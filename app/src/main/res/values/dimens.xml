@@ -13,6 +13,7 @@
     <dimen name="dp22">22dp</dimen>
     <dimen name="dp24">24dp</dimen>
     <dimen name="dp26">26dp</dimen>
+    <dimen name="dp28">28dp</dimen>
 
 
     <dimen name="map_location_marker_icon_width">500dp</dimen>
@@ -24,6 +25,8 @@
     <dimen name="circle_indicator_pager_width">8dp</dimen>
     <dimen name="login_sign_in_btn_width">120dp</dimen>
     <dimen name="login_sign_in_btn_height">40dp</dimen>
+    <dimen name="sign_up_container_padding">36dp</dimen>
+    <dimen name="sign_in_container_padding">36dp</dimen>
 
 
 </resources>

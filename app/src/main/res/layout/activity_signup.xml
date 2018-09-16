@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
                 android:orientation="vertical"
-                android:padding="35dp">
+                android:padding="@dimen/sign_up_container_padding">
 
 
                 <android.support.design.widget.TextInputLayout

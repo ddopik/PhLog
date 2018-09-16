@@ -28,4 +28,5 @@
     <string name="sign_up_terms_notifier"><font fgcolor='#424242'>By creating An account you are agree to our</font><font fgcolor='#ffffff'>  user Agreement </font><font fgcolor='#424242'> and </font> <font fgcolor='#ffffff'>privacy Policy</font></string>
     <string name="sign_in_to_continue">Sign In to continue</string>
     <string name="do_not_have_account">Don\'t Have an account?" "</string>
+    <string name="or">OR</string>
 </resources>
