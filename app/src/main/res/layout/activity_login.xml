@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp12"
-                    android:text="@string/create_an_account"
+                    android:text="@string/sign_in_to_continue"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sign_up_logo_sub_head"
                     android:textStyle="bold" />
@@ -57,60 +57,7 @@
                 android:padding="35dp">
 
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/TextLabel"
-                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
-                    <EditText
-                        android:id="@+id/name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/user_name"
-                        android:inputType="textPersonName"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sign_up_text_size"
-                        android:textStyle="bold" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/TextLabel"
-                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
-
-                    <EditText
-                        android:id="@+id/user_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/user_name"
-                        android:inputType="textPersonName"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sign_up_text_size"
-                        android:textStyle="bold" />
-                </android.support.design.widget.TextInputLayout>
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/TextLabel"
-                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
-
-                    <EditText
-                        android:id="@+id/mail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/mail"
-                        android:inputType="textEmailAddress"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sign_up_text_size"
-                        android:textStyle="bold" />
-                </android.support.design.widget.TextInputLayout>
                 <!--android.support.design:hintAnimationEnabled="true"-->
                 <!--android.support.design:hintEnabled="true"-->
 
@@ -190,41 +137,43 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+
+                <Button
+                    android:layout_width="@dimen/login_sign_in_btn_width"
+                    android:layout_height="@dimen/login_sign_in_btn_height"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/dp18"
+                    android:layout_marginEnd="@dimen/dp8"
+                    android:layout_marginStart="@dimen/dp8"
+                    android:layout_marginTop="@dimen/dp26"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_sign_up_btn"
+                    android:text="@string/sign_up"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sign_up_text_size_meduim" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp18"
+                    android:layout_marginTop="@dimen/dp22"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
-
-                    <Button
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/sign_up_btn_size"
-                        android:layout_margin="@dimen/dp8"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_cancel_btn"
-                        android:text="@string/cancel"
-                        android:textColor="@color/gray96A0AA"
-                        android:textSize="@dimen/sign_up_text_size_meduim" />
+                        android:layout_height="wrap_content"
 
-                    <Button
+
+                        android:text="@string/do_not_have_account"
+                        android:textAlignment="textStart" />
+
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/sign_up_btn_size"
-                        android:layout_margin="@dimen/dp8"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_sign_up_btn"
+                        android:layout_height="wrap_content"
                         android:text="@string/sign_up"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sign_up_text_size_meduim" />
+                        android:textColor="@color/text_input_color" />
 
                 </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="textStart"
-                    android:layout_marginTop="@dimen/dp22"
-                    android:padding="@dimen/dp8"
-                    android:text="@string/sign_up_terms_notifier"/>
 
 
             </LinearLayout>
