@@ -11,14 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.splash.view.SplashActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".ui.signup.view.SignUpActivity"/>
+        <activity android:name=".ui.welcome.view.WelcomeActivity"/>
+        <activity android:name=".ui.home.view.HomeActivity"/>
+        <activity android:name=".ui.login.view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.signup.view.SignUpActivity"/>
-        <activity android:name=".ui.welcome.view.WelcomeActivity"/>
 
     </application>
 

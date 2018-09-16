@@ -193,8 +193,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp22"
-                    android:layout_marginTop="@dimen/dp22"
+                    android:layout_marginTop="@dimen/dp18"
                     android:orientation="horizontal">
 
 
@@ -219,16 +218,13 @@
                         android:textSize="@dimen/sign_up_text_size_meduim" />
 
                 </LinearLayout>
-
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dp12"
-                    android:paddingEnd="@dimen/dp12"
-                    android:paddingStart="@dimen/dp12"
-                    android:text="@string/sign_up_terms_notifier"
-                    android:textAlignment="textStart" />
+                    android:textAlignment="textStart"
+                    android:layout_marginTop="@dimen/dp22"
+                    android:padding="@dimen/dp8"
+                    android:text="@string/sign_up_terms_notifier"/>
 
 
             </LinearLayout>

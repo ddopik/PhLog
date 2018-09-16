@@ -43,4 +43,5 @@
     <color name="grayF6F8FA">#F6F8FA</color>
     <color name="black677078">#677078</color>
     <color name="black242B31">#242B31</color>
+    <color name="text_input_color">#f5c424</color>
 </resources>

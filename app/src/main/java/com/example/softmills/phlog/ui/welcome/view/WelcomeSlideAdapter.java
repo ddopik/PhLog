@@ -8,12 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WelcomeSlideAdapter extends PagerAdapter {
@@ -56,7 +53,7 @@ public class WelcomeSlideAdapter extends PagerAdapter {
                 .load(urlList.get(position))
                 .centerCrop()
 //                .override(600, 200)
-                .placeholder(R.drawable.splash_screen)
+                .placeholder(R.drawable.splash_screen_background)
                 .into(imageView);
         view.addView(imageLayout, 0);
         return imageLayout;

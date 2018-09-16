@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <dimen name="dp4">4dp</dimen>
+    <dimen name="dp6">6dp</dimen>
+    <dimen name="dp8">8dp</dimen>
+    <dimen name="dp10">10dp</dimen>
+    <dimen name="dp12">12dp</dimen>
+    <dimen name="dp14">14dp</dimen>
+    <dimen name="dp16">16dp</dimen>
+    <dimen name="dp18">18dp</dimen>
+    <dimen name="dp20">20dp</dimen>
+    <dimen name="dp22">22dp</dimen>
+
+
     <dimen name="map_location_marker_icon_width">500dp</dimen>
     <dimen name="map_location_marker_icon_height">500dp</dimen>
+    <dimen name="logo_width">60dp</dimen>
+    <dimen name="logo_height">60dp</dimen>
+    <dimen name="sign_up_btn_size">36dp</dimen>
+    <dimen name="circle_indicator_pager_height">8dp</dimen>
+    <dimen name="circle_indicator_pager_width">8dp</dimen>
+
+
 </resources>

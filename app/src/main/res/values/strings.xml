@@ -16,4 +16,14 @@
     <string name="map_fragment_unspecified_user_location">UnSpecified userLocation</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">SignUp</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="user_name">User name</string>
+    <string name="mail">Email</string>
+    <string name="country">Country</string>
+    <string name="mobile">Mobile</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="cancel">Cancel</string>
+    <string name="sign_up_terms_notifier"><font fgcolor='#424242'>By creating An account you are agree to our</font><font fgcolor='#ffffff'>  user Agreement </font><font fgcolor='#424242'> and </font> <font fgcolor='#ffffff'>privacy Policy</font></string>
 </resources>
