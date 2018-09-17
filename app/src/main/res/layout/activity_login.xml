@@ -54,7 +54,7 @@
 
 
         <Button
-            android:id="@+id/signin"
+            android:id="@+id/google_signing"
             android:layout_width="250dp"
             android:layout_height="@dimen/social_login_btn_height"
             android:layout_marginTop="@dimen/dp12"
