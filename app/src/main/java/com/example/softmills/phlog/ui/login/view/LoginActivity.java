@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.login.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -10,9 +11,11 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.signup.view.SignUpActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.jaychang.sa.AuthCallback;
 import com.jaychang.sa.SocialUser;
@@ -28,7 +31,8 @@ import java.util.List;
 public class LoginActivity extends BaseActivity implements LoginView {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
-    Button googleSigningBtn;
+    private Button facebookSigning,googleSigningBtn;
+    private TextView signUpTxt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,15 +47,25 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     private void initView() {
-        googleSigningBtn = findViewById(R.id.google_signing);
+        googleSigningBtn = findViewById(R.id.google_signing_btn);
+        facebookSigning = findViewById(R.id.facebook_signing_btn);
+        signUpTxt = findViewById(R.id.sign_up_txt);
+
     }
 
     private void initListener() {
 
-        googleSigningBtn.setOnClickListener((view -> connectFacebook()));
+        facebookSigning.setOnClickListener((view -> signInWithFaceBook()));
+        googleSigningBtn.setOnClickListener((view -> signInWithGoogle()));
+        signUpTxt.setOnClickListener((view)-> navigateToSignUp());
     }
 
-    void signInWithGoogle() {
+    private void navigateToSignUp() {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+    }
+
+    private void signInWithGoogle() {
 //        GoogleSignInOptions.SCOPE_EMAIL
         List<String> scopes = new ArrayList<String>();
         scopes.add("email");
@@ -81,7 +95,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     }
 
-    private void connectFacebook() {
+    private void signInWithFaceBook() {
 //        List<String> scopes = Arrays.asList("user_birthday", "user_friends");
         List<String> scopes = new ArrayList<>();
 
