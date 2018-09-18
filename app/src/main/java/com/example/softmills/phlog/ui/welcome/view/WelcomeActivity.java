@@ -26,63 +26,65 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
 
     private PagerAdapter WelcomeSlideAdapter;
-    private List<String> urlList=new ArrayList<>();
+    private List<String> urlList = new ArrayList<>();
     private WelcomePresenter welcomePresenter;
-    private Button signInBtn,signUpBtn;
+    private Button signInBtn, signUpBtn;
+    private CircleIndicatorPager indicator;
+    private ViewPager slidesViewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         getSupportActionBar().hide();
-        welcomePresenter = new WelcomeScreenImpl(this);
+
         initView();
+        initListener();
+        initPresenter();
+        welcomePresenter.getWelcomeSlidesImages();
     }
 
     @Override
     public void initView() {
 
 
-        signInBtn=findViewById(R.id.sign_in_btn);
-        signUpBtn=findViewById(R.id.sign_up_btn);
+        signInBtn = findViewById(R.id.sign_in_btn);
+        signUpBtn = findViewById(R.id.sign_up_btn);
 
-
-//        urlList = new ArrayList<String>();
-//        urlList.add("https://iceclog.com/wp-content/uploads/2016/09/596px-Internet1.jpg");
-//        urlList.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe2VE423htE5GAa8iIEwuNf9umKaVHaz1MwpTQ-Qk_LaUHkb6r0A");
-//        urlList.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRElWJrfw2VRYvsdm0M01hsjTspCy5zryS691vKlNzn2NG3mRYs");
 
         WelcomeSlideAdapter = new WelcomeSlideAdapter(getBaseContext(), urlList);
-        ViewPager slidesViewPager = findViewById(R.id.slides_view_pager);
-        slidesViewPager.setAdapter(WelcomeSlideAdapter);
 
-        CircleIndicatorPager indicator = findViewById(R.id.circle_indicator_pager);
-        indicator.setViewPager(slidesViewPager);
-        welcomePresenter.getWelcomeSlidesImages();
-        initListener();
+        slidesViewPager = findViewById(R.id.slides_view_pager);
+        slidesViewPager.setAdapter(WelcomeSlideAdapter);
+        indicator = findViewById(R.id.circle_indicator_pager);
+
+
+    }
+
+
+    @Override
+    public void initPresenter() {
+        welcomePresenter = new WelcomeScreenImpl(this);
+    }
+
+    private void initListener() {
+        signInBtn.setOnClickListener((view) -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        });
+        signUpBtn.setOnClickListener((view) -> {
+            Intent intent = new Intent(this, SignUpActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override
     public void showWelcomeImageSlider(List<String> images) {
         urlList.clear();
         urlList.addAll(images);
+
         WelcomeSlideAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void initPresenter() {
-
-    }
-
-    private void initListener(){
-        signInBtn.setOnClickListener((view)->{
-            Intent intent=new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        });
-        signUpBtn.setOnClickListener((view)->{
-            Intent intent=new Intent(this, SignUpActivity.class);
-            startActivity(intent);
-        });
+        indicator.setViewPager(slidesViewPager);
     }
 
     @Override
