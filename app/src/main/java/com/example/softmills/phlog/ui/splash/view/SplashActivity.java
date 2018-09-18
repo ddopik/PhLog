@@ -21,4 +21,14 @@ public class SplashActivity extends BaseActivity{
             startActivity(intent);
         },3000);
     }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
 }

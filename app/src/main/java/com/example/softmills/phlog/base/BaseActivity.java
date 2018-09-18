@@ -21,6 +21,8 @@ public  abstract  class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
+    public abstract void initView();
+    public abstract void initPresenter();
     public void showToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }

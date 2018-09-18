@@ -34,6 +34,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     private Button facebookSigning,googleSigningBtn;
     private TextView signUpTxt;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +47,17 @@ public class LoginActivity extends BaseActivity implements LoginView {
         printHashKey(this);
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         googleSigningBtn = findViewById(R.id.google_signing_btn);
         facebookSigning = findViewById(R.id.facebook_signing_btn);
         signUpTxt = findViewById(R.id.sign_up_txt);
 
+    }
+
+    @Override
+    public void initPresenter() {
+        
     }
 
     private void initListener() {

@@ -39,7 +39,8 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         initView();
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
 
 
         signInBtn=findViewById(R.id.sign_in_btn);
@@ -61,7 +62,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         indicator.setViewPager(slidesViewPager);
 
 //        welcomePresenter.getWelcomeSlidesImages();
-        initListner();
+        initListener();
     }
 
     @Override
@@ -71,7 +72,12 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         WelcomeSlideAdapter.notifyDataSetChanged();
     }
 
-    private void initListner(){
+    @Override
+    public void initPresenter() {
+
+    }
+
+    private void initListener(){
         signInBtn.setOnClickListener((view)->{
             Intent intent=new Intent(this, LoginActivity.class);
             startActivity(intent);
