@@ -17,7 +17,9 @@ public class SplashActivity extends BaseActivity{
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
         new Handler().postDelayed(() ->{
-            Intent intent=new Intent(this, WelcomeActivity.class);
+            Intent intent=new Intent(SplashActivity.this, WelcomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+
             startActivity(intent);
         },3000);
     }

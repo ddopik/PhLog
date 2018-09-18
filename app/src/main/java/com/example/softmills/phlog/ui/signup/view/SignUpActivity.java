@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.signup.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.login.view.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,14 +68,8 @@ public class SignUpActivity extends BaseActivity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.listValues));
 
-        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.country);
+        autoCompleteTextView =  findViewById(R.id.country);
         autoCompleteTextView.setAdapter(arrayAdapter);
-//        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(final View arg0) {
-////                autoCompleteTextView.showDropDown();
-//            }
-//        });
         autoCompleteTextView.setOnFocusChangeListener((view, b) -> autoCompleteTextView.showDropDown());
 
 
@@ -87,6 +83,7 @@ public class SignUpActivity extends BaseActivity {
 
     public void initListener() {
         register_signUp.setOnClickListener(view -> dataIsValid());
+        registerCancel.setOnClickListener(view ->navigateToLogin());
     }
 
     private boolean dataIsValid() {
@@ -146,5 +143,10 @@ public class SignUpActivity extends BaseActivity {
 
         }
         return  true;
+    }
+
+    private void navigateToLogin(){
+        Intent intent=new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }

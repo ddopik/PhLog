@@ -26,7 +26,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
 
     private PagerAdapter WelcomeSlideAdapter;
-    private List<String> urlList;
+    private List<String> urlList=new ArrayList<>();
     private WelcomePresenter welcomePresenter;
     private Button signInBtn,signUpBtn;
 
@@ -47,21 +47,18 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         signUpBtn=findViewById(R.id.sign_up_btn);
 
 
-        urlList = new ArrayList<String>();
-        urlList.add("https://iceclog.com/wp-content/uploads/2016/09/596px-Internet1.jpg");
-        urlList.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe2VE423htE5GAa8iIEwuNf9umKaVHaz1MwpTQ-Qk_LaUHkb6r0A");
-        urlList.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRElWJrfw2VRYvsdm0M01hsjTspCy5zryS691vKlNzn2NG3mRYs");
+//        urlList = new ArrayList<String>();
+//        urlList.add("https://iceclog.com/wp-content/uploads/2016/09/596px-Internet1.jpg");
+//        urlList.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe2VE423htE5GAa8iIEwuNf9umKaVHaz1MwpTQ-Qk_LaUHkb6r0A");
+//        urlList.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRElWJrfw2VRYvsdm0M01hsjTspCy5zryS691vKlNzn2NG3mRYs");
 
         WelcomeSlideAdapter = new WelcomeSlideAdapter(getBaseContext(), urlList);
-
-
         ViewPager slidesViewPager = findViewById(R.id.slides_view_pager);
         slidesViewPager.setAdapter(WelcomeSlideAdapter);
 
         CircleIndicatorPager indicator = findViewById(R.id.circle_indicator_pager);
         indicator.setViewPager(slidesViewPager);
-
-//        welcomePresenter.getWelcomeSlidesImages();
+        welcomePresenter.getWelcomeSlidesImages();
         initListener();
     }
 

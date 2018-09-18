@@ -23,8 +23,8 @@ import io.reactivex.Observable;
 
 public class BaseNetworkApi {
 //
-    private static final String BASE_URL = "http://dev.spade.studio/mek-apis/public/api/v1/{lang}";
-    private static final String WELCOME_SLIDES_IMAGES = "http://dev.spade.studio/mek-apis/public/api/v1/{lang}";
+    private static final String BASE_URL = "      http://178.128.162.10/public/api";
+    private static final String WELCOME_SLIDES_IMAGES =BASE_URL+"/photographer/init_slider";
 
 //    public static io.reactivex.Observable<BaseResponse> makeGetRequest(String lang, String key) {
 //        return Rx2AndroidNetworking.get(REQUEST_URL)

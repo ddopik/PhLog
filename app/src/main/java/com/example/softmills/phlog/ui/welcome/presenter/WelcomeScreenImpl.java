@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.welcome.view.WelcomeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -14,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 public class WelcomeScreenImpl implements WelcomePresenter {
 
 
-    private String TAG=WelcomeScreenImpl.class.getSimpleName();
+    private String TAG = WelcomeScreenImpl.class.getSimpleName();
     private WelcomeView welcomeView;
 
     public WelcomeScreenImpl(WelcomeView welcomeView) {
@@ -29,12 +30,16 @@ public class WelcomeScreenImpl implements WelcomePresenter {
         BaseNetworkApi.getWelcomeSlidesImages()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(welcomeScreenResponse ->{
+                .subscribe(welcomeScreenResponse -> {
+                    List<String> imagesList = new ArrayList<String>();
 
-//                    welcomeView.showWelcomeImageSlider(welcomeScreenResponse);
-                },throwable -> {
+                    for (int i = 0; i < welcomeScreenResponse.initSlider.size(); i++) {
+                        imagesList.add(welcomeScreenResponse.initSlider.get(i).image);
+                    }
+                    welcomeView.showWelcomeImageSlider(imagesList);
+                }, throwable -> {
                     welcomeView.navigateToHome();
-                  Log.e(TAG,"getWelcomeSlidesImages() -----> Error :"+throwable.getMessage());
+                    Log.e(TAG, "getWelcomeSlidesImages() -----> Error :" + throwable.getMessage());
                 });
 
     }
