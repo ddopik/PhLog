@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
+import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
 import com.example.softmills.phlog.ui.welcome.model.WelcomeScreenResponse;
@@ -24,6 +25,7 @@ public class BaseNetworkApi {
     private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider";
     private static final String ALL_COUNTRES = BASE_URL + "/photographer/countires";
     private static final String SIGNUP_USER = BASE_URL + "/photographer/signup";
+    private static final String NORMAL_LOGIN = BASE_URL + "/photographer/login";
 
 
 
@@ -58,6 +60,17 @@ public class BaseNetworkApi {
                 .build()
                 .getObjectObservable(SignUpResponse.class);
     }
+
+    public static io.reactivex.Observable<LoginResponse> LoginUserNormal(HashMap<String,String> loginData) {
+        return Rx2AndroidNetworking.post(NORMAL_LOGIN)
+                .addBodyParameter("email",loginData.get("email"))
+                .addBodyParameter("password",loginData.get("password"))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(LoginResponse.class);
+    }
+
+
 
 //
 

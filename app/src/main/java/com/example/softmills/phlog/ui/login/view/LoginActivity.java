@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.util.Base64;
 import android.util.Log;
 import android.view.WindowManager;
@@ -15,24 +16,26 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.login.presenter.LoginPresenter;
+import com.example.softmills.phlog.ui.login.presenter.LoginPresenterImp;
 import com.example.softmills.phlog.ui.signup.view.SignUpActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.jaychang.sa.AuthCallback;
 import com.jaychang.sa.SocialUser;
-import com.jaychang.sa.facebook.SimpleAuth;
 
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private Button facebookSigning,googleSigningBtn;
-    private TextView signUpTxt;
+    private Button facebookSigning, googleSigningBtn, signUpBtn;
+    private TextView mail, passWord, signUpTxt;
+    private TextInputLayout mailInput, passwordInput;
+    private LoginPresenter loginPresenter;
 
 
     @Override
@@ -43,8 +46,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         initView();
+        initPresenter();
         initListener();
-        printHashKey(this);
+
     }
 
     @Override
@@ -52,99 +56,70 @@ public class LoginActivity extends BaseActivity implements LoginView {
         googleSigningBtn = findViewById(R.id.google_signing_btn);
         facebookSigning = findViewById(R.id.facebook_signing_btn);
         signUpTxt = findViewById(R.id.sign_up_txt);
+        signUpBtn = findViewById(R.id.sign_up_btn);
+        mail = findViewById(R.id.mail);
+        passWord = findViewById(R.id.password);
+        mailInput = findViewById(R.id.mail_login_input);
+        passwordInput = findViewById(R.id.login_password_input);
 
     }
 
     @Override
     public void initPresenter() {
-        
+
+        loginPresenter=new LoginPresenterImp(this);
+
     }
 
     private void initListener() {
 
-        facebookSigning.setOnClickListener((view -> signInWithFaceBook()));
-        googleSigningBtn.setOnClickListener((view -> signInWithGoogle()));
-        signUpTxt.setOnClickListener((view)-> navigateToSignUp());
+        facebookSigning.setOnClickListener((view -> loginPresenter.signInWithFaceBook()));
+        googleSigningBtn.setOnClickListener((view -> loginPresenter.signInWithGoogle()));
+        signUpTxt.setOnClickListener((view) -> navigateToSignUp());
+        signUpBtn.setOnClickListener(view -> {
+            if (isLoginDataValid()) {
+                HashMap<String, String> normalLoginData = new HashMap<String, String>();
+                normalLoginData.put("email", mail.getText().toString());
+                normalLoginData.put("password", passWord.getText().toString());
+                loginPresenter.signInNormal(normalLoginData);
+            }
+        });
     }
 
-    private void navigateToSignUp() {
+
+
+
+
+
+
+    private boolean isLoginDataValid() {
+        if (!mail.getText().toString().isEmpty() && !passWord.getText().toString().isEmpty()) {
+            return true;
+        }
+
+        if (mail.getText().toString().isEmpty()) {
+            mailInput.setError(getResources().getString(R.string.email_missing));
+        } else {
+            mailInput.setErrorEnabled(false);
+        }
+        if (passWord.getText().toString().isEmpty()) {
+            passwordInput.setError(getResources().getString(R.string.invalid_password));
+        } else {
+            passwordInput.setErrorEnabled(false);
+        }
+        return false;
+    }
+
+
+    @Override
+    public void navigateToSignUp() {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 
-    private void signInWithGoogle() {
-//        GoogleSignInOptions.SCOPE_EMAIL
-        List<String> scopes = new ArrayList<String>();
-        scopes.add("email");
-        scopes.add("profile");
-        scopes.add("openid");
-
-        com.jaychang.sa.google.SimpleAuth.connectGoogle(scopes, new AuthCallback() {
-            @Override
-            public void onSuccess(SocialUser socialUser) {
-
-                Log.e(TAG, "userId:" + socialUser.toString());
-//                Log.d(TAG, "email:" + socialUser.email);
-
-
-            }
-
-            @Override
-            public void onError(Throwable error) {
-                Log.e(TAG, "signInWithGoogle()--->" + error.getMessage());
-            }
-
-            @Override
-            public void onCancel() {
-                Log.e(TAG, "Canceled");
-            }
-        });
-
-    }
-
-    private void signInWithFaceBook() {
-//        List<String> scopes = Arrays.asList("user_birthday", "user_friends");
-        List<String> scopes = new ArrayList<>();
-
-
-        com.jaychang.sa.facebook.SimpleAuth.connectFacebook(scopes, new AuthCallback() {
-            @Override
-            public void onSuccess(SocialUser socialUser) {
-                Log.d(TAG, "userId:" + socialUser.userId);
-                Log.d(TAG, "email:" + socialUser.email);
-                Log.d(TAG, "accessToken:" + socialUser.accessToken);
-                Log.d(TAG, "profilePictureUrl:" + socialUser.profilePictureUrl);
-                Log.d(TAG, "username:" + socialUser.username);
-                Log.d(TAG, "fullName:" + socialUser.fullName);
-                Log.d(TAG, "pageLink:" + socialUser.pageLink);
-            }
-
-            @Override
-            public void onError(Throwable error) {
-                Log.e(TAG, error.getMessage());
-            }
-
-            @Override
-            public void onCancel() {
-                Log.e(TAG, "Canceled");
-            }
-        });
-    }
-
-    public void printHashKey(Context pContext) {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String hashKey = new String(Base64.encode(md.digest(), 0));
-                Log.e(TAG, "printHashKey() Hash Key: " + hashKey);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "printHashKey()", e);
-        } catch (Exception e) {
-            Log.e(TAG, "printHashKey()", e);
-        }
+    @Override
+    public void showToast(String msg) {
+        super.showToast(msg);
     }
 }
 
