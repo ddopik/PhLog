@@ -1,20 +1,9 @@
 package com.example.softmills.phlog.network;
 
-import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.welcome.model.WelcomeScreenResponse;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-
-import io.reactivex.Observable;
 
 
 /**
@@ -22,9 +11,10 @@ import io.reactivex.Observable;
  */
 
 public class BaseNetworkApi {
-//
+    //
     private static final String BASE_URL = "      http://178.128.162.10/public/api";
-    private static final String WELCOME_SLIDES_IMAGES =BASE_URL+"/photographer/init_slider";
+    private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider";
+    private static final String ALL_COUNTRES = BASE_URL + "/photographer/countires";
 
 //    public static io.reactivex.Observable<BaseResponse> makeGetRequest(String lang, String key) {
 //        return Rx2AndroidNetworking.get(REQUEST_URL)
@@ -41,6 +31,15 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(WelcomeScreenResponse.class);
+
+
+    }
+
+    public static io.reactivex.Observable<AllCountersRepose> getAllCounters() {
+        return Rx2AndroidNetworking.get(ALL_COUNTRES)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(AllCountersRepose.class);
     }
 
 //

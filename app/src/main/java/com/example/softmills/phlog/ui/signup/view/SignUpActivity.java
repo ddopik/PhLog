@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Patterns;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -18,16 +15,24 @@ import android.widget.Toast;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.login.view.LoginActivity;
+import com.example.softmills.phlog.ui.signup.model.Country;
+import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenter;
+import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenterImp;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SignUpActivity extends BaseActivity {
+public class SignUpActivity extends BaseActivity implements SignUpView {
 
-    private EditText name, userName, mail, registerPassword, confirmRegister_password, mobile;
-    private TextInputLayout nameInput, userNameInput, mailInput, registerPasswordInput, confirmRegister_passwordInput, mobileInput;
+    private EditText name, userName, mail, registerPassword, confirmRegister_password, mobile, country;
+    private TextInputLayout nameInput, userNameInput, mailInput, registerPasswordInput, confirmRegister_passwordInput, mobileInput, countryInput;
     private Button registerCancel, register_signUp;
     private AutoCompleteTextView autoCompleteTextView;
+    private CountersAdapter countersAdapter;
+    private ArrayList<Country> countryListObj = new ArrayList<>();
+    private ArrayList<String> countryList = new ArrayList<>();
+    private int currentCountryID = 0;
+    private SignUpPresenter signUpPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,8 +45,8 @@ public class SignUpActivity extends BaseActivity {
         initPresenter();
         initView();
         initListener();
+        signUpPresenter.getAllCounters();
     }
-
 
 
     @Override
@@ -52,7 +57,6 @@ public class SignUpActivity extends BaseActivity {
         registerPassword = findViewById(R.id.register_password);
         confirmRegister_password = findViewById(R.id.confirm_register_password);
         mobile = findViewById(R.id.mobile);
-
         registerCancel = findViewById(R.id.register_cancel);
         register_signUp = findViewById(R.id.register_sign_up);
 
@@ -63,27 +67,21 @@ public class SignUpActivity extends BaseActivity {
         registerPasswordInput = findViewById(R.id.register_password_input);
         confirmRegister_passwordInput = findViewById(R.id.confirm_register_password_input);
         mobileInput = findViewById(R.id.mobile_input);
+        countryInput = findViewById(R.id.country_input);
 
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
-                getResources().getStringArray(R.array.listValues));
-
-        autoCompleteTextView =  findViewById(R.id.country);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countryList);
+        autoCompleteTextView = findViewById(R.id.country);
         autoCompleteTextView.setAdapter(arrayAdapter);
-        autoCompleteTextView.setOnFocusChangeListener((view, b) -> autoCompleteTextView.showDropDown());
-
-
-
     }
 
     @Override
     public void initPresenter() {
-
+        signUpPresenter = new SignUpPresenterImp(this);
     }
 
     public void initListener() {
         register_signUp.setOnClickListener(view -> dataIsValid());
-        registerCancel.setOnClickListener(view ->navigateToLogin());
+        registerCancel.setOnClickListener(view -> navigateToLogin());
     }
 
     private boolean dataIsValid() {
@@ -127,7 +125,7 @@ public class SignUpActivity extends BaseActivity {
             confirmRegister_passwordInput.setErrorEnabled(false);
             failedStates.add(4, true);
         }
-        if ( mobile.getText().toString().equals("") || ! android.util.Patterns.PHONE.matcher(mobile.getText()).matches()) {
+        if (mobile.getText().toString().equals("") || !android.util.Patterns.PHONE.matcher(mobile.getText()).matches()) {
             mobileInput.setError(getString(R.string.invalid_phone_number));
             failedStates.add(5, false);
         } else {
@@ -136,17 +134,52 @@ public class SignUpActivity extends BaseActivity {
         }
 
 
+        if (autoCompleteTextView.getText().toString().isEmpty()) {
+//            countryInput.setError(getString(R.string.please_select_country));
+            countryInput.setError(getString(R.string.please_select_country));
+            failedStates.add(6, false);
+        } else {
+
+
+            for (int i = 0; i <= countryListObj.size(); i++) {
+                if(i==countryListObj.size()){
+                   countryInput.setError(getString(R.string.please_select_country_not_exist));
+                    failedStates.add(6, false);
+                    break;
+                }
+                if (countryListObj.get(i).nameEn.equals(autoCompleteTextView.getText().toString())) {
+                    countryInput.setErrorEnabled(false);
+                    failedStates.add(6, true);
+                    break;
+                }
+
+            }
+
+        }
+
+
         for (int i = 0; i < failedStates.size(); i++) {
             if (!failedStates.get(i)) {
                 return false;
             }
-
         }
-        return  true;
+
+        return true;
     }
 
-    private void navigateToLogin(){
-        Intent intent=new Intent(this, LoginActivity.class);
+    @Override
+    public void showCounters(List<Country> countries) {
+        this.countryList.clear();
+        this.countryListObj.clear();
+        this.countryListObj.addAll(countries);
+        for (int i = 0; i < countries.size(); i++) {
+            countryList.add(countries.get(i).nameEn);
+        }
+        countersAdapter.notifyDataSetChanged();
+    }
+
+    private void navigateToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

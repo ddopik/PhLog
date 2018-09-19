@@ -81,6 +81,7 @@
                     android:id="@+id/user_name_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sign_up_text_input_margin_top"
                     android:theme="@style/TextLabel"
                     android:hint="@string/user_name"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
@@ -101,6 +102,7 @@
                     android:id="@+id/mail_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sign_up_text_input_margin_top"
                     android:hint="@string/mail"
                     android:theme="@style/TextLabel"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
@@ -122,6 +124,7 @@
                     android:id="@+id/register_password_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sign_up_text_input_margin_top"
                     android:hint="@string/password"
                     android:theme="@style/TextLabel"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
@@ -142,6 +145,7 @@
                     android:id="@+id/confirm_register_password_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sign_up_text_input_margin_top"
                     android:hint="@string/confirm_password"
                     android:theme="@style/TextLabel"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
@@ -162,6 +166,7 @@
                     android:id="@+id/mobile_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sign_up_text_input_margin_top"
                     android:hint="@string/mobile"
                     android:theme="@style/TextLabel"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
@@ -178,19 +183,26 @@
                 </android.support.design.widget.TextInputLayout>
 
 
-
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/country_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/country"
+                    android:theme="@style/TextLabel"
+                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
                     <AutoCompleteTextView
                         android:id="@+id/country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/sign_up_text_input_margin_top"
                         android:inputType="textAutoComplete"
                         android:textAlignment="textStart"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sign_up_text_size"
                         android:textStyle="bold" />
 
-
+                </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

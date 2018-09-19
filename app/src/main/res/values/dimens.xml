@@ -28,6 +28,7 @@
     <dimen name="sign_up_container_padding">36dp</dimen>
     <dimen name="sign_in_container_padding">36dp</dimen>
     <dimen name="social_login_btn_height">40dp</dimen>
+    <dimen name="sign_up_text_input_margin_top">12dp</dimen>
 
 
 </resources>

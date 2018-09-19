@@ -3,6 +3,7 @@
 
 
     <dimen name="text_medium">21sp</dimen>
+    <dimen name="text_medium_s">18sp</dimen>
 
 
     <dimen name="sign_up_head_text_size">26sp</dimen>
