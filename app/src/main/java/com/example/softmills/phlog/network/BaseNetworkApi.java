@@ -2,8 +2,11 @@ package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
+import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
 import com.example.softmills.phlog.ui.welcome.model.WelcomeScreenResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
+
+import java.util.HashMap;
 
 
 /**
@@ -11,19 +14,18 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
  */
 
 public class BaseNetworkApi {
+
+
+
+    //Network Status
+    public static String STATUS_OK="200";
     //
     private static final String BASE_URL = "      http://178.128.162.10/public/api";
     private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider";
     private static final String ALL_COUNTRES = BASE_URL + "/photographer/countires";
+    private static final String SIGNUP_USER = BASE_URL + "/photographer/signup";
 
-//    public static io.reactivex.Observable<BaseResponse> makeGetRequest(String lang, String key) {
-//        return Rx2AndroidNetworking.get(REQUEST_URL)
-//                .addPathParameter("lang", lang)
-//                .addQueryParameter("key", String.valueOf(key))
-//                .getResponseOnlyFromNetwork()
-//                .build()
-//                .getObjectObservable(BaseResponse.class);
-//    }
+
 
 
     public static io.reactivex.Observable<WelcomeScreenResponse> getWelcomeSlidesImages() {
@@ -42,7 +44,32 @@ public class BaseNetworkApi {
                 .getObjectObservable(AllCountersRepose.class);
     }
 
+    public static io.reactivex.Observable<SignUpResponse> signUpUser(HashMap<String,String> signUpData) {
+        return Rx2AndroidNetworking.post(SIGNUP_USER)
+                .addBodyParameter("full_name",signUpData.get("full_name"))
+                .addBodyParameter("email",signUpData.get("email"))
+                .addBodyParameter("password",signUpData.get("password"))
+                .addBodyParameter("mobile",signUpData.get("mobile"))
+                .addBodyParameter("country_id",signUpData.get("country_id"))
+                .addBodyParameter("User_name",signUpData.get("User_name"))
+                .addBodyParameter("mobile_os",signUpData.get("mobile_os"))
+                .addBodyParameter("mobile_model",signUpData.get("mobile_model"))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(SignUpResponse.class);
+    }
+
 //
+
+//    public static io.reactivex.Observable<BaseResponse> makeGetRequest(String lang, String key) {
+//        return Rx2AndroidNetworking.get(REQUEST_URL)
+//                .addPathParameter("lang", lang)
+//                .addQueryParameter("key", String.valueOf(key))
+//                .getResponseOnlyFromNetwork()
+//                .build()
+//                .getObjectObservable(BaseResponse.class);
+//    }
+
 //    /**
 //     * --Upload Attachment
 //     *

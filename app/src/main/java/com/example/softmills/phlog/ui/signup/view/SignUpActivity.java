@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.login.view.LoginActivity;
 import com.example.softmills.phlog.ui.signup.model.Country;
@@ -20,6 +21,7 @@ import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenter;
 import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenterImp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SignUpActivity extends BaseActivity implements SignUpView {
@@ -28,10 +30,9 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
     private TextInputLayout nameInput, userNameInput, mailInput, registerPasswordInput, confirmRegister_passwordInput, mobileInput, countryInput;
     private Button registerCancel, register_signUp;
     private AutoCompleteTextView autoCompleteTextView;
-    private CountersAdapter countersAdapter;
+    private ArrayAdapter<String> arrayAdapter;
     private ArrayList<Country> countryListObj = new ArrayList<>();
     private ArrayList<String> countryList = new ArrayList<>();
-    private int currentCountryID = 0;
     private SignUpPresenter signUpPresenter;
 
     @Override
@@ -68,8 +69,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         confirmRegister_passwordInput = findViewById(R.id.confirm_register_password_input);
         mobileInput = findViewById(R.id.mobile_input);
         countryInput = findViewById(R.id.country_input);
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countryList);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList);
         autoCompleteTextView = findViewById(R.id.country);
         autoCompleteTextView.setAdapter(arrayAdapter);
     }
@@ -80,11 +80,27 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
     }
 
     public void initListener() {
-        register_signUp.setOnClickListener(view -> dataIsValid());
+        register_signUp.setOnClickListener(view -> {
+            if (isDataIsValid()) {
+
+                HashMap<String, String> signUpData = new HashMap<>();
+                signUpData.put("full_name", name.getText().toString());
+                signUpData.put("email", mail.getText().toString());
+                signUpData.put("password", registerPassword.getText().toString());
+                signUpData.put("mobile", mobile.getText().toString());
+                signUpData.put("country_id", String.valueOf(getCountryID()));
+                signUpData.put("User_name", userName.getText().toString());
+                signUpData.put("mobile_os", "Android");
+                signUpData.put("mobile_model", Utilities.getDeviceName());
+
+                signUpPresenter.signUpUser(signUpData);
+
+            }
+        });
         registerCancel.setOnClickListener(view -> navigateToLogin());
     }
 
-    private boolean dataIsValid() {
+    private boolean isDataIsValid() {
         List<Boolean> failedStates = new ArrayList<Boolean>(6);
 
         if (name.getText() == null || name.getText().toString().equals("")) {
@@ -140,20 +156,14 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
             failedStates.add(6, false);
         } else {
 
-
-            for (int i = 0; i <= countryListObj.size(); i++) {
-                if(i==countryListObj.size()){
-                   countryInput.setError(getString(R.string.please_select_country_not_exist));
-                    failedStates.add(6, false);
-                    break;
-                }
-                if (countryListObj.get(i).nameEn.equals(autoCompleteTextView.getText().toString())) {
-                    countryInput.setErrorEnabled(false);
-                    failedStates.add(6, true);
-                    break;
-                }
-
+            if (getCountryID() == 0) {
+                countryInput.setError(getString(R.string.select_country_not_exist));
+                failedStates.add(6, false);
+            } else {
+                countryInput.setErrorEnabled(false);
+                failedStates.add(6, true);
             }
+
 
         }
 
@@ -175,11 +185,25 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         for (int i = 0; i < countries.size(); i++) {
             countryList.add(countries.get(i).nameEn);
         }
-        countersAdapter.notifyDataSetChanged();
+        arrayAdapter.notifyDataSetChanged();
     }
 
     private void navigateToLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    private int getCountryID() {
+        for (int i = 0; i < countryListObj.size(); i++) {
+            if (countryListObj.get(i).nameEn.equals(autoCompleteTextView.getText().toString())) {
+                return countryListObj.get(i).id;
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        showToast(msg);
     }
 }

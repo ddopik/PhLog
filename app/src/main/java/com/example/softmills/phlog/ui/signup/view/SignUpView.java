@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SignUpView {
     void showCounters(List<Country> countries);
+    void showMessage(String msg);
 }

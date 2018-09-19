@@ -43,5 +43,5 @@
     <string name="invalid_phone_number">invalid Phone Number</string>
     <string name="password_not_matched">password not matched</string>
     <string name="please_select_country">Please Select you country</string>
-    <string name="please_select_country_not_exist">your country not exist</string>
+    <string name="select_country_not_exist">your country not exist</string>
 </resources>
