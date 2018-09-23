@@ -31,12 +31,12 @@ public class WelcomeScreenImpl implements WelcomePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(welcomeScreenResponse -> {
-                    List<String> imagesList = new ArrayList<String>();
+//                    List<String> imagesList = new ArrayList<String>();
 
-                    for (int i = 0; i < welcomeScreenResponse.initSlider.size(); i++) {
-                        imagesList.add(welcomeScreenResponse.initSlider.get(i).image);
-                    }
-                    welcomeView.showWelcomeImageSlider(imagesList);
+//                    for (int i = 0; i < welcomeScreenResponse.initSlider.size(); i++) {
+//                        imagesList.add(welcomeScreenResponse.initSlider.get(i).image);
+//                    }
+                    welcomeView.showWelcomeImageSlider(welcomeScreenResponse.initSlider);
                 }, throwable -> {
                     welcomeView.navigateToHome();
                     Log.e(TAG, "getWelcomeSlidesImages() -----> Error :" + throwable.getMessage());

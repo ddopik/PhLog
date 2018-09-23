@@ -11,6 +11,9 @@ public class InitSlider {
     @SerializedName("image")
     @Expose
     public String image;
+    @SerializedName("text")
+    @Expose
+    public String text;
     @SerializedName("created_at")
     @Expose
     public String createdAt;

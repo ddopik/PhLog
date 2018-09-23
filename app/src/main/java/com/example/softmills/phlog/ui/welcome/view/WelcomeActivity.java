@@ -13,6 +13,7 @@ import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.home.view.HomeActivity;
 import com.example.softmills.phlog.ui.login.view.LoginActivity;
 import com.example.softmills.phlog.ui.signup.view.SignUpActivity;
+import com.example.softmills.phlog.ui.welcome.model.InitSlider;
 import com.example.softmills.phlog.ui.welcome.presenter.WelcomePresenter;
 import com.example.softmills.phlog.ui.welcome.presenter.WelcomeScreenImpl;
 
@@ -26,7 +27,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
 
     private PagerAdapter WelcomeSlideAdapter;
-    private List<String> urlList = new ArrayList<>();
+    private List<InitSlider> urlList = new ArrayList<InitSlider>();
     private WelcomePresenter welcomePresenter;
     private Button signInBtn, signUpBtn;
     private CircleIndicatorPager indicator;
@@ -79,7 +80,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     }
 
     @Override
-    public void showWelcomeImageSlider(List<String> images) {
+    public void showWelcomeImageSlider(List<InitSlider> images) {
         urlList.clear();
         urlList.addAll(images);
 
