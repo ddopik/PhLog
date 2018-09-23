@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class SignUpActivity extends BaseActivity implements SignUpView {
 
+    private String TAG=SignUpActivity.class.getSimpleName();
     private EditText name, userName, mail, registerPassword, confirmRegister_password, mobile, country;
     private TextInputLayout nameInput, userNameInput, mailInput, registerPasswordInput, confirmRegister_passwordInput, mobileInput, countryInput;
     private Button registerCancel, register_signUp;
@@ -41,6 +43,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         setContentView(R.layout.activity_signup);
         getSupportActionBar().hide();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 
 
         initPresenter();
@@ -72,6 +75,23 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList);
         autoCompleteTextView = findViewById(R.id.country);
         autoCompleteTextView.setAdapter(arrayAdapter);
+
+
+
+
+        Intent intent = getIntent();
+        HashMap<String, String> hashMap = (HashMap<String, String>)intent.getSerializableExtra("data");
+        if(hashMap != null) {
+            if(hashMap.get("username") !=null){
+                name.setText(hashMap.get("username"));
+            }if( hashMap.get("fullName")!=null){
+                userName.setText(hashMap.get("fullName"));
+            }if( hashMap.get("email")!=null){
+                mail.setText(hashMap.get("email"));
+            }
+        }
+
+
     }
 
     @Override

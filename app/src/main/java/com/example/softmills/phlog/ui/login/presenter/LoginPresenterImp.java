@@ -1,6 +1,8 @@
 package com.example.softmills.phlog.ui.login.presenter;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.example.softmills.phlog.network.BaseNetworkApi;
@@ -19,22 +21,23 @@ import io.reactivex.schedulers.Schedulers;
 public class LoginPresenterImp implements LoginPresenter {
 
     private LoginView loginView;
-    public LoginPresenterImp (LoginView loginView){
-        this.loginView=loginView;
+
+    public LoginPresenterImp(LoginView loginView) {
+        this.loginView = loginView;
     }
 
     private static final String TAG = LoginPresenterImp.class.getSimpleName();
 
     @SuppressLint("CheckResult")
     @Override
-    public void signInNormal(HashMap<String,String> loginData) {
+    public void signInNormal(HashMap<String, String> loginData) {
         BaseNetworkApi.LoginUserNormal(loginData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loginResponse -> {
-                  String m=  loginResponse.loginData.email;
+                    String m = loginResponse.loginData.email;
                     loginView.showToast(loginResponse.loginData.fullName);
-                },throwable -> {
+                }, throwable -> {
                     loginView.showToast(throwable.getMessage());
                 });
     }
@@ -53,8 +56,6 @@ public class LoginPresenterImp implements LoginPresenter {
 
                 Log.e(TAG, "userId:" + socialUser.toString());
 //                Log.d(TAG, "email:" + socialUser.email);
-
-
             }
 
             @Override
@@ -72,20 +73,23 @@ public class LoginPresenterImp implements LoginPresenter {
 
     @Override
     public void signInWithFaceBook() {
-//        List<String> scopes = Arrays.asList("user_birthday", "user_friends");
         List<String> scopes = new ArrayList<>();
-
-
         com.jaychang.sa.facebook.SimpleAuth.connectFacebook(scopes, new AuthCallback() {
+            @SuppressLint("CheckResult")
             @Override
             public void onSuccess(SocialUser socialUser) {
-                Log.d(TAG, "userId:" + socialUser.userId);
-                Log.d(TAG, "email:" + socialUser.email);
-                Log.d(TAG, "accessToken:" + socialUser.accessToken);
-                Log.d(TAG, "profilePictureUrl:" + socialUser.profilePictureUrl);
-                Log.d(TAG, "username:" + socialUser.username);
-                Log.d(TAG, "fullName:" + socialUser.fullName);
-                Log.d(TAG, "pageLink:" + socialUser.pageLink);
+
+                HashMap<String, String> parameter = new HashMap<String, String>();
+                parameter.put("userId", socialUser.userId);
+                parameter.put("email", socialUser.email);
+                parameter.put("accessToken", socialUser.accessToken);
+                parameter.put("profilePictureUrl", socialUser.profilePictureUrl);
+                parameter.put("username", socialUser.username);
+                parameter.put("fullName", socialUser.fullName);
+                parameter.put("pageLink", socialUser.pageLink);
+                parameter.put("facebook_id", socialUser.userId);
+                processFaceBookUser(parameter);
+
             }
 
             @Override
@@ -98,5 +102,20 @@ public class LoginPresenterImp implements LoginPresenter {
                 Log.e(TAG, "Canceled");
             }
         });
+    }
+
+
+    @SuppressLint("CheckResult")
+    private void processFaceBookUser(HashMap<String, String> data) {
+        BaseNetworkApi.socialLoginFacebook(data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(socialLoginResponse -> {
+                    if (socialLoginResponse.state.equals(BaseNetworkApi.STATUS_OK) && socialLoginResponse.found.equals(BaseNetworkApi.NEW_FACEBOOK_USER_STATUS)) {
+                        loginView.navigateToSignUp(data);
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "processFaceBookUser() Error--->" + throwable.getMessage());
+                });
     }
 }

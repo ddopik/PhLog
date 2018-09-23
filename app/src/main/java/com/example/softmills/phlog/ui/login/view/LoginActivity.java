@@ -118,6 +118,13 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
+    public void navigateToSignUp(HashMap<String,String> mapData) {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        intent.putExtra("data", mapData);
+        startActivity(intent);
+    }
+
+    @Override
     public void showToast(String msg) {
         super.showToast(msg);
     }
