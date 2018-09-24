@@ -35,7 +35,7 @@ public class SignUpPresenterImp implements SignUpPresenter {
                     Log.e(TAG,"signUpUser() --->"+signUpResponse.toString());
                     if (signUpResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         signUpView.showMessage(signUpResponse.token);
-                        ///todo navigate to next step
+                        signUpView.showMessage("What should we do now");
                     } else if (signUpResponse.state.equals(BaseNetworkApi.STATUS_IN_VALID_RESPONSE)){
                         signUpView.showMessage(signUpResponse.message);
                     }

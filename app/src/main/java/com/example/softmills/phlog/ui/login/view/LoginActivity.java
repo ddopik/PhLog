@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.home.view.HomeActivity;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenter;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenterImp;
 import com.example.softmills.phlog.ui.signup.view.SignUpActivity;
@@ -117,16 +118,16 @@ public class LoginActivity extends BaseActivity implements LoginView {
         startActivity(intent);
     }
 
+
     @Override
-    public void navigateToSignUp(HashMap<String,String> mapData) {
-        Intent intent = new Intent(this, SignUpActivity.class);
-        intent.putExtra("data", mapData);
-        startActivity(intent);
+    public void showMessage(String msg) {
+        super.showToast(msg);
     }
 
     @Override
-    public void showToast(String msg) {
-        super.showToast(msg);
+    public void navigateToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 }
 

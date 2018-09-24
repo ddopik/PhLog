@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public interface LoginView {
     void navigateToSignUp();
-    void navigateToSignUp(HashMap<String,String> map);
-    void showToast(String msg);
+
+    void navigateToHome();
+    void showMessage(String msg);
 }

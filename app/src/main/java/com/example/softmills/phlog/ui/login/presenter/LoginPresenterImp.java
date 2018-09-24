@@ -36,9 +36,9 @@ public class LoginPresenterImp implements LoginPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loginResponse -> {
                     String m = loginResponse.loginData.email;
-                    loginView.showToast(loginResponse.loginData.fullName);
+                    loginView.showMessage(loginResponse.loginData.fullName);
                 }, throwable -> {
-                    loginView.showToast(throwable.getMessage());
+                    loginView.showMessage(throwable.getMessage());
                 });
     }
 
@@ -112,7 +112,8 @@ public class LoginPresenterImp implements LoginPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(socialLoginResponse -> {
                     if (socialLoginResponse.state.equals(BaseNetworkApi.STATUS_OK) && socialLoginResponse.found.equals(BaseNetworkApi.NEW_FACEBOOK_USER_STATUS)) {
-                        loginView.navigateToSignUp(data);
+                        //todo--->session data should be set
+                        loginView.navigateToHome();
                     }
                 }, throwable -> {
                     Log.e(TAG, "processFaceBookUser() Error--->" + throwable.getMessage());

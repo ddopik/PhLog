@@ -79,6 +79,10 @@ dependencies {
     implementation"com.google.android.gms:play-services-auth:16.0.0"
     //circleindicatorpager
     implementation 'com.bikomobile:circleindicatorpager:1.0.0'
+    //ImagePicker
+    implementation 'com.github.jkwiecien:EasyImage:1.3.1'
+    //Easy permissions
+    implementation 'pub.devrel:easypermissions:1.3.0'
 
     ////--->SimpleAuth
 

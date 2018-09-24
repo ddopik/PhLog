@@ -45,4 +45,5 @@
     <string name="please_select_country">Please Select you country</string>
     <string name="select_country_not_exist">your country not exist</string>
     <string name="email_missing">Email is missing</string>
+    <string name="camera_and_location_rationale">Need camera and storage permation</string>
 </resources>

@@ -46,11 +46,9 @@ public class ImageUtils {
     private static final float CORNER_RADIUS = 2.0f;
     public ArrayList<String> imagesPaths = new ArrayList<String>();
     public String imgBase64 = "", imgName;
-    private String mImgPath;
 
-    public ImageUtils(String imgPath) {
-        mImgPath = imgPath;
-    }
+
+
 
 
 
@@ -91,7 +89,7 @@ public class ImageUtils {
     }
     //-------------------Functions to upload multiple Images at once for OOH---------end----
 
-    public static String getSelectedImagePath(Activity activity, int requestCode, int resultCode, Intent data, File cameraImage, int randomNumber) {
+    public static String getSelectedImagePath(Activity activity, int requestCode, int resultCode, Intent data, int randomNumber) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == FILE_CODE) {
                 Uri selectedImageUri = data.getData();
@@ -99,8 +97,7 @@ public class ImageUtils {
                 return new FileUtils().getPathFromUri(selectedImageUri, activity);
             } else if (requestCode == CAMERA_CODE) {
                 //mImgPath = cameraImage.getPath();
-                cameraImage = new File(FileUtils.TEMP_FILES, randomNumber + ".jpg");
-                return cameraImage.getPath();
+                return new File(FileUtils.TEMP_FILES, randomNumber + ".jpg").getPath();
 
             }
         }
@@ -114,23 +111,24 @@ public class ImageUtils {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(activity.getResources().getString(R.string.general_photo_chooser_title));
-        builder.setItems(photoChooserOptions, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int option) {
-                if (option == 0) {
-                    if (!new File(FileUtils.TEMP_FILES).isDirectory())
-                        new File(FileUtils.TEMP_FILES).mkdir();
-                    //mCcameraImage = new File(FileUtils.TEMP_FILES, randomNumber + ".jpg");
-                    File cameraImage = new File(FileUtils.TEMP_FILES, randomNumber + ".jpg");
-                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraImage));
-                    activity.startActivityForResult(intent, CAMERA_CODE);
-                } else if (option == 1) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_PICK);
-                    activity.startActivityForResult(Intent.createChooser(intent, activity.getResources().getString(R.string.general_gallery_chooser_title)), FILE_CODE);
+        builder.setItems(photoChooserOptions, (dialog, option) -> {
+            if (option == 0) {
+
+                if (!new File(FileUtils.TEMP_FILES).isDirectory())
+                    new File(FileUtils.TEMP_FILES).mkdir();
+                File cameraImage = new File(FileUtils.TEMP_FILES, randomNumber + ".jpg");
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraImage));
+                if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                   activity. startActivityForResult(intent, randomNumber);
                 }
+
+
+            } else if (option == 1) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_PICK);
+                activity.startActivityForResult(Intent.createChooser(intent, activity.getResources().getString(R.string.general_gallery_chooser_title)), FILE_CODE);
             }
         });
         return builder;
@@ -158,7 +156,7 @@ public class ImageUtils {
 
     }
 
-    public void convertImgToBase64WithoutGlide(final int width, final int height) {
+    public void convertImgToBase64WithoutGlide(String mImgPath,final int width, final int height) {
         Bitmap bitmap = rotateImage(mImgPath, BitmapFactory.decodeFile(mImgPath));
         //Bitmap bitmap = BitmapFactory.decodeFile(mImgPath);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
