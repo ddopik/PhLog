@@ -17,7 +17,7 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_up">SignUp</string>
     <string name="create_an_account">Create an account</string>
-    <string name="name">Name</string>
+    <string name="full_name">Name</string>
     <string name="password">Password</string>
     <string name="user_name">User name</string>
     <string name="mail">Email</string>

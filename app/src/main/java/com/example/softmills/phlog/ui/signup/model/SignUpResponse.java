@@ -10,6 +10,9 @@ public class SignUpResponse {
     @SerializedName("token")
     @Expose
     public String token;
+    @SerializedName("msg")
+    @Expose
+    public String message;
     @SerializedName("state")
     @Expose
     public String state;

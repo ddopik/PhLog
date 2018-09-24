@@ -20,6 +20,7 @@ public class BaseNetworkApi {
 
     //Network Status
     public static String STATUS_OK = "200";
+    public static String STATUS_IN_VALID_RESPONSE = "401";
     public static String NEW_FACEBOOK_USER_STATUS = "0";
     //
     private static final String BASE_URL = "      http://178.128.162.10/public/api";
@@ -49,11 +50,12 @@ public class BaseNetworkApi {
     public static io.reactivex.Observable<SignUpResponse> signUpUser(HashMap<String, String> signUpData) {
         return Rx2AndroidNetworking.post(SIGNUP_USER)
                 .addBodyParameter("full_name", signUpData.get("full_name"))
-                .addBodyParameter("email", signUpData.get("email"))
                 .addBodyParameter("password", signUpData.get("password"))
+                .addBodyParameter("email", signUpData.get("email"))
+
                 .addBodyParameter("mobile", signUpData.get("mobile"))
                 .addBodyParameter("country_id", signUpData.get("country_id"))
-                .addBodyParameter("User_name", signUpData.get("User_name"))
+
                 .addBodyParameter("mobile_os", signUpData.get("mobile_os"))
                 .addBodyParameter("mobile_model", signUpData.get("mobile_model"))
                 .setPriority(Priority.HIGH)

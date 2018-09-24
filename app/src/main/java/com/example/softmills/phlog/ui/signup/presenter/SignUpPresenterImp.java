@@ -32,10 +32,12 @@ public class SignUpPresenterImp implements SignUpPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(signUpResponse -> {
+                    Log.e(TAG,"signUpUser() --->"+signUpResponse.toString());
                     if (signUpResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         signUpView.showMessage(signUpResponse.token);
-                    } else {
-                        signUpView.showMessage(signUpResponse.email.get(0));
+                        ///todo navigate to next step
+                    } else if (signUpResponse.state.equals(BaseNetworkApi.STATUS_IN_VALID_RESPONSE)){
+                        signUpView.showMessage(signUpResponse.message);
                     }
                 }, throwable -> {
                     signUpView.showMessage(throwable.getMessage());

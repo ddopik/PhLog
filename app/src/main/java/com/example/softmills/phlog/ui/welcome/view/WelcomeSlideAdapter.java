@@ -53,17 +53,13 @@ public class WelcomeSlideAdapter extends PagerAdapter {
 
 
         imageText.setText(urlList.get(position).text);
-//        imageText.setText("sssssss");
         GlideApp.with(context)
                 .load(urlList.get(position).image)
                 .centerCrop()
 //                .override(600, 200) //setImageDimension
                 .placeholder(R.drawable.splash_screen_background)
                 .into(slideImage);
-
-
         view.addView(imageLayout, 0);
-
         return imageLayout;
     }
 

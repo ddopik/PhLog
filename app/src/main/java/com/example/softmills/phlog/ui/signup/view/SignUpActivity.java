@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Utilities;
@@ -27,8 +25,8 @@ import java.util.List;
 
 public class SignUpActivity extends BaseActivity implements SignUpView {
 
-    private String TAG=SignUpActivity.class.getSimpleName();
-    private EditText name, userName, mail, registerPassword, confirmRegister_password, mobile, country;
+    private String TAG = SignUpActivity.class.getSimpleName();
+    private EditText full_name, mail, registerPassword, confirmRegister_password, mobile, country;
     private TextInputLayout nameInput, userNameInput, mailInput, registerPasswordInput, confirmRegister_passwordInput, mobileInput, countryInput;
     private Button registerCancel, register_signUp;
     private AutoCompleteTextView autoCompleteTextView;
@@ -45,7 +43,6 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
-
         initPresenter();
         initView();
         initListener();
@@ -55,8 +52,8 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
 
     @Override
     public void initView() {
-        name = findViewById(R.id.name);
-        userName = findViewById(R.id.user_name);
+        full_name = findViewById(R.id.full_name);
+//        userName = findViewById(R.id.user_name);
         mail = findViewById(R.id.mail);
         registerPassword = findViewById(R.id.register_password);
         confirmRegister_password = findViewById(R.id.confirm_register_password);
@@ -65,8 +62,8 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         register_signUp = findViewById(R.id.register_sign_up);
 
 
-        nameInput = findViewById(R.id.name_input);
-        userNameInput = findViewById(R.id.user_name_input);
+        nameInput = findViewById(R.id.full_name_input);
+//        userNameInput = findViewById(R.id.user_name_input);
         mailInput = findViewById(R.id.mail_input);
         registerPasswordInput = findViewById(R.id.register_password_input);
         confirmRegister_passwordInput = findViewById(R.id.confirm_register_password_input);
@@ -75,21 +72,6 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList);
         autoCompleteTextView = findViewById(R.id.country);
         autoCompleteTextView.setAdapter(arrayAdapter);
-
-
-
-
-        Intent intent = getIntent();
-        HashMap<String, String> hashMap = (HashMap<String, String>)intent.getSerializableExtra("data");
-        if(hashMap != null) {
-            if(hashMap.get("username") !=null){
-                name.setText(hashMap.get("username"));
-            }if( hashMap.get("fullName")!=null){
-                userName.setText(hashMap.get("fullName"));
-            }if( hashMap.get("email")!=null){
-                mail.setText(hashMap.get("email"));
-            }
-        }
 
 
     }
@@ -104,12 +86,30 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
             if (isDataIsValid()) {
 
                 HashMap<String, String> signUpData = new HashMap<>();
-                signUpData.put("full_name", name.getText().toString());
-                signUpData.put("email", mail.getText().toString());
+                signUpData.put("full_name", full_name.getText().toString());
                 signUpData.put("password", registerPassword.getText().toString());
-                signUpData.put("mobile", mobile.getText().toString());
-                signUpData.put("country_id", String.valueOf(getCountryID()));
-                signUpData.put("User_name", userName.getText().toString());
+
+                if (!mail.getText().toString().isEmpty()) {
+                    signUpData.put("email", mail.getText().toString());
+                } else {
+                    signUpData.put("email", "");
+
+                }
+                if (!mobile.getText().toString().isEmpty()) {
+                    signUpData.put("mobile", mobile.getText().toString());
+                } else {
+                    signUpData.put("mobile", "");
+
+                }
+
+                if (!String.valueOf(getCountryID()).isEmpty()) {
+                    signUpData.put("country_id", String.valueOf(getCountryID()));
+                }
+                {
+                    signUpData.put("country_id", "");
+                }
+
+//                signUpData.put("User_name", userName.getText().toString());
                 signUpData.put("mobile_os", "Android");
                 signUpData.put("mobile_model", Utilities.getDeviceName());
 
@@ -123,65 +123,66 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
     private boolean isDataIsValid() {
         List<Boolean> failedStates = new ArrayList<Boolean>(6);
 
-        if (name.getText() == null || name.getText().toString().equals("")) {
+        if (full_name.getText() == null || full_name.getText().toString().equals("")) {
             nameInput.setError(getResources().getText(R.string.invailde_name));
             failedStates.add(0, false);
         } else {
             nameInput.setErrorEnabled(false);
             failedStates.add(0, true);
         }
-        if (userName.getText().toString().isEmpty()) {
-            userNameInput.setError(getString(R.string.invalid_user_name));
-            failedStates.add(1, false);
-        } else {
-            userNameInput.setErrorEnabled(false);
-            failedStates.add(1, true);
-        }
-        if (mail.getText().toString().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(mail.getText().toString()).matches()) {
-            mailInput.setError(getString(R.string.invalid_mail));
-            failedStates.add(2, false);
-        } else {
-            mailInput.setErrorEnabled(false);
-            failedStates.add(2, true);
-        }
+//        if (userName.getText().toString().isEmpty()) {
+//            userNameInput.setError(getString(R.string.invalid_user_name));
+//            failedStates.add(1, false);
+//        } else {
+//            userNameInput.setErrorEnabled(false);
+//            failedStates.add(1, true);
+//        }
+//        if (mail.getText().toString().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(mail.getText().toString()).matches()) {
+//            mailInput.setError(getString(R.string.invalid_mail));
+//            failedStates.add(2, false);
+//        } else {
+//            mailInput.setErrorEnabled(false);
+//            failedStates.add(2, true);
+//        }
         if (registerPassword.getText().toString().isEmpty()) {
             registerPasswordInput.setError(getString(R.string.invalid_password));
-            failedStates.add(3, false);
+            failedStates.add(1, false);
         } else if (registerPassword.getText().length() < 6) {
             registerPasswordInput.setError(getString(R.string.password_limit));
-            failedStates.add(3, false);
+            failedStates.add(1, false);
         } else {
             registerPasswordInput.setErrorEnabled(false);
-            failedStates.add(3, true);
+            failedStates.add(1, true);
         }
         if (!registerPassword.getText().toString().equals(confirmRegister_password.getText().toString())) {
             confirmRegister_passwordInput.setError(getResources().getString(R.string.password_not_matched));
-            failedStates.add(4, false);
+            failedStates.add(2, false);
         } else {
             confirmRegister_passwordInput.setErrorEnabled(false);
-            failedStates.add(4, true);
+            failedStates.add(2, true);
         }
-        if (mobile.getText().toString().equals("") || !android.util.Patterns.PHONE.matcher(mobile.getText()).matches()) {
-            mobileInput.setError(getString(R.string.invalid_phone_number));
-            failedStates.add(5, false);
-        } else {
-            mobileInput.setErrorEnabled(false);
-            failedStates.add(5, true);
-        }
+//        if (mobile.getText().toString().equals("") || !android.util.Patterns.PHONE.matcher(mobile.getText()).matches()) {
+//            mobileInput.setError(getString(R.string.invalid_phone_number));
+//            failedStates.add(5, false);
+//        } else {
+//            mobileInput.setErrorEnabled(false);
+//            failedStates.add(5, true);
+//        }
 
 
         if (autoCompleteTextView.getText().toString().isEmpty()) {
 //            countryInput.setError(getString(R.string.please_select_country));
-            countryInput.setError(getString(R.string.please_select_country));
-            failedStates.add(6, false);
+//            countryInput.setError(getString(R.string.please_select_country));
+//            failedStates.add(6, false);
         } else {
+
 
             if (getCountryID() == 0) {
                 countryInput.setError(getString(R.string.select_country_not_exist));
-                failedStates.add(6, false);
+                failedStates.add(3, false);
             } else {
                 countryInput.setErrorEnabled(false);
-                failedStates.add(6, true);
+                failedStates.add(3, true);
             }
 
 
