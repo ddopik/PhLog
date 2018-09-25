@@ -46,4 +46,8 @@
     <string name="select_country_not_exist">your country not exist</string>
     <string name="email_missing">Email is missing</string>
     <string name="camera_and_location_rationale">Need camera and storage permation</string>
+    <string name="saved">saved</string>
+    <string name="following">following</string>
+    <string name="campains">campains</string>
+    <string name="photos">photos</string>
 </resources>
