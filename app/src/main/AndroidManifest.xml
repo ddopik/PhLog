@@ -15,13 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.splash.view.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ui.splash.view.SplashActivity"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
         <activity android:name=".ui.signup.view.SignUpActivity"/>
         <activity android:name=".ui.welcome.view.WelcomeActivity"/>
 
@@ -31,7 +27,13 @@
         <activity android:name=".ui.signup.PickProfilePhotoActivity"/>
 
 
-        <activity android:name=".ui.profile.view.PhotoGrapherProfileActivity" />
+        <activity android:name=".ui.profile.view.PhotoGrapherProfileActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
 
     </application>

@@ -58,6 +58,7 @@ public class WelcomeSlideAdapter extends PagerAdapter {
                 .centerCrop()
 //                .override(600, 200) //setImageDimension
                 .placeholder(R.drawable.splash_screen_background)
+                .error(R.drawable.splash_screen_background)
                 .into(slideImage);
         view.addView(imageLayout, 0);
         return imageLayout;

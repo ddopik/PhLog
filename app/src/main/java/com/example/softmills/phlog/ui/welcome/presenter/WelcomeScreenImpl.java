@@ -6,9 +6,6 @@ import android.util.Log;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.welcome.view.WelcomeView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -38,7 +35,7 @@ public class WelcomeScreenImpl implements WelcomePresenter {
 //                    }
                     welcomeView.showWelcomeImageSlider(welcomeScreenResponse.initSlider);
                 }, throwable -> {
-                    welcomeView.navigateToHome();
+                    welcomeView.ViewBasicDefaultWelcomeImg();
                     Log.e(TAG, "getWelcomeSlidesImages() -----> Error :" + throwable.getMessage());
                 });
 

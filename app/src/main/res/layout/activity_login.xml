@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_screen_background"
@@ -9,22 +9,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center_horizontal|bottom"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="@dimen/logo_width"
-            android:layout_height="@dimen/logo_height"
-            android:src="@drawable/phlog_logo" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp8"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sign_up_head_text_size" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/logo_width"
+                android:layout_height="@dimen/logo_height"
+                android:layout_marginEnd="@dimen/dp12"
+                android:src="@drawable/phlog_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp8"
+                android:fontFamily="@font/arial_rounded_font"
+                android:gravity="bottom"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/signing_head_text_size" />
+
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,20 +55,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:baselineAligned="false"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingStart="@dimen/sign_in_container_padding"
-        android:paddingEnd="@dimen/sign_in_container_padding"
-       >
+        android:paddingEnd="@dimen/sign_in_container_padding">
 
 
         <Button
             android:id="@+id/google_signing_btn"
             android:layout_width="250dp"
             android:layout_height="@dimen/social_login_btn_height"
-            android:layout_marginTop="@dimen/dp12"
             android:background="@drawable/rounded_google_btn"
             android:drawableStart="@drawable/google_plus_symbol"
             android:drawablePadding="@dimen/dp8"
@@ -84,7 +97,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp12"
-            android:layout_marginBottom="@dimen/dp12"
             android:background="@drawable/circle_white"
             android:gravity="center"
             android:text="@string/or"
@@ -137,6 +149,19 @@
             android:layout_marginTop="@dimen/dp16"
             android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/sign_up_btn"
+                android:layout_width="@dimen/login_sign_in_btn_width"
+                android:layout_height="@dimen/login_sign_in_btn_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp26"
+                android:layout_marginEnd="@dimen/dp8"
+
+                android:background="@drawable/rounded_sign_up_btn"
+                android:text="@string/sign_in"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sign_up_text_size_meduim" />
 
             <TextView
                 android:id="@+id/forgot_password"
@@ -152,33 +177,17 @@
         </LinearLayout>
 
 
-        <Button
-            android:id="@+id/sign_up_btn"
-            android:layout_width="@dimen/login_sign_in_btn_width"
-            android:layout_height="@dimen/login_sign_in_btn_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/dp8"
-            android:layout_marginTop="@dimen/dp26"
-            android:layout_marginEnd="@dimen/dp8"
-
-            android:background="@drawable/rounded_sign_up_btn"
-            android:text="@string/sign_in"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sign_up_text_size_meduim" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp8"
             android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-
                 android:text="@string/do_not_have_account"
+                android:textColor="@color/white"
                 android:textAlignment="textStart" />
 
             <TextView
@@ -194,6 +203,6 @@
     </LinearLayout>
 
 
-        </LinearLayout>
+</LinearLayout>
 
 

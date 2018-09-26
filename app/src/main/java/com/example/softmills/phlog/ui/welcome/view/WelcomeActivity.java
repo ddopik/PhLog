@@ -82,15 +82,24 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     @Override
     public void showWelcomeImageSlider(List<InitSlider> images) {
         urlList.clear();
+        InitSlider initSliderDefaultItem=new InitSlider();
+        initSliderDefaultItem.image="";
+        initSliderDefaultItem.text="basic Image";
+        urlList.add(initSliderDefaultItem);
         urlList.addAll(images);
-
         WelcomeSlideAdapter.notifyDataSetChanged();
         indicator.setViewPager(slidesViewPager);
     }
 
     @Override
-    public void navigateToHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+    public void ViewBasicDefaultWelcomeImg() {
+        urlList.clear();
+        InitSlider initSliderDefaultItem=new InitSlider();
+        initSliderDefaultItem.image="";
+        initSliderDefaultItem.text="basic Image";
+        urlList.add(initSliderDefaultItem);
+
+//        Intent intent = new Intent(this, HomeActivity.class);
+//        startActivity(intent);
     }
 }
