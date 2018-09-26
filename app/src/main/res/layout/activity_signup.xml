@@ -243,6 +243,7 @@
                     android:paddingBottom="@dimen/dp12"
                     android:paddingEnd="@dimen/dp12"
                     android:paddingStart="@dimen/dp12"
+                    android:textColor="@color/white"
                     android:text="@string/sign_up_terms_notifier"
                     android:textAlignment="textStart" />
 

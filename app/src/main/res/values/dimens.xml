@@ -14,6 +14,7 @@
     <dimen name="dp24">24dp</dimen>
     <dimen name="dp26">26dp</dimen>
     <dimen name="dp28">28dp</dimen>
+    <dimen name="dp80">80dp</dimen>
 
 
     <dimen name="map_location_marker_icon_width">500dp</dimen>
@@ -30,5 +31,6 @@
     <dimen name="social_login_btn_height">40dp</dimen>
     <dimen name="sign_up_text_input_margin_top">12dp</dimen>
     <dimen name="welcome_screen_text_height">150dp</dimen>
+    <dimen name="splash_logo_size">85dp</dimen>
 
 </resources>
