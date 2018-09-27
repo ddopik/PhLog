@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.profile.view.saved;
+package com.example.softmills.phlog.ui.userprofile.view.saved;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 
-public class PhotoGrapherSavedFragment extends BaseFragment {
+public class UserSavedFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

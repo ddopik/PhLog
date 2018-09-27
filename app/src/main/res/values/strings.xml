@@ -48,7 +48,10 @@
     <string name="camera_and_location_rationale">Need camera and storage permation</string>
     <string name="saved">saved</string>
     <string name="following">following</string>
-    <string name="campains">campains</string>
+    <string name="campaigns">campaigns</string>
     <string name="photos">photos</string>
     <string name="loading">Loading....</string>
+    <string name="edit">Edit</string>
+    <string name="total_photos">Total Photos</string>
+    <string name="followers">Followers</string>
 </resources>

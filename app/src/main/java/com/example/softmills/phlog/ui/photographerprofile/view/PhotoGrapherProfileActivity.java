@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.profile.view;
+package com.example.softmills.phlog.ui.photographerprofile.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,10 +8,10 @@ import android.support.v4.view.ViewPager;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.ui.profile.view.campains.PhotoGrapherCampainsFragment;
-import com.example.softmills.phlog.ui.profile.view.follwing.PhotoGrapherFollowingFragment;
-import com.example.softmills.phlog.ui.profile.view.photos.view.PhotoGraphrtPhotosFragment;
-import com.example.softmills.phlog.ui.profile.view.saved.PhotoGrapherSavedFragment;
+import com.example.softmills.phlog.ui.userprofile.view.campaigns.view.UserCampaignsFragment;
+import com.example.softmills.phlog.ui.userprofile.view.follwing.UserFollowingFragment;
+import com.example.softmills.phlog.ui.userprofile.view.photos.view.UserPhotosFragment;
+import com.example.softmills.phlog.ui.userprofile.view.saved.UserSavedFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,10 +62,10 @@ public class PhotoGrapherProfileActivity extends BaseActivity {
 
     private List<Fragment> getPhotoGrapherProfileFragment() {
 
-        this.profileFragmentList.add(new PhotoGraphrtPhotosFragment());
-        this.profileFragmentList.add(new PhotoGrapherCampainsFragment());
-        this.profileFragmentList.add(new PhotoGrapherFollowingFragment());
-        this.profileFragmentList.add(new PhotoGrapherSavedFragment());
+        this.profileFragmentList.add(new UserPhotosFragment());
+        this.profileFragmentList.add(new UserCampaignsFragment());
+        this.profileFragmentList.add(new UserFollowingFragment());
+        this.profileFragmentList.add(new UserSavedFragment());
 
         return profileFragmentList;
     }
@@ -73,7 +73,7 @@ public class PhotoGrapherProfileActivity extends BaseActivity {
     private List<String> getPhotoGrapherProfileFragmentTitles() {
 
         profileFragmentListTitles.add(getResources().getString(R.string.photos));
-        profileFragmentListTitles.add(getResources().getString(R.string.campains));
+        profileFragmentListTitles.add(getResources().getString(R.string.campaigns));
         profileFragmentListTitles.add(getResources().getString(R.string.following));
         profileFragmentListTitles.add(getResources().getString(R.string.saved));
         return profileFragmentListTitles;

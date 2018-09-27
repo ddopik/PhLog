@@ -1,17 +1,16 @@
-package com.example.softmills.phlog.ui.profile.view;
+package com.example.softmills.phlog.ui.userprofile.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoGrapherProfileViewPagerAdapter extends FragmentPagerAdapter {
+public class UserProfileViewPagerAdapter   extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList ;
     private List<String> mFragmentTitleList ;
 
-    public PhotoGrapherProfileViewPagerAdapter(FragmentManager manager, List<Fragment> mFragmentList, List<String> mFragmentTitleList) {
+    public UserProfileViewPagerAdapter(FragmentManager manager, List<Fragment> mFragmentList, List<String> mFragmentTitleList) {
         super(manager);
         this.mFragmentList = mFragmentList;
         this.mFragmentTitleList = mFragmentTitleList;

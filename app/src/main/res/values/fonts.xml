@@ -3,6 +3,8 @@
 
 
 
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_normal">14sp</dimen>
     <dimen name="text_medium_s">18sp</dimen>
     <dimen name="text_medium">21sp</dimen>
 

@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.profile.view.photos.view;
+package com.example.softmills.phlog.ui.userprofile.view.photos.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 
-public class PhotoGraphrtPhotosFragment extends BaseFragment {
+public class UserPhotosFragment extends BaseFragment {
 
     @Nullable
     @Override

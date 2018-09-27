@@ -13,6 +13,10 @@
         <item name="android:textColor">@color/text_input_color</item>
     </style>
 
+    <style name="PhlogRatingBarThem" parent="Base.Widget.AppCompat.RatingBar.Small">
+        <item name="colorControlNormal">#f57c00</item>
+        <item name="colorControlActivated">#c51162</item>
+    </style>
 
     <style name="TextLabel" parent="Widget.Design.TextInputLayout">
         <!-- Hint color and label color in FALSE state -->

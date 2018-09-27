@@ -33,4 +33,14 @@
     <dimen name="welcome_screen_text_height">150dp</dimen>
     <dimen name="splash_logo_size">85dp</dimen>
 
+
+
+    <!--/////////  ActivityUserProfile-->
+    <dimen name="user_profile_header_img_size">85dp</dimen>
+    <dimen name="user_profile_main_preview_height">320dp</dimen>
+    <dimen name="user_profile_rating_bar_width">65dp</dimen>
+    <dimen name="user_profile_rating_bar_height">20dp</dimen>
+    <dimen name="user_profile_gride_img_height">150dp</dimen>
+    <!--////////-->
+
 </resources>
