@@ -1,5 +1,5 @@
 package com.example.softmills.phlog.ui.userprofile.view.campaigns.presenter;
 
 public interface UserCampaignsPresenter {
-    void getUserCampaigns();
+    void getUserCampaigns(int page);
 }

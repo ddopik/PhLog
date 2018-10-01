@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_profile_background_img"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_screen_background">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/dp22"
+            android:text="@string/edit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_medium" />
+
+        <ImageView
+            android:id="@+id/user_profile_img"
+            android:layout_width="@dimen/user_profile_header_img_size"
+            android:layout_height="@dimen/user_profile_header_img_size"
+            android:layout_gravity="center"
+            android:src="@drawable/phlog_logo" />
+
+        <TextView
+            android:id="@+id/user_profile_full_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp18"
+            android:layout_marginBottom="@dimen/dp10"
+            android:fontFamily="@font/arial_rounded_font"
+            android:text="@string/full_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_normal" />
+
+        <TextView
+            android:id="@+id/user_profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dp10"
+            android:background="@drawable/rounded_frame_btn"
+            android:padding="@dimen/dp4"
+            android:text="@string/user_name"
+            android:textColor="@color/white" />
+
+        <RatingBar
+            android:id="@+id/profile_rating"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
+            android:layout_width="@dimen/user_profile_rating_bar_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:rating="2" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="@dimen/dp18">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/photos_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="101"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium_s" />
+
+            <TextView
+                android:id="@+id/total_photos_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_frame_btn_white_btn"
+                android:padding="@dimen/dp6"
+                android:text="@string/total_photos"
+                android:textAlignment="center"
+                android:textColor="@color/gray45494E" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_toStartOf="@+id/following_tag_container"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@id/followers_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="56"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium_s" />
+
+            <TextView
+                android:id="@+id/followers_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_frame_btn_white_btn"
+                android:padding="@dimen/dp6"
+                android:text="@string/followers"
+                android:textAlignment="center"
+                android:textColor="@color/gray45494E"
+                tools:ignore="RelativeOverlap" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/following_tag_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/following_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="56"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium_s" />
+
+            <TextView
+                android:id="@+id/following_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_frame_btn_white_btn"
+                android:padding="@dimen/dp6"
+                android:text="@string/following"
+                android:textAlignment="center"
+                android:textColor="@color/gray45494E" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</FrameLayout>

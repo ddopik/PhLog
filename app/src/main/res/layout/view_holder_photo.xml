@@ -5,9 +5,9 @@
 
     <ImageView
 
-        android:id="@+id/campaign_img"
+        android:id="@+id/photographer_photo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/user_profile_grid_img_height"
-        android:padding="1dp"/>
+        android:padding="1dp" />
 
 </FrameLayout>

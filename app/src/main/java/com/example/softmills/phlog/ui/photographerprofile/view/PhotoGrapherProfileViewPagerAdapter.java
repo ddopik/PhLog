@@ -1,5 +1,7 @@
 package com.example.softmills.phlog.ui.photographerprofile.view;
-
+/**
+ * Created by Abdalla_maged on 9/30/2018.
+ */
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -32,3 +34,4 @@ public class PhotoGrapherProfileViewPagerAdapter extends FragmentPagerAdapter {
         return mFragmentTitleList.get(position);
     }
 }
+

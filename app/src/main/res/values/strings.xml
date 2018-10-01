@@ -54,4 +54,8 @@
     <string name="edit">Edit</string>
     <string name="total_photos">Total Photos</string>
     <string name="followers">Followers</string>
+    <string name="home">Home</string>
+    <string name="missions">Missions</string>
+    <string name="Notification">Artists</string>
+    <string name="me">Me</string>
 </resources>

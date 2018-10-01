@@ -3,8 +3,12 @@ package com.example.softmills.phlog.network;
 import com.androidnetworking.common.Priority;
 import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.model.SocialLoginResponse;
+import com.example.softmills.phlog.ui.photographerprofile.model.ProfilePhotoGrapherInfoResponse;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhotosResponse;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhotosResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
+import com.example.softmills.phlog.ui.userprofile.model.UserProfileResponse;
 import com.example.softmills.phlog.ui.welcome.model.WelcomeScreenResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
@@ -23,12 +27,18 @@ public class BaseNetworkApi {
     public static String STATUS_IN_VALID_RESPONSE = "401";
     public static String NEW_FACEBOOK_USER_STATUS = "0";
     //
-    private static final String BASE_URL = "      http://178.128.162.10/public/api";
+    private static final String BASE_URL = "http://178.128.162.10/public/api/photographer";
     private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider";
-    private static final String ALL_COUNTRES = BASE_URL + "/photographer/countires";
-    private static final String SIGNUP_USER = BASE_URL + "/photographer/signup";
-    private static final String NORMAL_LOGIN = BASE_URL + "/photographer/login";
-    private static final String FACEBOOK_LOGIN_URL = BASE_URL +"/photographer/check_facebook_id";
+    private static final String ALL_COUNTRES = BASE_URL + "/countires";
+    private static final String SIGNUP_USER = BASE_URL + "/signup";
+    private static final String NORMAL_LOGIN = BASE_URL + "/login";
+    private static final String FACEBOOK_LOGIN_URL = BASE_URL +"/check_facebook_id";
+    private static final String USER_PROFILE_URL = BASE_URL +"/apiget_info_photographer";
+    private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL+"/image_photographer";
+    private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL+"/image_photographer";
+    private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL+"/get_info_photographer";
+
+    private static final String PAGER_PATH_PARAMETER ="page";
 
 
     public static io.reactivex.Observable<WelcomeScreenResponse> getWelcomeSlidesImages() {
@@ -79,6 +89,44 @@ public class BaseNetworkApi {
                 .build()
                 .getObjectObservable(SocialLoginResponse.class);
     }
+
+
+    public static  io.reactivex.Observable<UserProfileResponse> getUserProfile(String userID){
+        return Rx2AndroidNetworking.post(USER_PROFILE_URL)
+                .addBodyParameter("photographer_id ",userID)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(UserProfileResponse.class);
+    }
+
+
+   public static  io.reactivex.Observable<PhotoGrapherSavedPhotosResponse> getPhotoGrapherSavedPhotos(String token, String pageNumber){
+        return Rx2AndroidNetworking.post(PHOTOGRAPHER_SAVED_PHOTO_URL)
+                .addBodyParameter("token", token)
+                .addQueryParameter(PAGER_PATH_PARAMETER,pageNumber)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(PhotoGrapherSavedPhotosResponse.class);
+    }
+
+
+   public static  io.reactivex.Observable<PhotoGrapherPhotosResponse> getPhotoGrapherPhotos(String token, String pageNumber){
+        return Rx2AndroidNetworking.post(PHOTOGRAPHER_ALL_PHOTO_URL)
+                .addBodyParameter("token", token)
+                .addQueryParameter(PAGER_PATH_PARAMETER,pageNumber)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(PhotoGrapherPhotosResponse.class);
+    }
+
+    public static  io.reactivex.Observable<ProfilePhotoGrapherInfoResponse> getProfileInfo(String token){
+        return Rx2AndroidNetworking.post(PHOTOGRAPHER_PROFILE_INFO)
+                .addBodyParameter("token", token)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(ProfilePhotoGrapherInfoResponse.class);
+    }
+
 
 
 //

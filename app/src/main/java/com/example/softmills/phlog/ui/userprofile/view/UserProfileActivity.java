@@ -1,5 +1,7 @@
 package com.example.softmills.phlog.ui.userprofile.view;
-
+/**
+ * Created by Abdalla_maged on 9/30/2018.
+ */
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -33,8 +35,8 @@ public class UserProfileActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        TabLayout userProfileTabs = findViewById(R.id.profile_tabs);
-        ViewPager userProfileViewpager = findViewById(R.id.profile_viewpager);
+        TabLayout userProfileTabs = findViewById(R.id.photographer_profile_tabs);
+        ViewPager userProfileViewpager = findViewById(R.id.photographer_profile_viewpager);
         UserProfileViewPagerAdapter userProfileViewPagerAdapter = new UserProfileViewPagerAdapter(getSupportFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
         userProfileViewpager.setAdapter(userProfileViewPagerAdapter);
         userProfileTabs.setupWithViewPager(userProfileViewpager);
