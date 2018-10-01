@@ -10,7 +10,6 @@ import android.widget.Button;
 import com.bikomobile.circleindicatorpager.CircleIndicatorPager;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.ui.home.view.HomeActivity;
 import com.example.softmills.phlog.ui.login.view.LoginActivity;
 import com.example.softmills.phlog.ui.signup.view.SignUpActivity;
 import com.example.softmills.phlog.ui.welcome.model.InitSlider;
@@ -99,7 +98,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         initSliderDefaultItem.text="basic Image";
         urlList.add(initSliderDefaultItem);
 
-//        Intent intent = new Intent(this, HomeActivity.class);
+//        Intent intent = new Intent(this, HomeFragment.class);
 //        startActivity(intent);
     }
 }

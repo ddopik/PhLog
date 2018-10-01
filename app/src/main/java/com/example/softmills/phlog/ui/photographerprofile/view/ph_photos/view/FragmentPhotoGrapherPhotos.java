@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -69,6 +70,21 @@ public class FragmentPhotoGrapherPhotos extends BaseFragment implements Fragment
         photosRv = mainView.findViewById(R.id.photos_rv);
         photosRv.setAdapter(photographerSavedPhotoAdapter);
         photosProgress=mainView.findViewById(R.id.photos_progress);
+
+        photosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    // Scrolling up
+//                    ((AppCompatActivity) getActivity()).getSupportActionBar().setExpanded();
+//                    ((AppCompatActivity) getActivity()).getSupportActionBar().setExpanded(false);
+                } else {
+                    // Scrolling down
+                }
+            }
+        });
     }
     private void initListener(){
         photosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {

@@ -41,6 +41,7 @@
     <dimen name="user_profile_rating_bar_width">65dp</dimen>
     <dimen name="user_profile_rating_bar_height">20dp</dimen>
     <dimen name="user_profile_grid_img_height">150dp</dimen>
+    <dimen name="campaign_icon_size">35dp</dimen>
     <!--////////-->
 
 </resources>

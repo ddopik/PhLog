@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhoto;
@@ -41,6 +42,7 @@ public class PhotoGrapherPhotosAdapter  extends RecyclerView.Adapter<PhotoGraphe
 
     @Override
     public void onBindViewHolder(@NonNull PhotoGrapherPhotosAdapter.PhotosViewHolder campaignsViewHolder, int i) {
+
 
 
         GlideApp.with(context)

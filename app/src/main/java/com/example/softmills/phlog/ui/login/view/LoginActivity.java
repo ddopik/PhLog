@@ -1,34 +1,22 @@
 package com.example.softmills.phlog.ui.login.view;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.util.Base64;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.ui.home.view.HomeActivity;
+import com.example.softmills.phlog.ui.home.view.HomeFragment;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenter;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenterImp;
 import com.example.softmills.phlog.ui.signup.view.SignUpActivity;
-import com.jaychang.sa.AuthCallback;
-import com.jaychang.sa.SocialUser;
 
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
@@ -126,7 +114,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void navigateToHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeFragment.class);
         startActivity(intent);
     }
 }

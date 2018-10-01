@@ -4,17 +4,22 @@ package com.example.softmills.phlog.ui.photographerprofile.view;
  */
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.ui.photographerprofile.model.PhotoGrapherProfileData;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenterImpl;
@@ -26,7 +31,9 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.Fra
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityPhotoGraphedProfile extends BaseActivity implements PhotoGrapherProfileActivityView {
+public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGrapherProfileActivityView {
+
+    private View mainView;
 
     private List<Fragment> photoGrapherProfileFragmentList = new ArrayList<Fragment>();
     private List<String> photoGrapherFragmentListTitles = new ArrayList<String>();
@@ -35,31 +42,43 @@ public class ActivityPhotoGraphedProfile extends BaseActivity implements PhotoGr
     private RatingBar profileRating;
     private PhotoGrapherProfileActivityPresenter photoGrapherProfileActivityPresenter;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photographer_profile);
-        getSupportActionBar().hide();
-        initView();
-        initPresenter();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mainView = inflater.inflate(R.layout.fragment_photographer_profile, container, false);
+        return mainView;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
+        initViews();
+        initPresenter();
         photoGrapherProfileActivityPresenter.getPhotoGrapherProfileData();
     }
 
     @Override
-    public void initView() {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        fullName = findViewById(R.id.user_profile_full_name);
-        userName = findViewById(R.id.user_profile_username);
-        profileRating = findViewById(R.id.profile_rating);
-        photoCount = findViewById(R.id.photos_val);
-        followersCount = findViewById(R.id.followers_val);
-        followingCount = findViewById(R.id.following_val);
-        userProfileImg=findViewById(R.id.user_profile_img);
+    }
 
-        TabLayout userProfileTabs = findViewById(R.id.photographer_profile_tabs);
-        ViewPager userProfileViewpager = findViewById(R.id.photographer_profile_viewpager);
-        PhotoGrapherProfileViewPagerAdapter photographerProfileViewPagerAdapter = new PhotoGrapherProfileViewPagerAdapter(getSupportFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
+    @Override
+    public void initViews() {
+
+        fullName = mainView.findViewById(R.id.user_profile_full_name);
+        userName = mainView.findViewById(R.id.user_profile_username);
+        profileRating = mainView.findViewById(R.id.profile_rating);
+        photoCount = mainView.findViewById(R.id.photos_val);
+        followersCount = mainView.findViewById(R.id.followers_val);
+        followingCount = mainView.findViewById(R.id.following_val);
+        userProfileImg = mainView.findViewById(R.id.user_profile_img);
+
+        TabLayout userProfileTabs = mainView.findViewById(R.id.photographer_profile_tabs);
+        ViewPager userProfileViewpager = mainView.findViewById(R.id.photographer_profile_viewpager);
+        PhotoGrapherProfileViewPagerAdapter photographerProfileViewPagerAdapter = new PhotoGrapherProfileViewPagerAdapter(getActivity().getSupportFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
         userProfileViewpager.setAdapter(photographerProfileViewPagerAdapter);
         userProfileTabs.setupWithViewPager(userProfileViewpager);
     }
@@ -76,11 +95,12 @@ public class ActivityPhotoGraphedProfile extends BaseActivity implements PhotoGr
 
     private List<Fragment> getUserProfileFragment() {
 
-
-        this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherPhotos());
-        this.photoGrapherProfileFragmentList.add(new FragmentPhotographerCampaigns());
-        this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherFollowing());
-        this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherSaved());
+        if (photoGrapherProfileFragmentList.size() == 0){
+            this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherPhotos());
+            this.photoGrapherProfileFragmentList.add(new FragmentPhotographerCampaigns());
+            this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherFollowing());
+            this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherSaved());
+        }
 
 
         return photoGrapherProfileFragmentList;

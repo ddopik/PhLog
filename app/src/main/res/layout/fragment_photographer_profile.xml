@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
+            android:nestedScrollingEnabled="false"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
@@ -65,16 +66,16 @@
             android:layout_height="wrap_content" />
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/white"
-        app:itemIconTint="@color/text_input_color"
-        app:labelVisibilityMode="labeled"
-        app:itemTextColor="@color/bottom_bar_color"
-        app:menu="@menu/main_navigation" />
+    <!--<android.support.design.widget.BottomNavigationView-->
+        <!--android:id="@+id/navigationView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:background="?android:attr/windowBackground"-->
+        <!--app:itemBackground="@color/white"-->
+        <!--app:itemIconTint="@color/text_input_color"-->
+        <!--app:labelVisibilityMode="labeled"-->
+        <!--app:itemTextColor="@color/bottom_bar_color"-->
+        <!--app:menu="@menu/main_navigation" />-->
 
 </android.support.design.widget.CoordinatorLayout>
