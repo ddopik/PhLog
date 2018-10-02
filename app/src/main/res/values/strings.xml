@@ -58,4 +58,6 @@
     <string name="missions">Missions</string>
     <string name="Notification">Artists</string>
     <string name="me">Me</string>
+    <string name="remind_me">REMIND ME</string>
+    <string name="join">JOIN</string>
 </resources>

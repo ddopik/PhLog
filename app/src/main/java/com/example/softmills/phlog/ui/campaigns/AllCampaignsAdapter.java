@@ -1,16 +1,24 @@
 package com.example.softmills.phlog.ui.campaigns;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.userprofile.view.campaigns.model.Campaign;
+import com.example.softmills.phlog.ui.campaigns.model.Campaign;
 
 import java.util.List;
 
@@ -21,9 +29,10 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
 
     private List<Campaign> campaignList;
     private Context context;
-    public  AllCampaignsAdapter(Context context,List<Campaign> campaignList){
-        this.context=context;
-        this.campaignList=campaignList;
+
+    public AllCampaignsAdapter(Context context, List<Campaign> campaignList) {
+        this.context = context;
+        this.campaignList = campaignList;
 
     }
 
@@ -32,8 +41,8 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     @Override
     public CampaignViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        LayoutInflater layoutInflater=LayoutInflater.from(context);
-        return new CampaignViewHolder(layoutInflater.inflate(R.layout.view_holder_home_campaigns,viewGroup,false));
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        return new CampaignViewHolder(layoutInflater.inflate(R.layout.view_holder_home_campaigns, viewGroup, false));
 
 
     }
@@ -42,7 +51,19 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     public void onBindViewHolder(@NonNull CampaignViewHolder campaignViewHolder, int i) {
 
 
-//        GlideApp.with(context).load(url).apply(RequestOptions.circleCropTransform()).into(imageView); //set campaign rounded icon
+        Campaign campaign = campaignList.get(i);
+        GlideApp.with(context).load(campaign.imageCover)
+                .error(R.drawable.splash_screen_background)
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
+                        campaignViewHolder.campaignImage.setBackground(resource);
+                    }
+                });
+        //     campaignViewHolder.campaignName.setText(campaignList.get(i).);
+        campaignViewHolder.campaignTitle.setText(campaign.titleEn);
+        campaignViewHolder.campaignDayLeft.setText(campaign.endDay);
+        GlideApp.with(context).load(campaign.imageCover).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
     }
 
     @Override
@@ -51,8 +72,21 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     }
 
     public class CampaignViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout campaignImage;
+        ImageView campaignBusinessIcon;
+        TextView campaignBusinessName, campaignTitle, campaignDayLeft;
+        Button joinCampaignBtn;
+
         public CampaignViewHolder(View view) {
             super(view);
+
+            campaignBusinessIcon = view.findViewById(R.id.campaign_icon);
+            campaignImage = view.findViewById(R.id.campaign_img);
+            campaignBusinessName = view.findViewById(R.id.campaign_name);
+            campaignTitle = view.findViewById(R.id.campaign_title);
+            campaignDayLeft = view.findViewById(R.id.campaign_day_left);
+//            readMeBtn = view.findViewById(R.id.remind_me_btn);
+            joinCampaignBtn = view.findViewById(R.id.join_campaign_btn);
         }
     }
 }

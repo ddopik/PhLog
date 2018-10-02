@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp8"
     android:background="@color/white">
 
     <LinearLayout
@@ -17,7 +18,7 @@
             android:layout_height="40dp">
 
             <ImageView
-                android:id="@+id/campaign_img"
+                android:id="@+id/campaign_icon"
                 android:layout_width="@dimen/campaign_icon_size"
                 android:layout_height="@dimen/campaign_icon_size"
                 android:layout_marginEnd="@dimen/dp8"
@@ -27,7 +28,7 @@
                 android:id="@+id/campaign_name"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/campaign_icon_size"
-                android:layout_toEndOf="@+id/campaign_img"
+                android:layout_toEndOf="@+id/campaign_icon"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -35,26 +36,58 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/campaign_img"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:orientation="vertical"
+            android:padding="@dimen/dp8"
             tools:background="@drawable/splash_screen_background">
 
             <TextView
                 android:id="@+id/campaign_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
                 android:fontFamily="@font/arial_rounded_font"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_title_head"
-                tools:text="campai"/>
+                tools:text="campaign" />
 
             <TextView
-                android:id="@+id/campaign_sub_title"
+                android:id="@+id/campaign_day_left"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_star_off_24dp"
+                android:textColor="@color/gray400"
+                tools:text="5 day left" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:orientation="horizontal">
+
+                <!--<Button-->
+                    <!--android:id="@+id/remind_me_btn"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="@dimen/campaign_button_size"-->
+                    <!--android:layout_marginEnd="@dimen/dp18"-->
+                    <!--android:background="@drawable/rounded_campaign_button"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:text="@string/remind_me"/>-->
+
+                <Button
+                    android:id="@+id/join_campaign_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/campaign_button_size"
+                    android:background="@drawable/rounded_campaign_button"
+                    android:textColor="@color/white"
+                    android:text="@string/join"/>
+            </LinearLayout>
 
         </LinearLayout>
+
 
     </LinearLayout>
 

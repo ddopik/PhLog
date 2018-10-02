@@ -1,8 +1,10 @@
 package com.example.softmills.phlog.ui.photographerprofile.presenter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGrapherProfileActivityView;
 
@@ -15,15 +17,17 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
     private static String TAG = PhotoGrapherProfileActivityPresenterImpl.class.getSimpleName();
 
     private PhotoGrapherProfileActivityView photoGrapherProfileActivityView;
+    private Context context;
 
-    public PhotoGrapherProfileActivityPresenterImpl(PhotoGrapherProfileActivityView photoGrapherProfileActivityView) {
+    public PhotoGrapherProfileActivityPresenterImpl(Context context,PhotoGrapherProfileActivityView photoGrapherProfileActivityView) {
         this.photoGrapherProfileActivityView = photoGrapherProfileActivityView;
+        this.context=context;
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void getPhotoGrapherProfileData() {
-        BaseNetworkApi.getProfileInfo("ac99b777bf0d1e58e8e7cd8653da52f5")
+        BaseNetworkApi.getProfileInfo(PrefUtils.getUserToken(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profilePhotoGrapherInfoResponse -> {

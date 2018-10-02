@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/app_bar_container"
+        layout="@layout/phlog_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:id="@+id/view_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar_container"/>
+
+<!--/////////////////////-->
+
+    <!--///////////////////-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_anchor="@id/bottom_navigation"
+        app:layout_behavior="com.luasoftware.lualib2.ScrollAwareFABBehavior"
+        app:tint="@android:color/white"
+        app:srcCompat="@drawable/select_image_icon" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -18,8 +38,9 @@
         android:background="?android:attr/windowBackground"
         app:itemBackground="@color/white"
         app:itemIconTint="@color/text_input_color"
-        app:labelVisibilityMode="labeled"
         app:itemTextColor="@color/bottom_bar_color"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/main_navigation" />
+
 
 </RelativeLayout>

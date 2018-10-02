@@ -35,7 +35,6 @@ public class LoginPresenterImp implements LoginPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loginResponse -> {
-                    String m = loginResponse.loginData.email;
                     loginView.showMessage(loginResponse.loginData.fullName);
                 }, throwable -> {
                     loginView.showMessage(throwable.getMessage());

@@ -67,7 +67,7 @@ public class FragmentPhotoGrapherSaved extends BaseFragment implements FragmentP
 
     @Override
     protected void initPresenter() {
-        fragmentPhotoGrapherSavedPresenter = new FragmentPhotoGrapherSavedPresenterImpl(this);
+        fragmentPhotoGrapherSavedPresenter = new FragmentPhotoGrapherSavedPresenterImpl(getContext(),this);
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.FragmentPhotoGrapherSavedPhotosView;
 
@@ -16,18 +18,18 @@ public class FragmentPhotoGrapherSavedPresenterImpl implements FragmentPhotoGrap
 
     private static String TAG = FragmentPhotoGrapherSavedPresenterImpl.class.getSimpleName();
     private FragmentPhotoGrapherSavedPhotosView fragmentPhotoGrapherSavedPhotosView;
+private Context context;
 
-
-    public FragmentPhotoGrapherSavedPresenterImpl(FragmentPhotoGrapherSavedPhotosView fragmentPhotoGrapherSavedPhotosView) {
+    public FragmentPhotoGrapherSavedPresenterImpl(Context context,FragmentPhotoGrapherSavedPhotosView fragmentPhotoGrapherSavedPhotosView) {
         this.fragmentPhotoGrapherSavedPhotosView = fragmentPhotoGrapherSavedPhotosView;
-
+this.context=context;
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void getPhotographerSavedPhotos(String Page) {
 
-        BaseNetworkApi.getPhotoGrapherSavedPhotos("ac99b777bf0d1e58e8e7cd8653da52f5", Page)
+        BaseNetworkApi.getPhotoGrapherSavedPhotos(PrefUtils.getUserToken(context), Page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherPhotosResponse -> {
@@ -50,3 +52,4 @@ public class FragmentPhotoGrapherSavedPresenterImpl implements FragmentPhotoGrap
 
 
 }
+

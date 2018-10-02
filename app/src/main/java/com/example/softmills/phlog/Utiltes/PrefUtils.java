@@ -52,7 +52,8 @@ public abstract class PrefUtils {
     }
 
     public static String getUserToken(Context mContext) {
-        return getSharedPref(mContext).getString(USER_TOKEN, "");
+//        return getSharedPref(mContext).getString(USER_TOKEN, "");
+        return "ac99b777bf0d1e58e8e7cd8653da52f5";
     }
 
     public static String getNotificationToken(Context mContext) {

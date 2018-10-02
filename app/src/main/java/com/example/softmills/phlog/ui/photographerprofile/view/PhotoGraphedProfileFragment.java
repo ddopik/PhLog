@@ -55,8 +55,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         initViews();
         initPresenter();
         photoGrapherProfileActivityPresenter.getPhotoGrapherProfileData();
@@ -88,7 +87,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
     @Override
     public void initPresenter() {
-        photoGrapherProfileActivityPresenter = new PhotoGrapherProfileActivityPresenterImpl(this);
+        photoGrapherProfileActivityPresenter = new PhotoGrapherProfileActivityPresenterImpl(getContext(),this);
     }
 
     @Override
@@ -137,7 +136,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         GlideApp.with(this)
                 .load(photoGrapherProfileData.imageProfile)
                 .centerCrop()
-                .placeholder(R.drawable.ic_arrow_left)
+                .placeholder(R.drawable.ic_check_black_24dp)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(userProfileImg);
 
