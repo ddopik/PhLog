@@ -8,12 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.FragmentPhotoGrapherPhotos;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhoto;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.FragmentPhotoGrapherSavedPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.FragmentPhotoGrapherSavedPresenterImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +39,14 @@ public class FragmentPhotoGrapherSaved extends BaseFragment implements FragmentP
     private int startingPageIndex = 0;
     private int currentPage = 0;
 
+    private OnFragmentScroll onFragmentScroll;
+
+
+
+    public static FragmentPhotoGrapherSaved getInstance() {
+        return new FragmentPhotoGrapherSaved();
+    }
+
 
     @Nullable
     @Override
@@ -56,7 +67,7 @@ public class FragmentPhotoGrapherSaved extends BaseFragment implements FragmentP
 
     @Override
     protected void initPresenter() {
-        fragmentPhotoGrapherSavedPresenter =new FragmentPhotoGrapherSavedPresenterImpl(this);
+        fragmentPhotoGrapherSavedPresenter = new FragmentPhotoGrapherSavedPresenterImpl(this);
     }
 
     @Override
@@ -65,7 +76,8 @@ public class FragmentPhotoGrapherSaved extends BaseFragment implements FragmentP
         savedPhotosRv = mainView.findViewById(R.id.saved_photos_rv);
         savedPhotosRv.setAdapter(photographerSavedPhotoAdapter);
     }
-    private void initListener(){
+
+    private void initListener() {
         savedPhotosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -79,7 +91,23 @@ public class FragmentPhotoGrapherSaved extends BaseFragment implements FragmentP
                 onScroll(firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
+
+        savedPhotosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    // Scrolling up
+                    onFragmentScroll.onScrollAction(false);
+                } else {
+                    onFragmentScroll.onScrollAction(true);
+                    // Scrolling down
+                }
+            }
+        });
     }
+
     public void onScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state
@@ -119,5 +147,13 @@ public class FragmentPhotoGrapherSaved extends BaseFragment implements FragmentP
     @Override
     public void showMessage(String msg) {
         showToast(msg);
+    }
+
+    public void setOnFragmentScroll(OnFragmentScroll onFragmentScroll) {
+        this.onFragmentScroll = onFragmentScroll;
+    }
+
+    public interface OnFragmentScroll {
+        void onScrollAction(boolean state);
     }
 }

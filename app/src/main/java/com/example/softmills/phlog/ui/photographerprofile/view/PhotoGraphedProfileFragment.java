@@ -6,6 +6,8 @@ package com.example.softmills.phlog.ui.photographerprofile.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -41,6 +43,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     private TextView fullName, userName, photoCount, followersCount, followingCount;
     private RatingBar profileRating;
     private PhotoGrapherProfileActivityPresenter photoGrapherProfileActivityPresenter;
+    private AppBarLayout mAppBarLayout;
 
     @Nullable
     @Override
@@ -75,7 +78,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         followersCount = mainView.findViewById(R.id.followers_val);
         followingCount = mainView.findViewById(R.id.following_val);
         userProfileImg = mainView.findViewById(R.id.user_profile_img);
-
+        mAppBarLayout = mainView.findViewById(R.id.appBar);
         TabLayout userProfileTabs = mainView.findViewById(R.id.photographer_profile_tabs);
         ViewPager userProfileViewpager = mainView.findViewById(R.id.photographer_profile_viewpager);
         PhotoGrapherProfileViewPagerAdapter photographerProfileViewPagerAdapter = new PhotoGrapherProfileViewPagerAdapter(getActivity().getSupportFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
@@ -94,17 +97,22 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     }
 
     private List<Fragment> getUserProfileFragment() {
+        if (photoGrapherProfileFragmentList.size() == 0) {
 
-        if (photoGrapherProfileFragmentList.size() == 0){
-            this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherPhotos());
+            FragmentPhotoGrapherPhotos fragmentPhotoGrapherPhotos = FragmentPhotoGrapherPhotos.getInstance();
+            FragmentPhotoGrapherSaved fragmentPhotoGrapherSaved = FragmentPhotoGrapherSaved.getInstance();
+
+            fragmentPhotoGrapherPhotos.setOnFragmentScroll(this::setCollapseState);
+            fragmentPhotoGrapherSaved.setOnFragmentScroll(this::setCollapseState);
+
+            this.photoGrapherProfileFragmentList.add(fragmentPhotoGrapherPhotos);
             this.photoGrapherProfileFragmentList.add(new FragmentPhotographerCampaigns());
             this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherFollowing());
-            this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherSaved());
+            this.photoGrapherProfileFragmentList.add(fragmentPhotoGrapherSaved);
         }
-
-
         return photoGrapherProfileFragmentList;
     }
+
 
     private List<String> getUserProfileFragmentTitles() {
 
@@ -139,5 +147,14 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void showMessage(String msg) {
         showToast(msg);
+    }
+
+    private void setCollapseState(boolean state) {
+
+        if (state) {
+            mAppBarLayout.setExpanded(true);
+        } else {
+            mAppBarLayout.setExpanded(false);
+        }
     }
 }

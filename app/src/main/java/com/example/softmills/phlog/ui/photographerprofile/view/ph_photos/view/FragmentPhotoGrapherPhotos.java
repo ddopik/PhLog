@@ -41,6 +41,11 @@ public class FragmentPhotoGrapherPhotos extends BaseFragment implements Fragment
     private int startingPageIndex = 0;
     private int currentPage = 0;
 
+    private OnFragmentScroll onFragmentScroll;
+
+    public static FragmentPhotoGrapherPhotos getInstance() {
+        return new FragmentPhotoGrapherPhotos();
+    }
 
     @Nullable
     @Override
@@ -61,7 +66,7 @@ public class FragmentPhotoGrapherPhotos extends BaseFragment implements Fragment
 
     @Override
     protected void initPresenter() {
-        fragmentPhotoGrapherPhotosPresenter=new FragmentPhotoGrapherPhotosPresenterImpl(this);
+        fragmentPhotoGrapherPhotosPresenter = new FragmentPhotoGrapherPhotosPresenterImpl(this);
     }
 
     @Override
@@ -69,7 +74,7 @@ public class FragmentPhotoGrapherPhotos extends BaseFragment implements Fragment
         photographerSavedPhotoAdapter = new PhotoGrapherPhotosAdapter(getContext(), photoGrapherPhotoList);
         photosRv = mainView.findViewById(R.id.photos_rv);
         photosRv.setAdapter(photographerSavedPhotoAdapter);
-        photosProgress=mainView.findViewById(R.id.photos_progress);
+        photosProgress = mainView.findViewById(R.id.photos_progress);
 
         photosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -78,15 +83,16 @@ public class FragmentPhotoGrapherPhotos extends BaseFragment implements Fragment
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
                     // Scrolling up
-//                    ((AppCompatActivity) getActivity()).getSupportActionBar().setExpanded();
-//                    ((AppCompatActivity) getActivity()).getSupportActionBar().setExpanded(false);
+                    onFragmentScroll.onScrollAction(false);
                 } else {
+                    onFragmentScroll.onScrollAction(true);
                     // Scrolling down
                 }
             }
         });
     }
-    private void initListener(){
+
+    private void initListener() {
         photosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -101,6 +107,7 @@ public class FragmentPhotoGrapherPhotos extends BaseFragment implements Fragment
             }
         });
     }
+
     public void onScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state
@@ -144,10 +151,18 @@ public class FragmentPhotoGrapherPhotos extends BaseFragment implements Fragment
 
     @Override
     public void showPhotosProgress(boolean state) {
-        if(state){
+        if (state) {
             photosProgress.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             photosProgress.setVisibility(View.GONE);
         }
+    }
+
+    public void setOnFragmentScroll(OnFragmentScroll onFragmentScroll) {
+        this.onFragmentScroll = onFragmentScroll;
+    }
+
+    public interface OnFragmentScroll {
+        void onScrollAction(boolean state);
     }
 }
