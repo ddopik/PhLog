@@ -12,10 +12,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -35,8 +37,9 @@ import java.util.List;
 
 public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGrapherProfileActivityView {
 
-    private View mainView;
+    private static String TAG=PhotoGraphedProfileFragment.class.getSimpleName();
 
+    private View mainView;
     private List<Fragment> photoGrapherProfileFragmentList = new ArrayList<Fragment>();
     private List<String> photoGrapherFragmentListTitles = new ArrayList<String>();
     private ImageView userProfileImg;
@@ -44,6 +47,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     private RatingBar profileRating;
     private PhotoGrapherProfileActivityPresenter photoGrapherProfileActivityPresenter;
     private AppBarLayout mAppBarLayout;
+    private ProgressBar photographerProfileProgressBar;
 
     @Nullable
     @Override
@@ -78,16 +82,18 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         followingCount = mainView.findViewById(R.id.following_val);
         userProfileImg = mainView.findViewById(R.id.user_profile_img);
         mAppBarLayout = mainView.findViewById(R.id.appBar);
+        photographerProfileProgressBar = mainView.findViewById(R.id.photographer_profile_progress_bar);
         TabLayout userProfileTabs = mainView.findViewById(R.id.photographer_profile_tabs);
         ViewPager userProfileViewpager = mainView.findViewById(R.id.photographer_profile_viewpager);
-        PhotoGrapherProfileViewPagerAdapter photographerProfileViewPagerAdapter = new PhotoGrapherProfileViewPagerAdapter(getActivity().getSupportFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
+        PhotoGrapherProfileViewPagerAdapter photographerProfileViewPagerAdapter = new PhotoGrapherProfileViewPagerAdapter( getChildFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
         userProfileViewpager.setAdapter(photographerProfileViewPagerAdapter);
         userProfileTabs.setupWithViewPager(userProfileViewpager);
+
     }
 
     @Override
     public void initPresenter() {
-        photoGrapherProfileActivityPresenter = new PhotoGrapherProfileActivityPresenterImpl(getContext(),this);
+        photoGrapherProfileActivityPresenter = new PhotoGrapherProfileActivityPresenterImpl(getContext(), this);
     }
 
     @Override
@@ -96,8 +102,8 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     }
 
     private List<Fragment> getUserProfileFragment() {
-        if (photoGrapherProfileFragmentList.size() == 0) {
-
+//        if (photoGrapherProfileFragmentList.size() == 0) {
+        this.photoGrapherProfileFragmentList.clear();
             FragmentPhotoGrapherPhotos fragmentPhotoGrapherPhotos = FragmentPhotoGrapherPhotos.getInstance();
             FragmentPhotoGrapherSaved fragmentPhotoGrapherSaved = FragmentPhotoGrapherSaved.getInstance();
 
@@ -108,7 +114,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
             this.photoGrapherProfileFragmentList.add(new FragmentPhotographerCampaigns());
             this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherFollowing());
             this.photoGrapherProfileFragmentList.add(fragmentPhotoGrapherSaved);
-        }
+//        }
         return photoGrapherProfileFragmentList;
     }
 
@@ -151,9 +157,21 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     private void setCollapseState(boolean state) {
 
         if (state) {
+            Log.e(TAG,"onScrolled()"+"----->Scrolling down");
             mAppBarLayout.setExpanded(true);
         } else {
             mAppBarLayout.setExpanded(false);
+            Log.e(TAG,"onScrolled()"+"----->Scrolling up");
+
+        }
+    }
+
+    @Override
+    public void showProfileProgress(boolean state) {
+        if (state) {
+            photographerProfileProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            photographerProfileProgressBar.setVisibility(View.GONE);
         }
     }
 }

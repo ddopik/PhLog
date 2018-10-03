@@ -6,4 +6,5 @@ public interface PhotoGrapherProfileActivityView {
 
  void showPhotoGrapherProfileData(PhotoGrapherProfileData photoGrapherProfileData);
  void showMessage(String msg);
+ void showProfileProgress(boolean State);
 }

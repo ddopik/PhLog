@@ -66,16 +66,11 @@
             android:layout_height="wrap_content" />
     </android.support.v4.widget.NestedScrollView>
 
-    <!--<android.support.design.widget.BottomNavigationView-->
-        <!--android:id="@+id/navigationView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:background="?android:attr/windowBackground"-->
-        <!--app:itemBackground="@color/white"-->
-        <!--app:itemIconTint="@color/text_input_color"-->
-        <!--app:labelVisibilityMode="labeled"-->
-        <!--app:itemTextColor="@color/bottom_bar_color"-->
-        <!--app:menu="@menu/main_navigation" />-->
-
+    <ProgressBar
+        android:id="@+id/photographer_profile_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="gone"/>
 </android.support.design.widget.CoordinatorLayout>

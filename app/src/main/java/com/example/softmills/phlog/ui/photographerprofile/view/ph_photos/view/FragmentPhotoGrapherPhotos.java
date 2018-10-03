@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import java.util.List;
  * Created by Abdalla_maged on 9/30/2018.
  */
 public class FragmentPhotoGrapherPhotos extends BaseFragment implements FragmentPhotoGrapherPhotosView {
+
+    private static String TAG=FragmentPhotoGrapherPhotos.class.getSimpleName();
     private View mainView;
     private List<PhotoGrapherPhoto> photoGrapherPhotoList = new ArrayList<PhotoGrapherPhoto>();
     private PhotoGrapherPhotosAdapter photographerSavedPhotoAdapter;
@@ -76,23 +79,11 @@ public class FragmentPhotoGrapherPhotos extends BaseFragment implements Fragment
         photosRv.setAdapter(photographerSavedPhotoAdapter);
         photosProgress = mainView.findViewById(R.id.photos_progress);
 
-        photosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
-                    // Scrolling up
-                    onFragmentScroll.onScrollAction(false);
-                } else {
-                    onFragmentScroll.onScrollAction(true);
-                    // Scrolling down
-                }
-            }
-        });
     }
 
     private void initListener() {
+
         photosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -104,6 +95,16 @@ public class FragmentPhotoGrapherPhotos extends BaseFragment implements Fragment
                 totalItemCount = mLayoutManager.getItemCount();
                 firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 onScroll(firstVisibleItem, visibleItemCount, totalItemCount);
+
+                if (dy > 0) {
+                    // Scrolling Up
+                    onFragmentScroll.onScrollAction(false);
+
+                } else {
+                    onFragmentScroll.onScrollAction(true);
+
+                    // Scrolling down
+                }
             }
         });
     }

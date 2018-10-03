@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.example.softmills.phlog.base.widgets.CustomRecyclerView
 
@@ -12,5 +13,13 @@
         android:scaleType="fitXY"
         app:orientation="grid"
         app:span_size="3" />
+
+    <ProgressBar
+        android:id="@+id/photographer_photos_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
 </RelativeLayout>

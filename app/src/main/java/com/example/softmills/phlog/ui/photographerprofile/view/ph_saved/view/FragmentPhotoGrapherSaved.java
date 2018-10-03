@@ -84,19 +84,10 @@ public class FragmentPhotoGrapherSaved extends BaseFragment implements FragmentP
                 super.onScrolled(savedPhotosRv, dx, dy);
                 LinearLayoutManager mLayoutManager = (LinearLayoutManager) savedPhotosRv
                         .getLayoutManager();
-
                 visibleItemCount = savedPhotosRv.getChildCount();
                 totalItemCount = mLayoutManager.getItemCount();
                 firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 onScroll(firstVisibleItem, visibleItemCount, totalItemCount);
-            }
-        });
-
-        savedPhotosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
                     // Scrolling up
                     onFragmentScroll.onScrollAction(false);
