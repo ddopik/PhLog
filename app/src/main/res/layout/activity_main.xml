@@ -1,46 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/app_bar_container"
-        layout="@layout/phlog_app_bar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/view_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/app_bar_container"/>
 
-<!--/////////////////////-->
+        <include
+            android:id="@+id/app_bar_container"
+            layout="@layout/phlog_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <!--///////////////////-->
+        <FrameLayout
+            android:id="@+id/view_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/app_bar_container" />
+
+
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/black"
+        app:layout_anchor="@+id/bottom_navigation"
+        app:srcCompat="@drawable/ic_check_black_24dp" />
 
-        app:layout_anchor="@id/bottom_navigation"
-        app:layout_behavior="com.luasoftware.lualib2.ScrollAwareFABBehavior"
-        app:tint="@android:color/white"
-        app:srcCompat="@drawable/select_image_icon" />
 
-    <android.support.design.widget.BottomNavigationView
+    <android.support.design.bottomappbar.BottomAppBar
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/white"
-        app:itemIconTint="@color/text_input_color"
-        app:itemTextColor="@color/bottom_bar_color"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/main_navigation" />
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@color/gray400"
+        app:fabCradleVerticalOffset="12dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/navigation_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_check_black_24dp"
+                    android:gravity="center"
+                    android:text="@string/home"
+                    android:background="@color/transparent"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray677078" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/navigation_missions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_check_black_24dp"
+                    android:text="@string/campaigns"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray677078" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/navigation_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_check_black_24dp"
+                    android:gravity="center"
+                    android:text="@string/Notification"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray677078" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/navigation_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_check_black_24dp"
+                    android:gravity="center"
+                    android:text="@string/me"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray677078" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.design.bottomappbar.BottomAppBar>
+
+
+    <!--<android.support.design.bottomappbar.BottomAppBar-->
+    <!--android:id="@+id/bottom_navigation"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom"-->
+    <!--android:background="?android:attr/windowBackground"-->
+    <!--app:fabCradleVerticalOffset="12dp"-->
+    <!--app:itemBackground="@color/white"-->
+    <!--app:itemIconTint="@color/text_input_color"-->
+    <!--app:itemTextColor="@color/bottom_bar_color"-->
+    <!--app:labelVisibilityMode="labeled"-->
+    <!--app:menu="@menu/main_navigation"-->
+    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+    <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+
+
+</android.support.design.widget.CoordinatorLayout>
+
+
+
+
+
