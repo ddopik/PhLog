@@ -36,8 +36,7 @@
 
     <!--///MainActivity-->
 
-    <dimen name="bottom_bar_button_cap">18dp</dimen>
-
+    <dimen name="main_fragment_bottom_space">60dp</dimen>
     <!--///-->
     <!--/////////  ActivityUserProfile-->
     <dimen name="user_profile_header_img_size">85dp</dimen>

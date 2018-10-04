@@ -2,7 +2,6 @@ package com.example.softmills.phlog.ui.campaigns;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,8 +61,8 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
                 });
         //     campaignViewHolder.campaignName.setText(campaignList.get(i).);
         campaignViewHolder.campaignTitle.setText(campaign.titleEn);
-        campaignViewHolder.campaignDayLeft.setText(campaign.endDay);
-        GlideApp.with(context).load(campaign.imageCover).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
+        campaignViewHolder.campaignDayLeft.setText(campaign.left_days);
+        GlideApp.with(context).load(campaign.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
     }
 
     @Override

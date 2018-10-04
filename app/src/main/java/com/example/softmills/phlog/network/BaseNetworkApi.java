@@ -136,9 +136,10 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<CampaignResponse> getAllCampaign(String token) {
+    public static io.reactivex.Observable<CampaignResponse> getAllCampaign(String token, String page) {
         return Rx2AndroidNetworking.post(ALL_CAMPAIGN_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER,token)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addQueryParameter(PAGER_PATH_PARAMETER, page)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(CampaignResponse.class);

@@ -156,14 +156,15 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
     private void setCollapseState(boolean state) {
 
-        if (state) {
-            Log.e(TAG,"onScrolled()"+"----->Scrolling down");
-            mAppBarLayout.setExpanded(true);
-        } else {
-            mAppBarLayout.setExpanded(false);
-            Log.e(TAG,"onScrolled()"+"----->Scrolling up");
-
-        }
+        //listener to expand or collapse Header on ViewPager Scrolled
+//        if (state) {
+//            Log.e(TAG,"onScrolled()"+"----->Scrolling down");
+//            mAppBarLayout.setExpanded(true);
+//        } else {
+//            mAppBarLayout.setExpanded(false);
+//            Log.e(TAG,"onScrolled()"+"----->Scrolling up");
+//
+//        }
     }
 
     @Override

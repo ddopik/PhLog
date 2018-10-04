@@ -52,6 +52,7 @@
             android:textColor="@color/white" />
 
         <RatingBar
+            android:id="@+id/profile_rating"
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="@dimen/user_profile_rating_bar_width"
             android:layout_height="wrap_content"
@@ -102,7 +103,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@id/followers_val"
+                android:id="@+id/followers_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="56"
@@ -131,7 +132,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/followers_val"
+                android:id="@+id/following_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="56"

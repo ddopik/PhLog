@@ -25,7 +25,7 @@
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|enterAlways">
 
-                <include layout="@layout/user_profile_header_view" />
+                <include layout="@layout/photographer_header_view" />
             </RelativeLayout>
 
 

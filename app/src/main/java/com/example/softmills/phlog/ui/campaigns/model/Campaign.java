@@ -18,9 +18,12 @@ public class Campaign {
     @SerializedName("image_cover")
     @Expose
     public String imageCover;
-    @SerializedName("end_day")
+    @SerializedName("thumbnail")
     @Expose
-    public String endDay;
+    public String thumbnail;
+    @SerializedName("left_days")
+    @Expose
+    public String left_days;
     @SerializedName("title_en")
     @Expose
     public String titleEn;

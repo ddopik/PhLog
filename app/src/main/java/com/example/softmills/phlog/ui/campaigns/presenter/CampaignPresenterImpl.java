@@ -29,15 +29,15 @@ public class CampaignPresenterImpl implements CampaignPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getAllCampaign() {
+    public void getAllCampaign(String page) {
         campaignFragmentView.showAllCampaginProgress(true);
-        BaseNetworkApi.getAllCampaign(PrefUtils.getUserToken(context))
+        BaseNetworkApi.getAllCampaign(PrefUtils.getUserToken(context),page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(campaignResponse -> {
                     campaignFragmentView.showAllCampaginProgress(false);
                     if (campaignResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        campaignFragmentView.viewAllCampaign(campaignResponse.data);
+                        campaignFragmentView.viewAllCampaign(campaignResponse.data.data);
                     } else {
                         campaignFragmentView.showAllCampaginProgress(false);
                         Log.e(TAG, "getAllCampaign --->()" + campaignResponse.state);

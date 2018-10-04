@@ -13,8 +13,9 @@ public class CampaignResponse {
 
         @SerializedName("data")
         @Expose
-        public List<Campaign> data = null;
+        public CampaignData data;
         @SerializedName("state")
         @Expose
         public String state;
+
 }
