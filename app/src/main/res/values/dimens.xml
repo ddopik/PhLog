@@ -48,4 +48,8 @@
     <dimen name="campaign_button_size">30dp</dimen>
     <!--////////-->
 
+    <!--////-->
+    <dimen name="inner_campaign_inner_preview_height">320dp</dimen>
+    <!--////-->
+
 </resources>
