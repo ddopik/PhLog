@@ -1,5 +1,8 @@
 package com.example.softmills.phlog.ui;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -68,41 +71,59 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         clearSelected();
+        int imgResource = R.drawable.ic_check_circle_gold_24dp;
         switch (v.getId()) {
 
             case R.id.navigation_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new HomeFragment()).commit();
-                homeBrn.setBackground(getResources().getDrawable(R.drawable.navifation_bar_bottom_background));
-
-                homeBrn.setFocusableInTouchMode(true);
-                homeBrn.requestFocus();
+                homeBrn.setTextColor(getResources().getColor(R.color.text_input_color));
+                homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+                homeBrn.setCompoundDrawablePadding(8);
                 break;
             case R.id.navigation_missions:
                 getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new CampaignsFragment()).commit();
-                campaignBtn.setBackground(getResources().getDrawable(R.drawable.navifation_bar_bottom_background));
-                campaignBtn.setFocusableInTouchMode(true);
-                campaignBtn.requestFocus();
+                campaignBtn.setTextColor(getResources().getColor(R.color.text_input_color));
+                campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+                campaignBtn.setCompoundDrawablePadding(8);
                 break;
             case R.id.navigation_notification:
-                notificationBtn.setBackground(getResources().getDrawable(R.drawable.navifation_bar_bottom_background));
-                notificationBtn.setFocusableInTouchMode(true);
-                notificationBtn.requestFocus();
+                notificationBtn.setTextColor(getResources().getColor(R.color.text_input_color));
+                notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+                notificationBtn.setCompoundDrawablePadding(8);
                 break;
             case R.id.navigation_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new PhotoGraphedProfileFragment()).commit();
-                myProfileBtn.setBackground(getResources().getDrawable(R.drawable.navifation_bar_bottom_background));
-                myProfileBtn.setFocusableInTouchMode(true);
-                myProfileBtn.requestFocus();
+                myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
+                myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+                myProfileBtn.setCompoundDrawablePadding(8);
                 break;
             default:
         }
     }
 
     private void clearSelected() {
-        homeBrn.setFocusableInTouchMode(false);
-        campaignBtn.setFocusableInTouchMode(false);
-        notificationBtn.setFocusableInTouchMode(false);
-        myProfileBtn.setFocusableInTouchMode(false);
+        int imgResource = R.drawable.ic_check_circle_black_24dp;
+        homeBrn.setTextColor(getResources().getColor(R.color.gray677078));
+        homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+        homeBrn.setCompoundDrawablePadding(8);
+
+        campaignBtn.setTextColor(getResources().getColor(R.color.gray677078));
+        campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+        campaignBtn.setCompoundDrawablePadding(8);
+
+        notificationBtn.setTextColor(getResources().getColor(R.color.gray677078));
+        notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+        notificationBtn.setCompoundDrawablePadding(8);
+
+        myProfileBtn.setTextColor(getResources().getColor(R.color.gray677078));
+        myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+        myProfileBtn.setCompoundDrawablePadding(8);
+
+
+//        homeBrn.setFocusableInTouchMode(false);
+//        campaignBtn.setFocusableInTouchMode(false);
+//        notificationBtn.setFocusableInTouchMode(false);
+//        myProfileBtn.setFocusableInTouchMode(false);
 
     }
 }

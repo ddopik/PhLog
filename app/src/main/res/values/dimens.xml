@@ -34,7 +34,11 @@
     <dimen name="splash_logo_size">85dp</dimen>
 
 
+    <!--///MainActivity-->
 
+    <dimen name="bottom_bar_button_cap">18dp</dimen>
+
+    <!--///-->
     <!--/////////  ActivityUserProfile-->
     <dimen name="user_profile_header_img_size">85dp</dimen>
     <dimen name="user_profile_main_preview_height">320dp</dimen>
