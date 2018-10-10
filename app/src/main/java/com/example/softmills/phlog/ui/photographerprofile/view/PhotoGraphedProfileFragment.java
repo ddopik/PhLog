@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.photographerprofile.view;
  * Created by Abdalla_maged on 9/30/2018.
  */
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,14 +11,23 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseFragment;
@@ -34,12 +44,13 @@ import java.util.List;
 
 public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGrapherProfileActivityView {
 
-    private static String TAG=PhotoGraphedProfileFragment.class.getSimpleName();
+    private static String TAG = PhotoGraphedProfileFragment.class.getSimpleName();
 
     private View mainView;
     private List<Fragment> photoGrapherProfileFragmentList = new ArrayList<Fragment>();
     private List<String> photoGrapherFragmentListTitles = new ArrayList<String>();
-    private ImageView photographerProfileImg,photographerProfileBackgroundImg;
+    private FrameLayout photographerProfileBackgroundImg;
+    private ImageView photographerProfileImg;
     private TextView photographerName, photographeruserName, photoCount, followersCount, followingCount;
     private RatingBar profileRating;
     private PhotoGrapherProfileActivityPresenter photoGrapherProfileActivityPresenter;
@@ -71,19 +82,19 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void initViews() {
 
-        photographerName = mainView.findViewById(R.id.photographer_profile_full_name);
+        photographerProfileBackgroundImg = mainView.findViewById(R.id.photographer_profile_background_img);
         photographerName = mainView.findViewById(R.id.photographer_profile_full_name);
         photographeruserName = mainView.findViewById(R.id.photographer_profile_username);
         profileRating = mainView.findViewById(R.id.profile_rating);
         photoCount = mainView.findViewById(R.id.photos_val);
         followersCount = mainView.findViewById(R.id.followers_val);
         followingCount = mainView.findViewById(R.id.following_val);
-        photographerProfileImg = mainView.findViewById(R.id.user_profile_img);
+        photographerProfileImg = mainView.findViewById(R.id.photographer_profile_img);
         mAppBarLayout = mainView.findViewById(R.id.appBar);
         photographerProfileProgressBar = mainView.findViewById(R.id.photographer_profile_progress_bar);
         TabLayout userProfileTabs = mainView.findViewById(R.id.photographer_profile_tabs);
         ViewPager userProfileViewpager = mainView.findViewById(R.id.photographer_profile_viewpager);
-        PhotoGrapherProfileViewPagerAdapter photographerProfileViewPagerAdapter = new PhotoGrapherProfileViewPagerAdapter( getChildFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
+        PhotoGrapherProfileViewPagerAdapter photographerProfileViewPagerAdapter = new PhotoGrapherProfileViewPagerAdapter(getChildFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
         userProfileViewpager.setAdapter(photographerProfileViewPagerAdapter);
         userProfileTabs.setupWithViewPager(userProfileViewpager);
 
@@ -102,14 +113,14 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     private List<Fragment> getUserProfileFragment() {
 
         this.photoGrapherProfileFragmentList.clear();
-            PhotoGrapherPhotosFragment photoGrapherPhotosFragment = PhotoGrapherPhotosFragment.getInstance();
-            PhotoGrapherSavedFragment photoGrapherSavedFragment = PhotoGrapherSavedFragment.getInstance();
+        PhotoGrapherPhotosFragment photoGrapherPhotosFragment = PhotoGrapherPhotosFragment.getInstance();
+        PhotoGrapherSavedFragment photoGrapherSavedFragment = PhotoGrapherSavedFragment.getInstance();
 
 
-            this.photoGrapherProfileFragmentList.add(photoGrapherPhotosFragment);
-            this.photoGrapherProfileFragmentList.add(new PhotographerCampaignsFragment());
-            this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherFollowing());
-            this.photoGrapherProfileFragmentList.add(photoGrapherSavedFragment);
+        this.photoGrapherProfileFragmentList.add(photoGrapherPhotosFragment);
+        this.photoGrapherProfileFragmentList.add(new PhotographerCampaignsFragment());
+        this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherFollowing());
+        this.photoGrapherProfileFragmentList.add(photoGrapherSavedFragment);
 
         return photoGrapherProfileFragmentList;
     }
@@ -133,7 +144,6 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         profileRating.setRating(photoGrapherProfileData.rate.floatValue());
         photoCount.setText(photoGrapherProfileData.imagePhotographerCount);
         followersCount.setText(photoGrapherProfileData.followerCount);
-        followingCount.setText(photoGrapherProfileData.followingCount);
 
         GlideApp.with(this)
                 .load(photoGrapherProfileData.imageProfile)
@@ -142,19 +152,28 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
                 .error(R.drawable.ic_launcher_foreground)
                 .into(photographerProfileImg);
 
-//        GlideApp.with(this)
-//                .load(photoGrapherProfileData.imageProfile)
-//                .centerCrop()
-//                .placeholder(R.drawable.ic_check_black_24dp)
-//                .error(R.drawable.ic_launcher_foreground)
-//                .into(photographerProfileImg);
+
+
+//        GlideApp.with(this).
+//                load("www.google.com")
+//                .apply(new RequestOptions().placeholder(R.drawable.default_photographer_profile).error(R.drawable.default_photographer_profile))
+//                .into(new SimpleTarget<Drawable>() {
+//                    @Override
+//                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
+//                        photographerProfileBackgroundImg.setBackground(resource);
+//                    }
+//                });
+
+
 
 
     }
+
     @Override
     public void showMessage(String msg) {
         showToast(msg);
     }
+
     @Override
     public void showProfileProgress(boolean state) {
         if (state) {

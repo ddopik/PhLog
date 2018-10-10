@@ -35,7 +35,8 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
     private final String TAG = CampaignInnerActivity.class.getSimpleName();
     private FrameLayout campaignImg;
     private TextView campaignTitle, campaignHostedBy, campaignDayLeft;
-
+    private TabLayout campaignTabs;
+    private ViewPager campaignViewPager;
     private CampaignInnerPresenter campaignInnerPresenter;
     private OnMissionCampaignDataRecived onMissionCampaignDataRecived;
 
@@ -55,14 +56,11 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
         campaignTitle = findViewById(R.id.campaign_title);
         campaignHostedBy = findViewById(R.id.campaign_hosted_by);
         campaignDayLeft = findViewById(R.id.campaign_day_left);
-        InnerCampaignFragmentPagerAdapter innerCampaignFragmentPagerAdapter = new InnerCampaignFragmentPagerAdapter(getSupportFragmentManager(), getFragmentPagerFragment(), getFragmentTitles());
-        TabLayout campaignTabs = findViewById(R.id.inner_campaign_tabs);
-        ViewPager campaignViewPager = findViewById(R.id.inner_campaign_viewpager);
-        campaignViewPager.setAdapter(innerCampaignFragmentPagerAdapter);
-        campaignTabs.setupWithViewPager(campaignViewPager);
+        campaignTabs = findViewById(R.id.inner_campaign_tabs);
+        campaignViewPager = findViewById(R.id.inner_campaign_viewpager);
+
 
         String campaignID = getIntent().getStringExtra("campaign_id");
-
         if (!campaignID.isEmpty())
             campaignInnerPresenter.getCampaignDetails("1");
 
@@ -80,22 +78,6 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
     }
 
 
-    private List<Fragment> getFragmentPagerFragment() {
-        List<Fragment> fragmentList = new ArrayList<Fragment>();
-        CampaignInnerMissionFragment campaignInnerMissionFragment = CampaignInnerMissionFragment.getInstance();
-        onMissionCampaignDataRecived = campaignInnerMissionFragment;
-        fragmentList.add(campaignInnerMissionFragment);
-        fragmentList.add(CampaignInnerPhotosFragment.getInstance("1"));
-        return fragmentList;
-    }
-
-    private List<String> getFragmentTitles() {
-        List<String> fragmentList = new ArrayList<String>();
-        fragmentList.add(getResources().getString(R.string.tab_mission));
-        fragmentList.add(getResources().getString(R.string.tab_photos));
-        return fragmentList;
-    }
-
     @Override
     public void viewCampaignHeaderImg(String img) {
         GlideApp.with(this).load(img)
@@ -106,10 +88,6 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
                         campaignImg.setBackground(resource);
                     }
                 });
-
-//        GlideApp.with(this).load(img).error(R.drawable.splash_screen_background).into(campaignImg);
-
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -133,10 +111,32 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
     }
 
     @Override
-    public void viewCampaignMissionDescription(String missionDesc) {
-        Log.e(TAG, "viewCampaignMissionDescription () --->" + missionDesc);
-        if (onMissionCampaignDataRecived != null && missionDesc != null)
+    public void viewCampaignMissionDescription(String missionDesc,int photosCount) {
+
+         InnerCampaignFragmentPagerAdapter innerCampaignFragmentPagerAdapter = new InnerCampaignFragmentPagerAdapter(getSupportFragmentManager(), getFragmentPagerFragment(), getFragmentTitles(photosCount));
+        if (onMissionCampaignDataRecived != null && missionDesc != null) {
+            campaignViewPager.setAdapter(innerCampaignFragmentPagerAdapter);
+            campaignTabs.setupWithViewPager(campaignViewPager);
             onMissionCampaignDataRecived.onCampaignDescription(missionDesc);
+
+
+        }
+    }
+
+    private List<Fragment> getFragmentPagerFragment() {
+        List<Fragment> fragmentList = new ArrayList<Fragment>();
+        CampaignInnerMissionFragment campaignInnerMissionFragment = CampaignInnerMissionFragment.getInstance();
+        onMissionCampaignDataRecived = campaignInnerMissionFragment;
+        fragmentList.add(campaignInnerMissionFragment);
+        fragmentList.add(CampaignInnerPhotosFragment.getInstance("1"));
+        return fragmentList;
+    }
+
+    private List<String> getFragmentTitles(int photosCount) {
+        List<String> fragmentList = new ArrayList<String>();
+        fragmentList.add(getResources().getString(R.string.tab_mission));
+        fragmentList.add(photosCount+" " + getResources().getString(R.string.tab_photos));
+        return fragmentList;
     }
 
     public interface OnMissionCampaignDataRecived {

@@ -16,6 +16,7 @@
     <dimen name="dp28">28dp</dimen>
     <dimen name="dp80">80dp</dimen>
 
+    <dimen name="item_opacity">.4</dimen>
 
     <dimen name="map_location_marker_icon_width">500dp</dimen>
     <dimen name="map_location_marker_icon_height">500dp</dimen>

@@ -71,7 +71,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="upload_photo" />
+        android:background="@color/text_input_color"
+        android:text="@string/submit_ur_photo"
+        android:textColor="@color/white" />
 
     <ProgressBar
         android:id="@+id/user_profile_progress_bar"

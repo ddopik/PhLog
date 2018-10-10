@@ -42,7 +42,7 @@ public class CampaignInnerPresenterImpl implements CampaignInnerPresenter {
                                 campaignInnerActivityView.viewCampaignLeftDays(campaignInnerResponse.campaign.leftDays);
                                 campaignInnerActivityView.viewCampaignHeaderImg(campaignInnerResponse.campaign.imageCover);
                                 campaignInnerActivityView.viewCampaignHostedBy(campaignInnerResponse.business.userName);
-                                campaignInnerActivityView .viewCampaignMissionDescription(campaignInnerResponse.campaign.descrptionEn);
+                                campaignInnerActivityView .viewCampaignMissionDescription(campaignInnerResponse.campaign.descrptionEn,campaignInnerResponse.campaign.numberImages);
                             }
                         },
                         throwable -> Log.e(TAG, "getCampaignDetails() --->Error " + throwable.getMessage()));

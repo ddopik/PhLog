@@ -18,7 +18,7 @@ public class PhotoGrapherProfileData {
     public String imagePhotographerCount;
     @SerializedName("image_profile")
     @Expose
-    public Object imageProfile;
+    public String imageProfile;
     @SerializedName("full_name")
     @Expose
     public String fullName;
