@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import com.example.softmills.phlog.Utiltes.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
-import com.example.softmills.phlog.ui.campaigns.model.Campaign;
+import com.example.softmills.phlog.ui.campaigns.model.HomeCampaign;
 import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenter;
 import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenterImpl;
 
@@ -33,7 +32,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     private ProgressBar progressBar;
     private CustomRecyclerView allCampaignsRv;
     private AllCampaignsAdapter allCampaignsAdapter;
-    private List<Campaign> campaignList = new ArrayList<>();
+    private List<HomeCampaign> homeCampaignList = new ArrayList<>();
     private CampaignPresenter campaignPresenter;
     private PagingController pagingController;
 
@@ -60,7 +59,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     protected void initViews() {
         progressBar = mainView.findViewById(R.id.all_home_campaign_progress_bar);
         allCampaignsRv = mainView.findViewById(R.id.all_campaigns_rv);
-        allCampaignsAdapter = new AllCampaignsAdapter(getContext(), campaignList);
+        allCampaignsAdapter = new AllCampaignsAdapter(getContext(), homeCampaignList);
         allCampaignsRv.setAdapter(allCampaignsAdapter);
 
 
@@ -94,10 +93,10 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     }
 
     @Override
-    public void viewAllCampaign(List<Campaign> campaignList) {
+    public void viewAllCampaign(List<HomeCampaign> homeCampaignList) {
         allCampaignsRv.setVisibility(View.VISIBLE);
-        this.campaignList.clear();
-        this.campaignList.addAll(campaignList);
+        this.homeCampaignList.clear();
+        this.homeCampaignList.addAll(homeCampaignList);
         allCampaignsAdapter.notifyDataSetChanged();
 
     }

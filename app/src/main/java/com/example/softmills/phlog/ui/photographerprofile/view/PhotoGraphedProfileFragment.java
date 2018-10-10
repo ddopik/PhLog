@@ -118,7 +118,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
 
         this.photoGrapherProfileFragmentList.add(photoGrapherPhotosFragment);
-        this.photoGrapherProfileFragmentList.add(new PhotographerCampaignsFragment());
+        this.photoGrapherProfileFragmentList.add(PhotographerCampaignsFragment.getInstance());
         this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherFollowing());
         this.photoGrapherProfileFragmentList.add(photoGrapherSavedFragment);
 

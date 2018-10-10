@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,11 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.campaigns.model.HomeCampaign;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model.PhotoGrapherCampaign;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.presenter.FragmentPhotoGrapherCampaignsPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.presenter.FragmentPhotoGrapherCampaignsPresenterImpl;
-import com.example.softmills.phlog.ui.userprofile.view.campaigns.model.Campaign;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,17 @@ import java.util.List;
 public class PhotographerCampaignsFragment extends BaseFragment implements FragmentPhotoGrapherCampaignsView {
 
     private View mainView;
-    private List<Campaign> campaignList = new ArrayList<Campaign>();
+    private List<PhotoGrapherCampaign> campaignList = new ArrayList<PhotoGrapherCampaign>();
     private photographerCampaignsAdapter photoGrapherCampaignsAdapter;
     private FragmentPhotoGrapherCampaignsPresenter photoGrapherCampaignsPresenter;
     private LinearLayoutManager mLayoutManager;
     private CustomRecyclerView campaignsRv;
     private PagingController pagingController;
+
+    public static PhotographerCampaignsFragment getInstance() {
+
+        return new PhotographerCampaignsFragment();
+    }
 
 
     @Nullable
@@ -55,7 +61,6 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
     @Override
     protected void initPresenter() {
         photoGrapherCampaignsPresenter = new FragmentPhotoGrapherCampaignsPresenterImpl(this);
-
     }
 
     @Override
@@ -78,7 +83,7 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
 
 
     @Override
-    public void showCampaigns(List<Campaign> campaignList) {
+    public void showCampaigns(List<PhotoGrapherCampaign> campaignList) {
         this.campaignList.clear();
         this.campaignList.addAll(campaignList);
         photoGrapherCampaignsAdapter.notifyDataSetChanged();

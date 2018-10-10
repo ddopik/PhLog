@@ -9,9 +9,7 @@
         android:id="@+id/campaigns_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        app:orientation="grid"
-        app:span_size="3" />
+        app:orientation="vertical" />
 
 </RelativeLayout><!--android:scaleType="fitXY"-->
 

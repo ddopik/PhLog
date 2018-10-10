@@ -1,181 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/user_profile_background_img"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_profile_background_img"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/default_user_profile">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.3"
-        android:background="@drawable/graduant_layer" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <LinearLayout
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dp12">
+
+            <TextView
+                android:id="@+id/user_profile_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dp12">
+                android:textColor="@color/user_profile_text_header_color"
+                android:textSize="@dimen/text_medium"
+                tools:text="Level #" />
 
-                <TextView
-                    android:id="@+id/user_profile_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_medium"
-                    android:textColor="@color/white"
-                    tools:text="Level #"/>
-                <RatingBar
-                    android:id="@+id/profile_rating"
-                    style="@style/Base.Widget.AppCompat.RatingBar.Small"
-                    android:layout_width="@dimen/user_profile_rating_bar_width"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:rating="2" />
-            </LinearLayout>
-
-
-            <ImageView
-                android:id="@+id/user_profile_img"
-                android:layout_width="@dimen/user_profile_header_img_size"
-                android:layout_height="@dimen/user_profile_header_img_size"
-                android:layout_centerInParent="true"
-                android:src="@drawable/phlog_logo" />
-
-        </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/user_profile_full_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dp18"
-            android:layout_marginBottom="@dimen/dp10"
-            android:fontFamily="@font/arial_rounded_font"
-            android:text="@string/full_name"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_normal" />
-
-        <TextView
-            android:id="@+id/user_profile_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/dp10"
-            android:background="@drawable/rounded_frame_btn"
-            android:padding="@dimen/dp4"
-            android:text="@string/user_name"
-            android:textColor="@color/white" />
+            <RatingBar
+                android:id="@+id/profile_rating"
+                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                android:layout_width="@dimen/user_profile_rating_bar_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:rating="2" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="@dimen/dp18">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/user_profile_img"
+                    android:layout_width="@dimen/user_profile_header_img_size"
+                    android:layout_height="@dimen/user_profile_header_img_size"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/phlog_logo" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/user_profile_full_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp18"
+                android:layout_marginBottom="@dimen/dp10"
+                android:fontFamily="@font/arial_rounded_font"
+                android:text="@string/full_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal" />
 
-                <TextView
-                    android:id="@+id/photos_val"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="101"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium_s" />
-
-                <TextView
-                    android:id="@+id/total_photos_tag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_frame_btn_white_btn"
-                    android:padding="@dimen/dp6"
-                    android:text="@string/total_photos"
-                    android:textAlignment="center"
-                    android:textColor="@color/gray45494E" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/user_profile_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp8"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/followers_val"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="56"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium_s" />
-
-                <TextView
-                    android:id="@+id/followers_tag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_frame_btn_white_btn"
-                    android:padding="@dimen/dp6"
-                    android:text="@string/followers"
-                    android:textAlignment="center"
-                    android:textColor="@color/gray45494E"
-                    tools:ignore="RelativeOverlap" />
-            </LinearLayout>
-
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp10"
+                android:padding="@dimen/dp4"
+                android:text="@string/user_name"
+                android:textColor="@color/user_profile_text_header_color" />
 
             <LinearLayout
-                android:id="@+id/following_tag_container"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:padding="@dimen/dp18">
 
-                <TextView
-                    android:id="@+id/following_val"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="56"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium_s" />
+                    android:gravity="center"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/photos_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="101"
+                        android:textColor="@color/user_profile_text_header_color"
+                        android:textSize="@dimen/text_medium_s" />
 
-                <TextView
-                    android:id="@+id/following_tag"
+                    <TextView
+                        android:id="@+id/total_photos_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:padding="@dimen/dp6"
+                        android:text="@string/total_photos"
+                        android:textAlignment="center"
+                        android:textColor="@color/user_profile_text_header_color" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_frame_btn_white_btn"
-                    android:padding="@dimen/dp6"
-                    android:text="@string/following"
-                    android:textAlignment="center"
-                    android:textColor="@color/gray45494E" />
+                    android:layout_marginEnd="@dimen/dp8"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/followers_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/user_profile_text_header_color"
+                        android:textSize="@dimen/text_medium_s"
+                        tools:text="56" />
+
+                    <TextView
+                        android:id="@+id/followers_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:padding="@dimen/dp6"
+                        android:text="@string/followers"
+                        android:textAlignment="center"
+                        android:textColor="@color/user_profile_text_header_color"
+                        tools:ignore="RelativeOverlap" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/following_tag_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/following_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/user_profile_text_header_color"
+                        android:textSize="@dimen/text_medium_s"
+                        tools:text="56" />
+
+
+                    <TextView
+                        android:id="@+id/following_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:padding="@dimen/dp6"
+                        android:text="@string/following"
+                        android:textAlignment="center"
+                        android:textColor="@color/user_profile_text_header_color" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
-
-
         </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="@string/follow"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_orange_btn"/>
+
     </LinearLayout>
-
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.3"
-        android:background="@drawable/graduant_layer"
-        android:visibility="gone"/>
 </FrameLayout>

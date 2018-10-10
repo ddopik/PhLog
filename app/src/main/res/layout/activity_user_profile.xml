@@ -26,24 +26,21 @@
 
                 <include layout="@layout/user_profile_header_view" />
             </RelativeLayout>
-
-
-
         </android.support.design.widget.CollapsingToolbarLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:fillViewport="true"
+            android:paddingBottom="65dp"
+            android:background="@color/black"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-
+        </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:paddingBottom="65dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-    </FrameLayout>
+
 
     <ProgressBar
         android:id="@+id/user_profile_progress_bar"

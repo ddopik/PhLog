@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by abdalla_maged on 10/2/2018.
  */
-public class Campaign {
+public class HomeCampaign {
 
 
     @SerializedName("id")

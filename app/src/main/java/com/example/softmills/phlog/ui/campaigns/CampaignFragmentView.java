@@ -1,6 +1,6 @@
 package com.example.softmills.phlog.ui.campaigns;
 
-import com.example.softmills.phlog.ui.campaigns.model.Campaign;
+import com.example.softmills.phlog.ui.campaigns.model.HomeCampaign;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface CampaignFragmentView {
 
-    void viewAllCampaign(List<Campaign> campaignList);
+    void viewAllCampaign(List<HomeCampaign> homeCampaignList);
 
     void showAllCampaginProgress(boolean state);
 

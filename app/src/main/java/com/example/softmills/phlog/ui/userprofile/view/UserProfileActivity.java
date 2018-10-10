@@ -2,49 +2,57 @@ package com.example.softmills.phlog.ui.userprofile.view;
 /**
  * Created by Abdalla_maged on 9/30/2018.
  */
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.ui.userprofile.view.campaigns.view.UserCampaignsFragment;
-import com.example.softmills.phlog.ui.userprofile.view.follwing.UserFollowingFragment;
-import com.example.softmills.phlog.ui.userprofile.view.photos.view.UserPhotosFragment;
-import com.example.softmills.phlog.ui.userprofile.view.saved.UserSavedFragment;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class UserProfileActivity extends BaseActivity {
+import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
+import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
 
 
-    private List<Fragment> userProfileFragmentList = new ArrayList<Fragment>();
-    private List<String> userProfileFragmentListTitles = new ArrayList<String>();
+public class UserProfileActivity extends BaseActivity implements UserProfileActivityView {
+
+
+    private TextView userProfileLevel, userProfileUserName, userProfileFullName, userProfilePhotosCount, userProfileFolloweresCount, userProfileFollowingCount;
+    private RatingBar userProfileRating;
+    private ImageView userProfileImg;
+
+    private UserProfilePresenter userProfilePresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        initView();
+
         initPresenter();
+        initView();
     }
 
     @Override
     public void initView() {
-        TabLayout userProfileTabs = findViewById(R.id.photographer_profile_tabs);
-        ViewPager userProfileViewpager = findViewById(R.id.photographer_profile_viewpager);
-        UserProfileViewPagerAdapter userProfileViewPagerAdapter = new UserProfileViewPagerAdapter(getSupportFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
+        userProfileLevel = findViewById(R.id.user_profile_level);
+        userProfileRating = findViewById(R.id.profile_rating);
+        userProfileImg = findViewById(R.id.user_profile_img);
+        userProfileFullName = findViewById(R.id.user_profile_full_name);
+        userProfileUserName = findViewById(R.id.user_profile_username);
+        userProfilePhotosCount = findViewById(R.id.photos_val);
+        userProfileFolloweresCount = findViewById(R.id.followers_val);
+        userProfileFollowingCount = findViewById(R.id.following_val);
 
-        userProfileViewpager.setAdapter(userProfileViewPagerAdapter);
-        userProfileTabs.setupWithViewPager(userProfileViewpager);
+        userProfilePresenter.getUserProfileData("1");
+
     }
 
     @Override
     public void initPresenter() {
-
+        userProfilePresenter = new UserProfilePresenterImpl(getBaseContext(), this);
     }
 
     @Override
@@ -52,23 +60,48 @@ public class UserProfileActivity extends BaseActivity {
         super.showToast(msg);
     }
 
-    private List<Fragment> getUserProfileFragment() {
-
-        this.userProfileFragmentList.add(new UserPhotosFragment());
-        this.userProfileFragmentList.add(new UserCampaignsFragment());
-        this.userProfileFragmentList.add(new UserFollowingFragment());
-        this.userProfileFragmentList.add(new UserSavedFragment());
-
-        return userProfileFragmentList;
+    @Override
+    public void viewUserProfileLevel(String userLevel) {
+        userProfileLevel.setText(userLevel);
     }
 
-    private List<String> getUserProfileFragmentTitles() {
+    @Override
+    public void viewUserProfileRating(int userRating) {
+        userProfileRating.setRating(userRating);
 
-        userProfileFragmentListTitles.add(getResources().getString(R.string.photos));
-        userProfileFragmentListTitles.add(getResources().getString(R.string.campaigns));
-        userProfileFragmentListTitles.add(getResources().getString(R.string.following));
-        userProfileFragmentListTitles.add(getResources().getString(R.string.saved));
-        return userProfileFragmentListTitles;
     }
 
+    @Override
+    public void viewUserProfileProfileImg(String userImg) {
+        GlideApp.with(this)
+                .load(userImg)
+                .placeholder(R.drawable.default_user_pic)
+                .centerCrop()
+                .into(userProfileImg);
+    }
+
+    @Override
+    public void viewUserProfileFullName(String fullName) {
+        userProfileFullName.setText(fullName);
+    }
+
+    @Override
+    public void viewUserProfileUserName(String userName) {
+        userProfileUserName.setText(userName);
+    }
+
+    @Override
+    public void viewUserProfilePhotosCount(String photosCount) {
+        userProfilePhotosCount.setText(photosCount);
+    }
+
+    @Override
+    public void viewUserProfileFollowersCount(String followersCount) {
+        userProfileFolloweresCount.setText(followersCount);
+    }
+
+    @Override
+    public void viewUserProfileFollowingCount(String followingCount) {
+        userProfileFollowingCount.setText(followingCount);
+    }
 }
