@@ -15,7 +15,6 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            android:nestedScrollingEnabled="false"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
@@ -25,8 +24,7 @@
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|enterAlways">
 
-                <include layout="@layout/campaign_header_view"
-         />
+                <include layout="@layout/campaign_header_view" />
             </RelativeLayout>
 
 
@@ -38,24 +36,42 @@
             android:layout_height="wrap_content"
             android:background="@color/tab_background"
             app:layout_anchorGravity="bottom"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_collapseMode="pin"
+            app:layout_scrollFlags="enterAlways"
             app:tabSelectedTextColor="@color/text_input_color"
             app:tabTextColor="@color/white" />
 
     </android.support.design.widget.AppBarLayout>
 
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         android:fillViewport="true"
-        android:paddingBottom="65dp"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/inner_campaign_viewpager"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/inner_campaign_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </FrameLayout>
+
     </android.support.v4.widget.NestedScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="upload_photo" />
 
     <ProgressBar
         android:id="@+id/user_profile_progress_bar"
@@ -63,5 +79,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone"
-        tools:visibility="gone"/>
+        tools:visibility="gone" />
 </android.support.design.widget.CoordinatorLayout>

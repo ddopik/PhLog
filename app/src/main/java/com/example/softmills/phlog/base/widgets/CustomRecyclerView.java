@@ -2,11 +2,13 @@ package com.example.softmills.phlog.base.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.example.softmills.phlog.R;
 
@@ -38,4 +40,6 @@ public class CustomRecyclerView extends RecyclerView {
         }
         typedArray.recycle();
     }
+
+
 }

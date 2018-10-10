@@ -27,7 +27,7 @@ this.context=context;
 
     @SuppressLint("CheckResult")
     @Override
-    public void getPhotographerSavedPhotos(String Page) {
+    public void getPhotographerSavedPhotos(int Page) {
 
         BaseNetworkApi.getPhotoGrapherSavedPhotos(PrefUtils.getUserToken(context), Page)
                 .subscribeOn(Schedulers.io())

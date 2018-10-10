@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/user_profile_background_img"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/splash_screen_background">
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/photographer_profile_background_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:background="@drawable/splash_screen_background"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.3"
+        android:background="@drawable/graduant_layer" />
 
     <LinearLayout
 
@@ -22,14 +31,14 @@
             android:textSize="@dimen/text_medium" />
 
         <ImageView
-            android:id="@+id/user_profile_img"
+            android:id="@+id/photographer_profile_img"
             android:layout_width="@dimen/user_profile_header_img_size"
             android:layout_height="@dimen/user_profile_header_img_size"
             android:layout_gravity="center"
             android:src="@drawable/phlog_logo" />
 
         <TextView
-            android:id="@+id/user_profile_full_name"
+            android:id="@+id/photographer_profile_full_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -41,7 +50,7 @@
             android:textSize="@dimen/font_normal" />
 
         <TextView
-            android:id="@+id/user_profile_username"
+            android:id="@+id/photographer_profile_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

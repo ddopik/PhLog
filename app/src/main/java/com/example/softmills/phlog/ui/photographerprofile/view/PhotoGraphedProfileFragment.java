@@ -7,12 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +24,10 @@ import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.ui.photographerprofile.model.PhotoGrapherProfileData;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenterImpl;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.FragmentPhotographerCampaigns;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.PhotographerCampaignsFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.FragmentPhotoGrapherFollowing;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.FragmentPhotoGrapherPhotos;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.FragmentPhotoGrapherSaved;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.PhotoGrapherPhotosFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotoGrapherSavedFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +39,8 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     private View mainView;
     private List<Fragment> photoGrapherProfileFragmentList = new ArrayList<Fragment>();
     private List<String> photoGrapherFragmentListTitles = new ArrayList<String>();
-    private ImageView userProfileImg;
-    private TextView fullName, userName, photoCount, followersCount, followingCount;
+    private ImageView photographerProfileImg,photographerProfileBackgroundImg;
+    private TextView photographerName, photographeruserName, photoCount, followersCount, followingCount;
     private RatingBar profileRating;
     private PhotoGrapherProfileActivityPresenter photoGrapherProfileActivityPresenter;
     private AppBarLayout mAppBarLayout;
@@ -74,13 +71,14 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void initViews() {
 
-        fullName = mainView.findViewById(R.id.user_profile_full_name);
-        userName = mainView.findViewById(R.id.user_profile_username);
+        photographerName = mainView.findViewById(R.id.photographer_profile_full_name);
+        photographerName = mainView.findViewById(R.id.photographer_profile_full_name);
+        photographeruserName = mainView.findViewById(R.id.photographer_profile_username);
         profileRating = mainView.findViewById(R.id.profile_rating);
         photoCount = mainView.findViewById(R.id.photos_val);
         followersCount = mainView.findViewById(R.id.followers_val);
         followingCount = mainView.findViewById(R.id.following_val);
-        userProfileImg = mainView.findViewById(R.id.user_profile_img);
+        photographerProfileImg = mainView.findViewById(R.id.user_profile_img);
         mAppBarLayout = mainView.findViewById(R.id.appBar);
         photographerProfileProgressBar = mainView.findViewById(R.id.photographer_profile_progress_bar);
         TabLayout userProfileTabs = mainView.findViewById(R.id.photographer_profile_tabs);
@@ -102,19 +100,17 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     }
 
     private List<Fragment> getUserProfileFragment() {
-//        if (photoGrapherProfileFragmentList.size() == 0) {
+
         this.photoGrapherProfileFragmentList.clear();
-            FragmentPhotoGrapherPhotos fragmentPhotoGrapherPhotos = FragmentPhotoGrapherPhotos.getInstance();
-            FragmentPhotoGrapherSaved fragmentPhotoGrapherSaved = FragmentPhotoGrapherSaved.getInstance();
+            PhotoGrapherPhotosFragment photoGrapherPhotosFragment = PhotoGrapherPhotosFragment.getInstance();
+            PhotoGrapherSavedFragment photoGrapherSavedFragment = PhotoGrapherSavedFragment.getInstance();
 
-            fragmentPhotoGrapherPhotos.setOnFragmentScroll(this::setCollapseState);
-            fragmentPhotoGrapherSaved.setOnFragmentScroll(this::setCollapseState);
 
-            this.photoGrapherProfileFragmentList.add(fragmentPhotoGrapherPhotos);
-            this.photoGrapherProfileFragmentList.add(new FragmentPhotographerCampaigns());
+            this.photoGrapherProfileFragmentList.add(photoGrapherPhotosFragment);
+            this.photoGrapherProfileFragmentList.add(new PhotographerCampaignsFragment());
             this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherFollowing());
-            this.photoGrapherProfileFragmentList.add(fragmentPhotoGrapherSaved);
-//        }
+            this.photoGrapherProfileFragmentList.add(photoGrapherSavedFragment);
+
         return photoGrapherProfileFragmentList;
     }
 
@@ -132,8 +128,8 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     public void showPhotoGrapherProfileData(PhotoGrapherProfileData photoGrapherProfileData) {
 
 
-        fullName.setText(photoGrapherProfileData.fullName);
-        userName.setText(photoGrapherProfileData.userName);
+        photographerName.setText(photoGrapherProfileData.fullName);
+        photographeruserName.setText(photoGrapherProfileData.userName);
         profileRating.setRating(photoGrapherProfileData.rate.floatValue());
         photoCount.setText(photoGrapherProfileData.imagePhotographerCount);
         followersCount.setText(photoGrapherProfileData.followerCount);
@@ -144,29 +140,21 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
                 .centerCrop()
                 .placeholder(R.drawable.ic_check_black_24dp)
                 .error(R.drawable.ic_launcher_foreground)
-                .into(userProfileImg);
+                .into(photographerProfileImg);
+
+//        GlideApp.with(this)
+//                .load(photoGrapherProfileData.imageProfile)
+//                .centerCrop()
+//                .placeholder(R.drawable.ic_check_black_24dp)
+//                .error(R.drawable.ic_launcher_foreground)
+//                .into(photographerProfileImg);
 
 
     }
-
     @Override
     public void showMessage(String msg) {
         showToast(msg);
     }
-
-    private void setCollapseState(boolean state) {
-
-        //listener to expand or collapse Header on ViewPager Scrolled
-//        if (state) {
-//            Log.e(TAG,"onScrolled()"+"----->Scrolling down");
-//            mAppBarLayout.setExpanded(true);
-//        } else {
-//            mAppBarLayout.setExpanded(false);
-//            Log.e(TAG,"onScrolled()"+"----->Scrolling up");
-//
-//        }
-    }
-
     @Override
     public void showProfileProgress(boolean state) {
         if (state) {

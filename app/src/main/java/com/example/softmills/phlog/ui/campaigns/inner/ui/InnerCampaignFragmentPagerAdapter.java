@@ -1,15 +1,16 @@
-package com.example.softmills.phlog.ui.campaigns.inner;
+package com.example.softmills.phlog.ui.campaigns.inner.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
 /**
  * Created by abdalla_maged on 10/4/2018.
  */
-public class InnerCampaignFragmentPagerAdapter extends FragmentPagerAdapter {
+public class InnerCampaignFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> mFragmentList;
     private List<String> mFragmentTitleList;

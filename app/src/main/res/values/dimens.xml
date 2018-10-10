@@ -48,8 +48,14 @@
     <dimen name="campaign_button_size">30dp</dimen>
     <!--////////-->
 
-    <!--////-->
+    <!--////CampignInner-->
     <dimen name="inner_campaign_inner_preview_height">320dp</dimen>
-    <!--////-->
+    <dimen name="item_offset">2</dimen>
+    <dimen name="campaign_mission_padding">25dp</dimen>
 
+    <!--////AllCampaignActivity-->
+    <dimen name="campaign_item_height">200dp</dimen>
+    <dimen name="campaign_drawable_padding">4dp</dimen>
+    <dimen name="campaign_home_button_width">175dp</dimen>
+    <!--////-->
 </resources>

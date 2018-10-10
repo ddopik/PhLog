@@ -28,6 +28,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
 
     private List<Campaign> campaignList;
     private Context context;
+    public CampaignLister campaignLister;
 
     public AllCampaignsAdapter(Context context, List<Campaign> campaignList) {
         this.context = context;
@@ -49,8 +50,16 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     @Override
     public void onBindViewHolder(@NonNull CampaignViewHolder campaignViewHolder, int i) {
 
-
         Campaign campaign = campaignList.get(i);
+        campaignViewHolder.campaignImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (campaignLister != null) {
+                    campaignLister.onCampaignClicked(campaign.id.toString());
+                }
+            }
+        });
+
         GlideApp.with(context).load(campaign.imageCover)
                 .error(R.drawable.splash_screen_background)
                 .into(new SimpleTarget<Drawable>() {
@@ -59,10 +68,11 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
                         campaignViewHolder.campaignImage.setBackground(resource);
                     }
                 });
-        //     campaignViewHolder.campaignName.setText(campaignList.get(i).);
+        campaignViewHolder.campaignBusinessName.setText(campaign.business.userName);
         campaignViewHolder.campaignTitle.setText(campaign.titleEn);
-        campaignViewHolder.campaignDayLeft.setText(campaign.left_days);
-        GlideApp.with(context).load(campaign.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
+        campaignViewHolder.campaignDayLeft.setText(campaign.leftDays);
+        campaignViewHolder.campaignDayLeft.append(" "+context.getResources().getString(R.string.days_left));
+        GlideApp.with(context).load(campaign.business.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
     }
 
     @Override
@@ -71,7 +81,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     }
 
     public class CampaignViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout campaignImage;
+        ImageView campaignImage;
         ImageView campaignBusinessIcon;
         TextView campaignBusinessName, campaignTitle, campaignDayLeft;
         Button joinCampaignBtn;
@@ -86,6 +96,14 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
             campaignDayLeft = view.findViewById(R.id.campaign_day_left);
 //            readMeBtn = view.findViewById(R.id.remind_me_btn);
             joinCampaignBtn = view.findViewById(R.id.join_campaign_btn);
+
         }
+    }
+
+
+    public interface CampaignLister {
+
+        void onCampaignClicked(String campaignID);
+
     }
 }

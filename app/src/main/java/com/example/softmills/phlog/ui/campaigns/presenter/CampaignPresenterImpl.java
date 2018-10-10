@@ -29,7 +29,7 @@ public class CampaignPresenterImpl implements CampaignPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getAllCampaign(String page) {
+    public void getAllCampaign(int page) {
         campaignFragmentView.showAllCampaginProgress(true);
         BaseNetworkApi.getAllCampaign(PrefUtils.getUserToken(context),page)
                 .subscribeOn(Schedulers.io())

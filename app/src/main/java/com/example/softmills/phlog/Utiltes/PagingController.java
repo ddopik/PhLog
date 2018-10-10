@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 /**
  * Created by abdalla_maged on 10/4/2018.
  */
-public class pagingController {
+public abstract class PagingController {
 
     //    private val recyclerView: RecyclerView? = null
 // The total number of items in the dataset after the last load
@@ -19,11 +19,9 @@ public class pagingController {
     private int startingPageIndex = 0;
     private int currentPage = 0;
     private RecyclerView recyclerView;
-    private PagingControllerCallBack pagingControllerCallBack;
 
-
-    public pagingController(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
+    public PagingController(RecyclerView recyclerView) {
+        this.recyclerView=recyclerView;
         initListener();
     }
 
@@ -73,16 +71,13 @@ public class pagingController {
         // If we do need to reload some more data, we execute onLoadMore to fetch the data.
         if (!loading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
             //            onLoadMore(currentPage + 1, totalItemCount);
-            pagingControllerCallBack.onPageRequest(String.valueOf(currentPage + 1));
+            getPagingControllerCallBack(currentPage + 1);
             loading = true;
         }
     }
 
-    public void setPagingControllerCallBack(PagingControllerCallBack pagingControllerCallBack) {
-        this.pagingControllerCallBack = pagingControllerCallBack;
-    }
 
-    public interface PagingControllerCallBack {
-        void onPageRequest(String page);
-    }
+    public abstract void getPagingControllerCallBack(int page);
+
+
 }

@@ -28,7 +28,6 @@ public class UserProfileActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        getSupportActionBar().hide();
         initView();
         initPresenter();
     }
@@ -38,6 +37,7 @@ public class UserProfileActivity extends BaseActivity {
         TabLayout userProfileTabs = findViewById(R.id.photographer_profile_tabs);
         ViewPager userProfileViewpager = findViewById(R.id.photographer_profile_viewpager);
         UserProfileViewPagerAdapter userProfileViewPagerAdapter = new UserProfileViewPagerAdapter(getSupportFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
+
         userProfileViewpager.setAdapter(userProfileViewPagerAdapter);
         userProfileTabs.setupWithViewPager(userProfileViewpager);
     }

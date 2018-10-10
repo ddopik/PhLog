@@ -37,4 +37,7 @@ public class PhotoGrapherPhoto {
     @SerializedName("deleted_at")
     @Expose
     public Object deletedAt;
+
+
+
 }

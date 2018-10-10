@@ -60,4 +60,8 @@
     <string name="me">Me</string>
     <string name="remind_me">REMIND ME</string>
     <string name="join">JOIN</string>
+    <string name="tab_mission">Mission</string>
+    <string name="tab_photos">Photos</string>
+    <string name="days_left">Days Left</string>
+    <string name="hosted_by">Hosted By</string>
 </resources>

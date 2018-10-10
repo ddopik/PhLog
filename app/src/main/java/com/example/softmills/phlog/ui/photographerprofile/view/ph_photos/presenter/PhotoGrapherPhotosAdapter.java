@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 10/1/2018.
  */
-public class PhotoGrapherPhotosAdapter  extends RecyclerView.Adapter<PhotoGrapherPhotosAdapter.PhotosViewHolder> {
+public class PhotoGrapherPhotosAdapter extends RecyclerView.Adapter<PhotoGrapherPhotosAdapter.PhotosViewHolder> {
 
 
     private List<PhotoGrapherPhoto> photoGrapherPhotosList;
@@ -44,7 +44,6 @@ public class PhotoGrapherPhotosAdapter  extends RecyclerView.Adapter<PhotoGraphe
     public void onBindViewHolder(@NonNull PhotoGrapherPhotosAdapter.PhotosViewHolder campaignsViewHolder, int i) {
 
 
-
         GlideApp.with(context)
                 .load(photoGrapherPhotosList.get(i).image)
                 .centerCrop()
@@ -61,6 +60,7 @@ public class PhotoGrapherPhotosAdapter  extends RecyclerView.Adapter<PhotoGraphe
     public int getItemCount() {
         return photoGrapherPhotosList.size();
     }
+
 
     class PhotosViewHolder extends RecyclerView.ViewHolder {
 

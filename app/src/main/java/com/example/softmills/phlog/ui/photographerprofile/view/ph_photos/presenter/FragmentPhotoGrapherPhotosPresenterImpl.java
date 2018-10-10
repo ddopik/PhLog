@@ -28,7 +28,7 @@ public class FragmentPhotoGrapherPhotosPresenterImpl implements FragmentPhotoGra
 
     @SuppressLint("CheckResult")
     @Override
-    public void getPhotographerPhotos(String page) {
+    public void getPhotographerPhotos(int page) {
         fragmentPhotoGrapherPhotosView.showPhotosProgress(true);
         BaseNetworkApi.getPhotoGrapherPhotos(PrefUtils.getUserToken(context), page)
                 .subscribeOn(Schedulers.io())
@@ -43,6 +43,7 @@ public class FragmentPhotoGrapherPhotosPresenterImpl implements FragmentPhotoGra
                     fragmentPhotoGrapherPhotosView.showPhotosProgress(false);
                     try {
                         fragmentPhotoGrapherPhotosView.showMessage(throwable.getMessage());
+                        Log.e(TAG, throwable.getMessage());
                     } catch (Exception e) {
                         Log.e(TAG, e.getMessage());
                     }

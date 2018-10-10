@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dp8"
-    android:background="@color/white">
+    android:background="@color/white"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,60 +37,67 @@
                 tools:text="Toyota" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/campaign_img"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:orientation="vertical"
-            android:padding="@dimen/dp8"
-            tools:background="@drawable/splash_screen_background">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/campaign_item_height">
 
-            <TextView
-                android:id="@+id/campaign_title"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/campaign_img"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/arial_rounded_font"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_title_head"
-                tools:text="campaign" />
+                tools:background="@drawable/splash_screen_background"/>
 
-            <TextView
-                android:id="@+id/campaign_day_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_star_off_24dp"
-                android:textColor="@color/gray400"
-                tools:text="5 day left" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.3"
+                android:background="@drawable/graduant_layer" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:gravity="bottom|center"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/dp14">
 
-                <!--<Button-->
-                    <!--android:id="@+id/remind_me_btn"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="@dimen/campaign_button_size"-->
-                    <!--android:layout_marginEnd="@dimen/dp18"-->
-                    <!--android:background="@drawable/rounded_campaign_button"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:text="@string/remind_me"/>-->
-
-                <Button
-                    android:id="@+id/join_campaign_btn"
+                <TextView
+                    android:id="@+id/campaign_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/campaign_button_size"
-                    android:background="@drawable/rounded_campaign_button"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arial_rounded_font"
                     android:textColor="@color/white"
-                    android:text="@string/join"/>
+                    android:textSize="@dimen/text_title_head"
+                    tools:text="campaign" />
+
+                <TextView
+                    android:id="@+id/campaign_day_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_time_white"
+                    android:drawablePadding="@dimen/campaign_drawable_padding"
+                    android:textColor="@color/white"
+                    tools:text="5 day left" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:gravity="bottom|center"
+                    android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/join_campaign_btn"
+                        android:layout_width="@dimen/campaign_home_button_width"
+                        android:layout_height="@dimen/campaign_button_size"
+                        android:background="@drawable/rounded_campaign_button"
+                        android:text="@string/join"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
-
-
+        </FrameLayout>
     </LinearLayout>
 
 

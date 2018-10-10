@@ -1,17 +1,15 @@
-package com.example.softmills.phlog.ui.campaigns.model;
+package com.example.softmills.phlog.ui.campaigns.inner.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by abdalla_maged on 10/2/2018.
+ * Created by abdalla_maged on 10/8/2018.
  */
-public class Campaign {
-
-
+public class CampaignInner {
     @SerializedName("id")
     @Expose
-    public String id;
+    public Integer id;
     @SerializedName("business_id")
     @Expose
     public Integer businessId;
@@ -35,13 +33,10 @@ public class Campaign {
     public String descrptionAr;
     @SerializedName("number_images")
     @Expose
-    public String numberImages;
+    public Integer numberImages;
     @SerializedName("prize")
     @Expose
     public String prize;
-    @SerializedName("is_publish")
-    @Expose
-    public String isPublish;
     @SerializedName("created_at")
     @Expose
     public String createdAt;
@@ -54,8 +49,4 @@ public class Campaign {
     @SerializedName("left_days")
     @Expose
     public String leftDays;
-    @SerializedName("business")
-    @Expose
-    public CampaignBussines business;
-
 }

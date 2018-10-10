@@ -40,9 +40,6 @@ public class FragmentPhotoGrapherCampaignsPresenterImpl implements FragmentPhoto
         fragmentPhotoGrapherCampaignsView.showCampaigns(campaignList);
     }
 
-    @Override
-    public void getPhotographerSavedPhotos(int pageNum) {
 
-    }
 
 }

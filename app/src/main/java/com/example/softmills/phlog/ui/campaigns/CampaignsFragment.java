@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.campaigns;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,9 +12,10 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 
-import com.example.softmills.phlog.Utiltes.pagingController;
+import com.example.softmills.phlog.Utiltes.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.campaigns.model.Campaign;
 import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenter;
 import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenterImpl;
@@ -33,7 +35,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     private AllCampaignsAdapter allCampaignsAdapter;
     private List<Campaign> campaignList = new ArrayList<>();
     private CampaignPresenter campaignPresenter;
-
+    private PagingController pagingController;
 
     private int currentPage = 0;
 
@@ -41,8 +43,6 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_campaigns, container, false);
-
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         return mainView;
     }
 
@@ -52,7 +52,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
         initPresenter();
         initViews();
         initListener();
-        campaignPresenter.getAllCampaign("0");
+        campaignPresenter.getAllCampaign(0);
     }
 
 
@@ -63,6 +63,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
         allCampaignsAdapter = new AllCampaignsAdapter(getContext(), campaignList);
         allCampaignsRv.setAdapter(allCampaignsAdapter);
 
+
     }
 
     @Override
@@ -72,10 +73,18 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
 
     private void initListener() {
 
-        pagingController pagingController = new pagingController((RecyclerView) allCampaignsRv);
-        pagingController.setPagingControllerCallBack(page -> {
-            campaignPresenter.getAllCampaign(String.valueOf(currentPage + 1));
-        });
+        pagingController = new PagingController(allCampaignsRv) {
+            @Override
+            public void getPagingControllerCallBack(int page) {
+                campaignPresenter.getAllCampaign(currentPage + 1);
+            }
+        };
+        allCampaignsAdapter.campaignLister = campaignID -> {
+            Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
+            intent.putExtra("campaign_id", campaignID);
+            startActivity(intent);
+        };
+
     }
 
 
