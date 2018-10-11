@@ -8,9 +8,6 @@ import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.FragmentPhotoGrapherCampaignsView;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -38,7 +35,7 @@ public class FragmentPhotoGrapherCampaignsPresenterImpl implements FragmentPhoto
     @SuppressLint("CheckResult")
     @Override
     public void getPhotographerCampaigns(int pageNum) {
-        BaseNetworkApi.getPhotoGrapherCampaign(PrefUtils.getUserToken(context),pageNum)
+        BaseNetworkApi.getPhotoGrapherProfileCampaign(PrefUtils.getUserToken(context),pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(campaignResponse -> {

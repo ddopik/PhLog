@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view
  * Created by Abdalla_maged on 9/30/2018.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.campaigns.model.HomeCampaign;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model.PhotoGrapherCampaign;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.presenter.FragmentPhotoGrapherCampaignsPresenter;
@@ -79,12 +81,17 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
                 photoGrapherCampaignsPresenter.getPhotographerCampaigns(page + 1);
             }
         };
+
+        photoGrapherCampaignsAdapter.campaignLister = campaignID -> {
+            Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
+            intent.putExtra("campaign_id", campaignID);
+            startActivity(intent);
+        };
     }
 
 
     @Override
     public void showCampaigns(List<PhotoGrapherCampaign> campaignList) {
-        this.campaignList.clear();
         this.campaignList.addAll(campaignList);
         photoGrapherCampaignsAdapter.notifyDataSetChanged();
     }

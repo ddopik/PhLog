@@ -47,7 +47,7 @@
         android:id="@+id/photographer_profile_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="65dp"
+        android:paddingBottom="@dimen/fragment_photographer_padding_bottom"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

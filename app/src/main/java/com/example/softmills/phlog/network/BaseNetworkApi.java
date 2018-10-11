@@ -8,6 +8,7 @@ import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.model.SocialLoginResponse;
 import com.example.softmills.phlog.ui.photographerprofile.model.ProfilePhotoGrapherInfoResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model.PhotoGrapherCampaignResponse;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.model.PhotoGrapherFollowingInResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhotosResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
@@ -43,6 +44,7 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/image_photographer";
     private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/get_info_photographer";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/get_photographer_campaign";
+    private static final String PHOTOGRAPHER_PHOTOGRAPHER_FOLLOWING_IN_URL = BASE_URL + "/get_following";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/get_all_campaigns_running";
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/detail_one_campaign";
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/get_photos_campaign";
@@ -136,7 +138,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(PhotoGrapherPhotosResponse.class);
     }
 
-    public static io.reactivex.Observable<PhotoGrapherCampaignResponse> getPhotoGrapherCampaign(String token, int pageNumber) {
+    public static io.reactivex.Observable<PhotoGrapherCampaignResponse> getPhotoGrapherProfileCampaign(String token, int pageNumber) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_ALL_CAMPAIGN_URL)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(pageNumber))
@@ -153,6 +155,15 @@ public class BaseNetworkApi {
                 .getObjectObservable(ProfilePhotoGrapherInfoResponse.class);
     }
 
+
+    public static io.reactivex.Observable<PhotoGrapherFollowingInResponse> getPhotoGrapherProfileFollowingIn(String token,int page) {
+        return Rx2AndroidNetworking.post(PHOTOGRAPHER_PHOTOGRAPHER_FOLLOWING_IN_URL)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addQueryParameter(PAGER_PATH_PARAMETER,String.valueOf(page))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(PhotoGrapherFollowingInResponse.class);
+    }
 
     public static io.reactivex.Observable<CampaignResponse> getAllCampaign(String token, int page) {
         return Rx2AndroidNetworking.post(ALL_CAMPAIGN_URL)

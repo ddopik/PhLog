@@ -38,7 +38,10 @@
     <!--///MainActivity-->
 
     <dimen name="main_fragment_bottom_space">60dp</dimen>
-    <!--///-->
+    <!--/// Profile_PhotoGrapher Fragment-->
+
+    <dimen name="fragment_photographer_padding_bottom">65dp</dimen>
+
     <!--/////////  ActivityUserProfile-->
     <dimen name="user_profile_header_img_size">85dp</dimen>
     <dimen name="user_profile_main_preview_height">345dp</dimen>
