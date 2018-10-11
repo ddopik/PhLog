@@ -58,4 +58,7 @@ public class HomeCampaign {
     @Expose
     public CampaignBussines business;
 
+
+
+
 }

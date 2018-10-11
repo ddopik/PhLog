@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.campaigns.model;
+package com.example.softmills.phlog.ui.userprofile.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,15 +6,15 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by abdalla_maged on 10/4/2018.
+ * Created by abdalla_maged on 10/11/2018.
  */
-public class CampaignData {
+public class UserPhotoData {
     @SerializedName("current_page")
     @Expose
     public Integer currentPage;
     @SerializedName("data")
     @Expose
-    public List<HomeCampaign> data = null;
+    public List<UserPhoto> data = null;
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;
@@ -45,7 +45,4 @@ public class CampaignData {
     @SerializedName("total")
     @Expose
     public Integer total;
-
-
 }
-

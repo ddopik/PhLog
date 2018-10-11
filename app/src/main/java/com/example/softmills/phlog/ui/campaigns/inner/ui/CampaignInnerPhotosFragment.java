@@ -1,12 +1,8 @@
 package com.example.softmills.phlog.ui.campaigns.inner.ui;
 
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +18,7 @@ import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhoto;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenterImpl;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhoto;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presenter.PhotoGrapherPhotosAdapter;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.PhotoGrapherPhotosAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

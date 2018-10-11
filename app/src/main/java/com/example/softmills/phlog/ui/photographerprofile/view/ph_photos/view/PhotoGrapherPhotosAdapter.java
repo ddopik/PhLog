@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presenter;
+package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhoto;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotographerSavedPhotoAdapter;
 
 import java.util.List;
 

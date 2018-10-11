@@ -16,7 +16,6 @@ import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhoto;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presenter.FragmentPhotoGrapherPhotosPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presenter.FragmentPhotoGrapherPhotosPresenterImpl;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presenter.PhotoGrapherPhotosAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

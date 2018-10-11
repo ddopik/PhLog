@@ -27,26 +27,27 @@
                 <include layout="@layout/user_profile_header_view" />
             </RelativeLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:fillViewport="true"
-            android:paddingBottom="65dp"
-            android:background="@color/black"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-
-
+        <com.example.softmills.phlog.base.widgets.CustomRecyclerView
+            android:id="@+id/user_profile_photos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:orientation="grid"
+            app:span_size="2" />
+    </FrameLayout>
     <ProgressBar
-        android:id="@+id/user_profile_progress_bar"
+        android:id="@+id/user_profile_photos_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone"
-        tools:visibility="gone"/>
+        tools:visibility="gone" />
 </android.support.design.widget.CoordinatorLayout>

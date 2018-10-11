@@ -2,6 +2,7 @@ package com.example.softmills.phlog.ui.userprofile.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
@@ -13,23 +14,24 @@ import io.reactivex.schedulers.Schedulers;
 
 public class UserProfilePresenterImpl implements UserProfilePresenter {
 
-    private String TAG=UserProfilePresenterImpl.class.getSimpleName();
+    private String TAG = UserProfilePresenterImpl.class.getSimpleName();
     private Context context;
     private UserProfileActivityView userProfileActivityView;
 
-    public UserProfilePresenterImpl(Context context,UserProfileActivityView userProfileActivityView){
-        this.context=context;
-        this.userProfileActivityView=userProfileActivityView;
+    public UserProfilePresenterImpl(Context context, UserProfileActivityView userProfileActivityView) {
+        this.context = context;
+        this.userProfileActivityView = userProfileActivityView;
     }
+
     @SuppressLint("CheckResult")
     @Override
     public void getUserProfileData(String userID) {
-        BaseNetworkApi.getUserProfile(PrefUtils.getUserToken(context),userID)
+        BaseNetworkApi.getUserProfile(PrefUtils.getUserToken(context), userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfileResponse -> {
-                    if(userProfileResponse.state.equals(BaseNetworkApi.STATUS_OK)){
-                        UserProfileData userProfileData= userProfileResponse.data;
+                    if (userProfileResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        UserProfileData userProfileData = userProfileResponse.data;
                         userProfileActivityView.viewUserProfileUserName(userProfileData.userName);
                         userProfileActivityView.viewUserProfileFullName(userProfileData.fullName);
                         userProfileActivityView.viewUserProfileRating(userProfileData.rate);
@@ -38,10 +40,38 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                         userProfileActivityView.viewUserProfileFollowersCount(userProfileData.followerCount);
                         userProfileActivityView.viewUserProfileFollowingCount(userProfileData.followingCount);
                         userProfileActivityView.viewUserProfilePhotosCount(userProfileData.imagePhotographerCount);
+                    } else {
+                        Log.e(TAG, "getUserProfile() ---> Errore  " + userProfileResponse.state);
+                        userProfileActivityView.showMessage(userProfileResponse.data.toString());
                     }
 
-                },throwable -> {
-
+                }, throwable -> {
+                    Log.e(TAG, "getUserProfile() ---> Errore  " + throwable.getMessage());
                 });
+    }
+
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void getUserPhotos(String userID, int page) {
+        userProfileActivityView.viewUserPhotosProgress(true);
+        BaseNetworkApi.getUserProfilePhotos(PrefUtils.getUserToken(context), userID, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userPhotosResponse -> {
+                    userProfileActivityView.viewUserPhotosProgress(false);
+                    if (userPhotosResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
+                    } else {
+                        userProfileActivityView.showMessage(userPhotosResponse.state);
+                        userProfileActivityView.showMessage(userPhotosResponse.data.toString());
+                        Log.e(TAG, "getUserProfile() ---> Errore  " + userPhotosResponse.state);
+                    }
+
+                }, throwable -> {
+                    userProfileActivityView.viewUserPhotosProgress(false);
+                    Log.e(TAG, "getUserProfile() ---> Errore  " + throwable.getMessage());
+                });
+
     }
 }

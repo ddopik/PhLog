@@ -41,7 +41,7 @@
     <!--///-->
     <!--/////////  ActivityUserProfile-->
     <dimen name="user_profile_header_img_size">85dp</dimen>
-    <dimen name="user_profile_main_preview_height">320dp</dimen>
+    <dimen name="user_profile_main_preview_height">345dp</dimen>
     <dimen name="user_profile_rating_bar_width">65dp</dimen>
     <dimen name="user_profile_rating_bar_height">20dp</dimen>
     <dimen name="user_profile_grid_img_height">150dp</dimen>
@@ -58,5 +58,10 @@
     <dimen name="campaign_item_height">200dp</dimen>
     <dimen name="campaign_drawable_padding">4dp</dimen>
     <dimen name="campaign_home_button_width">175dp</dimen>
+
+
+    <!--////UserProfileHeader-->
+    <dimen name="user_profile_follow_btn_w">95dp</dimen>
+    <dimen name="user_profile_follow_btn_h">32dp</dimen>
     <!--////-->
 </resources>

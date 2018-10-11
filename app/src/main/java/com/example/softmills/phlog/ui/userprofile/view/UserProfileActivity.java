@@ -6,15 +6,23 @@ package com.example.softmills.phlog.ui.userprofile.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.PagingController;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.userprofile.model.UserPhoto;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserProfileActivity extends BaseActivity implements UserProfileActivityView {
@@ -23,8 +31,13 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private TextView userProfileLevel, userProfileUserName, userProfileFullName, userProfilePhotosCount, userProfileFolloweresCount, userProfileFollowingCount;
     private RatingBar userProfileRating;
     private ImageView userProfileImg;
-
+    private CustomRecyclerView userProfilePhotosRv;
+    private UserProfilePhotosAdapter userProfilePhotosAdapter;
     private UserProfilePresenter userProfilePresenter;
+    private List<UserPhoto> userPhotoList = new ArrayList<UserPhoto>();
+    private ProgressBar userProfilePhotosProgressBar;
+    private PagingController pagingController;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +46,14 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
         initPresenter();
         initView();
+        initListener();
     }
+
+    @Override
+    public void initPresenter() {
+        userProfilePresenter = new UserProfilePresenterImpl(getBaseContext(), this);
+    }
+
 
     @Override
     public void initView() {
@@ -45,14 +65,23 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         userProfilePhotosCount = findViewById(R.id.photos_val);
         userProfileFolloweresCount = findViewById(R.id.followers_val);
         userProfileFollowingCount = findViewById(R.id.following_val);
-
-        userProfilePresenter.getUserProfileData("1");
+        userProfilePhotosRv = findViewById(R.id.user_profile_photos);
+        userProfilePhotosProgressBar = findViewById(R.id.user_profile_photos_progress_bar);
+        userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
+        userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
+        userProfilePresenter.getUserProfileData("1"); //todo static call here
+        userProfilePresenter.getUserPhotos("1",0);
 
     }
 
-    @Override
-    public void initPresenter() {
-        userProfilePresenter = new UserProfilePresenterImpl(getBaseContext(), this);
+
+    private void initListener(){
+        pagingController=new PagingController(userProfilePhotosRv) {
+            @Override
+            public void getPagingControllerCallBack(int page) {
+                userProfilePresenter.getUserPhotos("1",page+1);
+            }
+        };
     }
 
     @Override
@@ -103,5 +132,26 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     @Override
     public void viewUserProfileFollowingCount(String followingCount) {
         userProfileFollowingCount.setText(followingCount);
+    }
+
+    @Override
+    public void viewUserPhotos(List<UserPhoto> userPhotoList) {
+        this.userPhotoList.addAll(userPhotoList);
+        this.userPhotoList.addAll(userPhotoList);
+        userProfilePhotosAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void viewUserPhotosProgress(boolean state) {
+        if (state) {
+            userProfilePhotosProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            userProfilePhotosProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        super.showToast(msg);
     }
 }
