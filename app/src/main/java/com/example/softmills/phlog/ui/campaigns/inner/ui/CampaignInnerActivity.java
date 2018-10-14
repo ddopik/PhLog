@@ -8,10 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -24,7 +21,6 @@ import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPre
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by abdalla_maged on 10/4/2018.

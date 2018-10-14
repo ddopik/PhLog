@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <com.example.softmills.phlog.base.widgets.CustomRecyclerView
-        android:id="@+id/photo_grapher_followingIn_Rv"
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/following_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:orientation="vertical"/>
-
-
-    <ProgressBar
-        android:id="@+id/photo_grapher_followingIn_progrss_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_height="wrap_content" />
 
 
 </FrameLayout>

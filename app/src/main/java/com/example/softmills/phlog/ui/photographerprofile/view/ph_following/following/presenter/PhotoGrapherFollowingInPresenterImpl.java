@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.view.PhotoGrapherFollowingInFragmentView;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.view.PhotoGrapherFollowingFragmentView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -18,31 +18,31 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
 
     private String TAG = PhotoGrapherFollowingInPresenterImpl.class.getSimpleName();
     private Context context;
-    private PhotoGrapherFollowingInFragmentView photoGrapherFollowingInFragmentView;
+    private PhotoGrapherFollowingFragmentView photoGrapherFollowingFragmentView;
 
-    public PhotoGrapherFollowingInPresenterImpl(Context context, PhotoGrapherFollowingInFragmentView photoGrapherFollowingInFragmentView) {
+    public PhotoGrapherFollowingInPresenterImpl(Context context, PhotoGrapherFollowingFragmentView photoGrapherFollowingFragmentView) {
         this.context = context;
-        this.photoGrapherFollowingInFragmentView = photoGrapherFollowingInFragmentView;
+        this.photoGrapherFollowingFragmentView = photoGrapherFollowingFragmentView;
 
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void getPhotoGrapherFollowing(int page) {
-        photoGrapherFollowingInFragmentView.viewPhotographerFollowingInProgress(true);
+        photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(true);
         BaseNetworkApi.getPhotoGrapherProfileFollowingIn(PrefUtils.getUserToken(context), page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherFollowingInResponse -> {
-                    photoGrapherFollowingInFragmentView.viewPhotographerFollowingInProgress(false);
+                    photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
                     if (photoGrapherFollowingInResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        photoGrapherFollowingInFragmentView.viewPhotographerFollowingIn(photoGrapherFollowingInResponse.data.data);
+                        photoGrapherFollowingFragmentView.viewPhotographerFollowingIn(photoGrapherFollowingInResponse.data.data);
                     } else {
-                        photoGrapherFollowingInFragmentView.viewMessage(photoGrapherFollowingInResponse.state);
+                        photoGrapherFollowingFragmentView.viewMessage(photoGrapherFollowingInResponse.state);
                         Log.e(TAG, "getPhotoGrapherFollowing() ---> Error  " + photoGrapherFollowingInResponse.state);
                     }
                 }, throwable -> {
-                    photoGrapherFollowingInFragmentView.viewPhotographerFollowingInProgress(false);
+                    photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
                     Log.e(TAG, "getPhotoGrapherFollowing() ---> Error  " + throwable.getMessage());
                 });
     }

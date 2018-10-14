@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.home.view;
+package com.example.softmills.phlog.ui.photographerprofile.view.ph_following.album;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,19 +10,22 @@ import android.view.ViewGroup;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 
-public class HomeFragment extends BaseFragment {
+/**
+ * Created by abdalla_maged on 10/14/2018.
+ */
+public class PhotoGrapherAlbumFragment extends BaseFragment {
 
     private View mainView;
+
+    public static PhotoGrapherAlbumFragment getInstance() {
+        return new PhotoGrapherAlbumFragment();
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mainView =inflater.inflate(R.layout.fragment_home,container,false);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-
-        return mainView;
-
+        return mainView = inflater.inflate(R.layout.fragment_photographer_follow_album, container, false);
     }
 
     @Override
@@ -30,6 +33,10 @@ public class HomeFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void showToast(String msg) {
+        super.showToast(msg);
+    }
 
     @Override
     protected void initPresenter() {
@@ -40,10 +47,4 @@ public class HomeFragment extends BaseFragment {
     protected void initViews() {
 
     }
-
-    @Override
-    public void showToast(String msg) {
-        super.showToast(msg);
-    }
-
 }

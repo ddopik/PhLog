@@ -10,20 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.model.PhotoGrapherFollowingInObj;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.model.PhotoGrapherFollowingObj;
 
 import java.util.List;
 
 /**
  * Created by abdalla_maged on 10/11/2018.
  */
-public class PhotoGrapherFollowingInAdapter extends RecyclerView.Adapter<PhotoGrapherFollowingInAdapter.PhotoGrapherFollowingInViewHolder> {
+public class PhotoGrapherFollowingAdapter extends RecyclerView.Adapter<PhotoGrapherFollowingAdapter.PhotoGrapherFollowingInViewHolder> {
 
 
     public Context context;
-    private List<PhotoGrapherFollowingInObj> photoGrapherFollowingInList;
+    private List<PhotoGrapherFollowingObj> photoGrapherFollowingInList;
 
-    public PhotoGrapherFollowingInAdapter(Context context, List<PhotoGrapherFollowingInObj> photoGrapherFollowingInList) {
+    public PhotoGrapherFollowingAdapter(Context context, List<PhotoGrapherFollowingObj> photoGrapherFollowingInList) {
         this.context = context;
         this.photoGrapherFollowingInList = photoGrapherFollowingInList;
     }
@@ -38,7 +38,7 @@ public class PhotoGrapherFollowingInAdapter extends RecyclerView.Adapter<PhotoGr
     @Override
     public void onBindViewHolder(@NonNull PhotoGrapherFollowingInViewHolder photoGrapherFollowingInViewHolder, int i) {
 
-        
+
 
     }
 

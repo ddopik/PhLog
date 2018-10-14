@@ -1,36 +1,23 @@
 package com.example.softmills.phlog.ui.signup;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.FileUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.Utiltes.ImagePathUtil;
-import com.example.softmills.phlog.Utiltes.ImageUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 
 import java.io.File;
-import java.util.List;
 
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.example.softmills.phlog.Utiltes.ImageUtils.CAMERA_CODE;
-import static com.example.softmills.phlog.Utiltes.ImageUtils.FILE_CODE;
 
 public class PickProfilePhotoActivity extends BaseActivity {
 

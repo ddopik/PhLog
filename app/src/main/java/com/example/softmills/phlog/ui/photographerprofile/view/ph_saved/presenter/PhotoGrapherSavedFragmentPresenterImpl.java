@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.FragmentPhotoGrapherSavedPhotosView;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotoGrapherSavedPhotosFragmentView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -14,14 +14,14 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by abdalla_maged on 9/30/2018.
  */
-public class FragmentPhotoGrapherSavedPresenterImpl implements FragmentPhotoGrapherSavedPresenter {
+public class PhotoGrapherSavedFragmentPresenterImpl implements PhotoGrapherSavedFragmentPresenter {
 
-    private static String TAG = FragmentPhotoGrapherSavedPresenterImpl.class.getSimpleName();
-    private FragmentPhotoGrapherSavedPhotosView fragmentPhotoGrapherSavedPhotosView;
+    private static String TAG = PhotoGrapherSavedFragmentPresenterImpl.class.getSimpleName();
+    private PhotoGrapherSavedPhotosFragmentView photoGrapherSavedPhotosFragmentView;
 private Context context;
 
-    public FragmentPhotoGrapherSavedPresenterImpl(Context context,FragmentPhotoGrapherSavedPhotosView fragmentPhotoGrapherSavedPhotosView) {
-        this.fragmentPhotoGrapherSavedPhotosView = fragmentPhotoGrapherSavedPhotosView;
+    public PhotoGrapherSavedFragmentPresenterImpl(Context context, PhotoGrapherSavedPhotosFragmentView photoGrapherSavedPhotosFragmentView) {
+        this.photoGrapherSavedPhotosFragmentView = photoGrapherSavedPhotosFragmentView;
 this.context=context;
     }
 
@@ -36,12 +36,12 @@ this.context=context;
                     Log.e(TAG, "getPhotoGrapherSavedPhotos() --->" + photoGrapherPhotosResponse.toString());
                     if (photoGrapherPhotosResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         Log.e(TAG, "getPhotoGrapherSavedPhotos() --->" + BaseNetworkApi.STATUS_OK);
-                        fragmentPhotoGrapherSavedPhotosView.showSavedPhotos(photoGrapherPhotosResponse.data.data);
+                        photoGrapherSavedPhotosFragmentView.showSavedPhotos(photoGrapherPhotosResponse.data.data);
                     }
                 }, throwable -> {
                     try {
 
-                        fragmentPhotoGrapherSavedPhotosView.showMessage(throwable.getMessage());
+                        photoGrapherSavedPhotosFragmentView.showMessage(throwable.getMessage());
                     } catch (Exception e) {
                         Log.e(TAG, e.getMessage());
                     }

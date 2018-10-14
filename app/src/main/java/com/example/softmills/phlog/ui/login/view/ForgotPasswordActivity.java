@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 
-public class ForgotPasswordActivity extends BaseActivity{
+public class ForgotPasswordActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -14,7 +14,7 @@ public class PhotoGrapherFollowingInData {
     public Integer currentPage;
     @SerializedName("data")
     @Expose
-    public List<PhotoGrapherFollowingInObj> data = null;
+    public List<PhotoGrapherFollowingObj> data = null;
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;

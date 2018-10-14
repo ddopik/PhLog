@@ -17,7 +17,6 @@ import com.example.softmills.phlog.Utiltes.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
-import com.example.softmills.phlog.ui.campaigns.model.HomeCampaign;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model.PhotoGrapherCampaign;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.presenter.FragmentPhotoGrapherCampaignsPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.presenter.FragmentPhotoGrapherCampaignsPresenterImpl;

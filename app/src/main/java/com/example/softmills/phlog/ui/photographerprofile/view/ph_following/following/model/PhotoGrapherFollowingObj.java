@@ -3,5 +3,5 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_following.fol
 /**
  * Created by abdalla_maged on 10/11/2018.
  */
-public class PhotoGrapherFollowingInObj {
+public class PhotoGrapherFollowingObj {
 }

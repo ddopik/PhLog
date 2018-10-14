@@ -37,7 +37,6 @@
             app:layout_anchorGravity="bottom"
             app:layout_collapseMode="pin"
             app:tabSelectedTextColor="@color/text_input_color"
-
             app:tabTextColor="@color/white" />
 
     </android.support.design.widget.AppBarLayout>

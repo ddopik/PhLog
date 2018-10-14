@@ -12,8 +12,8 @@ import com.example.softmills.phlog.Utiltes.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhoto;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.FragmentPhotoGrapherSavedPresenter;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.FragmentPhotoGrapherSavedPresenterImpl;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.PhotoGrapherSavedFragmentPresenter;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.PhotoGrapherSavedFragmentPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,12 @@ import java.util.List;
 /**
  * Created by Abdalla_maged on 9/30/2018.
  */
-public class PhotoGrapherSavedFragment extends BaseFragment implements FragmentPhotoGrapherSavedPhotosView {
+public class PhotoGrapherSavedFragment extends BaseFragment implements PhotoGrapherSavedPhotosFragmentView {
 
     private View mainView;
     private List<PhotoGrapherSavedPhoto> photoGrapherSavedPhotoList = new ArrayList<PhotoGrapherSavedPhoto>();
     private PhotographerSavedPhotoAdapter photographerSavedPhotoAdapter;
-    private FragmentPhotoGrapherSavedPresenter fragmentPhotoGrapherSavedPresenter;
+    private PhotoGrapherSavedFragmentPresenter photoGrapherSavedFragmentPresenter;
 
     private CustomRecyclerView savedPhotosRv;
     private PagingController pagingController;
@@ -50,12 +50,12 @@ public class PhotoGrapherSavedFragment extends BaseFragment implements FragmentP
         initPresenter();
         initViews();
         initListener();
-        fragmentPhotoGrapherSavedPresenter.getPhotographerSavedPhotos(0); //initialPage
+        photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(0); //initialPage
     }
 
     @Override
     protected void initPresenter() {
-        fragmentPhotoGrapherSavedPresenter = new FragmentPhotoGrapherSavedPresenterImpl(getContext(), this);
+        photoGrapherSavedFragmentPresenter = new PhotoGrapherSavedFragmentPresenterImpl(getContext(), this);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class PhotoGrapherSavedFragment extends BaseFragment implements FragmentP
         pagingController = new PagingController(savedPhotosRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                fragmentPhotoGrapherSavedPresenter.getPhotographerSavedPhotos(page + 1);
+                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(page + 1);
             }
         };
     }

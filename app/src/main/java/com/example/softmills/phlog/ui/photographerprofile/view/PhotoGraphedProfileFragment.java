@@ -3,7 +3,6 @@ package com.example.softmills.phlog.ui.photographerprofile.view;
  * Created by Abdalla_maged on 9/30/2018.
  */
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +10,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseFragment;
@@ -35,7 +26,7 @@ import com.example.softmills.phlog.ui.photographerprofile.model.PhotoGrapherProf
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenterImpl;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.PhotographerCampaignsFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.FragmentPhotoGrapherFollowing;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.view.PhotoGrapherFollowFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.PhotoGrapherPhotosFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotoGrapherSavedFragment;
 
@@ -119,7 +110,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
         this.photoGrapherProfileFragmentList.add(photoGrapherPhotosFragment);
         this.photoGrapherProfileFragmentList.add(PhotographerCampaignsFragment.getInstance());
-        this.photoGrapherProfileFragmentList.add(new FragmentPhotoGrapherFollowing());
+        this.photoGrapherProfileFragmentList.add(new PhotoGrapherFollowFragment());
         this.photoGrapherProfileFragmentList.add(photoGrapherSavedFragment);
 
         return photoGrapherProfileFragmentList;
