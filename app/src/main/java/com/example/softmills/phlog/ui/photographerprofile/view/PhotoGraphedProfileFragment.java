@@ -26,7 +26,7 @@ import com.example.softmills.phlog.ui.photographerprofile.model.PhotoGrapherProf
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenterImpl;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.PhotographerCampaignsFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.view.PhotoGrapherFollowFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.PhotoGrapherFollowFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.PhotoGrapherPhotosFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotoGrapherSavedFragment;
 

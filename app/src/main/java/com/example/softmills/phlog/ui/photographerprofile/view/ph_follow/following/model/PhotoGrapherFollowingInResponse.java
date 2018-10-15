@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.model;
+package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model;
 
 import com.example.softmills.phlog.base.BaseApiResponse;
 import com.google.gson.annotations.Expose;

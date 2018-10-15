@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_following.brand;
+package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.album;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,19 +13,19 @@ import com.example.softmills.phlog.base.BaseFragment;
 /**
  * Created by abdalla_maged on 10/14/2018.
  */
-public class PhotoGrapherBrandFragment extends BaseFragment {
+public class PhotoGrapherAlbumFragment extends BaseFragment {
 
     private View mainView;
 
-
-    public static PhotoGrapherBrandFragment getInstance() {
-        return new PhotoGrapherBrandFragment();
+    public static PhotoGrapherAlbumFragment getInstance() {
+        return new PhotoGrapherAlbumFragment();
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return  mainView=inflater.inflate(R.layout.fragment_photographer_follow_brand,container,false);
+        return mainView = inflater.inflate(R.layout.fragment_photographer_follow_album, container, false);
     }
 
     @Override

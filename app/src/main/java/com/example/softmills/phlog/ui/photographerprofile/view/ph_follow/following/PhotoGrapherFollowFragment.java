@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.view;
+package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.album.PhotoGrapherAlbumFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.brand.PhotoGrapherBrandFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.album.PhotoGrapherAlbumFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.PhotoGrapherBrandFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFolloViewPagerAdapter;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +29,14 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
     private View mainView;
     private TabLayout followTableLayout;
     private ViewPager followViewPager;
-    private PhotoGrapherFollowViewPagerAdapter photoGrapherFollowViewPagerAdapter;
-    private PagingController pagingController;
+    private PhotoGrapherFolloViewPagerAdapter photoGrapherFollowViewPagerAdapter;
+
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        mainView = inflater.inflate(R.layout.fragment_follow, container, false);
+        mainView = inflater.inflate(R.layout.fragment_photographer_follow, container, false);
         return mainView;
     }
 
@@ -57,7 +58,7 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
 
         followTableLayout = mainView.findViewById(R.id.photographer_follow_tabs);
         followViewPager = mainView.findViewById(R.id.photographer_follow_pager);
-        photoGrapherFollowViewPagerAdapter = new PhotoGrapherFollowViewPagerAdapter(getContext(), getChildFragmentManager(), getFragmentList(), getFragmentIcon());
+        photoGrapherFollowViewPagerAdapter = new PhotoGrapherFolloViewPagerAdapter(getContext(), getChildFragmentManager(), getFragmentList(), getFragmentIcon());
         followViewPager.setAdapter(photoGrapherFollowViewPagerAdapter);
         followTableLayout.setupWithViewPager(followViewPager);
 

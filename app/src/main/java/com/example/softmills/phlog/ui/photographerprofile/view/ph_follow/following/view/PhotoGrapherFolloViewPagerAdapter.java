@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.view;
+package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 10/14/2018.
  */
-public class PhotoGrapherFollowViewPagerAdapter extends FragmentPagerAdapter {
+public class PhotoGrapherFolloViewPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList;
     private List<Integer> mFragmentTitleList;
     private Context context;
 
-    public PhotoGrapherFollowViewPagerAdapter(Context context,FragmentManager manager, List<Fragment> mFragmentList, List<Integer> mFragmentTitleList) {
+    public PhotoGrapherFolloViewPagerAdapter(Context context, FragmentManager manager, List<Fragment> mFragmentList, List<Integer> mFragmentTitleList) {
         super(manager);
         this.mFragmentList = mFragmentList;
         this.mFragmentTitleList = mFragmentTitleList;

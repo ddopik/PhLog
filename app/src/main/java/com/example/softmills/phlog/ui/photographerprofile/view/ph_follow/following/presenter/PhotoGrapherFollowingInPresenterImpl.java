@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.presenter;
+package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.view.PhotoGrapherFollowingFragmentView;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragmentView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -30,7 +30,8 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
     @Override
     public void getPhotoGrapherFollowing(int page) {
         photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(true);
-        BaseNetworkApi.getPhotoGrapherProfileFollowingIn(PrefUtils.getUserToken(context), page)
+//        BaseNetworkApi.getPhotoGrapherProfileFollowingIn(PrefUtils.getUserToken(context), page)
+        BaseNetworkApi.getPhotoGrapherProfileFollowingIn("084dcf099582cfbd6147215708035bf9", page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherFollowingInResponse -> {

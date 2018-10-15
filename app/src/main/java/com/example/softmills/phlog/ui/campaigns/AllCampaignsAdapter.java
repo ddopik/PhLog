@@ -80,10 +80,10 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     }
 
     public class CampaignViewHolder extends RecyclerView.ViewHolder {
-        ImageView campaignImage;
-        ImageView campaignBusinessIcon;
-        TextView campaignBusinessName, campaignTitle, campaignDayLeft;
-        Button joinCampaignBtn;
+        private  ImageView campaignImage;
+        private  ImageView campaignBusinessIcon;
+        private  TextView campaignBusinessName, campaignTitle, campaignDayLeft;
+        private   Button joinCampaignBtn;
 
         public CampaignViewHolder(View view) {
             super(view);

@@ -1,6 +1,6 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.view;
+package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view;
 
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_following.following.model.PhotoGrapherFollowingObj;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model.PhotoGrapherFollowingObj;
 
 import java.util.List;
 
