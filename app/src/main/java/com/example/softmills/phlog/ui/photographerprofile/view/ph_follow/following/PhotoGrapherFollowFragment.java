@@ -6,16 +6,17 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.album.PhotoGrapherAlbumFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.PhotoGrapherBrandFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFolloViewPagerAdapter;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowViewPagerAdapter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragment;
 
 import java.util.ArrayList;
@@ -29,8 +30,7 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
     private View mainView;
     private TabLayout followTableLayout;
     private ViewPager followViewPager;
-    private PhotoGrapherFolloViewPagerAdapter photoGrapherFollowViewPagerAdapter;
-
+    private PhotoGrapherFollowViewPagerAdapter photoGrapherFollowViewPagerAdapter;
 
 
     @Nullable
@@ -45,7 +45,10 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         initPresenter();
         initViews();
+
     }
+
+
 
 
     @Override
@@ -58,12 +61,18 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
 
         followTableLayout = mainView.findViewById(R.id.photographer_follow_tabs);
         followViewPager = mainView.findViewById(R.id.photographer_follow_pager);
-        photoGrapherFollowViewPagerAdapter = new PhotoGrapherFolloViewPagerAdapter(getContext(), getChildFragmentManager(), getFragmentList(), getFragmentIcon());
+        photoGrapherFollowViewPagerAdapter = new PhotoGrapherFollowViewPagerAdapter(getChildFragmentManager(), getFragmentList());
         followViewPager.setAdapter(photoGrapherFollowViewPagerAdapter);
         followTableLayout.setupWithViewPager(followViewPager);
 
-
+        followTableLayout.setupWithViewPager(followViewPager);
+//        for (int i = 0; i < followTableLayout.getTabCount(); i++) {
+            followTableLayout.getTabAt(0).setIcon(R.drawable.tab_follow_album);
+            followTableLayout.getTabAt(1).setIcon(R.drawable.tab_follow_following);
+            followTableLayout.getTabAt(2).setIcon(R.drawable.tab_follow_brand);
+//        }
     }
+
 
     @Override
     public void showToast(String msg) {
@@ -72,18 +81,11 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
 
     private List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(PhotoGrapherFollowingFragment.getInstance());
         fragmentList.add(PhotoGrapherAlbumFragment.getInstance());
+        fragmentList.add(PhotoGrapherFollowingFragment.getInstance());
         fragmentList.add(PhotoGrapherBrandFragment.getInstance());
         return fragmentList;
     }
 
-    private List<Integer> getFragmentIcon() {
-        List<Integer> fragmentIcons = new ArrayList<Integer>();
-        fragmentIcons.add(R.drawable.ic_star_on_24dp);
-        fragmentIcons.add(R.drawable.ic_star_on_24dp);
-        fragmentIcons.add(R.drawable.ic_star_on_24dp);
-        return fragmentIcons;
-    }
 
 }

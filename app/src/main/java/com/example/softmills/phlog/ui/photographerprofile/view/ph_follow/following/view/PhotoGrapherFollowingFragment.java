@@ -3,10 +3,16 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.follow
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.PagingController;
@@ -31,6 +37,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
     private CustomRecyclerView followingRV;
     private PhotoGrapherFollowingInPresenter photoGrapherFollowingInPresenter;
     private PagingController pagingController;
+    private EditText searchEditText;
     private ProgressBar followingProgressBar;
 
     public static PhotoGrapherFollowingFragment getInstance() {
@@ -63,12 +70,15 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         photoGrapherFollowingInPresenter = new PhotoGrapherFollowingInPresenterImpl(getContext(), this);
     }
 
+
     @Override
     protected void initViews() {
+
         followingProgressBar = mainView.findViewById(R.id.photographer_following_progress_bar);
         followingRV = mainView.findViewById(R.id.photographer_following_rv);
         photoGrapherFollowingAdapter = new PhotoGrapherFollowingAdapter(getContext(), photoGrapherFollowingObjs);
         followingRV.setAdapter(photoGrapherFollowingAdapter);
+        searchEditText = mainView.findViewById(R.id.search_following);
     }
 
     private void initListener() {
@@ -78,6 +88,29 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
                 photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(page + 1);
             }
         };
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                photoGrapherFollowingAdapter.getFilter().filter(s.toString());
+
+            }
+        });
+
     }
 
     @Override
