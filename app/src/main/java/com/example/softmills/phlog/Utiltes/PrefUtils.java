@@ -84,8 +84,12 @@ public abstract class PrefUtils {
         return getSharedPref(context).getBoolean(IS_TOKEN_SAVED, false);
     }
 
-    public static void setIsTokenSaved(Context context, boolean isSaved) {
-        getSharedPref(context).edit().putBoolean(IS_TOKEN_SAVED, isSaved).apply();
+    public static void setLoginState(Context context,boolean state) {
+        getSharedPref(context).edit().putBoolean(LOGIN_PROVIDER, state).apply();
+
+    }
+    public static boolean isLoginProvided(Context context){
+        return getSharedPref(context).getBoolean(LOGIN_PROVIDER, false);
     }
 
     public static void firstTimeAskingPermission(Context context, String permission, boolean isFirstTime) {

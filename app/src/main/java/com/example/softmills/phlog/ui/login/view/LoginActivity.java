@@ -31,7 +31,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
+
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         initView();
@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void initPresenter() {
 
-        loginPresenter=new LoginPresenterImp(this);
+        loginPresenter=new LoginPresenterImp(getBaseContext(),this);
 
     }
 

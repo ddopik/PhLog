@@ -39,7 +39,7 @@ public class BaseNetworkApi {
     private static final String ALL_COUNTRES = BASE_URL + "/countires";
     private static final String SIGNUP_USER = BASE_URL + "/signup";
     private static final String NORMAL_LOGIN = BASE_URL + "/login";
-    private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/signup";
+    private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/signup_facebook";
     private static final String USER_PROFILE_URL = BASE_URL + "/get_info_photographer";
     private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/image_photographer";
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/image_photographer";
@@ -105,7 +105,12 @@ public class BaseNetworkApi {
 
     public static io.reactivex.Observable<SocialLoginResponse> socialLoginFacebook(HashMap<String, String> loginData) {
         return Rx2AndroidNetworking.post(FACEBOOK_LOGIN_URL)
+                .addBodyParameter("fullName", loginData.get("fullName"))
                 .addBodyParameter("facebook_id", loginData.get("facebook_id"))
+                .addBodyParameter("mobile_os", loginData.get("mobile_os"))
+                .addBodyParameter("mobile_model", loginData.get("mobile_model"))
+                .addBodyParameter("email", loginData.get("email"))
+                .addBodyParameter("image_profile", loginData.get("image_profile"))
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(SocialLoginResponse.class);

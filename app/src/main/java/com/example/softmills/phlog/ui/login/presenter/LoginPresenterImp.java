@@ -1,10 +1,14 @@
 package com.example.softmills.phlog.ui.login.presenter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.view.LoginView;
@@ -21,9 +25,11 @@ import io.reactivex.schedulers.Schedulers;
 public class LoginPresenterImp implements LoginPresenter {
 
     private LoginView loginView;
+    private Context context;
 
-    public LoginPresenterImp(LoginView loginView) {
+    public LoginPresenterImp(Context context,LoginView loginView) {
         this.loginView = loginView;
+        this.context=context;
     }
 
     private static final String TAG = LoginPresenterImp.class.getSimpleName();
@@ -80,20 +86,24 @@ public class LoginPresenterImp implements LoginPresenter {
 
                 HashMap<String, String> parameter = new HashMap<String, String>();
                 parameter.put("userId", socialUser.userId);
-                parameter.put("email", socialUser.email);
+
                 parameter.put("accessToken", socialUser.accessToken);
-                parameter.put("profilePictureUrl", socialUser.profilePictureUrl);
-                parameter.put("username", socialUser.username);
-                parameter.put("fullName", socialUser.fullName);
+                 parameter.put("username", socialUser.username);
                 parameter.put("pageLink", socialUser.pageLink);
+
+                parameter.put("fullName", socialUser.fullName);
                 parameter.put("facebook_id", socialUser.userId);
+                parameter.put("mobile_os", "Android");
+                parameter.put("mobile_model", Utilities.getDeviceName());
+                parameter.put("email", socialUser.email);
+                parameter.put("image_profile", socialUser.profilePictureUrl);
                 processFaceBookUser(parameter);
 
             }
 
             @Override
             public void onError(Throwable error) {
-                Log.e(TAG, error.getMessage());
+                Log.e(TAG, "signInWithFaceBook() --->" + error.getMessage());
             }
 
             @Override
@@ -110,9 +120,13 @@ public class LoginPresenterImp implements LoginPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(socialLoginResponse -> {
-                    if (socialLoginResponse.state.equals(BaseNetworkApi.STATUS_OK) && socialLoginResponse.found.equals(BaseNetworkApi.NEW_FACEBOOK_USER_STATUS)) {
-                        //todo--->session data should be set
+                    if (socialLoginResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        PrefUtils.setLoginState(context, true);
+                        PrefUtils.setUserToken(context, socialLoginResponse.token.get(0));
                         loginView.navigateToHome();
+                    } else {
+                        loginView.showMessage(context.getResources().getString(R.string.error_login));
+//                        Log.e(TAG, "processFaceBookUser() Error--->" + socialLoginResponse.state +"  "+ socialLoginResponse.msg) ;
                     }
                 }, throwable -> {
                     Log.e(TAG, "processFaceBookUser() Error--->" + throwable.getMessage());

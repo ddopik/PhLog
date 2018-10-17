@@ -69,4 +69,5 @@
     <string name="search">Search</string>
     <string name="following_state">You are now following</string>
     <string name="error_following_state">Error Following User</string>
+    <string name="error_login">Error login</string>
 </resources>
