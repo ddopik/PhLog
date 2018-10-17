@@ -6,4 +6,5 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.follow
 public interface PhotoGrapherFollowingInPresenter  {
 
     void getPhotoGrapherFollowing(int page);
+    void getPhotoGrapherFollowingSearch(int page, String key);
 }

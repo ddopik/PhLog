@@ -10,6 +10,7 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="0dp">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/following_container"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="@dimen/following_card_height"

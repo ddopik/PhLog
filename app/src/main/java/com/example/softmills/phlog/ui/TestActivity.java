@@ -98,4 +98,9 @@ public class TestActivity extends BaseActivity implements PhotoGrapherFollowingF
     public void viewMessage(String msg) {
         showToast(msg);
     }
+
+    @Override
+    public void viewPhotographerFollowingSearch(List<PhotoGrapherFollowingObj> photoGrapherFollowingObjList) {
+
+    }
 }

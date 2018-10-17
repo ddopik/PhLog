@@ -10,6 +10,7 @@ import java.util.List;
 public interface PhotoGrapherFollowingFragmentView {
 
     void viewPhotographerFollowingIn(List<PhotoGrapherFollowingObj> photoGrapherFollowingObjList);
+    void viewPhotographerFollowingSearch(List<PhotoGrapherFollowingObj> photoGrapherFollowingObjList);
     void viewPhotographerFollowingInProgress(boolean state);
     void viewMessage(String msg);
 }

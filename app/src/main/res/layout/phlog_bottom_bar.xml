@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:drawableTop="@drawable/ic_check_circle_black_24dp"
+                android:drawableTop="@drawable/ic_tab_home"
                 android:gravity="center"
                 android:text="@string/home"
                 android:textAlignment="center"
@@ -42,7 +42,6 @@
             android:id="@+id/navigation_missions_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_toEndOf="@+id/navigation_home_container"
             android:gravity="center">
 
@@ -51,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:drawableTop="@drawable/ic_check_circle_black_24dp"
+                android:drawableTop="@drawable/ic_tab_missions_off"
                 android:text="@string/campaigns"
                 android:textAlignment="center"
                 android:textColor="@color/gray677078" />
@@ -69,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:drawableTop="@drawable/ic_check_circle_black_24dp"
+                android:drawableTop="@drawable/ic_tab_notificatin_off"
                 android:gravity="center"
                 android:text="@string/Notification"
                 android:textAlignment="center"
@@ -88,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:drawableTop="@drawable/ic_check_circle_black_24dp"
+                android:drawableTop="@drawable/ic_tab_profile_off"
                 android:gravity="center"
                 android:text="@string/me"
                 android:textAlignment="center"

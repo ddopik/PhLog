@@ -65,30 +65,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         clearSelected();
-        int imgResource = R.drawable.ic_check_circle_gold_24dp;
-        switch (v.getId()) {
+        int homeBrnImg = R.drawable.ic_tab_home;
+        int campaignBtnImg = R.drawable.ic_tab_missions;
+        int notificationBtnImg = R.drawable.ic_tab_notificatin;
+        int myProfileBtnImg = R.drawable.ic_tab_profile;
 
+        switch (v.getId()) {
             case R.id.navigation_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new HomeFragment()).commit();
                 homeBrn.setTextColor(getResources().getColor(R.color.text_input_color));
-                homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+                homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg, 0, 0);
                 homeBrn.setCompoundDrawablePadding(8);
                 break;
             case R.id.navigation_missions:
                 getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new CampaignsFragment()).commit();
                 campaignBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+                campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, campaignBtnImg, 0, 0);
                 campaignBtn.setCompoundDrawablePadding(8);
                 break;
             case R.id.navigation_notification:
                 notificationBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+                notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg, 0, 0);
                 notificationBtn.setCompoundDrawablePadding(8);
                 break;
             case R.id.navigation_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new PhotoGraphedProfileFragment()).commit();
                 myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+                myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                 myProfileBtn.setCompoundDrawablePadding(8);
                 break;
             default:
@@ -96,21 +99,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void clearSelected() {
-        int imgResource = R.drawable.ic_check_circle_black_24dp;
+
+        int homeBrnImg_off = R.drawable.ic_tab_home_off;
+        int campaignBtnImg_off = R.drawable.ic_tab_home_off;
+        int notificationBtnImg_off = R.drawable.ic_tab_notificatin_off;
+        int myProfileBtnImg_off = R.drawable.ic_tab_profile_off;
+
         homeBrn.setTextColor(getResources().getColor(R.color.gray677078));
-        homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+        homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg_off, 0, 0);
         homeBrn.setCompoundDrawablePadding(8);
 
         campaignBtn.setTextColor(getResources().getColor(R.color.gray677078));
-        campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+        campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, campaignBtnImg_off, 0, 0);
         campaignBtn.setCompoundDrawablePadding(8);
 
         notificationBtn.setTextColor(getResources().getColor(R.color.gray677078));
-        notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+        notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg_off, 0, 0);
         notificationBtn.setCompoundDrawablePadding(8);
 
         myProfileBtn.setTextColor(getResources().getColor(R.color.gray677078));
-        myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, imgResource, 0, 0);
+        myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg_off, 0, 0);
         myProfileBtn.setCompoundDrawablePadding(8);
 
 

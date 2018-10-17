@@ -42,9 +42,14 @@
 
     <dimen name="fragment_photographer_padding_bottom">65dp</dimen>
 
+    <!--/////////  ActivityPhotoGrapherProfile-->
+    <dimen name="photographer_profile_main_preview_height">300dp</dimen>
+
+
+
     <!--/////////  ActivityUserProfile-->
     <dimen name="user_profile_header_img_size">85dp</dimen>
-    <dimen name="user_profile_main_preview_height">300dp</dimen>
+
     <dimen name="user_profile_rating_bar_width">65dp</dimen>
     <dimen name="user_profile_rating_bar_height">20dp</dimen>
     <dimen name="user_profile_grid_img_height">150dp</dimen>
@@ -64,8 +69,11 @@
 
 
     <!--////UserProfileHeader-->
+
     <dimen name="user_profile_follow_btn_w">95dp</dimen>
     <dimen name="user_profile_follow_btn_h">32dp</dimen>
     <dimen name="following_card_height">100dp</dimen>
+    <dimen name="search_widger_height">35dp</dimen>
+    <dimen name="user_profile_main_preview_height">350dp</dimen>
     <!--////-->
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/photographer_profile_background_img"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/photographer_profile_main_preview_height"
     android:background="@drawable/default_photographer_profile">
 
 
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:alpha="0.4"
         android:background="@drawable/graduant_layer" />
+
 
     <LinearLayout
 
@@ -24,7 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_margin="@dimen/dp22"
+            android:layout_marginEnd="@dimen/dp22"
+
             android:text="@string/edit"
             android:textColor="@color/white"
             android:textSize="@dimen/text_medium" />
@@ -33,7 +35,8 @@
             android:id="@+id/photographer_profile_img"
             android:layout_width="@dimen/user_profile_header_img_size"
             android:layout_height="@dimen/user_profile_header_img_size"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp18"
             android:src="@drawable/phlog_logo" />
 
         <TextView

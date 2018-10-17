@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -28,6 +29,8 @@ import java.util.List;
 public class UserProfileActivity extends BaseActivity implements UserProfileActivityView {
 
 
+    public static String USER_ID="user_id";
+    private String userID;
     private TextView userProfileLevel, userProfileUserName, userProfileFullName, userProfilePhotosCount, userProfileFolloweresCount, userProfileFollowingCount;
     private RatingBar userProfileRating;
     private ImageView userProfileImg;
@@ -36,6 +39,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private UserProfilePresenter userProfilePresenter;
     private List<UserPhoto> userPhotoList = new ArrayList<UserPhoto>();
     private ProgressBar userProfilePhotosProgressBar;
+    private Button followUser;
     private PagingController pagingController;
 
 
@@ -57,6 +61,14 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
     @Override
     public void initView() {
+
+
+        if(getIntent().getStringExtra(USER_ID) != null){
+            this.userID=getIntent().getStringExtra(USER_ID);
+        }else {
+            return;
+        }
+
         userProfileLevel = findViewById(R.id.user_profile_level);
         userProfileRating = findViewById(R.id.profile_rating);
         userProfileImg = findViewById(R.id.user_profile_img);
@@ -67,10 +79,13 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         userProfileFollowingCount = findViewById(R.id.following_val);
         userProfilePhotosRv = findViewById(R.id.user_profile_photos);
         userProfilePhotosProgressBar = findViewById(R.id.user_profile_photos_progress_bar);
+        followUser=findViewById(R.id.follow_user);
         userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
         userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
-        userProfilePresenter.getUserProfileData("1"); //todo static call here
-        userProfilePresenter.getUserPhotos("1",0);
+
+
+        userProfilePresenter.getUserProfileData(userID); //todo static call here
+        userProfilePresenter.getUserPhotos(userID,0);
 
     }
 
@@ -79,9 +94,13 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         pagingController=new PagingController(userProfilePhotosRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                userProfilePresenter.getUserPhotos("1",page+1);
+                userProfilePresenter.getUserPhotos(userID,page+1);
             }
         };
+        followUser.setOnClickListener(v -> {
+            if(userID !=null)
+            userProfilePresenter.followUser(userID);
+        });
     }
 
     @Override

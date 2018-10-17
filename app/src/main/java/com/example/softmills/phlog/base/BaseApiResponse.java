@@ -10,5 +10,8 @@ public class BaseApiResponse {
     @SerializedName("state")
     @Expose
     public String state;
+    @SerializedName("msg")
+    @Expose
+    public String msg;
 
 }
