@@ -69,11 +69,19 @@
 
 
     <!--////UserProfileHeader-->
-
     <dimen name="user_profile_follow_btn_w">95dp</dimen>
     <dimen name="user_profile_follow_btn_h">32dp</dimen>
     <dimen name="following_card_height">100dp</dimen>
     <dimen name="search_widger_height">35dp</dimen>
     <dimen name="user_profile_main_preview_height">350dp</dimen>
-    <!--////-->
+    <!--//Activity_upload_profile_pic//-->
+    <dimen name="profile_pic_fab_margin">16dp</dimen>
+    <dimen name="profile_pic_thumbnail_size">80dp</dimen>
+    <dimen name="profile_pic_recycler_size">100dp</dimen>
+    <dimen name="profile_pic_thumbnail_horizontal_padding">8dp</dimen>
+    <dimen name="profile_pic_thumbnail_vertical_padding">10dp</dimen>
+    <dimen name="profile_pic_padding_10">10dp</dimen>
+    <dimen name="profile_pic_margin_horizontal">16dp</dimen>
+    <dimen name="profile_pic_lbl_edit_image_control">100dp</dimen>
+    <!--////////////////////////////////////////-->
 </resources>

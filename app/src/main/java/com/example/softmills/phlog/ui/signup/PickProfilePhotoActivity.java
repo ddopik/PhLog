@@ -28,7 +28,6 @@ public class PickProfilePhotoActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_upload_profile_pic);
 
 
