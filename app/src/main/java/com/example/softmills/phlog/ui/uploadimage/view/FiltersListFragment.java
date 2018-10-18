@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.signup.view;
+package com.example.softmills.phlog.ui.uploadimage.view;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -15,7 +15,6 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
 import com.example.softmills.phlog.Utiltes.SpacesItemDecoration;
 import com.example.softmills.phlog.base.BaseFragment;
-import com.example.softmills.phlog.ui.MainActivity;
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.utils.ThumbnailItem;

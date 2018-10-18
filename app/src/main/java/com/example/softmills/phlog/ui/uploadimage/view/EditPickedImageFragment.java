@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.signup.view;
+package com.example.softmills.phlog.ui.uploadimage.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

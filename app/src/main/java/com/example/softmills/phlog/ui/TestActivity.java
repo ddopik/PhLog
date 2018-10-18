@@ -25,8 +25,8 @@ import android.widget.Toast;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.ui.signup.view.EditPickedImageFragment;
-import com.example.softmills.phlog.ui.signup.view.FiltersListFragment;
+import com.example.softmills.phlog.ui.uploadimage.view.EditPickedImageFragment;
+import com.example.softmills.phlog.ui.uploadimage.view.FiltersListFragment;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -38,8 +38,6 @@ import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import pub.devrel.easypermissions.PermissionRequest;
 
 /**
  * Created by abdalla_maged on 10/15/2018.
@@ -246,10 +244,8 @@ public class TestActivity extends BaseActivity implements FiltersListFragment.Fi
         int id = item.getItemId();
 
         if (id == R.id.action_open) {
-//            openImageFromGallery();
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setType("image/*");
-            startActivityForResult(intent, SELECT_GALLERY_IMAGE);
+            openImageFromGallery();
+
             return true;
         }
 

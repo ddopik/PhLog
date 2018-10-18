@@ -91,8 +91,8 @@ public class PickProfilePhotoActivity extends BaseActivity {
             @Override
             public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
                 //Some error handling
+                e.printStackTrace();
             }
-
             @Override
             public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
                 GlideApp.with(PickProfilePhotoActivity.this)
