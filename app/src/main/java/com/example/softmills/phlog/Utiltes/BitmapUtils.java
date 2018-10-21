@@ -12,12 +12,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by abdalla_maged on 10/18/2018.
@@ -101,7 +105,19 @@ public class BitmapUtils {
 
         return inSampleSize;
     }
+    public static   Bitmap getBitmapFromGallery(Context context, String picturePath, int width, int height) {
 
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(picturePath, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = BitmapUtils.calculateInSampleSize(options, width, height);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(picturePath, options);
+    }
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
@@ -117,7 +133,33 @@ public class BitmapUtils {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
+    /*
+     * saves image to camera gallery
+     * */
+    public static void saveImageToGallery(Context context,Bitmap finalImage) {
 
+        final String path = BitmapUtils.insertImage(getApplicationContext().getContentResolver(), finalImage, System.currentTimeMillis() + "_phlog.jpg", "PhLogCaptured Photo");
+        if (!TextUtils.isEmpty(path)) {
+            Toast.makeText(context, "Image with path " + path + "  Saved to galelry", Toast.LENGTH_SHORT).show();
+//            Snackbar snackbar = Snackbar
+//                    .make(coordinatorLayout, "Image saved to gallery!", Snackbar.LENGTH_LONG)
+//                    .setAction("OPEN", new View.OnClickListener() {
+//                        @Override
+////                                            todo action to be taken after image get saved to gallery
+//                        public void onClick(View view) {
+//                            openImage(path);
+//                        }
+//                    });
+//
+//            snackbar.show();
+        } else {
+            Toast.makeText(context, "Couldn't Save Image", Toast.LENGTH_SHORT).show();
+//            Snackbar snackbar = Snackbar
+//                    .make(coordinatorLayout, "Unable to save image!", Snackbar.LENGTH_LONG);
+//
+//            snackbar.show();
+        }
+    }
     /**
      * Storing image to device gallery
      *

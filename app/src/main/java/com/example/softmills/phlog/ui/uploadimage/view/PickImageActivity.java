@@ -47,6 +47,8 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.net.Uri.fromFile;
+import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGallery;
+import static com.example.softmills.phlog.Utiltes.BitmapUtils.saveImageToGallery;
 import static com.example.softmills.phlog.Utiltes.Constants.PERMEATION_REQUEST_CODE__WRITE_EXTERNAL_CAMERA;
 import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_CAMERA;
 import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_GALLERY;
@@ -118,7 +120,7 @@ public class PickImageActivity extends BaseActivity implements FiltersListFragme
             openPickerDialog();
         });
         saveImg.setOnClickListener(view -> {
-            saveImageToGallery();
+            saveImageToGallery(this,finalImage);
         });
 
 
@@ -185,36 +187,7 @@ public class PickImageActivity extends BaseActivity implements FiltersListFragme
         }).show();
     }
 
-    /*
-     * saves image to camera gallery
-     * */
-    private void saveImageToGallery() {
 
-        final String path = BitmapUtils.insertImage(getApplicationContext().getContentResolver(), finalImage, System.currentTimeMillis() + "_profile.jpg", null);
-        if (!TextUtils.isEmpty(path)) {
-            Toast.makeText(getBaseContext(), "Image with path " + path + "  Saved to galelry", Toast.LENGTH_SHORT).show();
-//            Snackbar snackbar = Snackbar
-//                    .make(coordinatorLayout, "Image saved to gallery!", Snackbar.LENGTH_LONG)
-//                    .setAction("OPEN", new View.OnClickListener() {
-//                        @Override
-//
-////                                            todo action to be taken after image get saved to gallery
-//                        public void onClick(View view) {
-//                            openImage(path);
-//                        }
-//                    });
-//
-//            snackbar.show();
-        } else {
-            Toast.makeText(getBaseContext(), "Couldn't Save Image", Toast.LENGTH_SHORT).show();
-//            Snackbar snackbar = Snackbar
-//                    .make(coordinatorLayout, "Unable to save image!", Snackbar.LENGTH_LONG);
-//
-//            snackbar.show();
-        }
-
-
-    }
 
 
     @AfterPermissionGranted(PERMEATION_REQUEST_CODE__WRITE_EXTERNAL_CAMERA)
@@ -231,25 +204,7 @@ public class PickImageActivity extends BaseActivity implements FiltersListFragme
                     PERMEATION_REQUEST_CODE__WRITE_EXTERNAL_CAMERA, perms);
         }
     }
-    private  Bitmap getBitmapFromGallery(Context context, String picturePath, int width, int height) {
-//        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//        Cursor cursor = context.getContentResolver().query(path, filePathColumn, null, null, null);
-//        cursor.moveToFirst();
-//        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//        String picturePath = cursor.getString(columnIndex);
-//        cursor.close();
 
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(picturePath, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = BitmapUtils.calculateInSampleSize(options, width, height);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(picturePath, options);
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
@@ -277,71 +232,9 @@ public class PickImageActivity extends BaseActivity implements FiltersListFragme
         }
         super.onActivityResult(requestCode, resultCode, data);
 
-
-//        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
-//            @Override
-//            public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
-//                //Some error handling
-//                e.printStackTrace();
-//                Log.e(TAG, "onImagePickerError() --->() Error  " + e.getMessage());
-//            }
-//
-//            @Override
-//            public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
-//
-//                //Header Img
-//                GlideApp.with(getBaseContext())
-//                        .load(fromFile(imageFile))
-//                        .error(R.drawable.ic_launcher_foreground)
-//                        .override(612, 816)
-//                        .into(imagePreview);
-//
-//                switch (type) {
-//                    case REQUEST_CODE_GALLERY: {  //in case image came from gallery
-//                        handleGalleryImage(data);
-//                        break;
-//                    }
-//                    case REQUEST_CODE_CAMERA: {  // in case Image CAme from Camera
-//                        handleCameraImage(imageFile);
-//                        break;
-//                    }
-//                }
-//
-//                filtersListFragment.prepareThumbnail(originalImage, fromFile(imageFile).toString());
-//            }
-//        });
     }
 
-    private void handleGalleryImage(Intent data) {
 
-
-        Bitmap bitmap = BitmapUtils.getBitmapFromGallery(getBaseContext(), data.getData(), 800, 800);
-        originalImage.recycle();
-        finalImage.recycle();
-        originalImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-        finalImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-        imagePreview.setImageBitmap(originalImage);
-        bitmap.recycle();
-        // render selected image thumbnails
-
-    }
-
-//    private void handleCameraImage(File imageFile) {
-//
-//
-//        saveImage(imageFile.getAbsolutePath());
-//        Bitmap bitmap = BitmapUtils.getBitmapFromGallery(getBaseContext(), imageFile.toURI(), 800, 800);
-//        originalImage.recycle();
-//        finalImage.recycle();
-//        originalImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-//        filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-//        finalImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-//        imagePreview.setImageBitmap(originalImage);
-//        bitmap.recycle();
-//        // render selected image thumbnails
-//
-//    }
 
     @Override
     public void onBrightnessChanged(int brightness) {
@@ -398,29 +291,7 @@ public class PickImageActivity extends BaseActivity implements FiltersListFragme
         finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
     }
 
-    private void saveImage(String imagePath) {
-        try {
 
-
-            //to get the image from the ImageView (say iv)
-            BitmapDrawable draw = (BitmapDrawable) imagePreview.getDrawable();
-            Bitmap bitmap = draw.getBitmap();
-
-            FileOutputStream outStream = null;
-            File sdCard = Environment.getExternalStorageDirectory();
-            File dir = new File(sdCard.getAbsolutePath() + "/phLogGallery");
-            dir.mkdirs();
-            String fileName = String.format("%d.jpg", System.currentTimeMillis());
-            File outFile = new File(dir, fileName);
-            outStream = new FileOutputStream(outFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-            outStream.flush();
-            outStream.close();
-        } catch (Exception e) {
-            Log.e(TAG, "saveImage() ---> Error Saving Image  " + e.getMessage());
-
-        }
-    }
 
     @Override
     public void showToast(String msg) {
