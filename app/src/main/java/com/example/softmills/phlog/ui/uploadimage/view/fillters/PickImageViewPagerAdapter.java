@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.uploadimage.view;
+package com.example.softmills.phlog.ui.uploadimage.view.fillters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

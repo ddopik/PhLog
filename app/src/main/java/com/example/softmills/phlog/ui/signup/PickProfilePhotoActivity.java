@@ -13,9 +13,6 @@ import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
 
 import java.io.File;
-
-import pl.aprilapps.easyphotopicker.DefaultCallback;
-import pl.aprilapps.easyphotopicker.EasyImage;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -58,14 +55,13 @@ public class PickProfilePhotoActivity extends BaseActivity {
 
     private void openPickerDialog() {
         CharSequence photoChooserOptions[] = new CharSequence[]{getResources().getString(R.string.general_photo_chooser_camera), getResources().getString(R.string.general_photo_chooser_gallery)};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.general_photo_chooser_title));
         builder.setItems(photoChooserOptions, (dialog, option) -> {
             if (option == 0) {
-                EasyImage.openCamera(this, 0);
+//                EasyImage.openCamera(this, 0);
             } else if (option == 1) {
-                EasyImage.openGallery(this, 0);
+//                EasyImage.openGallery(this, 0);
             }
         }).show();
     }
@@ -87,21 +83,21 @@ public class PickProfilePhotoActivity extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
-            @Override
-            public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
-                //Some error handling
-                e.printStackTrace();
-            }
-            @Override
-            public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
-                GlideApp.with(PickProfilePhotoActivity.this)
-                        .load(Uri.fromFile(imageFile))
-                        .error(R.drawable.ic_launcher_foreground)
-                        .override(612, 816)
-                        .into(pickImage);
-            }
-        });
+//        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+//            @Override
+//            public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
+//                //Some error handling
+//                e.printStackTrace();
+//            }
+//            @Override
+//            public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
+//                GlideApp.with(PickProfilePhotoActivity.this)
+//                        .load(Uri.fromFile(imageFile))
+//                        .error(R.drawable.ic_launcher_foreground)
+//                        .override(612, 816)
+//                        .into(pickImage);
+//            }
+//        });
     }
 
     @Override

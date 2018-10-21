@@ -4,6 +4,7 @@
     package="com.example.softmills.phlog">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGEWRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 

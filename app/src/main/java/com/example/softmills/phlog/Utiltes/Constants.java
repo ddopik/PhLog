@@ -6,5 +6,8 @@ package com.example.softmills.phlog.Utiltes;
 public interface Constants {
 
     int PERMEATION_REQUEST_CODE__WRITE_EXTERNAL_CAMERA =1223;
+    int REQUEST_CODE_GALLERY =1224;
+    int REQUEST_CODE_CAMERA =1225;
+
 
 }

@@ -26,7 +26,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.EditPickedImageFragment;
-import com.example.softmills.phlog.ui.uploadimage.view.FiltersListFragment;
+import com.example.softmills.phlog.ui.uploadimage.view.fillters.FiltersListFragment;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
