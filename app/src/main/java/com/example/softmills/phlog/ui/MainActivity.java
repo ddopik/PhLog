@@ -1,8 +1,10 @@
 package com.example.softmills.phlog.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
 import com.example.softmills.phlog.ui.home.view.HomeFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
+import com.example.softmills.phlog.ui.uploadimage.view.ImageFilterActivity;
 
 /**
  * Created by abdalla_maged on 10/1/2018.
@@ -20,6 +23,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private BottomAppBar bottomNavigation;
     private Button homeBrn, campaignBtn, notificationBtn, myProfileBtn;
+    private FloatingActionButton picImgHomeBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         campaignBtn = findViewById(R.id.navigation_missions);
         myProfileBtn = findViewById(R.id.navigation_profile);
         notificationBtn = findViewById(R.id.navigation_notification);
+        picImgHomeBtn = findViewById(R.id.pic_img_home_btn);
 
     }
 
@@ -50,6 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         campaignBtn.setOnClickListener(this);
         myProfileBtn.setOnClickListener(this);
         notificationBtn.setOnClickListener(this);
+        picImgHomeBtn.setOnClickListener(this);
     }
 
     private void initListener() {
@@ -65,10 +71,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         clearSelected();
-        int homeBrnImg = R.drawable.ic_tab_home;
-        int campaignBtnImg = R.drawable.ic_tab_missions;
-        int notificationBtnImg = R.drawable.ic_tab_notificatin;
-        int myProfileBtnImg = R.drawable.ic_tab_profile;
+        int homeBrnImg = R.drawable.ic_tab_home_on;
+        int campaignBtnImg = R.drawable.ic_tab_missions_on;
+        int notificationBtnImg = R.drawable.ic_tab_notificatin_on;
+        int myProfileBtnImg = R.drawable.ic_tab_profile_on;
 
         switch (v.getId()) {
             case R.id.navigation_home:
@@ -94,6 +100,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                 myProfileBtn.setCompoundDrawablePadding(8);
                 break;
+            case R.id.pic_img_home_btn:
+                Intent intent = new Intent(this, ImageFilterActivity.class);
+                startActivity(intent);
+                break;
             default:
         }
     }
@@ -101,7 +111,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void clearSelected() {
 
         int homeBrnImg_off = R.drawable.ic_tab_home_off;
-        int campaignBtnImg_off = R.drawable.ic_tab_home_off;
+        int campaignBtnImg_off = R.drawable.ic_tab_missions_off;
         int notificationBtnImg_off = R.drawable.ic_tab_notificatin_off;
         int myProfileBtnImg_off = R.drawable.ic_tab_profile_off;
 

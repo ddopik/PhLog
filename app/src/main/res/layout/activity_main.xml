@@ -27,13 +27,14 @@
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/pic_img_home_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/black"
+        app:backgroundTint="@android:color/transparent"
+        android:src="@drawable/btn_upload_img"
         app:layout_anchor="@+id/bottom_navigation"
-        app:srcCompat="@drawable/ic_check_black_24dp" />
+      />
 
 
     <include

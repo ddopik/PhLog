@@ -53,6 +53,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         initListener();
     }
 
+
     @Override
     public void initPresenter() {
         userProfilePresenter = new UserProfilePresenterImpl(getBaseContext(), this);
@@ -63,29 +64,27 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     public void initView() {
 
 
-        if(getIntent().getStringExtra(USER_ID) != null){
+        if(getIntent().getStringExtra(USER_ID) != null)
             this.userID=getIntent().getStringExtra(USER_ID);
-        }else {
-            return;
-        }
-
-        userProfileLevel = findViewById(R.id.user_profile_level);
-        userProfileRating = findViewById(R.id.profile_rating);
-        userProfileImg = findViewById(R.id.user_profile_img);
-        userProfileFullName = findViewById(R.id.user_profile_full_name);
-        userProfileUserName = findViewById(R.id.user_profile_username);
-        userProfilePhotosCount = findViewById(R.id.photos_val);
-        userProfileFolloweresCount = findViewById(R.id.followers_val);
-        userProfileFollowingCount = findViewById(R.id.following_val);
-        userProfilePhotosRv = findViewById(R.id.user_profile_photos);
-        userProfilePhotosProgressBar = findViewById(R.id.user_profile_photos_progress_bar);
-        followUser=findViewById(R.id.follow_user);
-        userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
-        userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
+            userProfileLevel = findViewById(R.id.user_profile_level);
+            userProfileRating = findViewById(R.id.profile_rating);
+            userProfileImg = findViewById(R.id.user_profile_img);
+            userProfileFullName = findViewById(R.id.user_profile_full_name);
+            userProfileUserName = findViewById(R.id.user_profile_username);
+            userProfilePhotosCount = findViewById(R.id.photos_val);
+            userProfileFolloweresCount = findViewById(R.id.followers_val);
+            userProfileFollowingCount = findViewById(R.id.following_val);
+            userProfilePhotosRv = findViewById(R.id.user_profile_photos);
+            userProfilePhotosProgressBar = findViewById(R.id.user_profile_photos_progress_bar);
+            followUser=findViewById(R.id.follow_user);
+            userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
+            userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
 
 
-        userProfilePresenter.getUserProfileData(userID); //todo static call here
-        userProfilePresenter.getUserPhotos(userID,0);
+            userProfilePresenter.getUserProfileData(userID); //todo static call here
+            userProfilePresenter.getUserPhotos(userID,0);
+
+
 
     }
 

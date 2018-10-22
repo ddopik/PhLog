@@ -1,0 +1,137 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.softmills.phlog.base.widgets.CustomRecyclerView
+        android:id="@+id/gallery_img_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:horizontalSpacing="2dp"
+        android:padding="2dp"
+
+        android:verticalSpacing="2dp"
+        app:orientation="grid"
+        app:span_size="3"/>
+
+    <!--<ProgressBar-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true" />-->
+
+</FrameLayout>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:id="@+id/coordinator_layout"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent">-->
+
+<!--<android.support.design.widget.AppBarLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+<!--<FrameLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content">-->
+
+<!--<include layout="@layout/phlog_app_bar" />-->
+
+<!--<LinearLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:gravity="end">-->
+
+
+<!--<ImageButton-->
+<!--android:id="@+id/open_camera_btn"-->
+<!--android:layout_width="45dp"-->
+<!--android:layout_height="40dp"-->
+<!--android:layout_marginTop="@dimen/dp8"-->
+<!--android:layout_marginEnd="@dimen/dp12"-->
+<!--android:src="@drawable/btn_upload_img" />-->
+<!--</LinearLayout>-->
+<!--</FrameLayout>-->
+<!--</android.support.design.widget.AppBarLayout>-->
+
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:background="@android:color/white"-->
+<!--android:orientation="vertical"-->
+<!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--tools:context="info.androidhive.imagefilters.MainActivity"-->
+<!--tools:showIn="@layout/activity_main">-->
+
+<!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;android:id="@+id/upload_image_preview"&ndash;&gt;-->
+<!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;android:layout_height="360dp"&ndash;&gt;-->
+<!--&lt;!&ndash;android:scaleType="centerCrop" />&ndash;&gt;-->
+<!--<LinearLayout-->
+<!--android:id="@+id/image_preview_section"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="@dimen/upload_image_head_height"-->
+<!--android:gravity="center"-->
+<!--android:orientation="vertical">-->
+
+<!--<ImageView-->
+<!--android:layout_width="@dimen/logo_width"-->
+<!--android:layout_height="@dimen/logo_width"-->
+<!--android:layout_gravity="center"-->
+<!--android:src="@drawable/phlog_logo" />-->
+
+<!--<TextView-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="@string/choose_from_your_photos"-->
+<!--android:textAlignment="center"-->
+<!--android:textColor="@color/black"-->
+<!--android:textSize="@dimen/font_small" />-->
+<!--</LinearLayout>-->
+
+<!--<FrameLayout-->
+<!--android:id="@+id/gallery_img_container"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_below="@+id/image_preview_section"-->
+<!--android:visibility="gone"-->
+<!--tools:visibility="visible" />-->
+
+
+<!--<RelativeLayout-->
+<!--android:id="@+id/filter_container"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_below="@+id/gallery_img_container"-->
+<!--android:visibility="gone"-->
+<!--tools:visibility="visible">-->
+
+<!--<com.example.softmills.phlog.Utiltes.NonSwipeableViewPager-->
+<!--android:id="@+id/viewpager"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="120dp"-->
+<!--android:layout_above="@+id/tabs"-->
+<!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+<!--<android.support.design.widget.TabLayout-->
+<!--android:id="@+id/tabs"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_alignParentBottom="true"-->
+<!--app:tabGravity="fill"-->
+<!--app:tabMode="fixed" />-->
+<!--</RelativeLayout>-->
+<!--</RelativeLayout>-->
+
+<!--</android.support.design.widget.CoordinatorLayout>-->
+
+
+
+

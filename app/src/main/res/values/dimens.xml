@@ -83,5 +83,7 @@
     <dimen name="profile_pic_padding_10">10dp</dimen>
     <dimen name="profile_pic_margin_horizontal">16dp</dimen>
     <dimen name="profile_pic_lbl_edit_image_control">100dp</dimen>
+    <dimen name="gallery_image_size">175dp</dimen>
+    <dimen name="upload_image_head_height">160dp</dimen>
     <!--////////////////////////////////////////-->
 </resources>

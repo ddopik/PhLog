@@ -30,15 +30,16 @@
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.MainActivity">
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
 
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
+        </activity>
         <activity android:name=".ui.campaigns.inner.ui.CampaignInnerActivity"/>
         <activity android:name=".ui.signup.PickProfilePhotoActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.TestActivity" >
             <!--<intent-filter>-->
@@ -48,11 +49,18 @@
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".ui.uploadimage.view.PickImageActivity" >
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ui.uploadimage.view.ImageFilterActivity" >
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <category android:name="android.intent.category.LAUNCHER" />
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".ui.uploadimage.view.GalleryImageActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 

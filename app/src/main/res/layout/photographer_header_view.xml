@@ -5,7 +5,9 @@
     android:id="@+id/photographer_profile_background_img"
     android:layout_width="match_parent"
     android:layout_height="@dimen/photographer_profile_main_preview_height"
-    android:background="@drawable/default_photographer_profile">
+    android:scaleType="centerInside"
+    android:background="@drawable/default_photographer_profile"
+   >
 
 
     <ImageView

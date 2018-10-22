@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:drawableTop="@drawable/ic_tab_home"
+                android:drawableTop="@drawable/ic_tab_home_on"
                 android:gravity="center"
                 android:text="@string/home"
                 android:textAlignment="center"
