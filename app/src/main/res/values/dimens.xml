@@ -45,7 +45,8 @@
     <!--/////////  ActivityPhotoGrapherProfile-->
     <dimen name="photographer_profile_main_preview_height">300dp</dimen>
 
-
+    <!--/////////  ActivityUserProfile-->
+    <dimen name="filters_list_item_h">150dp</dimen>
 
     <!--/////////  ActivityUserProfile-->
     <dimen name="user_profile_header_img_size">85dp</dimen>
@@ -86,5 +87,6 @@
     <dimen name="gallery_image_size">175dp</dimen>
     <dimen name="upload_image_head_height">155dp</dimen>
     <dimen name="dp2">2dp</dimen>
+    <dimen name="filter_preview_img_w">250dp</dimen>
     <!--////////////////////////////////////////-->
 </resources>

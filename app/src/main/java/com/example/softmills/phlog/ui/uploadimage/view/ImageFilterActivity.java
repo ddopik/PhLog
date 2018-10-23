@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.esafirm.imagepicker.features.ImagePicker;
@@ -147,7 +148,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         GlideApp.with(getBaseContext())
                 .load(imgPath.getPath())
                 .error(R.drawable.ic_launcher_foreground)
-                .override(612, 816)
+                .override(LinearLayout.LayoutParams.MATCH_PARENT
+                        , LinearLayout.LayoutParams.MATCH_PARENT)
                 .into(imagePreview);
 
         Bitmap bitmap = getBitmapFromGallery(getBaseContext(), img, 800, 800);

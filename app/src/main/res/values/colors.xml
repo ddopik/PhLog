@@ -50,6 +50,6 @@
     <color name="user_profile_text_header_color">#96A0AA</color>
 
         <color name="color_option_menu">#FF3990</color>
-        <color name="filter_label_normal">#8A8889</color>
-        <color name="filter_label_selected">#221F20</color>
+        <color name="filter_label_normal">#EEEEEE</color>
+        <color name="filter_label_selected">#FFFFFF</color>
 </resources>

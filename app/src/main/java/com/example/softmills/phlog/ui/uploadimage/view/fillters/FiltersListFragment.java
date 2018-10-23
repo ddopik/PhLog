@@ -32,13 +32,14 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
     private static String TAG = FiltersListFragment.class.getSimpleName();
     RecyclerView recyclerView;
     ThumbnailsAdapter mAdapter;
-    List<ThumbnailItem> thumbnailItemList=new ArrayList<>();
+    List<ThumbnailItem> thumbnailItemList = new ArrayList<>();
     FiltersListFragmentListener listener;
-   private Activity activityContext;
+    private Activity activityContext;
+
     public static FiltersListFragment getInstance(Activity activity) {
-        FiltersListFragment filtersListFragment= new FiltersListFragment();
-        filtersListFragment.activityContext=activity;
-        return  filtersListFragment;
+        FiltersListFragment filtersListFragment = new FiltersListFragment();
+        filtersListFragment.activityContext = activity;
+        return filtersListFragment;
     }
 
     public void setListener(FiltersListFragmentListener listener) {
@@ -91,12 +92,12 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
      *
      * @param bitmap
      */
-    public void prepareThumbnail(final Bitmap bitmap,String pickedImageName) {
+    public void prepareThumbnail(final Bitmap bitmap, String pickedImageName) {
         Runnable r = () -> {
             Bitmap thumbImage;
 
             if (bitmap == null) {
-                thumbImage = BitmapUtils.getBitmapFromAssets(getContext(), pickedImageName, 100, 100);
+                thumbImage = BitmapUtils.getBitmapFromAssets(activityContext, pickedImageName, 100, 100);
             } else {
                 thumbImage = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
             }
@@ -128,7 +129,7 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
 
             thumbnailItemList.addAll(ThumbnailsManager.processThumbs(activityContext));
 
-           activityContext.runOnUiThread(() -> mAdapter.notifyDataSetChanged());
+            activityContext.runOnUiThread(() -> mAdapter.notifyDataSetChanged());
         };
 
         new Thread(r).start();

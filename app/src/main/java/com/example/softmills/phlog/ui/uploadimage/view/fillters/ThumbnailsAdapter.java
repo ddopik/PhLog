@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.uploadimage.view.fillters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -61,8 +62,10 @@ public class ThumbnailsAdapter extends RecyclerView.Adapter<ThumbnailsAdapter.My
         holder.filterName.setText(thumbnailItem.filterName);
 
         if (selectedIndex == position) {
+            holder.filterName.setTypeface(null, Typeface.BOLD);
             holder.filterName.setTextColor(ContextCompat.getColor(mContext, R.color.filter_label_selected));
         } else {
+            holder.filterName.setTypeface(null, Typeface.NORMAL);
             holder.filterName.setTextColor(ContextCompat.getColor(mContext, R.color.filter_label_normal));
         }
     }
