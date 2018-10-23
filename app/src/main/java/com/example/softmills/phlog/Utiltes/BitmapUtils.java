@@ -105,7 +105,8 @@ public class BitmapUtils {
 
         return inSampleSize;
     }
-    public static   Bitmap getBitmapFromGallery(Context context, String picturePath, int width, int height) {
+
+    public static Bitmap getBitmapFromGallery(Context context, String picturePath, int width, int height) {
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -118,6 +119,7 @@ public class BitmapUtils {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(picturePath, options);
     }
+
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
@@ -133,10 +135,11 @@ public class BitmapUtils {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
+
     /*
      * saves image to camera gallery
      * */
-    public static void saveImageToGallery(Context context,Bitmap finalImage) {
+    public static void saveImageToGallery(Context context, Bitmap finalImage) {
 
         final String path = BitmapUtils.insertImage(getApplicationContext().getContentResolver(), finalImage, System.currentTimeMillis() + "_phlog.jpg", "PhLogCaptured Photo");
         if (!TextUtils.isEmpty(path)) {
@@ -160,6 +163,7 @@ public class BitmapUtils {
 //            snackbar.show();
         }
     }
+
     /**
      * Storing image to device gallery
      *

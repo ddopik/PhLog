@@ -21,6 +21,7 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
 
     private List<String> imageList;
     private Context context;
+    public OnGalleryImageClicked onGalleryImageClicked;
 
     public GalleryImageAdapter(Context context, List<String> imageList) {
         this.context = context;
@@ -43,6 +44,10 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
                 .placeholder(R.drawable.phlog_logo).centerCrop()
                 .into(galleryImageViewHolder.galleryImageImg);
 
+        if (onGalleryImageClicked != null) {
+            galleryImageViewHolder.galleryImageImg.setOnClickListener(v -> onGalleryImageClicked.onImageClick(imageList.get(i)));
+        }
+
 
     }
 
@@ -59,5 +64,9 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
             super(view);
             galleryImageImg = view.findViewById(R.id.gallery_image_img);
         }
+    }
+
+    public interface OnGalleryImageClicked {
+        void onImageClick(String imagePath);
     }
 }

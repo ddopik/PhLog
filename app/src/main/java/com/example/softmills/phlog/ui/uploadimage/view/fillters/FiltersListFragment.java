@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.uploadimage.view.fillters;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,19 +29,16 @@ import java.util.List;
  */
 public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapter.ThumbnailsAdapterListener {
 
-    private static String TAG = "FiltersListFragment";
+    private static String TAG = FiltersListFragment.class.getSimpleName();
     RecyclerView recyclerView;
     ThumbnailsAdapter mAdapter;
-    List<ThumbnailItem> thumbnailItemList;
+    List<ThumbnailItem> thumbnailItemList=new ArrayList<>();
     FiltersListFragmentListener listener;
-
-    public static FiltersListFragment getInstance(String PickedImageName) {
-        FiltersListFragment filtersListFragment = new FiltersListFragment();
-
-//        Bundle bundle = new Bundle();
-//        bundle.putString("pickedImageName", PickedImageName);
-//        filtersListFragment.setArguments(bundle);
-        return new FiltersListFragment();
+   private Activity activityContext;
+    public static FiltersListFragment getInstance(Activity activity) {
+        FiltersListFragment filtersListFragment= new FiltersListFragment();
+        filtersListFragment.activityContext=activity;
+        return  filtersListFragment;
     }
 
     public void setListener(FiltersListFragmentListener listener) {
@@ -63,8 +61,6 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
         View view = inflater.inflate(R.layout.fragment_filters_list, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-
-        thumbnailItemList = new ArrayList<>();
         mAdapter = new ThumbnailsAdapter(getActivity(), thumbnailItemList, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -74,7 +70,7 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
         recyclerView.addItemDecoration(new SpacesItemDecoration(space));
         recyclerView.setAdapter(mAdapter);
 
-        prepareThumbnail(null,"");
+//        prepareThumbnail(null,"");
 
         return view;
     }
@@ -100,7 +96,7 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
             Bitmap thumbImage;
 
             if (bitmap == null) {
-                thumbImage = BitmapUtils.getBitmapFromAssets(getActivity(), pickedImageName, 100, 100);
+                thumbImage = BitmapUtils.getBitmapFromAssets(getContext(), pickedImageName, 100, 100);
             } else {
                 thumbImage = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
             }
@@ -117,10 +113,10 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
             // add normal bitmap first
             ThumbnailItem thumbnailItem = new ThumbnailItem();
             thumbnailItem.image = thumbImage;
-            thumbnailItem.filterName = getString(R.string.filter_normal);
+            thumbnailItem.filterName = activityContext.getString(R.string.filter_normal);
             ThumbnailsManager.addThumb(thumbnailItem);
 
-            List<Filter> filters = FilterPack.getFilterPack(getActivity());
+            List<Filter> filters = FilterPack.getFilterPack(activityContext);
 
             for (Filter filter : filters) {
                 ThumbnailItem tI = new ThumbnailItem();
@@ -130,9 +126,9 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
                 ThumbnailsManager.addThumb(tI);
             }
 
-            thumbnailItemList.addAll(ThumbnailsManager.processThumbs(getActivity()));
+            thumbnailItemList.addAll(ThumbnailsManager.processThumbs(activityContext));
 
-            getActivity().runOnUiThread(() -> mAdapter.notifyDataSetChanged());
+           activityContext.runOnUiThread(() -> mAdapter.notifyDataSetChanged());
         };
 
         new Thread(r).start();

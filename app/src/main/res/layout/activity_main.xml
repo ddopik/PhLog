@@ -10,12 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <include
+        <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar_container"
-            layout="@layout/phlog_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+            <include
+
+                layout="@layout/phlog_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/view_container"
@@ -31,21 +36,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:backgroundTint="@android:color/transparent"
         android:src="@drawable/btn_upload_img"
-        app:layout_anchor="@+id/bottom_navigation"
-      />
+        app:backgroundTint="@android:color/transparent"
+        app:layout_anchor="@+id/bottom_navigation" />
 
 
-    <include
-        layout="@layout/phlog_bottom_bar"
-          />
+    <include layout="@layout/phlog_bottom_bar" />
 
 
-    <!--<android.support.design.bottomappbar.BottomAppBar--><!--android:id="@+id/bottom_navigation"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_gravity="bottom"--><!--android:background="?android:attr/windowBackground"--><!--app:fabCradleVerticalOffset="12dp"--><!--app:itemBackground="@color/white"--><!--app:itemIconTint="@color/text_input_color"--><!--app:itemTextColor="@color/bottom_bar_color"--><!--app:labelVisibilityMode="labeled"--><!--app:menu="@menu/main_navigation"--><!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"--><!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />-->
-
-
-    </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>
 
 
 

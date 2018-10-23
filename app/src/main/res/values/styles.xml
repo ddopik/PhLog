@@ -2,6 +2,8 @@
 
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="windowActionBar">false</item>
         <!-- Your Toolbar Color-->
         <item name="colorPrimary">@color/colorPrimary</item>
 

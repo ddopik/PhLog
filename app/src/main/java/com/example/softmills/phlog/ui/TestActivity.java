@@ -85,7 +85,7 @@ public class TestActivity extends BaseActivity implements FiltersListFragment.Fi
         setContentView(R.layout.activity_test);
 
         initView();
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.phlog_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.activity_title_main));

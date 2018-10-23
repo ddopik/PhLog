@@ -2,18 +2,22 @@ package com.example.softmills.phlog.ui.uploadimage.view;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.BitmapUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.fillters.FiltersListFragment;
@@ -63,12 +67,9 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_filter);
 
-        if (getIntent().getStringExtra("image_uri") != null) {
-            initView();
-            initListeners();
-            // load the default image from assets on app launch
-            loadImage(getIntent().getStringExtra("image_uri"));
-        }
+
+        initView();
+        initListeners();
 
 
     }
@@ -83,6 +84,10 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         ViewPager viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+        if (getIntent().getStringExtra("image_uri") != null) {
+            loadImage(getIntent().getStringExtra("image_uri"));
+        }
     }
 
 
@@ -99,15 +104,13 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 //        }); //todo back to GalleryImageActivity
 
 
-
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
         PickImageViewPagerAdapter adapter = new PickImageViewPagerAdapter(getSupportFragmentManager());
 
         // adding filter list fragment
-        filtersListFragment = new FiltersListFragment();
+        filtersListFragment =   FiltersListFragment.getInstance(this);
         filtersListFragment.setListener(this);
 
         // adding edit image fragment
@@ -116,7 +119,6 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
         adapter.addFragment(filtersListFragment, getString(R.string.tab_filters));
         adapter.addFragment(editImageFragment, getString(R.string.tab_edit));
-
         viewPager.setAdapter(adapter);
     }
 
@@ -134,20 +136,21 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     }
 
     private void loadImage(String img) {
-//        originalImage = BitmapUtils.getBitmapFromAssets(getBaseContext(), DEFAULT_PROFILE_IMAGE, 300, 300);
-//        filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-//        finalImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-//        imagePreview.setImageBitmap(originalImage);
+
+        originalImage = BitmapUtils.getBitmapFromGallery(getBaseContext(), img, 300, 300);
+        filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
+        finalImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
+        imagePreview.setImageBitmap(originalImage);
 
         Uri imgPath = Uri.parse(img);
         //Header Img
         GlideApp.with(getBaseContext())
-                .load(imgPath)
+                .load(imgPath.getPath())
                 .error(R.drawable.ic_launcher_foreground)
                 .override(612, 816)
                 .into(imagePreview);
 
-        Bitmap bitmap = getBitmapFromGallery(getBaseContext(), imgPath, 800, 800);
+        Bitmap bitmap = getBitmapFromGallery(getBaseContext(), img, 800, 800);
         originalImage.recycle();
         finalImage.recycle();
         originalImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -276,7 +279,6 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     public void onFilterSelected(Filter filter) {
         // reset image controls
         resetControls();
-
         // applying the selected filter
         filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
         // preview filtered image

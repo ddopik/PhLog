@@ -1,10 +1,10 @@
 package com.example.softmills.phlog.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +14,7 @@ import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
 import com.example.softmills.phlog.ui.home.view.HomeFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
-import com.example.softmills.phlog.ui.uploadimage.view.ImageFilterActivity;
+import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
 
 /**
  * Created by abdalla_maged on 10/1/2018.
@@ -24,13 +24,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private BottomAppBar bottomNavigation;
     private Button homeBrn, campaignBtn, notificationBtn, myProfileBtn;
     private FloatingActionButton picImgHomeBtn;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.phlog_toolbar);
+        super.setSupportActionBar(toolbar);
         initView();
         initPresenter();
         initListener();
@@ -39,6 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
+
         bottomNavigation = findViewById(R.id.bottom_navigation);
         homeBrn = findViewById(R.id.navigation_home);
         campaignBtn = findViewById(R.id.navigation_missions);
@@ -62,6 +64,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     }
+
 
     @Override
     public void showToast(String msg) {
@@ -101,8 +104,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 myProfileBtn.setCompoundDrawablePadding(8);
                 break;
             case R.id.pic_img_home_btn:
-                Intent intent = new Intent(this, ImageFilterActivity.class);
-                startActivity(intent);
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new GalleryImageFragment()).commit();
+                picImgHomeBtn.setImageResource(R.drawable.circle_indicator_selected);
+//                Intent intent = new Intent(this, ImageFilterActivity.class);
+//                startActivity(intent);
                 break;
             default:
         }
@@ -132,10 +138,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         myProfileBtn.setCompoundDrawablePadding(8);
 
 
+        picImgHomeBtn.setImageResource(R.drawable.btn_upload_img);
+
+
 //        homeBrn.setFocusableInTouchMode(false);
 //        campaignBtn.setFocusableInTouchMode(false);
 //        notificationBtn.setFocusableInTouchMode(false);
 //        myProfileBtn.setFocusableInTouchMode(false);
 
     }
+
+
 }
