@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,12 +39,12 @@ import static com.example.softmills.phlog.Utiltes.Constants.PERMEATION_REQUEST_C
 /**
  * Created by abdalla_maged on 10/18/2018.
  */
-public class ImageFilterActivity extends BaseActivity implements FiltersListFragment.FiltersListFragmentListener, EditPickedImageFragment.EditImageFragmentListener {
+public class ImageFilterActivity extends BaseActivity implements  FiltersListFragment.FiltersListFragmentListener, EditPickedImageFragment.EditImageFragmentListener {
     private static final String TAG = ImageFilterActivity.class.getSimpleName();
     public static final int SELECT_GALLERY_IMAGE = 106;
 
     private ImageView imagePreview;
-    private ImageButton openCameraBtn;
+    private ImageButton applyFilterBtn, closeFilterBtn;
     private Bitmap originalImage;
     private Bitmap filteredImage; //Image get filtered from filter list
     // the final image after applying
@@ -67,8 +68,6 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_filter);
-
-
         initView();
         initListeners();
 
@@ -80,7 +79,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     public void initView() {
 //        RequestPermutations(); //todo back to GalleryImageActivity
         imagePreview = findViewById(R.id.upload_image_preview);
-//        openCameraBtn = findViewById(R.id.open_camera_btn);
+        applyFilterBtn = findViewById(R.id.btn_apply_filter);
+        closeFilterBtn = findViewById(R.id.btn_close_filter);
         TabLayout tabLayout = findViewById(R.id.tabs);
         ViewPager viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -95,10 +95,19 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     @Override
     public void initPresenter() {
 
+
     }
 
 
+
     private void initListeners() {
+        closeFilterBtn.setOnClickListener(v -> {
+
+                    onBackPressed();
+                }
+        );
+
+
 //        openCameraBtn.setOnClickListener(view -> {
 //            ImagePicker.cameraOnly().start(this);
 ////            openPickerDialog();
@@ -111,7 +120,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         PickImageViewPagerAdapter adapter = new PickImageViewPagerAdapter(getSupportFragmentManager());
 
         // adding filter list fragment
-        filtersListFragment =   FiltersListFragment.getInstance(this);
+        filtersListFragment = FiltersListFragment.getInstance(this);
         filtersListFragment.setListener(this);
 
         // adding edit image fragment
