@@ -28,7 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/dp12"
+            android:layout_marginStart="@dimen/dp12"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp12"
             android:background="@color/transparent"
             android:onClick="onClick"
             app:srcCompat="@drawable/ic_done" />
@@ -36,7 +38,7 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/upload_image_preview"
+        android:id="@+id/filtered_image_preview"
         android:layout_width="@dimen/filter_preview_img_w"
         android:layout_height="0dp"
         android:layout_gravity="center"

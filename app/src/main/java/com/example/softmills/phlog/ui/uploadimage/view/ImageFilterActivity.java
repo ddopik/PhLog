@@ -1,23 +1,15 @@
 package com.example.softmills.phlog.ui.uploadimage.view;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.esafirm.imagepicker.features.ImagePicker;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
@@ -30,16 +22,12 @@ import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
-
 import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGallery;
-import static com.example.softmills.phlog.Utiltes.Constants.PERMEATION_REQUEST_CODE__WRITE_EXTERNAL_CAMERA;
 
 /**
  * Created by abdalla_maged on 10/18/2018.
  */
-public class ImageFilterActivity extends BaseActivity implements  FiltersListFragment.FiltersListFragmentListener, EditPickedImageFragment.EditImageFragmentListener {
+public class ImageFilterActivity extends BaseActivity implements FiltersListFragment.FiltersListFragmentListener, EditPickedImageFragment.EditImageFragmentListener {
     private static final String TAG = ImageFilterActivity.class.getSimpleName();
     public static final int SELECT_GALLERY_IMAGE = 106;
 
@@ -57,6 +45,8 @@ public class ImageFilterActivity extends BaseActivity implements  FiltersListFra
     private int brightnessFinal = 0;
     private float saturationFinal = 1.0f;
     private float contrastFinal = 1.0f;
+
+    private  String filteredImagePath;
 
 
     // load native image filters library
@@ -78,7 +68,7 @@ public class ImageFilterActivity extends BaseActivity implements  FiltersListFra
     @Override
     public void initView() {
 //        RequestPermutations(); //todo back to GalleryImageActivity
-        imagePreview = findViewById(R.id.upload_image_preview);
+        imagePreview = findViewById(R.id.filtered_image_preview);
         applyFilterBtn = findViewById(R.id.btn_apply_filter);
         closeFilterBtn = findViewById(R.id.btn_close_filter);
         TabLayout tabLayout = findViewById(R.id.tabs);
@@ -87,7 +77,8 @@ public class ImageFilterActivity extends BaseActivity implements  FiltersListFra
         tabLayout.setupWithViewPager(viewPager);
 
         if (getIntent().getStringExtra("image_uri") != null) {
-            loadImage(getIntent().getStringExtra("image_uri"));
+            filteredImagePath=getIntent().getStringExtra("image_uri");
+            loadImage(filteredImagePath);
         }
     }
 
@@ -99,13 +90,22 @@ public class ImageFilterActivity extends BaseActivity implements  FiltersListFra
     }
 
 
-
     private void initListeners() {
         closeFilterBtn.setOnClickListener(v -> {
 
                     onBackPressed();
                 }
         );
+
+        applyFilterBtn.setOnClickListener(v -> {
+            if (filteredImagePath !=null){
+                Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
+                intent.putExtra("filtered_image_path",filteredImagePath);
+                startActivity(intent);
+            }
+
+
+        });
 
 
 //        openCameraBtn.setOnClickListener(view -> {
@@ -175,75 +175,6 @@ public class ImageFilterActivity extends BaseActivity implements  FiltersListFra
     }
 
 
-//    private void openPickerDialog() {
-//        CharSequence photoChooserOptions[] = new CharSequence[]{getResources().getString(R.string.general_photo_chooser_camera), getResources().getString(R.string.general_photo_chooser_gallery)};
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle(getResources().getString(R.string.general_photo_chooser_title));
-
-//        builder.setItems(photoChooserOptions, (dialog, option) -> {
-//            if (option == 0) {
-//                ImagePicker.cameraOnly().start(this);
-//            } else if (option == 1) {
-//                ImagePicker.create(this)
-//                        .returnMode(ReturnMode.GALLERY_ONLY) // set whether pick and / or camera action should return immediate result or not.
-//                        .folderMode(false) // folder mode (false by default)
-//                        .toolbarFolderTitle("Folder") // folder selection title
-//                        .toolbarImageTitle("Tap to select") // image selection title
-//                        .toolbarArrowColor(Color.BLACK) // Toolbar 'up' arrow color
-//                        .single() // single mode
-//                        .showCamera(true) // show camera or not (true by default)
-//                        .enableLog(false) // disabling log
-//                        .start(); // start image picker activity with request code
-//            }
-//        }).show();  //todo back to GalleryImageActivity
-//    }
-
-
-//    @AfterPermissionGranted(PERMEATION_REQUEST_CODE__WRITE_EXTERNAL_CAMERA)
-//    private void RequestPermutations() {
-//        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-//
-//        if (EasyPermissions.hasPermissions(getBaseContext(), perms)) {
-//            // Already have permission, do the thing
-//            // ...
-//            Toast.makeText(getBaseContext(), "Already have permission, do the thing", Toast.LENGTH_SHORT).show();
-//        } else {
-//            // Do not have permissions, request them now
-//            EasyPermissions.requestPermissions(this, getString(R.string.camera_and_location_rationale),
-//                    PERMEATION_REQUEST_CODE__WRITE_EXTERNAL_CAMERA, perms);
-//        }
-//    } //todo back to GalleryImageActivity
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-//
-//            Image image = ImagePicker.getFirstImageOrNull(data);
-//
-//            //Header Img
-//            GlideApp.with(getBaseContext())
-//                    .load(image.getPath())
-//                    .error(R.drawable.ic_launcher_foreground)
-//                    .override(612, 816)
-//                    .into(imagePreview);
-//
-//            Bitmap bitmap = getBitmapFromGallery(getBaseContext(), image.getPath(), 800, 800);
-//            originalImage.recycle();
-//            finalImage.recycle();
-//            originalImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-//            filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-//            finalImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-//            imagePreview.setImageBitmap(originalImage);
-//            bitmap.recycle();
-//
-//            filtersListFragment.prepareThumbnail(originalImage, image.getPath());
-//
-//        }
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//    }
-
-
     @Override
     public void onBrightnessChanged(int brightness) {
         brightnessFinal = brightness;
@@ -304,10 +235,5 @@ public class ImageFilterActivity extends BaseActivity implements  FiltersListFra
         super.showToast(msg);
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        // Forward results to EasyPermissions
-//        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-//    }
+
 }

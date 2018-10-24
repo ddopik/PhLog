@@ -106,9 +106,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.pic_img_home_btn:
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new GalleryImageFragment()).commit();
-                picImgHomeBtn.setImageResource(R.drawable.circle_indicator_selected);
-//                Intent intent = new Intent(this, ImageFilterActivity.class);
-//                startActivity(intent);
+                picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
                 break;
             default:
         }

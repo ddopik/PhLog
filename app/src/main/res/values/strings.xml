@@ -84,5 +84,12 @@
     <string name="action_save">SAVE</string>
     <string name="action_open">OPEN</string>
     <string name="choose_from_your_photos">Tab On Camera button Or Choose from your Photos</string>
+    <string name="back">back</string>
+    <string name="next">Next</string>
+    <string name="add_caption">Add caption</string>
+    <string name="add_location">  Add Location</string>
+    <string name="save_to_draft">  Save to draft</string>
+    <string name="rationale_sms">Needs Locaiton to get you address</string>
+    <string name="need_location_permation">Need location Permation</string>
 
 </resources>

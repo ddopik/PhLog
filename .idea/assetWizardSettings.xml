@@ -128,7 +128,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/android-studio-ide-182.5012296-windows/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_close_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/D:/android-studio-ide-182.5012296-windows/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_location_on_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -139,11 +139,11 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="ffffff" />
-                            <entry key="height" value="44" />
-                            <entry key="outputName" value="ic_close" />
+                            <entry key="height" value="45" />
+                            <entry key="outputName" value="ic_location" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\user 4" />
-                            <entry key="width" value="44" />
+                            <entry key="width" value="45" />
                           </map>
                         </option>
                       </PersistentState>
