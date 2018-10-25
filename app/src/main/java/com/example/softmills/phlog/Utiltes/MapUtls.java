@@ -2,10 +2,12 @@ package com.example.softmills.phlog.Utiltes;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,8 +26,19 @@ import android.widget.Toast;
 
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.ui.uploadimage.view.PickedPhotoInfoActivity;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResolvableApiException;
+
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.Projection;
@@ -35,6 +49,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,12 +58,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
+
 /**
  * Created by ddopik..@_@
  */
 public class MapUtls {
 
     private final static int CAMERA_ZOOM = 16;
+    private LocationRequest mLocationRequest;
+
+    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
+    private long FASTEST_INTERVAL = 2000; /* 2 sec */
+
 
     public static boolean isLocationPermissionGranted(Context context) {
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -57,25 +79,12 @@ public class MapUtls {
         return true;
     }
 
-    @SuppressLint("MissingPermission")
-    public static LatLng getMyCurrentLocation(Location mLastLocation, GoogleApiClient mGoogleApiClient, Context context) {
-        LatLng latLng = null;
-        //This if statement is written by android itself
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return latLng;
-        }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-        if (mLastLocation == null && MapUtls.isLocationPermissionGranted(context)) {
-            buildAlertMessageNoGps(context);
-        } else {
-            //mha moveMapCamera( new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), R.drawable.ic_test,"","",map );
-            //VOO moveMapCamera(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), map);
-            latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        }
-
-        return latLng;
-    }
+//    @SuppressLint("MissingPermission")
+//    public static LatLng getMyCurrentLocation(Location mLastLocation, GoogleApiClient mGoogleApiClient, Context context) {
+//
+//
+//        return latLng;
+//    }
 
     public static void buildAlertMessageNoGps(final Context baseActivity) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
@@ -112,6 +121,78 @@ public class MapUtls {
 
         LatLngBounds bounds = builder.build();
         map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 175));
+    }
+
+
+
+
+    // Trigger new location updates at interval
+    @SuppressLint("MissingPermission")
+    public  void startLocationUpdates(Activity context) {
+        // Create the location request to start receiving updates
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+
+        // Create LocationSettingsRequest object using location request
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest);
+        LocationSettingsRequest locationSettingsRequest = builder.build();
+
+        // Check whether location settings are satisfied
+        // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient
+        SettingsClient settingsClient = LocationServices.getSettingsClient(context);
+        settingsClient.checkLocationSettings(locationSettingsRequest);
+
+        /////////
+
+        builder.setAlwaysShow(true);
+        Task<LocationSettingsResponse> result = settingsClient.checkLocationSettings(locationSettingsRequest);
+        result.addOnCompleteListener(task -> {
+            try {
+                LocationSettingsResponse response = task.getResult(ApiException.class);
+            } catch (ApiException ex) {
+                switch (ex.getStatusCode()) {
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            ResolvableApiException resolvableApiException = (ResolvableApiException) ex;
+                            resolvableApiException.startResolutionForResult(context, 1126);
+                        } catch (IntentSender.SendIntentException e) {
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+
+                        break;
+                }
+            }
+        });
+
+
+        ////////////
+
+
+        // new Google API SDK v11 uses getFusedLocationProviderClient(this)
+        getFusedLocationProviderClient(context).requestLocationUpdates(mLocationRequest, new LocationCallback() {
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        // do work here
+                        onLocationChanged(locationResult.getLastLocation(),context);
+                    }
+                },
+                Looper.myLooper());
+
+
+    }
+
+    public void onLocationChanged(Location location,Context context) {
+        // New location has now been determined
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        // You can now create a LatLng Object for use with maps
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
 
