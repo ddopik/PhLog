@@ -13,24 +13,24 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.SystemClock;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
-import android.widget.Toast;
-
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.ui.uploadimage.view.PickedPhotoInfoActivity;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
-
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -55,22 +55,30 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
+import java.util.Locale;
 
 /**
  * Created by ddopik..@_@
  */
 public class MapUtls {
-
+    private FusedLocationProviderClient client;
+    private LocationCallback locationCallback;
     private final static int CAMERA_ZOOM = 16;
     private LocationRequest mLocationRequest;
-
-    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
+//    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
+    private long UPDATE_INTERVAL = 2000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
+    private static String TAG = MapUtls.class.getSimpleName();
 
+    public OnLocationUpdate onLocationUpdate;
+
+
+    public MapUtls(OnLocationUpdate onLocationUpdate){
+        this.onLocationUpdate=onLocationUpdate;
+    }
 
     public static boolean isLocationPermissionGranted(Context context) {
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -79,12 +87,7 @@ public class MapUtls {
         return true;
     }
 
-//    @SuppressLint("MissingPermission")
-//    public static LatLng getMyCurrentLocation(Location mLastLocation, GoogleApiClient mGoogleApiClient, Context context) {
-//
-//
-//        return latLng;
-//    }
+
 
     public static void buildAlertMessageNoGps(final Context baseActivity) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
@@ -104,7 +107,7 @@ public class MapUtls {
                     public void onClick(final DialogInterface dialog,
                                         @SuppressWarnings("unused") final int id) {
                         dialog.cancel();
-                        Log.e("MapUtls","Error--->UnSpecified userLocation");
+                        Log.e(TAG, "Error--->UnSpecified userLocation");
                     }
                 });
         AlertDialog alert;
@@ -124,6 +127,52 @@ public class MapUtls {
     }
 
 
+    public void getAddressFromLocation(final double latitude, final double longitude, final Context context, final Handler handler) {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+                String result = null;
+                try {
+                    List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
+                    if (addressList != null && addressList.size() > 0) {
+                        Address address = addressList.get(0);
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                            sb.append(address.getAddressLine(i)); //.append("\n");
+                        }
+                        if(address.getLocality() !=null)
+                            sb.append(address.getLocality()).append(" ");
+                        if(address.getPostalCode() !=null)
+                            sb.append(address.getPostalCode()).append(" ");
+                        if(address.getCountryName() !=null)
+                            sb.append(address.getCountryName());
+                        result = sb.toString();
+                    }
+                } catch (IOException e) {
+                    Log.e("Location Address Loader", "Unable connect to Geocoder", e);
+                } finally {
+                    Message message = Message.obtain();
+                    message.setTarget(handler);
+                    if (result != null) {
+                        message.what = 1;
+                        Bundle bundle = new Bundle();
+                        bundle.putString("address", result);
+                        message.setData(bundle);
+
+                    } else {
+                        message.what = 1;
+                        Bundle bundle = new Bundle();
+                        result = " Unable to get address for current location.";
+                        bundle.putString("address", result);
+                        message.setData(bundle);
+                    }
+                    message.sendToTarget();
+                }
+            }
+        };
+        thread.start();
+    }
 
 
     // Trigger new location updates at interval
@@ -131,6 +180,7 @@ public class MapUtls {
     public  void startLocationUpdates(Activity context) {
         // Create the location request to start receiving updates
         mLocationRequest = new LocationRequest();
+        client = LocationServices.getFusedLocationProviderClient(context);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
@@ -144,11 +194,10 @@ public class MapUtls {
         // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient
         SettingsClient settingsClient = LocationServices.getSettingsClient(context);
         settingsClient.checkLocationSettings(locationSettingsRequest);
-
-        /////////
-
         builder.setAlwaysShow(true);
         Task<LocationSettingsResponse> result = settingsClient.checkLocationSettings(locationSettingsRequest);
+
+        //Enabling device GPS
         result.addOnCompleteListener(task -> {
             try {
                 LocationSettingsResponse response = task.getResult(ApiException.class);
@@ -170,32 +219,30 @@ public class MapUtls {
 
 
         ////////////
-
-
         // new Google API SDK v11 uses getFusedLocationProviderClient(this)
-        getFusedLocationProviderClient(context).requestLocationUpdates(mLocationRequest, new LocationCallback() {
-                    @Override
-                    public void onLocationResult(LocationResult locationResult) {
-                        // do work here
-                        onLocationChanged(locationResult.getLastLocation(),context);
-                    }
-                },
-                Looper.myLooper());
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                // do work here
+                if(onLocationUpdate !=null)
+                    onLocationUpdate.onLocationUpdate(locationResult.getLastLocation());
+            }
+
+        };
+
+        client.requestLocationUpdates(mLocationRequest, locationCallback, Looper.myLooper());
 
 
     }
 
-    public void onLocationChanged(Location location,Context context) {
-        // New location has now been determined
-        String msg = "Updated Location: " +
-                Double.toString(location.getLatitude()) + "," +
-                Double.toString(location.getLongitude());
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-        // You can now create a LatLng Object for use with maps
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+
+
+    public void removeLocationRequest() {
+        if (client != null && locationCallback != null) {
+            client.removeLocationUpdates(locationCallback);
+        }
     }
-
-
     //----------------New configuration------begin---------
 
     public static void moveMapCamera(LatLng latLng, GoogleMap map, Context context) {
@@ -423,4 +470,9 @@ public class MapUtls {
     }
 
     //---------------To draw line on map-----end-----
+
+
+    public interface OnLocationUpdate {
+        void onLocationUpdate(Location location);
+    }
 }

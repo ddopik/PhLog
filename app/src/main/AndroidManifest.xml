@@ -33,11 +33,11 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.MainActivity">
-        <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-        <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.campaigns.inner.ui.CampaignInnerActivity"/>
         <activity android:name=".ui.signup.PickProfilePhotoActivity">
@@ -58,9 +58,16 @@
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".ui.uploadimage.view.PickedPhotoInfoActivity" />
+        <activity android:name=".ui.uploadimage.view.PickedPhotoInfoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDryqbBvzbQcReaUwKN9dABdnyfRf0eW5A"/>
     </application>
 
 

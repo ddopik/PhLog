@@ -13,6 +13,7 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.P
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhotosResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
+import com.example.softmills.phlog.ui.uploadimage.model.GeoCodeAutoCompleteResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserPhotosResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserProfileResponse;
@@ -229,6 +230,12 @@ public class BaseNetworkApi {
                 .build()
                 .getObjectObservable(UserPhotosResponse.class);
     }
+
+
+//    public static io.reactivex.Observable<GeoCodeAutoCompleteResponse> getGeoGodeAutoCompleteResponse(String key){
+//        return Rx2AndroidNetworking.get()
+//
+//    }
 //
 
 //    public static io.reactivex.Observable<BaseResponse> makeGetRequest(String lang, String key) {

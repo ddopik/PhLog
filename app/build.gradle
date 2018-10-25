@@ -65,6 +65,8 @@ dependencies {
     implementation "com.android.support:design:$supportLibraryVersion"
     implementation "com.android.support.constraint:constraint-layout:$constrain_layuout_version"
 
+
+
     // Glide image library
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
@@ -76,6 +78,7 @@ dependencies {
     ////google-Maps
     implementation "com.google.android.gms:play-services-maps:$location_Services"
     implementation "com.google.android.gms:play-services-location:$location_Services"
+    implementation "com.google.android.gms:play-services-places:$location_Services"
     ///google-Auth
     implementation"com.google.android.gms:play-services-auth:16.0.0"
     //circleindicatorpager
