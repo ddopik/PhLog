@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <dimen name="dp2">2dp</dimen>
     <dimen name="dp4">4dp</dimen>
     <dimen name="dp6">6dp</dimen>
     <dimen name="dp8">8dp</dimen>
@@ -17,23 +17,31 @@
     <dimen name="dp80">80dp</dimen>
 
     <dimen name="item_opacity">.4</dimen>
-
     <dimen name="map_location_marker_icon_width">500dp</dimen>
     <dimen name="map_location_marker_icon_height">500dp</dimen>
     <dimen name="logo_width">60dp</dimen>
     <dimen name="logo_height">60dp</dimen>
-    <dimen name="sign_up_btn_size">36dp</dimen>
     <dimen name="circle_indicator_pager_height">8dp</dimen>
     <dimen name="circle_indicator_pager_width">8dp</dimen>
-    <dimen name="login_sign_in_btn_width">120dp</dimen>
-    <dimen name="login_sign_in_btn_height">40dp</dimen>
-    <dimen name="sign_up_container_padding">36dp</dimen>
-    <dimen name="sign_in_container_padding">36dp</dimen>
     <dimen name="social_login_btn_height">40dp</dimen>
     <dimen name="sign_up_text_input_margin_top">12dp</dimen>
     <dimen name="welcome_screen_text_height">150dp</dimen>
     <dimen name="splash_logo_size">85dp</dimen>
+    <dimen name="widgets_cap">8dp</dimen>
+    <dimen name="widgets_padding">8dp</dimen>
+    <dimen name="activity_padding">16dp</dimen>
 
+
+
+    <!--///SignUpActivity-->
+    <dimen name="sign_up_btn_size">36dp</dimen>
+    <dimen name="sign_up_container_padding">36dp</dimen>
+
+
+    <!--LoginActivity-->
+    <dimen name="login_sign_in_btn_width">120dp</dimen>
+    <dimen name="login_sign_in_btn_height">40dp</dimen>
+    <dimen name="sign_in_container_padding">36dp</dimen>
 
     <!--///MainActivity-->
 
@@ -86,7 +94,14 @@
     <dimen name="profile_pic_lbl_edit_image_control">100dp</dimen>
     <dimen name="gallery_image_size">175dp</dimen>
     <dimen name="upload_image_head_height">155dp</dimen>
-    <dimen name="dp2">2dp</dimen>
+
     <dimen name="filter_preview_img_w">250dp</dimen>
-    <!--////////////////////////////////////////-->
+
+
+    <!--/////////////AddTagActivity///////////////////////////-->
+    <dimen name="add_tag_search_widget_h">35dp</dimen>
+    <dimen name="add_tag_img_size">65dp</dimen>
+    <!--/////////////////////////////////////////////////////////-->
+
+
 </resources>

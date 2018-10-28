@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.uploadimage.view;
+package com.example.softmills.phlog.ui.uploadimage.view.adapter;
 
 /**
  * Created by abdalla_maged on 10/25/2018.
@@ -135,7 +135,7 @@ public class PlaceArrayAdapter
         return filter;
     }
 
-    class PlaceAutocomplete {
+   public  class PlaceAutocomplete {
 
         public CharSequence placeId;
         public CharSequence description;

@@ -18,6 +18,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.MainActivity;
+import com.example.softmills.phlog.ui.uploadimage.view.adapter.GalleryImageAdapter;
 
 import java.util.ArrayList;
 

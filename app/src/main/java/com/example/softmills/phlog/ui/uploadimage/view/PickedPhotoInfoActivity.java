@@ -2,7 +2,6 @@ package com.example.softmills.phlog.ui.uploadimage.view;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,12 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.Utiltes.MapUtls;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.uploadimage.view.adapter.PlaceArrayAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -121,9 +120,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         });
         backBtn.setOnClickListener(v -> onBackPressed());
 
-        locateMeBtn.setOnClickListener((view) -> {
-            requestLocation();
-        });
+        locateMeBtn.setOnClickListener((view) -> requestLocation());
     }
 
     @Override
@@ -136,7 +133,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     @AfterPermissionGranted(REQUEST_CODE_LOCATION)
     private void requestLocation() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            mapUtls.startLocationUpdates(this);
+            mapUtls.startLocationUpdates(this,MapUtls.MapConst.UPDATE_INTERVAL_INSTANT);
         } else {
             // Request one permission
             EasyPermissions.requestPermissions(this, getString(R.string.need_location_permation),
@@ -192,7 +189,6 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         }
         // Selecting the first object buffer.
         final Place place = places.get(0);
-
         placesAutoCompete.setText(place.getAddress());
         hideSoftKeyBoard();
 //        CharSequence attributions = places.getAttributions();
@@ -217,7 +213,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     @Override
     public void onConnected(Bundle bundle) {
         mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
-        Log.i(TAG, "Google Places API connected.");
+        Log.e(TAG, "Google Places API connected.");
 
     }
 
@@ -226,10 +222,9 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         Log.e(TAG, "Google Places API connection failed with error code: "
                 + connectionResult.getErrorCode());
 
-        Toast.makeText(this,
-                "Google Places API connection failed with error code:" +
-                        connectionResult.getErrorCode(),
-                Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,
+//                "Google Places API connection failed with error code:" + connectionResult.getErrorCode(),
+//                Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -259,6 +254,10 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     }
 
 
+
+    private void processed(){
+
+    }
     protected void onDestroy() {
         super.onDestroy();
 

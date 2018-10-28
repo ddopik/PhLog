@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="@dimen/dp16">
+        android:padding="@dimen/activity_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,27 +89,37 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
+                android:paddingStart="-6dp"
                 android:background="@color/transparent"
                 app:srcCompat="@drawable/ic_location" />
 
-
-            <AutoCompleteTextView
-                android:id="@+id/auto_complete_places"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:hint="@string/add_location"
-                android:paddingStart="@dimen/dp10"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                app:backgroundTint="@color/white" />
+                android:layout_weight="2">
 
-            <ImageButton
-                android:id="@+id/locate_me_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_my_location" />
+                <AutoCompleteTextView
+                    android:id="@+id/auto_complete_places"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_location"
+                    android:paddingStart="@dimen/dp10"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/locate_me_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dp12"
+                    android:layout_marginBottom="@dimen/dp8"
+                    android:background="@color/transparent"
+                    app:srcCompat="@drawable/ic_my_location" />
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
@@ -122,14 +132,16 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="25dp"
+                android:layout_height="25sp"
+                android:paddingTop="@dimen/dp4"
                 android:background="@color/transparent"
                 app:srcCompat="@drawable/clock" />
 
             <Switch
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:paddingStart="@dimen/dp12"
                 android:text="@string/save_to_draft"
                 android:textColor="@color/white"

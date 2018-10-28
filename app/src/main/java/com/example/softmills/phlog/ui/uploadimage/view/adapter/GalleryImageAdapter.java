@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.uploadimage.view;
+package com.example.softmills.phlog.ui.uploadimage.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,7 +10,6 @@ import android.widget.ImageView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotographerSavedPhotoAdapter;
 
 import java.util.List;
 

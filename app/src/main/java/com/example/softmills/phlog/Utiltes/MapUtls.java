@@ -69,7 +69,8 @@ public class MapUtls {
     private final static int CAMERA_ZOOM = 16;
     private LocationRequest mLocationRequest;
 //    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
-    private long UPDATE_INTERVAL = 2000;  /* 10 secs */
+    private long UPDATE_INTERVAL_ISNTANT = 1000;  /* 10 secs */
+    private long UPDATE_INTERVAL = 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
     private static String TAG = MapUtls.class.getSimpleName();
 
@@ -177,12 +178,17 @@ public class MapUtls {
 
     // Trigger new location updates at interval
     @SuppressLint("MissingPermission")
-    public  void startLocationUpdates(Activity context) {
+    public  void startLocationUpdates(Activity context,MapConst mapConst) {
         // Create the location request to start receiving updates
         mLocationRequest = new LocationRequest();
         client = LocationServices.getFusedLocationProviderClient(context);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        if(mapConst ==MapConst.UPDATE_INTERVAL_INSTANT){
+            mLocationRequest.setInterval(UPDATE_INTERVAL_ISNTANT);
+        }else {
+            mLocationRequest.setInterval(UPDATE_INTERVAL);
+        }
+
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
 
         // Create LocationSettingsRequest object using location request
@@ -474,5 +480,9 @@ public class MapUtls {
 
     public interface OnLocationUpdate {
         void onLocationUpdate(Location location);
+    }
+
+    public enum MapConst{
+          UPDATE_INTERVAL_INSTANT
     }
 }

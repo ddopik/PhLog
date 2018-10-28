@@ -59,12 +59,17 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.uploadimage.view.PickedPhotoInfoActivity">
+
+        </activity>
+        <activity android:name=".ui.uploadimage.view.AddTagActivity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDryqbBvzbQcReaUwKN9dABdnyfRf0eW5A"/>

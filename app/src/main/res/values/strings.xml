@@ -91,5 +91,10 @@
     <string name="save_to_draft">  Save to draft</string>
     <string name="rationale_sms">Needs Locaiton to get you address</string>
     <string name="need_location_permation">Need location Permation</string>
+    <string name="tags">Tags</string>
+    <string name="powered_by">Powered By</string>
+    <string name="add_new_tag">Add new Tag</string>
+    <string name="selected_tags">Selected Tags</string>
+    <string name="upload_photo">Upload photo</string>
 
 </resources>
