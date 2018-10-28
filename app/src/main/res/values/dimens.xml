@@ -100,7 +100,7 @@
 
     <!--/////////////AddTagActivity///////////////////////////-->
     <dimen name="add_tag_search_widget_h">35dp</dimen>
-    <dimen name="add_tag_img_size">65dp</dimen>
+    <dimen name="add_tag_img_size">75dp</dimen>
     <!--/////////////////////////////////////////////////////////-->
 
 

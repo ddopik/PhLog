@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.TagViewHolder> {
     private List<Tag> tagList;
-
+    public OnSelectedItemClicked onSelectedItemClicked;
 
     public SelectedTagAdapter(List<Tag> tagList) {
         this.tagList = tagList;
@@ -37,6 +38,10 @@ public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.
 
         tagViewHolder.tagName.setText(tagList.get(i).tagName);
 
+        if (onSelectedItemClicked != null) {
+            tagViewHolder.delete.setOnClickListener((view) -> onSelectedItemClicked.onItemDeleted(tagList.get(i)));
+        }
+
     }
 
     @Override
@@ -48,11 +53,17 @@ public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.
 
     class TagViewHolder extends RecyclerView.ViewHolder {
         TextView tagName;
+        ImageButton delete;
 
         TagViewHolder(View view) {
             super(view);
             tagName = view.findViewById(R.id.tag_name);
+            delete= view.findViewById(R.id.delete_tag);
         }
 
+    }
+
+    public interface OnSelectedItemClicked {
+        void onItemDeleted(Tag tag);
     }
 }
