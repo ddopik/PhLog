@@ -40,7 +40,7 @@ public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.
 
         if (onSelectedItemClicked != null) {
             tagViewHolder.delete.setOnClickListener((view) -> onSelectedItemClicked.onItemDeleted(tagList.get(i)));
-        }
+         }
 
     }
 
@@ -65,5 +65,5 @@ public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.
 
     public interface OnSelectedItemClicked {
         void onItemDeleted(Tag tag);
-    }
+     }
 }

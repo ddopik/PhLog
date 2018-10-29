@@ -21,15 +21,16 @@ import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
-
 import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGallery;
 
 /**
  * Created by abdalla_maged on 10/18/2018.
  */
 public class ImageFilterActivity extends BaseActivity implements FiltersListFragment.FiltersListFragmentListener, EditPickedImageFragment.EditImageFragmentListener {
+
     private static final String TAG = ImageFilterActivity.class.getSimpleName();
-    public static final int SELECT_GALLERY_IMAGE = 106;
+    public static String ImageFilter="image_uri";
+
 
     private ImageView imagePreview;
     private ImageButton applyFilterBtn, closeFilterBtn;
@@ -76,8 +77,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
-        if (getIntent().getStringExtra("image_uri") != null) {
-            filteredImagePath=getIntent().getStringExtra("image_uri");
+        if (getIntent().getStringExtra(ImageFilter) != null) {
+            filteredImagePath=getIntent().getStringExtra(ImageFilter);
             loadImage(filteredImagePath);
         }
     }
@@ -91,16 +92,14 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
 
     private void initListeners() {
-        closeFilterBtn.setOnClickListener(v -> {
-
-                    onBackPressed();
-                }
+        closeFilterBtn.setOnClickListener(v -> onBackPressed()
         );
 
         applyFilterBtn.setOnClickListener(v -> {
             if (filteredImagePath !=null){
                 Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
-                intent.putExtra("filtered_image_path",filteredImagePath);
+                String s=filteredImagePath;
+                intent.putExtra(PickedPhotoInfoActivity.FILTRED_IIMG, filteredImagePath);
                 startActivity(intent);
             }
 

@@ -2,7 +2,9 @@ package com.example.softmills.phlog.ui.uploadimage.view;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,7 +47,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
 
-
+    public static String FILTRED_IIMG = "filtered_image_path";
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
@@ -60,13 +62,15 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private MapUtls mapUtls;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_info_activity);
 
-        if (getIntent().getStringExtra("filtered_image_path") == null) {
-            imagePath = getIntent().getStringExtra("filtered_image_path");
+
+        if (getIntent().getStringExtra(FILTRED_IIMG) != null) {
+            setContentView(R.layout.activity_photo_info_activity);
+            imagePath = getIntent().getStringExtra(FILTRED_IIMG);
             initPresenter();
             initView();
             initListener();
@@ -85,14 +89,13 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
                 .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
                 .addConnectionCallbacks(this)
                 .build();
-        placesAutoCompete = (AutoCompleteTextView) findViewById(R.id.auto_complete_places);
+        placesAutoCompete = findViewById(R.id.auto_complete_places);
         placesAutoCompete.setThreshold(3);
 
-        ///////////////
+
         filtredImg = findViewById(R.id.photo_info);
         GlideApp.with(getBaseContext())
-//                .load(Uri.parse(imagePath).getPath())
-                .load(R.drawable.splash_screen_background)
+                .load(Uri.parse(imagePath).getPath())
                 .centerCrop()
                 .error(R.drawable.ic_launcher_foreground)
                 .into(filtredImg);
@@ -116,7 +119,9 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
     private void initListener() {
         nextBtn.setOnClickListener(v -> {
-
+            Intent intent = new Intent(this, AddTagActivity.class);
+            intent.putExtra(AddTagActivity.IMAGE_PREVIEW, imagePath);
+            startActivity(intent);
         });
         backBtn.setOnClickListener(v -> onBackPressed());
 

@@ -37,7 +37,7 @@ public class GalleryImageFragment extends BaseFragment {
     private View mainView;
     private GalleryImageAdapter galleryImageAdapter;
     private CustomRecyclerView galleryRv;
-    private ImageButton openCameraBtn;
+    private ImageButton openCameraBtn, backBtn;
 
     @Nullable
     @Override
@@ -80,6 +80,8 @@ public class GalleryImageFragment extends BaseFragment {
         galleryRv = mainView.findViewById(R.id.gallery_img_rv);
         galleryRv.setAdapter(galleryImageAdapter);
         openCameraBtn = mainView.findViewById(R.id.open_camera_btn);
+        backBtn = mainView.findViewById(R.id.back_btn);
+
     }
 
     @Override
@@ -103,13 +105,17 @@ public class GalleryImageFragment extends BaseFragment {
     private void initListeners() {
         galleryImageAdapter.onGalleryImageClicked = imagePath -> {
             Intent intent = new Intent(getContext(), ImageFilterActivity.class);
-            intent.putExtra("image_uri", imagePath);
+            intent.putExtra(ImageFilterActivity.ImageFilter, imagePath);
             startActivity(intent);
         };
         openCameraBtn.setOnClickListener((view) -> {
 
             RequestCameraPermutations();
         });
+        backBtn.setOnClickListener((view) -> {
+            getActivity().recreate();
+        });
+
     }
 
     @Override

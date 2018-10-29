@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
@@ -25,6 +26,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button homeBrn, campaignBtn, notificationBtn, myProfileBtn;
     private FloatingActionButton picImgHomeBtn;
     private Toolbar toolbar;
+    private ImageButton backBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
 
+        backBtn=findViewById(R.id.back_btn);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         homeBrn = findViewById(R.id.navigation_home);
         campaignBtn = findViewById(R.id.navigation_missions);
@@ -61,7 +64,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initListener() {
-
+        backBtn.setOnClickListener((view)->onBackPressed());
 
     }
 

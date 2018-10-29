@@ -6,8 +6,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.uploadimage.model.Tag;
@@ -24,22 +27,31 @@ import java.util.List;
  * Created by abdalla_maged on 10/28/2018.
  */
 public class AddTagActivity extends BaseActivity {
+    public static String IMAGE_PREVIEW="image_uri";
     private AutoCompleteTextView autoCompleteTextView;
     private View activityRootView;
     private List<Tag> tagList=new ArrayList<Tag>();
     private List<Tag> tagMenuList=new ArrayList<Tag>();
     private SelectedTagAdapter selectedTagAdapter;
     private AutoCompleteTagMenuAdapter autoCompleteTagMenuAdapter;
+    private ImageView imagePreview;
+    private String imagePreviewPath;
+    private ImageButton backBtn;
      @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tag);
 
-        initView();
-        initPresenter();
-        initListener();
-    }
 
+         if (getIntent().getStringExtra(IMAGE_PREVIEW) != null) {
+             imagePreviewPath = getIntent().getStringExtra(IMAGE_PREVIEW);
+             initView();
+             initPresenter();
+             initListener();
+         }
+
+
+    }
 
     @Override
     public void initView() {
@@ -52,10 +64,10 @@ public class AddTagActivity extends BaseActivity {
         tagList.add(tag);
         tagList.add(tag);
         tagList.add(tag);
-
         tagMenuList.addAll(tagList);
 
 
+        imagePreview=findViewById(R.id.tag_img_preview);
         autoCompleteTextView = findViewById(R.id.tag_auto_complete);
         autoCompleteTagMenuAdapter = new AutoCompleteTagMenuAdapter(this, R.layout.item_drop_down, tagMenuList);
         autoCompleteTextView.setAdapter(autoCompleteTagMenuAdapter);
@@ -64,6 +76,13 @@ public class AddTagActivity extends BaseActivity {
 
 
         activityRootView = findViewById(R.id.root_view);
+        backBtn=findViewById(R.id.back_btn);
+        GlideApp.with(getBaseContext())
+                .load(imagePreviewPath)
+                .centerCrop()
+                .error(R.drawable.ic_launcher_foreground)
+                .into(imagePreview);
+
         CustomRecyclerView tagsRv = findViewById(R.id.tags_rv);
 
         // Create the FlexboxLayoutMananger, only flexbox library version 0.3.0 or higher support.
@@ -93,22 +112,23 @@ public class AddTagActivity extends BaseActivity {
     private void initListener() {
 
         autoCompleteTagMenuAdapter.onMenuItemClicked = this::addSelectedTag;
-        selectedTagAdapter.onSelectedItemClicked=new SelectedTagAdapter.OnSelectedItemClicked() {
-            @Override
-            public void onItemDeleted(Tag tag) {
-                List<Tag> tempList=new ArrayList<Tag>();
-                for (int i=0;i<tagList.size();i++) {
-                    if(!tagList.get(i).tagName.equals(tag.tagName)){
-                        tempList.add(tagList.get(i));
-                    }
+        selectedTagAdapter.onSelectedItemClicked= tag -> {
 
+            List<Tag> tempList=new ArrayList<Tag>();
+            for (int i=0;i<tagList.size();i++) {
+                if(!tagList.get(i).tagName.equals(tag.tagName)){
+                    tempList.add(tagList.get(i));
                 }
-                tagList.clear();
-                tagList.addAll(tempList);
-                selectedTagAdapter.notifyDataSetChanged();
+
             }
+            tagList.clear();
+            tagList.addAll(tempList);
+            selectedTagAdapter.notifyDataSetChanged();
         };
         initKeyBoardListener();
+
+        backBtn.setOnClickListener((view)->onBackPressed());
+
     }
 
 
@@ -147,6 +167,7 @@ public class AddTagActivity extends BaseActivity {
     private void addSelectedTag(Tag tag) {
         tagList.add(tag);
         selectedTagAdapter.notifyDataSetChanged();
+        autoCompleteTextView.dismissDropDown();
     }
 
 }

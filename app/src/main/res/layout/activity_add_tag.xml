@@ -39,8 +39,9 @@
             <AutoCompleteTextView
                 android:id="@+id/tag_auto_complete"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/add_tag_search_widget_h"
-                android:layout_marginTop="@dimen/dp28"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/dp45"
                 android:background="@drawable/rounded_search_view"
                 android:hint="@string/add_new_tag"
                 android:imeActionLabel="Done"
@@ -52,6 +53,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/tag_img_preview"
             android:layout_width="@dimen/add_tag_img_size"
             android:layout_height="@dimen/add_tag_img_size"
             android:layout_gravity="end|top"
@@ -76,7 +78,7 @@
             android:fontFamily="@font/arial_rounded_font"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:paddingTop="@dimen/dp16"
+
             android:paddingStart="@dimen/dp16"
             android:paddingEnd="@dimen/dp16"/>
 
