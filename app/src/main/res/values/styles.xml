@@ -4,11 +4,11 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="windowActionBar">false</item>
-        <!-- Your Toolbar Color-->
-        <item name="colorPrimary">@color/colorPrimary</item>
-
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/black</item>
+
+        <!-- Your Toolbar Color-->
+        <item name="colorPrimary">@color/default_tool_bar_color</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
          which is used to tint widgets -->
@@ -17,6 +17,11 @@
         <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight, and colorSwitchThumbNormal. -->
         <item name="textInputStyle">@style/Widget.Design.TextInputLayout</item>
+        <!--The color of the screen background.-->
+        <item name="android:windowBackground">@color/black</item>
+
+        <!--//this is requred by in api 21-->
+        <!--<item name="android:navigationBarColor">@color/theme_color</item>-->
     </style>
 
     <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
