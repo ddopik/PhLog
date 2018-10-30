@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_filter_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start"
+    android:orientation="horizontal"
+    android:padding="@dimen/widgets_padding"
+    tools:background="@color/colorRed">
+
+    <!--<ToggleButton-->
+        <!--android:id="@+id/filter_item_btn"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_marginStart="@dimen/dp32"-->
+        <!--android:layout_marginEnd="@dimen/dp18"-->
+        <!--android:background="@drawable/check_box_background"-->
+        <!--android:textOff="@null"-->
+        <!--android:textOn="@null" />-->
+
+    <!--<RadioButton-->
+    <!--android:id="@+id/switch_1"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="sadasd"-->
+    <!--android:textColor="@color/white" />-->
+
+    <TextView
+        android:id="@+id/filter_item_val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp32"
+        android:drawableStart="@drawable/check_box_background"
+        android:drawablePadding="@dimen/dp16"
+        android:fontFamily="@font/arial_rounded_font"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal"
+        tools:text="text_here" />
+    <!--android:layout_marginStart="@dimen/dp32"-->
+    <!--android:drawableStart="@drawable/check_box_background"-->
+</LinearLayout>

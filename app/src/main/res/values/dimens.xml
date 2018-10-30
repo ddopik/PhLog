@@ -104,6 +104,7 @@
     <!--/////////////AddTagActivity///////////////////////////-->
     <dimen name="add_tag_search_widget_h">35dp</dimen>
     <dimen name="add_tag_img_size">80dp</dimen>
+    <dimen name="activity_search_tab_h">35dp</dimen>
     <!--/////////////////////////////////////////////////////////-->
 
 

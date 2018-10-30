@@ -11,9 +11,9 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model.PhotoGrapherFollowingInResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhotosResponse;
+import com.example.softmills.phlog.ui.search.view.album.model.SearchAlbumFilterResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
-import com.example.softmills.phlog.ui.uploadimage.model.GeoCodeAutoCompleteResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserPhotosResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserProfileResponse;
@@ -53,6 +53,7 @@ public class BaseNetworkApi {
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/detail_one_campaign";
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/get_photos_campaign";
     private static final String USER_PROFILE_PHOTOS = BASE_URL + "/image_photographer";
+    private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
 
 
     //Path Parameters
@@ -229,6 +230,14 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(UserPhotosResponse.class);
+    }
+
+    public static io.reactivex.Observable<SearchAlbumFilterResponse> getSearchFilters(String token) {
+        return Rx2AndroidNetworking.post(USER_SEARCH_FILTERS)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(SearchAlbumFilterResponse.class);
     }
 
 

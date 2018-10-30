@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.ui.search.view.album.AlbumSearchFragment;
+import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragment;
 
 /**
  * Created by abdalla_maged on 10/29/2018.
@@ -47,7 +47,6 @@ public class SearchActivity extends BaseActivity {
     private void initListener(){
         brandTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_brand);
-            addFragment(R.id.search_container, AlbumSearchFragment.getInstance(), AlbumSearchFragment.class.getSimpleName(), false);
         });
         profileTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_profile);
@@ -55,6 +54,7 @@ public class SearchActivity extends BaseActivity {
 
         albumTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_album);
+            addFragment(R.id.search_container, AlbumSearchFragment.getInstance(), AlbumSearchFragment.class.getSimpleName(), false);
         });
     }
 

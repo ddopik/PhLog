@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/white">
+
+    <ExpandableListView
+        android:id="@+id/filters_expand"
         android:layout_height="match_parent"
-        android:id="@+id/row_parent"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/row_simple_parent"
-            >
-            <View
-                android:id="@+id/row_simple_parent_invis_cover"
-                android:visibility="gone"
-                android:layout_height="450dp"
-                android:layout_width="match_parent"
-                android:background="@android:color/transparent"/>
-        </RelativeLayout>
+        android:layout_width="match_parent"
+        android:cacheColorHint="#00000000"
+        android:childDivider="@android:color/transparent"
+        android:divider="@color/black"
+        android:dividerHeight="1dp"
 
-        <!-- Dropdown -->
-        <RelativeLayout
-            android:id="@+id/row_dropdown"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-        </RelativeLayout>
-    </LinearLayout>
+        android:groupIndicator="@drawable/group_indicator"
+        android:scrollbars="vertical|horizontal" />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/album_search_filter_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_gravity="center"/>
+
+</FrameLayout>
