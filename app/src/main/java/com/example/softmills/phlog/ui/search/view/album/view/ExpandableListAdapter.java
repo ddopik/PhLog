@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 
 import java.util.List;
@@ -25,8 +24,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<SearchFilter> searchFilterList;
     public OnChildViewListener onChildViewListener;
-    public int notify_itemChild=-1;
-    public int notify_itemHead=-1;
 
     public ExpandableListAdapter(Context context, List<SearchFilter> searchFilterList) {
         this._context = context;
@@ -47,8 +44,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = searchFilterList.get(groupPosition).options.get(childPosition);
-
+        FilterOption filterOption = searchFilterList.get(groupPosition).options.get(childPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,28 +53,24 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = convertView.findViewById(R.id.filter_item_val);
         LinearLayout itemContainer = convertView.findViewById(R.id.item_filter_container);
-//        RadioButton radioButton = convertView.findViewById(R.id.switch_1);
-//        ToggleButton radioButton = convertView.findViewById(R.id.filter_item_btn);
-
-        txtListChild.setText(childText);
-
-        //todo: fix radio button to save prefs
-
-       if(childPosition ==notify_itemChild && groupPosition==notify_itemHead){
-            txtListChild.setCompoundDrawables(_context.getResources().getDrawable(R.drawable.ic_radio_button_checked),null,null,null);
-       }
+        RadioButton filterRadioButton = convertView.findViewById(R.id.filter_select);
+        txtListChild.setText(filterOption.name);
 
 
+        if (filterOption.isSelected) {
 
+            filterRadioButton.setChecked(true);
 
-//        itemContainer.setOnClickListener(v -> {
-//            txtListChild.setCompoundDrawables(_context.getResources().getDrawable(R.drawable.ic_radio_button_checked),null,null,null);
-//        });
-//        if (onChildViewListener != null) {
-//            radioButton.setOnClickListener((v -> {
-//                onChildViewListener.onChildViewClickListener(radioButton,searchFilterList.get(groupPosition), childText, groupPosition, childPosition);
-//            }));
-//        }
+        } else {
+            filterRadioButton.setChecked(false);
+
+        }
+
+        itemContainer.setOnClickListener(v -> {
+
+            onChildViewListener.onChildViewClickListener(filterOption);
+        });
+
 
         return convertView;
     }
@@ -134,7 +126,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
     public interface OnChildViewListener {
-        void onChildViewClickListener(ToggleButton txtListChild,SearchFilter searchFilter, String filterOption, int groupPosition, int childPosition);
+        void onChildViewClickListener(FilterOption filterOption);
 
     }
 }

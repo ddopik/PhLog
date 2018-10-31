@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/tab_background"
     android:orientation="vertical"
-    android:padding="@dimen/widgets_padding">
+    android:padding="@dimen/dp18">
 
 
     <TextView
@@ -29,12 +29,3 @@
         <!--app:srcCompat="@drawable/down_arrow" />-->
 
 </FrameLayout>
-
-    <!--<?xml version="1.0" encoding="utf-8"?>--><!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:background="@color/tab_background">-->
-
-
-    <!--<TextView--><!--android:id="@+id/lblListHeader"--><!--android:layout_width="fill_parent"--><!--android:layout_height="wrap_content"--><!--android:textColor="@color/orangeF58624"--><!--android:textSize="@dimen/text_medium"--><!--tools:text="Format" />-->
-
-    <!--<ImageButton--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--app:srcCompat="@drawable/down_arrow"--><!--android:background="@color/transparent"--><!--android:layout_gravity="end"/>-->
-
-    <!--</FrameLayout>-->

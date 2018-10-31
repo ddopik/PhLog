@@ -7,13 +7,12 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchFragmentImpl;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchPresenter;
@@ -28,8 +27,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
     private View mainView;
     private ExpandableListAdapter expandableListAdapter;
-    private ExpandableListView filterExpListView;
-
     private ProgressBar progressBar;
     private AlbumSearchPresenter albumSearchPresenter;
 
@@ -69,7 +66,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
         progressBar = mainView.findViewById(R.id.album_search_filter_progress);
 
-        filterExpListView = mainView.findViewById(R.id.filters_expand);
+        ExpandableListView filterExpListView = mainView.findViewById(R.id.filters_expand);
 
 
         expandableListAdapter = new ExpandableListAdapter(getActivity(), searchFilterList);
@@ -77,55 +74,37 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         filterExpListView.setAdapter(expandableListAdapter);
         initListener();
 
+
+    //////// setting ExpandableList indicator to right
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = metrics.widthPixels;
         filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
         filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
-
+    ///////////
         albumSearchPresenter.getSearchFilters();
     }
 
     private void initListener() {
 
-        filterExpListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
 
-            TextView txtListChild = v.findViewById(R.id.filter_item_val);
-            showToast("child is" + txtListChild.getText());
-            expandableListAdapter.notify_itemChild=groupPosition;
-            expandableListAdapter.notify_itemHead=childPosition;
-//                txtListChild.setCompoundDrawables(AlbumSearchFragment.this.getResources().getDrawable(R.drawable.ic_radio_button_checked), null, null, null);
-            expandableListAdapter.notifyDataSetChanged();
-            return true;
-        });
-//        expandableListAdapter.onChildViewListener = (radioButton, searchFilter, filterOption, groupPosition, childPosition) -> {
-//            showToast("child is" + filterOption);
-//
-//            filterExpListView.getExpandableListAdapter().getChild(groupPosition, childPosition);
-//
-//
-////            radioButton.setOnClickListener(v->{
-////
-////                if(  ((RadioButton) v).isSelected()){
-////                    radioButton.setSelected(false);
-////                }
-////                else{
-////                    radioButton.setSelected(true);
-////                }
-////
-////            });
-//
-////            ToggleButton toggleButton = filterExpListView.getChildAt(childPosition).findViewById(R.id.filter_item_btn);
-////            toggleButton.setBackground(getResources().getDrawable(R.drawable.ic_radio_button_checked));
-//        };
-//        filterExpListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
-//            TextView s = parent.getChildAt(childPosition).findViewById(R.id.filter_item_val);
-//            ToggleButton toggleButton = parent.getChildAt(childPosition).findViewById(R.id.filter_item_btn);
-//            toggleButton.setBackground(getResources().getDrawable(R.drawable.ic_radio_button_checked));
-//            String str = s.getText().toString();
-//            showToast("child is" + str);
-//            return true;
-//        });
-//        // Listview Group click listener
+        expandableListAdapter.onChildViewListener = filterOption -> {
+            showToast(filterOption.name);
+            for (int i = 0; i < searchFilterList.size(); i++) {
+                for (int x = 0; x < searchFilterList.get(i).options.size(); x++) {
+                    FilterOption currFilterOption = searchFilterList.get(i).options.get(x);
+                    if (currFilterOption.name.equals(filterOption.name)) {
+                        if (currFilterOption.isSelected) {
+                            searchFilterList.get(i).options.get(x).isSelected = false;
+                        } else {
+                            searchFilterList.get(i).options.get(x).isSelected = true;
+                        }
+                        expandableListAdapter.notifyDataSetChanged();
+                        return;
+                    }
+                }
+            }
+        };
+
 
     }
 
@@ -148,6 +127,21 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         this.searchFilterList.clear();
         this.searchFilterList.addAll(searchFilterList);
         expandableListAdapter.notifyDataSetChanged();
+
+
+//        List<FilterOption> filterOptionsObjList = new ArrayList<FilterOption>();
+//        for (int i = 0; i < searchFilterList.size(); i++) {
+//            for (int x=0;x<searchFilterList.get(i).options.size();x++){
+//                FilterOption filterOption = new FilterOption();
+//                filterOption.options = searchFilterList.get(i).options.get(i);
+//                filterOptionsObjList.add
+//            }
+//
+//
+//
+//        }
+
+
 
     }
 

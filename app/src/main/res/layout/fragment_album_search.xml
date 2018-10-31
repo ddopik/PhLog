@@ -13,7 +13,6 @@
         android:childDivider="@android:color/transparent"
         android:divider="@color/black"
         android:dividerHeight="1dp"
-
         android:groupIndicator="@drawable/group_indicator"
         android:scrollbars="vertical|horizontal" />
 

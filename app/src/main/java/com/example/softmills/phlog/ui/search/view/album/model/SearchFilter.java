@@ -1,8 +1,11 @@
 package com.example.softmills.phlog.ui.search.view.album.model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,5 +17,6 @@ public class SearchFilter {
     public String title;
     @SerializedName("options")
     @Expose
-    public List<String> options = null;
+    public List<FilterOption> options = null;
+
 }
