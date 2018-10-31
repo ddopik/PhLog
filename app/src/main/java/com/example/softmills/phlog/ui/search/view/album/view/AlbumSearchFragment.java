@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchFragmentImpl;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 10/29/2018.
  */
-public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFragmentView {
+public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFragmentView, SearchActivity.OnFilterClicked {
 
     private View mainView;
     private ExpandableListAdapter expandableListAdapter;
@@ -81,7 +82,8 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
         filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
     ///////////
-        albumSearchPresenter.getSearchFilters();
+
+//        albumSearchPresenter.getSearchFilters();
     }
 
     private void initListener() {
@@ -157,5 +159,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         } else {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onFilterIconClicked() {
+        albumSearchPresenter.getSearchFilters();
     }
 }

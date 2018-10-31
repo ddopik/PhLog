@@ -7,7 +7,7 @@
 
         android:id="@+id/photographer_photo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/user_profile_grid_img_height"
+        android:layout_height="@dimen/view_holder_item_list_height"
         android:padding="1dp" />
 
 </FrameLayout>

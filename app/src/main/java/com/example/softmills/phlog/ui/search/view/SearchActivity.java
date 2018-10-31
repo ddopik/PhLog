@@ -2,6 +2,7 @@ package com.example.softmills.phlog.ui.search.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -15,8 +16,10 @@ import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragment
 public class SearchActivity extends BaseActivity {
 
     private TextView searchView;
-    private TextView brandTab, profileTab, albumTab;
+    private TextView brandTab, profileTab, albumTab, filterTab;
     private FrameLayout searchContainer;
+    private AlbumSearchFragment albumSearchFragment;
+    private OnFilterClicked onFilterClicked;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class SearchActivity extends BaseActivity {
         profileTab = findViewById(R.id.tab_profile);
         albumTab = findViewById(R.id.tab_album);
         searchContainer = findViewById(R.id.search_container);
+        filterTab = findViewById(R.id.filter_ic);
 
     }
 
@@ -54,8 +58,18 @@ public class SearchActivity extends BaseActivity {
 
         albumTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_album);
-            addFragment(R.id.search_container, AlbumSearchFragment.getInstance(), AlbumSearchFragment.class.getSimpleName(), false);
+            filterTab.setVisibility(View.VISIBLE);
+            albumSearchFragment = AlbumSearchFragment.getInstance();
+            onFilterClicked = albumSearchFragment;
+            addFragment(R.id.search_container, albumSearchFragment, AlbumSearchFragment.class.getSimpleName(), false);
         });
+
+        filterTab.setOnClickListener(v -> {
+            if (onFilterClicked != null) {
+                onFilterClicked.onFilterIconClicked();
+            }
+        });
+
     }
 
 
@@ -72,7 +86,7 @@ public class SearchActivity extends BaseActivity {
         brandTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange));
         profileTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange));
         albumTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange));
-
+        filterTab.setVisibility(View.GONE);
 
         switch (tabId) {
             case R.id.tab_brand:
@@ -94,4 +108,7 @@ public class SearchActivity extends BaseActivity {
 
     }
 
+    public interface OnFilterClicked {
+        void onFilterIconClicked();
+    }
 }

@@ -89,6 +89,7 @@
 
 
             <TextView
+                android:id="@+id/filter_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -96,7 +97,9 @@
                 android:drawableEnd="@drawable/ic_filter"
                 android:text="@string/filters"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_medium_s" />
+                android:textSize="@dimen/text_medium_s"
+                android:visibility="gone"
+                />
 
 
         </FrameLayout>
