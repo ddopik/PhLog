@@ -45,7 +45,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private PagingController pagingController;
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    private OnBrandSearch onBrandSearch;
+    private OnSearchBrand onSearchBrand;
 
     public static BrandSearchFragment getInstance() {
         BrandSearchFragment brandSearchFragment = new BrandSearchFragment();
@@ -63,13 +63,13 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (onBrandSearch.getSearchView() != null) {
+        if (onSearchBrand.getSearchView() != null) {
             initPresenter();
             initViews();
             initListener();
 
         }
-
+        brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
     }
 
 
@@ -83,7 +83,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     protected void initViews() {
 
 //        brandSearch = mainView.findViewById(R.id.search_brand);
-        brandSearch = onBrandSearch.getSearchView();
+        brandSearch = onSearchBrand.getSearchView();
         searchBrandRv = mainView.findViewById(R.id.search_brand_rv);
         searchBrandProgress = mainView.findViewById(R.id.search_brand_progress_bar);
 
@@ -175,11 +175,11 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         disposable.clear();
     }
 
-    public void setBrandSearchView(OnBrandSearch onBrandSearch) {
-        this.onBrandSearch = onBrandSearch;
+    public void setBrandSearchView(OnSearchBrand onSearchBrand) {
+        this.onSearchBrand = onSearchBrand;
     }
 
-    public interface OnBrandSearch {
+    public interface OnSearchBrand {
         EditText getSearchView();
     }
 }

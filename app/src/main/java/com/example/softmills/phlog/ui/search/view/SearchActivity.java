@@ -11,6 +11,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragment;
 import com.example.softmills.phlog.ui.search.view.brand.view.BrandSearchFragment;
+import com.example.softmills.phlog.ui.search.view.profile.view.ProfileSearchFragment;
 
 /**
  * Created by abdalla_maged on 10/29/2018.
@@ -62,6 +63,10 @@ public class SearchActivity extends BaseActivity {
         });
         profileTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_profile);
+            ProfileSearchFragment profileSearchFragment=ProfileSearchFragment.getInstance();
+            profileSearchFragment.setOnSearchProfile(() -> searchView);
+            addFragment(R.id.search_container, profileSearchFragment, ProfileSearchFragment.class.getSimpleName(), false);
+
         });
 
         albumTab.setOnClickListener((view) -> {

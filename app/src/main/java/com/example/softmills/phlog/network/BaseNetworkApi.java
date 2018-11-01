@@ -13,6 +13,7 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.P
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhotosResponse;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchAlbumFilterResponse;
 import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearchResponse;
+import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearchResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
@@ -203,6 +204,16 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(BrandSearchResponse.class);
+    }
+
+    public static io.reactivex.Observable<ProfileSearchResponse> getProfileSearch(String token, String key, int page) {
+        return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOWING_SEARCH_URL)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addBodyParameter("keyword", key)
+                .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(ProfileSearchResponse.class);
     }
 
     public static io.reactivex.Observable<CampaignResponse> getAllCampaign(String token, int page) {
