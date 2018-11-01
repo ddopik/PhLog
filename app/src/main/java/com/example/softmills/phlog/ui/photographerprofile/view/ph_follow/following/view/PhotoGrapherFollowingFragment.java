@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,17 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.followi
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.presenter.PhotoGrapherFollowingInPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.presenter.PhotoGrapherFollowingInPresenterImpl;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
+import com.jakewharton.rxbinding3.widget.RxTextView;
+import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by abdalla_maged on 10/11/2018.
@@ -41,6 +50,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
     private PagingController pagingController;
     private EditText searchEditText;
     private ProgressBar followingProgressBar;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     public static PhotoGrapherFollowingFragment getInstance() {
         return new PhotoGrapherFollowingFragment();
@@ -105,22 +115,57 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
             }
         };
 
-        searchEditText.addTextChangedListener(new TextWatcher() {
+
+
+
+        disposable.add(
+
+                RxTextView.textChangeEvents(searchEditText)
+                        .skipInitialValue()
+                        .debounce(300, TimeUnit.MILLISECONDS)
+                        .distinctUntilChanged()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(searchQuery()));
+
+//        searchEditText.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count,
+//                                          int after) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                photoGrapherFollowingList.clear();
+////                photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
+//                // user cleared search get default data
+//                if (searchEditText.getText().length() == 0) {
+//                    photoGrapherFollowingList.clear();
+//                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
+//                }else {
+//                    // user is searching clear default value and get new search List
+//                    photoGrapherFollowingList.clear();
+//                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, s.toString());
+//                }
+//
+//
+//            }
+//        });
+
+    }
+    private DisposableObserver<TextViewTextChangeEvent> searchQuery() {
+        return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
                 photoGrapherFollowingList.clear();
-                photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
+//                photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
                 // user cleared search get default data
                 if (searchEditText.getText().length() == 0) {
                     photoGrapherFollowingList.clear();
@@ -128,15 +173,24 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
                 }else {
                     // user is searching clear default value and get new search List
                     photoGrapherFollowingList.clear();
-                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, s.toString());
+                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, searchEditText.toString());
                 }
 
 
+
             }
-        });
 
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
     }
-
     @Override
     public void viewPhotographerFollowingIn(List<PhotoGrapherFollowingObj> photoGrapherFollowingObjList) {
         this.photoGrapherFollowingList.addAll(photoGrapherFollowingObjList);
@@ -162,5 +216,11 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
     @Override
     public void viewMessage(String msg) {
         showToast(msg);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.clear();
     }
 }

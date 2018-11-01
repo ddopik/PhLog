@@ -120,6 +120,10 @@ dependencies {
     implementation 'info.androidhive:imagefilters:1.0.7'
     //Permastion Lib
     implementation 'com.karumi:dexter:4.1.0'
+//    RxBinding View
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha1'
+//    Google 'material' library bindings:
+//    implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0-alpha1'
 }
 repositories {
     mavenCentral()

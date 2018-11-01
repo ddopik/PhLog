@@ -1,6 +1,9 @@
 package com.example.softmills.phlog.ui.search.view.brand.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +16,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearch;
@@ -56,17 +62,21 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
         try {
             GlideApp.with(context)
-                    .load(brandList.get(i).thumbnail).apply(RequestOptions.circleCropTransform())
+                    .load(brandList.get(i).thumbnail)
+                    .apply(RequestOptions.circleCropTransform())
+                    .placeholder(R.drawable.default_user_pic)
+                    .error(R.drawable.default_user_pic)
                     .centerCrop()
                     .into(brandSearchViewHolder.brandIconImg);
 
-            GlideApp.with(context)
+
+            GlideApp .with(context)
                     .load(brandList.get(i).coverImage)
                     .centerCrop()
                     .into(brandSearchViewHolder.brandIconImg);
 
             brandSearchViewHolder.brandName.setText(brandList.get(i).nameEn);
-            brandSearchViewHolder.brandFollowers.setText(brandList.get(i).numberOfFollowers);
+            brandSearchViewHolder.brandFollowers.setText(new StringBuilder().append(brandList.get(i).numberOfFollowers).append(context.getResources().getString(R.string.following)).toString());
             brandSearchViewHolder.searchBrandContainer.setOnClickListener(v -> {
                 if (brandAdapterListener != null) {
                     brandAdapterListener.onBrandSelected(brandFiltered.get(i));

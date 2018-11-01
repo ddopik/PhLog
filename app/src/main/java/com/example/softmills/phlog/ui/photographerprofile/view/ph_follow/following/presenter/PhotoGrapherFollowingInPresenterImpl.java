@@ -4,9 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragmentView;
+
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -55,6 +56,8 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
         photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(true);
 //        BaseNetworkApi.getPhotoGrapherProfileFollowingIn(PrefUtils.getUserToken(context), page)
         BaseNetworkApi.getPhotoGrapherProfileFollowingSearch("084dcf099582cfbd6147215708035bf9", key, page)
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherFollowingInResponse -> {

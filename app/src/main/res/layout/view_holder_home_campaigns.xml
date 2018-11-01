@@ -21,15 +21,15 @@
 
             <ImageView
                 android:id="@+id/campaign_icon"
-                android:layout_width="@dimen/campaign_icon_size"
-                android:layout_height="@dimen/campaign_icon_size"
+                android:layout_width="@dimen/icon_view_holder_size_s"
+                android:layout_height="@dimen/icon_view_holder_size_m"
                 android:layout_marginEnd="@dimen/dp8"
                 android:src="@drawable/phlog_logo" />
 
             <TextView
                 android:id="@+id/campaign_name"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/campaign_icon_size"
+                android:layout_height="@dimen/icon_view_holder_size_m"
                 android:layout_toEndOf="@+id/campaign_icon"
                 android:gravity="center"
                 android:textColor="@color/black"

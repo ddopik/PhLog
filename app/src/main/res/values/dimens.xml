@@ -33,14 +33,14 @@
     <dimen name="widgets_cap">8dp</dimen>
     <dimen name="widgets_padding">8dp</dimen>
     <dimen name="activity_padding">16dp</dimen>
-    <dimen name="icon_view_holder_size">75dp</dimen>
+
 
 
     <!--//ViewHolders-->
     <dimen name="view_holder_item_list_height">150dp</dimen>
     <dimen name="view_holder_item_list_height_med">250dp</dimen>
-
-
+    <dimen name="icon_view_holder_size_s">35dp</dimen>
+    <dimen name="icon_view_holder_size_m">45dp</dimen>
     <!--///SignUpActivity-->
     <dimen name="sign_up_btn_size">36dp</dimen>
     <dimen name="sign_up_container_padding">36dp</dimen>
@@ -70,7 +70,7 @@
     <dimen name="user_profile_rating_bar_width">65dp</dimen>
     <dimen name="user_profile_rating_bar_height">20dp</dimen>
 
-    <dimen name="campaign_icon_size">35dp</dimen>
+
     <dimen name="campaign_button_size">30dp</dimen>
     <!--////////-->
 

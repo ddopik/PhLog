@@ -18,8 +18,8 @@ public class BrandSearch {
     public String nameEn;
     @SerializedName("number_of_followers")
     @Expose
-    public Integer numberOfFollowers;
+    public String numberOfFollowers;
     @SerializedName("id")
     @Expose
-    public Integer id;
+    public String id;
 }

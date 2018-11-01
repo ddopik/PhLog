@@ -12,6 +12,7 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.followi
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhotosResponse;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchAlbumFilterResponse;
+import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearchResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
@@ -49,6 +50,7 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_FOLLOWING_IN_URL = BASE_URL + "/get_following";
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/follow";
     private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/search_in_following";
+    private static final String BRAND_SEARCH_URL = BASE_URL + "/search_in_brands";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/get_all_campaigns_running";
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/detail_one_campaign";
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/get_photos_campaign";
@@ -191,6 +193,16 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(PhotoGrapherFollowingInResponse.class);
+    }
+
+    public static io.reactivex.Observable<BrandSearchResponse> getBrandSearch(String token, String key, int page) {
+        return Rx2AndroidNetworking.post(BRAND_SEARCH_URL)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addBodyParameter("keyword", key)
+                .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(BrandSearchResponse.class);
     }
 
     public static io.reactivex.Observable<CampaignResponse> getAllCampaign(String token, int page) {

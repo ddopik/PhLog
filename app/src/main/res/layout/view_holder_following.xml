@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/followers_img"
-            android:layout_width="@dimen/icon_view_holder_size"
-            android:layout_height="@dimen/icon_view_holder_size"
+            android:layout_width="@dimen/icon_view_holder_size_m"
+            android:layout_height="@dimen/icon_view_holder_size_m"
             android:layout_marginStart="@dimen/dp12"
             android:layout_marginEnd="@dimen/dp12"
             android:layout_gravity="center"

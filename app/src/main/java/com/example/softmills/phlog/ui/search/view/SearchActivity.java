@@ -3,19 +3,21 @@ package com.example.softmills.phlog.ui.search.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragment;
+import com.example.softmills.phlog.ui.search.view.brand.view.BrandSearchFragment;
 
 /**
  * Created by abdalla_maged on 10/29/2018.
  */
 public class SearchActivity extends BaseActivity {
 
-    private TextView searchView;
+    private EditText searchView;
     private TextView brandTab, profileTab, albumTab, filterTab;
     private FrameLayout searchContainer;
     private AlbumSearchFragment albumSearchFragment;
@@ -49,8 +51,14 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void initListener(){
+
+
         brandTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_brand);
+            BrandSearchFragment brandSearchFragment = BrandSearchFragment.getInstance();
+            brandSearchFragment.setBrandSearchView(() -> searchView);
+            addFragment(R.id.search_container, brandSearchFragment, BrandSearchFragment.class.getSimpleName(), false);
+
         });
         profileTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_profile);

@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.brand.model;
 
+import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

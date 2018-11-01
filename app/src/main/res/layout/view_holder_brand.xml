@@ -23,8 +23,10 @@
 
             <ImageView
                 android:id="@+id/brand_search_icon_img"
-                android:layout_width="@dimen/icon_view_holder_size"
-                android:layout_height="@dimen/icon_view_holder_size"
+                android:layout_width="@dimen/icon_view_holder_size_s"
+                android:layout_height="@dimen/icon_view_holder_size_s"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dp6"
                 tools:src="@drawable/default_user_pic" />
 
             <TextView
@@ -43,7 +45,7 @@
             <Button
                 android:id="@+id/follow_brand"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_orange_btn"
@@ -55,7 +57,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/widgets_padding">
+            android:padding="@dimen/dp4">
 
             <ImageView
                 android:id="@+id/brand_search_img"
