@@ -23,9 +23,8 @@
 
             <ImageView
                 android:id="@+id/brand_search_icon_img"
-                android:layout_width="@dimen/icon_view_holder_size_s"
-                android:layout_height="@dimen/icon_view_holder_size_s"
-                android:layout_gravity="center"
+                android:layout_width="@dimen/icon_view_holder_size_m"
+                android:layout_height="@dimen/icon_view_holder_size_m"
                 android:layout_marginStart="@dimen/dp6"
                 tools:src="@drawable/default_user_pic" />
 

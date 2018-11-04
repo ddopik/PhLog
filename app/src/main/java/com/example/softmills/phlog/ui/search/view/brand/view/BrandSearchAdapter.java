@@ -61,19 +61,17 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
 
         try {
+
             GlideApp.with(context)
                     .load(brandList.get(i).thumbnail)
-                    .apply(RequestOptions.circleCropTransform())
-                    .placeholder(R.drawable.default_user_pic)
-                    .error(R.drawable.default_user_pic)
-                    .centerCrop()
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .into(brandSearchViewHolder.brandIconImg);
 
 
             GlideApp .with(context)
                     .load(brandList.get(i).coverImage)
                     .centerCrop()
-                    .into(brandSearchViewHolder.brandIconImg);
+                    .into(brandSearchViewHolder.brandImg);
 
             brandSearchViewHolder.brandName.setText(brandList.get(i).nameEn);
             brandSearchViewHolder.brandFollowers.setText(new StringBuilder().append(brandList.get(i).numberOfFollowers).append(" ").append(context.getResources().getString(R.string.following)).toString());

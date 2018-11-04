@@ -66,11 +66,13 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
 
         if (onSearchProfile !=null){
-            prodileSearchPresenter.getProfileSearchList(onSearchProfile.getSearchView().getText().toString().trim(),0);
+
             initPresenter();
             initViews();
             initListener();
 
+            if(profileSearch.getText().toString().length() >0)
+                prodileSearchPresenter.getProfileSearchList(onSearchProfile.getSearchView().getText().toString().trim(),0);
         }
 
     }

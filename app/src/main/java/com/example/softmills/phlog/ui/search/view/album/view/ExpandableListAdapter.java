@@ -46,9 +46,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         FilterOption filterOption = searchFilterList.get(groupPosition).options.get(childPosition);
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
+            LayoutInflater layoutInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.item_expand_list, null);
+            convertView = layoutInflater.inflate(R.layout.item_expand_list, null);
         }
 
         TextView txtListChild = convertView.findViewById(R.id.filter_item_val);
@@ -58,12 +58,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         if (filterOption.isSelected) {
-
             filterRadioButton.setChecked(true);
 
         } else {
             filterRadioButton.setChecked(false);
-
         }
 
         itemContainer.setOnClickListener(v -> onChildViewListener.onChildViewClickListener(filterOption));

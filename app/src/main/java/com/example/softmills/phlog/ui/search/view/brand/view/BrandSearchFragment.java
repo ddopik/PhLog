@@ -69,7 +69,9 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             initListener();
 
         }
-//        brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
+
+        if(brandSearch.getText().toString().length() >0)
+            brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
     }
 
 
@@ -89,6 +91,8 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
         brandSearchAdapter = new BrandSearchAdapter(getContext(), brandSearchList);
         searchBrandRv.setAdapter(brandSearchAdapter);
+
+
     }
 
     private void initListener() {

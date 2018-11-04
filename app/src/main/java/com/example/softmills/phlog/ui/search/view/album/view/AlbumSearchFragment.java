@@ -46,7 +46,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         mainView = inflater.inflate(R.layout.fragment_album_search, container, false);
         initPresenter();
         initViews();
-
         return mainView;
     }
 
