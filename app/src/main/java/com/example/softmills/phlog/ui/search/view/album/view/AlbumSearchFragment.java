@@ -131,20 +131,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         expandableListAdapter.notifyDataSetChanged();
 
 
-//        List<FilterOption> filterOptionsObjList = new ArrayList<FilterOption>();
-//        for (int i = 0; i < searchFilterList.size(); i++) {
-//            for (int x=0;x<searchFilterList.get(i).options.size();x++){
-//                FilterOption filterOption = new FilterOption();
-//                filterOption.options = searchFilterList.get(i).options.get(i);
-//                filterOptionsObjList.add
-//            }
-//
-//
-//
-//        }
-
-
-
     }
 
     @Override

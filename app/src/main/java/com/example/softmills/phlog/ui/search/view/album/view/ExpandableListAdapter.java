@@ -66,10 +66,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         }
 
-        itemContainer.setOnClickListener(v -> {
-
-            onChildViewListener.onChildViewClickListener(filterOption);
-        });
+        itemContainer.setOnClickListener(v -> onChildViewListener.onChildViewClickListener(filterOption));
+        filterRadioButton.setOnClickListener(v -> onChildViewListener.onChildViewClickListener(filterOption));
 
 
         return convertView;

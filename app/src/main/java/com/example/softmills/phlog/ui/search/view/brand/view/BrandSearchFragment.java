@@ -69,7 +69,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             initListener();
 
         }
-        brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
+//        brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
     }
 
 
