@@ -59,12 +59,21 @@
             android:windowSoftInputMode="stateHidden"/>
 
         <activity android:name=".ui.search.view.SearchActivity" >
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".ui.album.view.AlbumPreviewActivity" >
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.album.view.AllAlbumImgActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDryqbBvzbQcReaUwKN9dABdnyfRf0eW5A"/>

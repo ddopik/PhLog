@@ -29,10 +29,15 @@
     <dimen name="social_login_btn_height">40dp</dimen>
     <dimen name="sign_up_text_input_margin_top">12dp</dimen>
     <dimen name="welcome_screen_text_height">150dp</dimen>
+    <dimen name="item_card_corner_radius">4dp</dimen>
+    <dimen name="item_card_elevation">2dp</dimen>
     <dimen name="splash_logo_size">85dp</dimen>
     <dimen name="widgets_cap">8dp</dimen>
     <dimen name="widgets_padding">8dp</dimen>
+    <dimen name="widgets_padding_s">4dp</dimen>
     <dimen name="activity_padding">16dp</dimen>
+    <dimen name="inner_header_preview_height">320dp</dimen>
+
 
 
 
@@ -75,7 +80,6 @@
     <!--////////-->
 
     <!--////CampignInner-->
-    <dimen name="inner_campaign_inner_preview_height">320dp</dimen>
     <dimen name="item_offset">2</dimen>
     <dimen name="campaign_mission_padding">25dp</dimen>
 
@@ -110,7 +114,13 @@
     <dimen name="add_tag_search_widget_h">35dp</dimen>
     <dimen name="add_tag_img_size">80dp</dimen>
     <dimen name="activity_search_tab_h">35dp</dimen>
-    <!--/////////////////////////////////////////////////////////-->
+
+
+
+    <!--//////////////ViewHolderFlexAlbum//////////////////-->
+    <dimen name="item_flex_height_l">250dp</dimen>
+    <dimen name="item_flex_height_s">175dp</dimen>
+    <dimen name="ic_size">24dp</dimen>
 
 
 </resources>

@@ -17,6 +17,7 @@ import com.example.softmills.phlog.ui.uploadimage.model.Tag;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.AutoCompleteTagMenuAdapter;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.SelectedTagAdapter;
 import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
@@ -89,6 +90,7 @@ public class AddTagActivity extends BaseActivity {
         FlexboxLayoutManager flexboxLayoutManager = new FlexboxLayoutManager(getApplicationContext());
         // Set flex direction.
         flexboxLayoutManager.setFlexDirection(FlexDirection.ROW);
+
         // Set JustifyContent.
         flexboxLayoutManager.setJustifyContent(JustifyContent.SPACE_AROUND);
         tagsRv.setLayoutManager(flexboxLayoutManager);

@@ -20,7 +20,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/inner_campaign_inner_preview_height"
+                android:layout_height="@dimen/inner_header_preview_height"
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|enterAlways">
                 <include layout="@layout/campaign_header_view" />

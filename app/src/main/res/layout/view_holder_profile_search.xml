@@ -7,8 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dp8"
     android:background="@color/white"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="0dp">
+    app:cardCornerRadius="@dimen/item_card_corner_radius"
+    app:cardElevation="@dimen/item_card_elevation">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/profile_container"
         xmlns:tools="http://schemas.android.com/tools"
