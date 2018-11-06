@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
-import com.example.softmills.phlog.Utiltes.SpacesItemDecoration;
+import com.example.softmills.phlog.base.widgets.SpacesItemDecoration;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;

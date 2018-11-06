@@ -4,12 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.model.AlbumGroup;
 import com.example.softmills.phlog.ui.album.model.AlbumImg;
+import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponseData;
+import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenter;
+import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +25,16 @@ import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALBU
 /**
  * Created by abdalla_maged on 11/4/2018.
  */
-public class AlbumPreviewActivity extends BaseActivity {
+public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewActivityView {
 
 
     private List<AlbumGroup> albumGroupList;
     private  List<AlbumImg> albumList;
     private AlbumAdapter albumAdapter;
+    private ProgressBar albumPreviewProgress;
+    private CustomRecyclerView albumRv;
+    private PagingController pagingController;
+    private AlbumPreviewActivityPresenter albumPreviewActivityPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,8 +54,8 @@ public class AlbumPreviewActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        CustomRecyclerView albumRv = findViewById(R.id.album_rv);
-
+        albumRv = findViewById(R.id.album_rv);
+        albumPreviewProgress = findViewById(R.id.user_profile_progress_bar);
 
         // Set adapter object.
         prepareAlbum();
@@ -53,14 +63,24 @@ public class AlbumPreviewActivity extends BaseActivity {
         albumRv.setAdapter(albumAdapter);
         albumAdapter.notifyDataSetChanged();
 
+
     }
 
     @Override
     public void initPresenter() {
-
+        albumPreviewActivityPresenter = new AlbumPreviewActivityPresenterImpl(getBaseContext(), this);
     }
 
     private void initListener() {
+
+
+        pagingController = new PagingController(albumRv) {
+            @Override
+            public void getPagingControllerCallBack(int page) {
+                albumPreviewActivityPresenter.getSelectedSearchAlbum("albumID", String.valueOf(page));
+            }
+        };
+
         albumAdapter.onAlbumImageClicked = albumImg -> {
             Intent intent =new Intent(this,AllAlbumImgActivity.class);
              intent.putExtra(ALBUM_ID,"albumID");
@@ -135,6 +155,24 @@ public class AlbumPreviewActivity extends BaseActivity {
 
         }
 
+
+    }
+
+    @Override
+    public void viewAlumPreview(AlbumPreviewResponseData albumPreviewResponseData) {
+
+
+    }
+
+    @Override
+    public void viewAlbumPreviewProgress(boolean state) {
+        if (state) {
+            albumPreviewProgress.setVisibility(View.VISIBLE);
+
+        } else {
+            albumPreviewProgress.setVisibility(View.GONE);
+
+        }
 
     }
 }

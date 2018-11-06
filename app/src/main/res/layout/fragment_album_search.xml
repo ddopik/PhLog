@@ -14,7 +14,16 @@
         android:divider="@color/black"
         android:dividerHeight="1dp"
         android:groupIndicator="@drawable/group_indicator"
-        android:scrollbars="vertical|horizontal" />
+        android:scrollbars="vertical|horizontal"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/album_search_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
     <ProgressBar
         android:id="@+id/album_search_filter_progress"

@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.PagingController;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearch;

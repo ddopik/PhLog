@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 10/30/2018.
  */
-public class SearchAlbumFilterResponse {
+public class SearchFiltersResponse {
 
     @SerializedName("data")
     @Expose

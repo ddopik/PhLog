@@ -74,6 +74,7 @@ public class SearchActivity extends BaseActivity {
             filterTab.setVisibility(View.VISIBLE);
             albumSearchFragment = AlbumSearchFragment.getInstance();
             onFilterClicked = albumSearchFragment;
+            albumSearchFragment.setBrandSearchView(() -> searchView);
             addFragment(R.id.search_container, albumSearchFragment, AlbumSearchFragment.class.getSimpleName(), false);
         });
 

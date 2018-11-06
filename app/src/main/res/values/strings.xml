@@ -99,5 +99,7 @@
     <string name="brand">Brand</string>
     <string name="profile">Profile</string>
     <string name="album">Album</string>
+    <string name="send">Send</string>
+    <string name="your_comment">your commnet</string>
 
 </resources>

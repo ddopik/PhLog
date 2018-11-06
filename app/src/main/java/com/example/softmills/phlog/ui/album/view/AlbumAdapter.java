@@ -40,8 +40,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumFlexIte
         View view = LayoutInflater.from(context).inflate(R.layout.view_holder_flex_album, viewGroup, false);
         AlbumFlexItem albumFlexItem = new AlbumFlexItem(view);
         return albumFlexItem;
-
-
     }
 
     @Override

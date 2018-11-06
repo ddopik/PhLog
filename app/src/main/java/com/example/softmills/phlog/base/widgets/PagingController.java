@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.Utiltes;
+package com.example.softmills.phlog.base.widgets;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

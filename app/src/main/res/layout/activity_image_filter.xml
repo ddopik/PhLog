@@ -46,7 +46,7 @@
         android:scaleType="centerCrop" />
 
 
-    <com.example.softmills.phlog.Utiltes.NonSwipeableViewPager
+    <com.example.softmills.phlog.base.widgets.NonSwipeableViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/filters_list_item_h"

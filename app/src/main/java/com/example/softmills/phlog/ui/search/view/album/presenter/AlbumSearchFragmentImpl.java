@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragmentView;
@@ -30,24 +31,44 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void getSearchFilters() {
-        albumSearchFragmentView.showAlbumSearchProgress(true);
-        BaseNetworkApi.getSearchFilters(PrefUtils.getUserToken(context))
+        albumSearchFragmentView.showFilterSearchProgress(true);
+        BaseNetworkApi.getFilters(PrefUtils.getUserToken(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(searchAlbumFilterResponse -> {
-                    if (searchAlbumFilterResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        albumSearchFragmentView.viewSearchFilters(searchAlbumFilterResponse.data);
-                        albumSearchFragmentView.showAlbumSearchProgress(false);
+                .subscribe(searchAlbumResponse -> {
+                    if (searchAlbumResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        albumSearchFragmentView.viewSearchFilters(searchAlbumResponse.data);
+                        albumSearchFragmentView.showFilterSearchProgress(false);
                     } else {
-                        albumSearchFragmentView.showMessage(searchAlbumFilterResponse.msg);
-                        albumSearchFragmentView.showAlbumSearchProgress(false);
+                        albumSearchFragmentView.showMessage(searchAlbumResponse.msg);
+                        albumSearchFragmentView.showFilterSearchProgress(false);
+                        ErrorUtils.setError(context, TAG, searchAlbumResponse.msg, searchAlbumResponse.state);
                     }
                 }, throwable -> {
-                    Log.e(TAG, "getSearchFilters() --->Error " + throwable.getMessage());
-                    albumSearchFragmentView.showAlbumSearchProgress(false);
+                    Log.e(TAG, "getFilters() --->Error " + throwable.getMessage());
+                    albumSearchFragmentView.showFilterSearchProgress(false);
+                    ErrorUtils.setError(context, TAG, throwable.toString());
                 });
 
 
     }
 
+    @SuppressLint("CheckResult")
+    @Override
+    public void getAlbumSearch(String key,int page) {
+        albumSearchFragmentView.showFilterSearchProgress(true);
+        BaseNetworkApi.getSearchAlbum(PrefUtils.getUserToken(context), key, String.valueOf(page))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(albumSearchResponse -> {
+                    if (albumSearchResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data.data);
+                        ErrorUtils.setError(context, TAG, albumSearchResponse.msg, albumSearchResponse.state);
+                    }
+                    albumSearchFragmentView.showFilterSearchProgress(false);
+                }, throwable -> {
+                    ErrorUtils.setError(context, TAG, throwable.toString());
+                    albumSearchFragmentView.showFilterSearchProgress(false);
+                });
+    }
 }

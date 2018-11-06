@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
+import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotosResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
@@ -11,7 +12,8 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model.PhotoGrapherFollowingInResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhotosResponse;
-import com.example.softmills.phlog.ui.search.view.album.model.SearchAlbumFilterResponse;
+import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearchResponse;
+import com.example.softmills.phlog.ui.search.view.album.model.SearchFiltersResponse;
 import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearchResponse;
 import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearchResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
@@ -57,6 +59,9 @@ public class BaseNetworkApi {
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/get_photos_campaign";
     private static final String USER_PROFILE_PHOTOS = BASE_URL + "/image_photographer";
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
+    private static final String SEARCH_ALBUM = BASE_URL + "/search_in_album";
+    private static final String GET_SEARCH_ALBUM = BASE_URL + BASE_URL +"/search_in_one_album";
+    private static final String GET_SEARCH_BRAND = BASE_URL + BASE_URL +"/search_in_one_brands";
 
 
     //Path Parameters
@@ -255,12 +260,30 @@ public class BaseNetworkApi {
                 .getObjectObservable(UserPhotosResponse.class);
     }
 
-    public static io.reactivex.Observable<SearchAlbumFilterResponse> getSearchFilters(String token) {
+    public static io.reactivex.Observable<SearchFiltersResponse> getFilters(String token) {
         return Rx2AndroidNetworking.post(USER_SEARCH_FILTERS)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(SearchAlbumFilterResponse.class);
+                .getObjectObservable(SearchFiltersResponse.class);
+    }
+
+    public static io.reactivex.Observable<AlbumSearchResponse> getSearchAlbum(String token, String key, String page) {
+        return Rx2AndroidNetworking.post(SEARCH_ALBUM)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addPathParameter(PAGER_PATH_PARAMETER,page)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(AlbumSearchResponse.class);
+    }
+
+    public static io.reactivex.Observable<AlbumPreviewResponse> getSearchSelectedAlbum(String token,String albumId,String page) {
+        return Rx2AndroidNetworking.post(GET_SEARCH_ALBUM)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addPathParameter(PAGER_PATH_PARAMETER,page)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(AlbumPreviewResponse.class);
     }
 
 
