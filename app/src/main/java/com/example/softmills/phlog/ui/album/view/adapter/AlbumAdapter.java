@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.album.view;
+package com.example.softmills.phlog.ui.album.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

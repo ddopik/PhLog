@@ -63,6 +63,7 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                 .subscribe(albumSearchResponse -> {
                     if (albumSearchResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data.data);
+                    }else {
                         ErrorUtils.setError(context, TAG, albumSearchResponse.msg, albumSearchResponse.state);
                     }
                     albumSearchFragmentView.showFilterSearchProgress(false);

@@ -1,5 +1,8 @@
 package com.example.softmills.phlog.ui.search.view.album.view;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
@@ -15,19 +19,28 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
+import com.example.softmills.phlog.ui.album.view.AlbumPreviewActivity;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearch;
 import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchFragmentImpl;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchPresenter;
+import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
+import static com.example.softmills.phlog.ui.album.view.AlbumPreviewActivity.ALBUM_PREVIEW_ID;
 
 /**
  * Created by abdalla_maged on 10/29/2018.
@@ -47,7 +60,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private List<AlbumSearch> albumSearchList = new ArrayList<AlbumSearch>();
     private AlbumSearchAdapter albumSearchAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
-
+    private PagingController pagingController;
     private OnSearchBrand onSearchBrand;
 
     public static AlbumSearchFragment getInstance() {
@@ -65,14 +78,20 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
+
         if (onSearchBrand.getSearchView() != null) {
             initPresenter();
             initViews();
             initListener();
 
         }
+        Log.e(TAG, "onViewCreated() ---> Start");
 
+        if (albumSearch.getText().toString().length() > 0)
+            albumSearchList.clear();
+            albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
     }
 
 
@@ -81,32 +100,62 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         albumSearchPresenter = new AlbumSearchFragmentImpl(getContext(), this);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void initViews() {
 
         albumSearch = onSearchBrand.getSearchView();
         progressBar = mainView.findViewById(R.id.album_search_filter_progress);
-         filterExpListView = mainView.findViewById(R.id.filters_expand);
+        filterExpListView = mainView.findViewById(R.id.filters_expand);
         albumSearchRv = mainView.findViewById(R.id.album_search_rv);
         expandableListAdapter = new ExpandableListAdapter(getActivity(), searchFilterList);
+
+
         albumSearchAdapter = new AlbumSearchAdapter(albumSearchList);
+        albumSearchRv.setAdapter(albumSearchAdapter);
+
         filterExpListView.setAdapter(expandableListAdapter);
-        initListener();
 
 
-    //////// setting ExpandableList indicator to right
+
+        //////// setting ExpandableList indicator to right
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = metrics.widthPixels;
         filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
         filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
-    ///////////
+        ///////////
 
-        albumSearchRv.setAdapter(albumSearchAdapter);
-        if (albumSearch.getText().toString().length() > 0)
-            albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
+
     }
 
     private void initListener() {
+
+
+        disposable.add(
+
+                RxTextView.textChangeEvents(albumSearch)
+                        .skipInitialValue()
+                        .debounce(300, TimeUnit.MILLISECONDS)
+                        .distinctUntilChanged()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(searchQuery())
+        );
+
+
+        pagingController = new PagingController(albumSearchRv) {
+            @Override
+            public void getPagingControllerCallBack(int page) {
+                if (albumSearch.getText().length() > 0) {
+                    String c=albumSearch.getText().toString();
+                    albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), page - 1);
+                }
+
+            }
+        };
+
+
+
 
 
 
@@ -127,6 +176,12 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
                 }
             }
         };
+
+        albumSearchAdapter.onAlbumPreview = albumSearch -> {
+            Intent intent = new Intent(getActivity(), AlbumPreviewActivity.class);
+            intent.putExtra(ALBUM_PREVIEW_ID, albumSearch.id);
+            startActivity(intent);
+        };
     }
 
 
@@ -134,13 +189,13 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-                albumSearchList.clear();
+
                 // user cleared search get default data
                 if (albumSearch.getText().length() == 0) {
                     albumSearchList.clear();
-                    albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
+                    albumSearchAdapter.notifyDataSetChanged();
                 } else {
-                    // user is searching clear default value and get new search List
+                    // user is searching clear default value and request get new search List
                     albumSearchList.clear();
                     albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
                 }
@@ -164,8 +219,11 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     public void viewSearchAlbum(List<AlbumSearch> albumSearchList) {
         filterExpListView.setVisibility(View.GONE);
         albumSearchRv.setVisibility(View.VISIBLE);
+
+
         this.albumSearchList.addAll(albumSearchList);
         albumSearchAdapter.notifyDataSetChanged();
+        hideSoftKeyBoard();
     }
 
     @Override
@@ -185,7 +243,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     public void viewSearchFilters(List<SearchFilter> searchFilterList) {
         filterExpListView.setVisibility(View.VISIBLE);
         albumSearchRv.setVisibility(View.GONE);
-        this.searchFilterList.clear();
         this.searchFilterList.addAll(searchFilterList);
         expandableListAdapter.notifyDataSetChanged();
 
@@ -217,10 +274,17 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         disposable.clear();
     }
 
+
+    private void hideSoftKeyBoard() {
+        albumSearch.clearFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+        if (imm.isAcceptingText()) { // verify if the soft keyboard is open
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        }
+    }
     public void setBrandSearchView(OnSearchBrand onSearchBrand) {
         this.onSearchBrand = onSearchBrand;
     }
-
     public interface OnSearchBrand {
         EditText getSearchView();
     }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -28,6 +29,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by abdalla_maged on 10/31/2018.
@@ -111,9 +114,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         pagingController = new PagingController(searchBrandRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                if (brandSearch.getText().length() == 0) {
-                    brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page - 1);
-                } else {
+                if (brandSearch.getText().length() > 0) {
                     brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page - 1);
                 }
 
@@ -125,11 +126,10 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-                brandSearchList.clear();
-                // user cleared search get default data
+                 // user cleared search get default data
                 if (brandSearch.getText().length() == 0) {
                     brandSearchList.clear();
-                    brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
+                    brandSearchAdapter.notifyDataSetChanged();
                 } else {
                     // user is searching clear default value and get new search List
                     brandSearchList.clear();
@@ -156,6 +156,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     public void viewBrandSearchItems(List<BrandSearch> brandSearchList) {
         this.brandSearchList.addAll(brandSearchList);
         brandSearchAdapter.notifyDataSetChanged();
+        hideSoftKeyBoard();g
     }
 
     @Override
@@ -185,5 +186,13 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
     public interface OnSearchBrand {
         EditText getSearchView();
+    }
+
+    private void hideSoftKeyBoard() {
+        brandSearch.clearFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        }
     }
 }

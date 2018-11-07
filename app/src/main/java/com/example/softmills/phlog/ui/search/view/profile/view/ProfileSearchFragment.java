@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -28,6 +29,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by abdalla_maged on 11/1/2018.
@@ -154,8 +157,10 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     }
     @Override
     public void viewProfileSearchItems(List<ProfileSearch> profileSearchList) {
+
         this.profileSearchList.addAll(profileSearchList);
         profileSearchAdapter.notifyDataSetChanged();
+        hideSoftKeyBoard();
     }
 
     @Override
@@ -173,6 +178,14 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
         showToast(msg);
     }
 
+
+    private void hideSoftKeyBoard() {
+        profileSearch.clearFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        }
+    }
     public void setOnSearchProfile(OnSearchProfile onSearchProfile) {
         this.onSearchProfile = onSearchProfile;
     }

@@ -2,6 +2,7 @@ package com.example.softmills.phlog.ui.album.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -16,11 +17,14 @@ import com.example.softmills.phlog.ui.album.model.AlbumImg;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponseData;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenter;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenterImpl;
+import com.example.softmills.phlog.ui.album.view.adapter.AlbumAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALBUM_ID;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+ import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
  * Created by abdalla_maged on 11/4/2018.
@@ -28,6 +32,7 @@ import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALBU
 public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewActivityView {
 
 
+    public static final String ALBUM_PREVIEW_ID="album_preview_id";
     private List<AlbumGroup> albumGroupList;
     private  List<AlbumImg> albumList;
     private AlbumAdapter albumAdapter;
@@ -83,7 +88,9 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
         albumAdapter.onAlbumImageClicked = albumImg -> {
             Intent intent =new Intent(this,AllAlbumImgActivity.class);
-             intent.putExtra(ALBUM_ID,"albumID");
+             intent.putExtra(ALBUM_ID,"albumID_here");
+             intent.putExtra(SELECTED_IMG_ID,albumImg.albumImgId);
+             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumList);
              startActivity(intent);
 
         };

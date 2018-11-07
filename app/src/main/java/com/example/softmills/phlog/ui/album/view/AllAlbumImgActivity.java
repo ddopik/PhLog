@@ -2,8 +2,6 @@ package com.example.softmills.phlog.ui.album.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -11,6 +9,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.album.model.AlbumImg;
+import com.example.softmills.phlog.ui.album.view.adapter.AllAlbumImgAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
 
     public static String ALBUM_ID = "album_id";
+    public static String ALL_ALBUM_IMAGES = "album_list";
+    public static String SELECTED_IMG_ID = "selected_img_id";
+    private String albumId;
     private AllAlbumImgAdapter allAlbumImgAdapter;
     private List<AlbumImg> albumImgList = new ArrayList<>();
     private ProgressBar albumImgProgress;
@@ -31,20 +33,39 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_album_img);
+
+
         initPresenter();
         initView();
         initListener();
+
+
     }
 
 
     @Override
     public void initView() {
-        prepareList();
+        if (getIntent().getParcelableArrayListExtra(ALL_ALBUM_IMAGES) != null && getIntent().getStringExtra(ALBUM_ID) != null) {
+            this.albumId = getIntent().getStringExtra(ALBUM_ID);
+            this.albumImgList = getIntent().<AlbumImg>getParcelableArrayListExtra("AlbumList");
+
         allAlbumImgAdapter = new AllAlbumImgAdapter(albumImgList);
         albumImgProgress = findViewById(R.id.album_img_list_progress_bar);
         CustomRecyclerView allAlbumImgRv = findViewById(R.id.album_img_list_rv);
         allAlbumImgRv.setAdapter(allAlbumImgAdapter);
-        allAlbumImgRv.getLayoutManager().scrollToPosition(4);
+
+            String selectedPosition = getIntent().getStringExtra(SELECTED_IMG_ID);
+            for (int i=0;i<albumImgList.size();i++){
+                if(albumImgList.get(i).albumImgId.equals(selectedPosition) ){
+                    allAlbumImgRv.getLayoutManager().scrollToPosition(i);
+                    break;
+                }
+            }
+
+
+        }
+
+
 //        RecyclerView.SmoothScroller smoothScroller = new
 //                LinearSmoothScroller(getBaseContext()) {
 //                    @Override
