@@ -11,7 +11,7 @@ import java.util.List;
 public class AlbumSearchData {
     @SerializedName("current_page")
     @Expose
-    public Integer currentPage;
+    public String currentPage;
     @SerializedName("data")
     @Expose
     public List<AlbumSearch> data = null;
@@ -20,29 +20,29 @@ public class AlbumSearchData {
     public String firstPageUrl;
     @SerializedName("from")
     @Expose
-    public Integer from;
+    public String from;
     @SerializedName("last_page")
     @Expose
-    public Integer lastPage;
+    public String lastPage;
     @SerializedName("last_page_url")
     @Expose
     public String lastPageUrl;
     @SerializedName("next_page_url")
     @Expose
-    public Object nextPageUrl;
+    public String nextPageUrl;
     @SerializedName("path")
     @Expose
     public String path;
     @SerializedName("per_page")
     @Expose
-    public Integer perPage;
+    public String perPage;
     @SerializedName("prev_page_url")
     @Expose
-    public Object prevPageUrl;
+    public String prevPageUrl;
     @SerializedName("to")
     @Expose
-    public Integer to;
+    public String to;
     @SerializedName("total")
     @Expose
-    public Integer total;
+    public String total;
 }

@@ -2,6 +2,7 @@ package com.example.softmills.phlog.ui.album.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
@@ -45,5 +46,11 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
                     ErrorUtils.setError(context, TAG, throwable.toString());
                     albumPreviewActivityView.viewAlbumPreviewProgress(false);
                 });
+
+
     }
+
+
+
+
 }

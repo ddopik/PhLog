@@ -60,8 +60,8 @@ public class BaseNetworkApi {
     private static final String USER_PROFILE_PHOTOS = BASE_URL + "/image_photographer";
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
     private static final String SEARCH_ALBUM = BASE_URL + "/search_in_album";
-    private static final String GET_SEARCH_ALBUM = BASE_URL + BASE_URL +"/search_in_one_album";
-    private static final String GET_SEARCH_BRAND = BASE_URL + BASE_URL +"/search_in_one_brands";
+    private static final String GET_SEARCH_ALBUM = BASE_URL +"/search_in_one_album";
+    private static final String GET_SEARCH_BRAND = BASE_URL +"/search_in_one_brands";
 
 
     //Path Parameters
@@ -271,7 +271,7 @@ public class BaseNetworkApi {
     public static io.reactivex.Observable<AlbumSearchResponse> getSearchAlbum(String token, String key, String page) {
         return Rx2AndroidNetworking.post(SEARCH_ALBUM)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
-                .addPathParameter(PAGER_PATH_PARAMETER,page)
+                .addQueryParameter(PAGER_PATH_PARAMETER,page)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AlbumSearchResponse.class);
@@ -280,7 +280,7 @@ public class BaseNetworkApi {
     public static io.reactivex.Observable<AlbumPreviewResponse> getSearchSelectedAlbum(String token,String albumId,String page) {
         return Rx2AndroidNetworking.post(GET_SEARCH_ALBUM)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
-                .addPathParameter(PAGER_PATH_PARAMETER,page)
+                .addQueryParameter(PAGER_PATH_PARAMETER,page)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AlbumPreviewResponse.class);

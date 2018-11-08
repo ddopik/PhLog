@@ -156,7 +156,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     public void viewBrandSearchItems(List<BrandSearch> brandSearchList) {
         this.brandSearchList.addAll(brandSearchList);
         brandSearchAdapter.notifyDataSetChanged();
-        hideSoftKeyBoard();g
+        hideSoftKeyBoard();
     }
 
     @Override

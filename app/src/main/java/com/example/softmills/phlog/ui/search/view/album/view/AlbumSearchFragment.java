@@ -32,6 +32,7 @@ import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -87,9 +88,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             initListener();
 
         }
-        Log.e(TAG, "onViewCreated() ---> Start");
-
-        if (albumSearch.getText().toString().length() > 0)
+        if (albumSearch.getText().toString().length() > 0) //there is A search query exist
             albumSearchList.clear();
             albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
     }
@@ -109,17 +108,12 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         filterExpListView = mainView.findViewById(R.id.filters_expand);
         albumSearchRv = mainView.findViewById(R.id.album_search_rv);
         expandableListAdapter = new ExpandableListAdapter(getActivity(), searchFilterList);
-
-
         albumSearchAdapter = new AlbumSearchAdapter(albumSearchList);
         albumSearchRv.setAdapter(albumSearchAdapter);
-
         filterExpListView.setAdapter(expandableListAdapter);
 
-
-
         //////// setting ExpandableList indicator to right
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = metrics.widthPixels;
         filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
         filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
@@ -147,7 +141,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             @Override
             public void getPagingControllerCallBack(int page) {
                 if (albumSearch.getText().length() > 0) {
-                    String c=albumSearch.getText().toString();
                     albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), page - 1);
                 }
 

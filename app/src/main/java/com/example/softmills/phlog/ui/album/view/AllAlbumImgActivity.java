@@ -47,14 +47,15 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     public void initView() {
         if (getIntent().getParcelableArrayListExtra(ALL_ALBUM_IMAGES) != null && getIntent().getStringExtra(ALBUM_ID) != null) {
             this.albumId = getIntent().getStringExtra(ALBUM_ID);
-            this.albumImgList = getIntent().<AlbumImg>getParcelableArrayListExtra("AlbumList");
+            this.albumImgList = getIntent().<AlbumImg>getParcelableArrayListExtra(ALL_ALBUM_IMAGES);
+            String selectedPosition = getIntent().getStringExtra(SELECTED_IMG_ID);
 
         allAlbumImgAdapter = new AllAlbumImgAdapter(albumImgList);
         albumImgProgress = findViewById(R.id.album_img_list_progress_bar);
         CustomRecyclerView allAlbumImgRv = findViewById(R.id.album_img_list_rv);
         allAlbumImgRv.setAdapter(allAlbumImgAdapter);
 
-            String selectedPosition = getIntent().getStringExtra(SELECTED_IMG_ID);
+
             for (int i=0;i<albumImgList.size();i++){
                 if(albumImgList.get(i).albumImgId.equals(selectedPosition) ){
                     allAlbumImgRv.getLayoutManager().scrollToPosition(i);

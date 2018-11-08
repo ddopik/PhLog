@@ -17,8 +17,8 @@ public class AlbumSearch {
     public String name;
     @SerializedName("number_of_photos")
     @Expose
-    public Integer numberOfPhotos;
+    public String numberOfPhotos;
     @SerializedName("id")
     @Expose
-    public Integer id;
+    public String id;
 }

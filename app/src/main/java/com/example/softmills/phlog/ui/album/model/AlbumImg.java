@@ -11,6 +11,9 @@ import com.google.gson.annotations.SerializedName;
  */
 public class AlbumImg implements Parcelable {
 
+
+    @SerializedName("image_id")
+    @Expose
     public String albumImgId;
     public String AlbumIcon;
     @SerializedName("image")
@@ -28,6 +31,7 @@ public class AlbumImg implements Parcelable {
 
     public void writeToParcel(Parcel out, int flags) {
 
+        out.writeString(albumImgId);
         out.writeString(AlbumImg);
         out.writeString(albumName);
         out.writeString(albumAuthorName);
@@ -51,6 +55,7 @@ public class AlbumImg implements Parcelable {
     }
 
     public AlbumImg(Parcel in) {
+        albumImgId = in.readString();
         AlbumImg = in.readString();
         albumName = in.readString();
         albumAuthorName = in.readString();

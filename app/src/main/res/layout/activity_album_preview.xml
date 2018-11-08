@@ -19,27 +19,38 @@
             app:layout_scrollFlags="scroll|snap"
             app:titleEnabled="false">
 
-            <include layout="@layout/phlog_app_bar" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/inner_header_preview_height">
+
+
+                <include
+                    android:id="@+id/preview_app_bar"
+                    layout="@layout/phlog_app_bar" />
 
 
             <ImageView
                 android:id="@+id/album_preview_img"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/inner_header_preview_height"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/preview_app_bar"
                 android:src="@drawable/default_campaign_header_view"
+                android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
 
+
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_gravity="bottom|start"
+                android:layout_gravity="bottom"
                 android:layout_marginBottom="@dimen/dp8">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                     android:fontFamily="@font/arial_rounded_font"
+                    android:fontFamily="@font/arial_rounded_font"
                     android:padding="@dimen/widgets_padding"
                     android:text="Album Name"
                     android:textColor="@color/white"
@@ -47,13 +58,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                     android:fontFamily="@font/arial_rounded_font"
+                    android:fontFamily="@font/arial_rounded_font"
                     android:padding="@dimen/widgets_padding"
                     android:textColor="@color/white"
                     android:text="246 following"
-          />
+                    />
             </LinearLayout>
-
         </android.support.design.widget.CollapsingToolbarLayout>
 
 
@@ -64,7 +74,6 @@
         android:id="@+id/album_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:orientation="vertical" />
 
