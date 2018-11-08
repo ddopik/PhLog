@@ -31,7 +31,7 @@ public class ProfileSearchAdapter extends RecyclerView.Adapter<ProfileSearchAdap
     private String TAG = ProfileSearchAdapter.class.getSimpleName();
     public Context context;
     private List<ProfileSearch> profileList;
-    private List<ProfileSearch> profileFiltered;
+    private List<ProfileSearch>profileFiltered;
     public ProfileAdapterListener profileAdapterListener;
 
     public ProfileSearchAdapter(Context context, List<ProfileSearch> profileList) {

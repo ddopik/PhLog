@@ -8,8 +8,11 @@ import com.google.gson.annotations.SerializedName;
  * Created by abdalla_maged on 11/1/2018.
  */
 public class ProfileSearchResponse {
+
     @SerializedName("data")
     @Expose
     public ProfileSearchData data;
-
+    @SerializedName("state")
+    @Expose
+    public String state;
 }

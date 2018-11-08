@@ -52,16 +52,16 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/get_photographer_campaign";
     private static final String PHOTOGRAPHER_FOLLOWING_IN_URL = BASE_URL + "/get_following";
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/follow";
-    private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/search_in_following";
-    private static final String BRAND_SEARCH_URL = BASE_URL + "/search_in_brands";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/get_all_campaigns_running";
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/detail_one_campaign";
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/get_photos_campaign";
     private static final String USER_PROFILE_PHOTOS = BASE_URL + "/image_photographer";
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
     private static final String SEARCH_ALBUM = BASE_URL + "/search_in_album";
+    private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/search_in_following";
     private static final String GET_SEARCH_ALBUM = BASE_URL +"/search_in_one_album";
-    private static final String GET_SEARCH_BRAND = BASE_URL +"/search_in_one_brands";
+    private static final String BRAND_SEARCH_URL = BASE_URL + "/search_in_brands";
+
 
 
     //Path Parameters
@@ -211,14 +211,15 @@ public class BaseNetworkApi {
                 .getObjectObservable(BrandSearchResponse.class);
     }
 
-    public static io.reactivex.Observable<ProfileSearchResponse> getProfileSearch(String token, String key, int page) {
-        return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOWING_SEARCH_URL)
+    public static io.reactivex.Observable<String> getProfileSearch(String token, String key, int page) {
+        return Rx2AndroidNetworking.post("http://178.128.162.10/public/api/photographer/search_in_following?page=1")
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("keyword", key)
-                .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
+//                .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
+                .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(ProfileSearchResponse.class);
+                .getStringObservable();
     }
 
     public static io.reactivex.Observable<CampaignResponse> getAllCampaign(String token, int page) {

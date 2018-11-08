@@ -4,6 +4,7 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.followi
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,19 +13,19 @@ import java.util.List;
 public class ProfileSearchData {
     @SerializedName("current_page")
     @Expose
-    public Integer currentPage;
+    public String currentPage;
     @SerializedName("data")
     @Expose
-    public List<ProfileSearch> data = null;
+    public List<ProfileSearch> data =new ArrayList<>();
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;
     @SerializedName("from")
     @Expose
-    public Integer from;
+    public String from;
     @SerializedName("last_page")
     @Expose
-    public Integer lastPage;
+    public String lastPage;
     @SerializedName("last_page_url")
     @Expose
     public String lastPageUrl;
@@ -36,14 +37,14 @@ public class ProfileSearchData {
     public String path;
     @SerializedName("per_page")
     @Expose
-    public Integer perPage;
+    public String perPage;
     @SerializedName("prev_page_url")
     @Expose
-    public Object prevPageUrl;
+    public String prevPageUrl;
     @SerializedName("to")
     @Expose
-    public Integer to;
+    public String to;
     @SerializedName("total")
     @Expose
-    public Integer total;
+    public String total;
 }

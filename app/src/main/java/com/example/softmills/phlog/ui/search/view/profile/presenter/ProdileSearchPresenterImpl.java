@@ -21,7 +21,7 @@ public class ProdileSearchPresenterImpl implements ProdileSearchPresenter {
     private Context context;
     private ProfileSearchFragmentView profileSearchFragmentView;
 
-    public ProdileSearchPresenterImpl(Context context, ProfileSearchFragmentView profileSearchFragmentView) {
+    public  ProdileSearchPresenterImpl(Context context, ProfileSearchFragmentView profileSearchFragmentView) {
         this.context = context;
         this.profileSearchFragmentView = profileSearchFragmentView;
     }
@@ -34,14 +34,15 @@ public class ProdileSearchPresenterImpl implements ProdileSearchPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profileSearchResponse -> {
-                    if (profileSearchResponse.data != null) {
-                        profileSearchFragmentView.viewProfileSearchProgress(false);
-                        profileSearchFragmentView.viewProfileSearchItems(profileSearchResponse.data.data);
-                    } else {
-                        profileSearchFragmentView.viewProfileSearchProgress(false);
-                        Log.e(TAG, "getProfileSearchList() ---> Error " + profileSearchResponse.toString());
-                        profileSearchFragmentView.showMessage(" getProfileSearchList ()--->error");
-                    }
+                    Log.e("------->",profileSearchResponse.toString());
+//                    if (profileSearchResponse.data != null) {
+//                        profileSearchFragmentView.viewProfileSearchProgress(false);
+//                        profileSearchFragmentView.viewProfileSearchItems(profileSearchResponse.data.data);
+//                    } else {
+//                        profileSearchFragmentView.viewProfileSearchProgress(false);
+//                        Log.e(TAG, "getProfileSearchList() ---> Error " + profileSearchResponse.toString());
+//                        profileSearchFragmentView.showMessage(" getProfileSearchList ()--->error");
+//                    }
 
                 }, throwable -> {
                     profileSearchFragmentView.viewProfileSearchProgress(false);
