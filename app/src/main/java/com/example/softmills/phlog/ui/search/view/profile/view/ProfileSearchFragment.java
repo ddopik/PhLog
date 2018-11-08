@@ -115,21 +115,18 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
         pagingController = new PagingController(profileSearchRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                if (profileSearch.getText().length() == 0) {
+                if (profileSearch.getText().length() > 0) {
                     prodileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), page - 1);
-                } else {
-                    prodileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), page - 1);
+
                 }
 
             }
         };
-
     }
     private DisposableObserver<TextViewTextChangeEvent> searchQuery() {
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-                profileSearchList.clear();
                 // user cleared search get default data
                 if (profileSearch.getText().length() == 0) {
                     profileSearchList.clear();
@@ -139,7 +136,6 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
                     profileSearchList.clear();
                     prodileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
                 }
-
                 Log.e(TAG, "search string: " + profileSearch.getText().toString());
 
             }

@@ -88,9 +88,12 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             initListener();
 
         }
-        if (albumSearch.getText().toString().length() > 0) //there is A search query exist
+
+        if (albumSearch.getText().toString().length() > 0){
             albumSearchList.clear();
             albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
+        } //there is A search query exist
+
     }
 
 

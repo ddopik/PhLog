@@ -40,7 +40,6 @@ public class ProdileSearchPresenterImpl implements ProdileSearchPresenter {
                     } else {
                         profileSearchFragmentView.viewProfileSearchProgress(false);
                         Log.e(TAG, "getProfileSearchList() ---> Error " + profileSearchResponse.toString());
-
                         profileSearchFragmentView.showMessage(" getProfileSearchList ()--->error");
                     }
 

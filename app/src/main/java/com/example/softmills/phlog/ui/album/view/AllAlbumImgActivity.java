@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.album.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -92,6 +93,8 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             @Override
             public void onAlbumImgClick(AlbumImg albumImg) {
 
+                Intent intent=new Intent(getBaseContext(),AlbumCommentActivity.class);
+                startActivity(intent);
             }
 
             @Override
