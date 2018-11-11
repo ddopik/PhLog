@@ -5,15 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <!--<EditText-->
-        <!--android:id="@+id/search_brand"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/search_widger_height"-->
-        <!--android:inputType="textAutoComplete"-->
-        <!--android:background="@drawable/search_edit_text"-->
-        <!--android:layout_marginTop="@dimen/dp8"-->
-        <!--android:paddingStart="@dimen/dp12"-->
-        <!--android:hint="@string/search"/>-->
+
     <com.example.softmills.phlog.base.widgets.CustomRecyclerView
 
         android:id="@+id/search_brand_rv"

@@ -8,7 +8,7 @@
     <EditText
         android:id="@+id/search_photographer_brand"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/search_widger_height"
+        android:layout_height="@dimen/activity_search_tab_h"
         android:inputType="textAutoComplete"
         android:background="@drawable/search_edit_text"
         android:layout_marginTop="@dimen/dp8"
