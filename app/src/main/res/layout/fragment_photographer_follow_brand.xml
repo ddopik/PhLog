@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <TextView
+    <EditText
+        android:id="@+id/search_photographer_brand"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_widger_height"
+        android:inputType="textAutoComplete"
+        android:background="@drawable/search_edit_text"
+        android:layout_marginTop="@dimen/dp8"
+        android:layout_marginStart="@dimen/dp8"
+        android:layout_marginEnd="@dimen/dp8"
+        android:paddingLeft="@dimen/dp12"
+        android:paddingStart="@dimen/dp12"
+        android:hint="@string/search"/>
+
+    <com.example.softmills.phlog.base.widgets.CustomRecyclerView
+        android:id="@+id/photographer_search_brand_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Data Data Data Data Data Data"/>
-</FrameLayout>
+        android:layout_below="@+id/search_photographer_brand"
+        app:orientation="vertical" />
+
+
+
+    <ProgressBar
+        android:id="@+id/photographer_brand_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/photographer_search_brand_rv"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+</RelativeLayout>

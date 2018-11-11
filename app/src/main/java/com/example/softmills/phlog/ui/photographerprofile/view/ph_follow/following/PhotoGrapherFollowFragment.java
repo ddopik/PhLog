@@ -6,15 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
- import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.PhotoGrapherBrandFragment;
+ import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.view.PhotoGrapherBrandFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowViewPagerAdapter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragment;
 

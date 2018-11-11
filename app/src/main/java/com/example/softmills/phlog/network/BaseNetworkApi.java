@@ -9,6 +9,7 @@ import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.model.SocialLoginResponse;
 import com.example.softmills.phlog.ui.photographerprofile.model.ProfilePhotoGrapherInfoResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model.PhotoGrapherCampaignResponse;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.model.PhotographerFollowingBrandResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model.PhotoGrapherFollowingInResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhotosResponse;
@@ -220,6 +221,17 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(ProfileSearchResponse.class);
+    }
+
+    public static io.reactivex.Observable<PhotographerFollowingBrandResponse> getProfileBrand(String token, String key, String page) {
+        return Rx2AndroidNetworking.post(BRAND_SEARCH_URL)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addBodyParameter("keyword", key)
+                .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
+                .getResponseOnlyFromNetwork()
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(PhotographerFollowingBrandResponse.class);
     }
 
     public static io.reactivex.Observable<CampaignResponse> getAllCampaign(String token, int page) {

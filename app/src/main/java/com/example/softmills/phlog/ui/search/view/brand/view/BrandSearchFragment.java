@@ -115,9 +115,9 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         pagingController = new PagingController(searchBrandRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                if (brandSearch.getText().length() > 0) {
+
                     brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page - 1);
-                }
+
 
             }
         };

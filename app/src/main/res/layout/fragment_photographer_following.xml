@@ -32,7 +32,9 @@
         android:id="@+id/photographer_following_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+        android:layout_below="@+id/photographer_following_rv"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
 </RelativeLayout>
