@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.profile.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,12 +13,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearch;
 import com.example.softmills.phlog.ui.search.view.profile.presenter.ProdileSearchPresenter;
 import com.example.softmills.phlog.ui.search.view.profile.presenter.ProdileSearchPresenterImpl;
+import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 
@@ -74,8 +76,11 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
             initViews();
             initListener();
 
-            if(profileSearch.getText().toString().length() >0)
+            if (profileSearch.getText().toString().length() > 0) {
+                profileSearchList.clear();
                 prodileSearchPresenter.getProfileSearchList(onSearchProfile.getSearchView().getText().toString().trim(),0);
+            }
+
         }
 
     }
@@ -122,6 +127,13 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
             }
         };
+
+
+        profileSearchAdapter.profileAdapterListener = profileSearch -> {
+            Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+            intent.putExtra(UserProfileActivity.USER_ID,profileSearch.userNameId);
+            startActivity(intent);
+        };
     }
     private DisposableObserver<TextViewTextChangeEvent> searchQuery() {
         return new DisposableObserver<TextViewTextChangeEvent>() {
@@ -153,7 +165,6 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     }
     @Override
     public void viewProfileSearchItems(List<ProfileSearch> profileSearchList) {
-
         this.profileSearchList.addAll(profileSearchList);
         profileSearchAdapter.notifyDataSetChanged();
         hideSoftKeyBoard();

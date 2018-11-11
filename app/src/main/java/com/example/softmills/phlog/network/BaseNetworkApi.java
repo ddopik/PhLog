@@ -211,15 +211,15 @@ public class BaseNetworkApi {
                 .getObjectObservable(BrandSearchResponse.class);
     }
 
-    public static io.reactivex.Observable<String> getProfileSearch(String token, String key, int page) {
-        return Rx2AndroidNetworking.post("http://178.128.162.10/public/api/photographer/search_in_following?page=1")
+    public static io.reactivex.Observable<ProfileSearchResponse> getProfileSearch(String token, String key, int page) {
+        return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOWING_SEARCH_URL)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("keyword", key)
-//                .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
+                .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
                 .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)
                 .build()
-                .getStringObservable();
+                .getObjectObservable(ProfileSearchResponse.class);
     }
 
     public static io.reactivex.Observable<CampaignResponse> getAllCampaign(String token, int page) {

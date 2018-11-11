@@ -34,17 +34,15 @@ public class ProdileSearchPresenterImpl implements ProdileSearchPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profileSearchResponse -> {
-                    Log.e("------->",profileSearchResponse.toString());
-//                    if (profileSearchResponse.data != null) {
-//                        profileSearchFragmentView.viewProfileSearchProgress(false);
-//                        profileSearchFragmentView.viewProfileSearchItems(profileSearchResponse.data.data);
-//                    } else {
-//                        profileSearchFragmentView.viewProfileSearchProgress(false);
-//                        Log.e(TAG, "getProfileSearchList() ---> Error " + profileSearchResponse.toString());
-//                        profileSearchFragmentView.showMessage(" getProfileSearchList ()--->error");
-//                    }
-
-                }, throwable -> {
+                     if (profileSearchResponse.data != null) {
+                        profileSearchFragmentView.viewProfileSearchProgress(false);
+                        profileSearchFragmentView.viewProfileSearchItems(profileSearchResponse.data.data);
+                    } else {
+                        profileSearchFragmentView.viewProfileSearchProgress(false);
+                        Log.e(TAG, "getProfileSearchList() ---> Error " + profileSearchResponse.toString());
+                        profileSearchFragmentView.showMessage(" getProfileSearchList ()--->error");
+//
+                }}, throwable -> {
                     profileSearchFragmentView.viewProfileSearchProgress(false);
                     Log.e(TAG, "getProfileSearchList() ---> Error " + throwable.getMessage());
                 });
