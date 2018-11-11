@@ -14,8 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.album.PhotoGrapherAlbumFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.PhotoGrapherBrandFragment;
+ import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.PhotoGrapherBrandFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowViewPagerAdapter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragment;
 
@@ -67,9 +66,8 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
 
         followTableLayout.setupWithViewPager(followViewPager);
 //        for (int i = 0; i < followTableLayout.getTabCount(); i++) {
-            followTableLayout.getTabAt(0).setIcon(R.drawable.tab_follow_album);
-            followTableLayout.getTabAt(1).setIcon(R.drawable.tab_follow_following);
-            followTableLayout.getTabAt(2).setIcon(R.drawable.tab_follow_brand);
+            followTableLayout.getTabAt(0).setIcon(R.drawable.tab_follow_following);
+            followTableLayout.getTabAt(1).setIcon(R.drawable.tab_follow_brand);
 //        }
     }
 
@@ -81,7 +79,6 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
 
     private List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(PhotoGrapherAlbumFragment.getInstance());
         fragmentList.add(PhotoGrapherFollowingFragment.getInstance());
         fragmentList.add(PhotoGrapherBrandFragment.getInstance());
         return fragmentList;

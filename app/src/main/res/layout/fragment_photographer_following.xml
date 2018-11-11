@@ -12,6 +12,8 @@
         android:inputType="textAutoComplete"
         android:background="@drawable/search_edit_text"
         android:layout_marginTop="@dimen/dp8"
+        android:layout_marginStart="@dimen/dp8"
+        android:layout_marginEnd="@dimen/dp8"
         android:paddingLeft="@dimen/dp12"
         android:paddingStart="@dimen/dp12"
         android:hint="@string/search"/>

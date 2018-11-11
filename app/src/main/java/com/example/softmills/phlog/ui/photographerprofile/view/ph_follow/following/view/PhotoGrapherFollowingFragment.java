@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
@@ -64,6 +65,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         initPresenter();
         initViews();
         initListener();
+        //default following list
         photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
     }
 
@@ -102,6 +104,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
             public void getPagingControllerCallBack(int page) {
 //                photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(page + 1);
                 if(searchEditText.getText().length() ==0){
+                    //default following list paging
                     photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(page-1);
                 }else {
                     photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(page-1,searchEditText.getText().toString());
@@ -117,49 +120,19 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
 
                 RxTextView.textChangeEvents(searchEditText)
                         .skipInitialValue()
-                        .debounce(300, TimeUnit.MILLISECONDS)
+                        .debounce(Constants.QUERY_SEARCH_TIME_OUT, TimeUnit.MILLISECONDS)
                         .distinctUntilChanged()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(searchQuery()));
 
-//        searchEditText.addTextChangedListener(new TextWatcher() {
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count,
-//                                          int after) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                photoGrapherFollowingList.clear();
-////                photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
-//                // user cleared search get default data
-//                if (searchEditText.getText().length() == 0) {
-//                    photoGrapherFollowingList.clear();
-//                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
-//                }else {
-//                    // user is searching clear default value and get new search List
-//                    photoGrapherFollowingList.clear();
-//                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, s.toString());
-//                }
-//
-//
-//            }
-//        });
+
 
     }
     private DisposableObserver<TextViewTextChangeEvent> searchQuery() {
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-                photoGrapherFollowingList.clear();
 //                photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
                 // user cleared search get default data
                 if (searchEditText.getText().length() == 0) {
@@ -168,7 +141,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
                 }else {
                     // user is searching clear default value and get new search List
                     photoGrapherFollowingList.clear();
-                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, searchEditText.toString());
+                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, searchEditText.getText().toString());
                 }
 
 

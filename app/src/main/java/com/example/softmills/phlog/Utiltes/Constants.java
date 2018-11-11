@@ -12,4 +12,8 @@ public interface Constants {
 //    String  DEFAULT_PROFILE_IMAGE =1225;
 
 
+
+    int QUERY_SEARCH_TIME_OUT=600;
+
+
 }

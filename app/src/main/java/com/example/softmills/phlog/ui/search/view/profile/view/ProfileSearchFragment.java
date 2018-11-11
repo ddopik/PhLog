@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
@@ -111,7 +112,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
                 RxTextView.textChangeEvents(profileSearch)
                         .skipInitialValue()
-                        .debounce(300, TimeUnit.MILLISECONDS)
+                        .debounce(Constants.QUERY_SEARCH_TIME_OUT, TimeUnit.MILLISECONDS)
                         .distinctUntilChanged()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

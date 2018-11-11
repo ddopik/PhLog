@@ -33,11 +33,11 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.MainActivity">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.campaigns.inner.ui.CampaignInnerActivity"/>
         <activity android:name=".ui.signup.PickProfilePhotoActivity"/>
@@ -59,11 +59,11 @@
             android:windowSoftInputMode="stateHidden"/>
 
         <activity android:name=".ui.search.view.SearchActivity" >
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.album.view.AlbumPreviewActivity" >
             <!--<intent-filter>-->

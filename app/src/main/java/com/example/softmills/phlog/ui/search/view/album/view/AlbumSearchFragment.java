@@ -17,6 +17,7 @@ import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
@@ -132,7 +133,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
                 RxTextView.textChangeEvents(albumSearch)
                         .skipInitialValue()
-                        .debounce(300, TimeUnit.MILLISECONDS)
+                        .debounce(Constants.QUERY_SEARCH_TIME_OUT, TimeUnit.MILLISECONDS)
                         .distinctUntilChanged()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
