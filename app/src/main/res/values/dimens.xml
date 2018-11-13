@@ -129,4 +129,11 @@
     <!--//////////////////////BrandInner/////////////////////////////////-->
     <dimen name="brand_type_view_height">28dp</dimen>
 
+    <!--///////////////////////SocialFragment/////////////////-->
+    <dimen name="social_img_size">75dp</dimen>
+
+
+    <!--///ViewHolderSocialProfileItem////-->
+    <dimen name="profile_search_icon_w">175dp</dimen>
+    <dimen name="profile_search_icon_h">150dp</dimen>
 </resources>

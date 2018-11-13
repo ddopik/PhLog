@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
-import com.example.softmills.phlog.ui.home.view.HomeFragment;
+import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
 
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initView();
         initPresenter();
         initListener();
-        getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new HomeFragment()).commit(); //default Screen
+        getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new SocialFragment()).commit(); //default Screen
     }
 
     @Override
@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.navigation_home:
-                addFragment(R.id.view_container, new HomeFragment(), HomeFragment.class.getSimpleName(), true);
+                addFragment(R.id.view_container, new SocialFragment(), SocialFragment.class.getSimpleName(), true);
                 homeBrn.setTextColor(getResources().getColor(R.color.text_input_color));
                 homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg, 0, 0);
                 homeBrn.setCompoundDrawablePadding(8);

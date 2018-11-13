@@ -20,6 +20,7 @@ import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearchRespons
 import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearchResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
+import com.example.softmills.phlog.ui.social.model.SocialResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserPhotosResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserProfileResponse;
@@ -64,6 +65,7 @@ public class BaseNetworkApi {
     private static final String GET_SEARCH_ALBUM = BASE_URL +"/search_in_one_album";
     private static final String BRAND_SEARCH_URL = BASE_URL + "/search_in_brands";
     private static final String INNER_BRAND_URL = BASE_URL + "/search_in_one_brands";
+    private static final String SOCIAL_DATA_URL = BASE_URL + "/social";
 
 
 
@@ -308,6 +310,15 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(BrandInnerResponse.class);
+    }
+
+
+    public static io.reactivex.Observable<SocialResponse> getSocialData(String token){
+        return Rx2AndroidNetworking.post(SOCIAL_DATA_URL)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(SocialResponse.class);
     }
 
 //    public static io.reactivex.Observable<GeoCodeAutoCompleteResponse> getGeoGodeAutoCompleteResponse(String key){

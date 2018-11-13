@@ -16,4 +16,14 @@ public interface Constants {
     int QUERY_SEARCH_TIME_OUT=600;
 
 
+    int ENTITY_PROFILE=1;
+    int ENTITY_CAMPAIGN=2;
+    int ENTITY_ALBUM=3;
+    int ENTITY_IMAGE=4;
+    int ENTITY_BRAND=5;
+
+    String ALBUM_DISPLAY_TYPE_1="303";
+    String PROFILE_DISPLAY_TYPE_1="405";
+
+
 }
