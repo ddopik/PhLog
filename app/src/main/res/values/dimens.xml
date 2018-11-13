@@ -17,6 +17,7 @@
     <dimen name="dp30">30dp</dimen>
     <dimen name="dp32">32dp</dimen>
     <dimen name="dp45">45dp</dimen>
+    <dimen name="dp65">65dp</dimen>
     <dimen name="dp80">80dp</dimen>
 
     <dimen name="item_opacity">.4</dimen>
@@ -39,7 +40,7 @@
     <dimen name="widgets_padding_s">4dp</dimen>
     <dimen name="activity_padding">16dp</dimen>
     <dimen name="inner_header_preview_height">320dp</dimen>
-
+    <dimen name="header_img_size">85dp</dimen>
 
 
 
@@ -72,7 +73,7 @@
     <dimen name="filters_list_item_h">150dp</dimen>
 
     <!--/////////  ActivityUserProfile-->
-    <dimen name="user_profile_header_img_size">85dp</dimen>
+
 
     <dimen name="user_profile_rating_bar_width">65dp</dimen>
     <dimen name="user_profile_rating_bar_height">20dp</dimen>
@@ -122,6 +123,10 @@
     <dimen name="item_flex_height_s">175dp</dimen>
     <dimen name="ic_size">24dp</dimen>
     <dimen name="dp1">1dp</dimen>
+    <dimen name="dp120">120dp</dimen>
 
+
+    <!--//////////////////////BrandInner/////////////////////////////////-->
+    <dimen name="brand_type_view_height">28dp</dimen>
 
 </resources>

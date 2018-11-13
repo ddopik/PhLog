@@ -35,8 +35,8 @@
 
         <ImageView
             android:id="@+id/photographer_profile_img"
-            android:layout_width="@dimen/user_profile_header_img_size"
-            android:layout_height="@dimen/user_profile_header_img_size"
+            android:layout_width="@dimen/header_img_size"
+            android:layout_height="@dimen/header_img_size"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp18"
             android:src="@drawable/phlog_logo" />

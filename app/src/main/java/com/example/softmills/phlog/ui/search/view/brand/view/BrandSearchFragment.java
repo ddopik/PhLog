@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.brand.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearch;
 import com.example.softmills.phlog.ui.search.view.brand.presenter.BrandSearchFragmentPresenter;
 import com.example.softmills.phlog.ui.search.view.brand.presenter.BrandSearchFragmentPresenterImpl;
@@ -119,6 +121,15 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
                     brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page - 1);
 
 
+            }
+        };
+
+        brandSearchAdapter.brandAdapterListener=new BrandSearchAdapter.BrandAdapterListener() {
+            @Override
+            public void onBrandSelected(BrandSearch brandSearch) {
+                Intent intent=new Intent(getActivity(), BrandInnerActivity.class);
+                intent.putExtra(BrandInnerActivity.BRAND_ID,brandSearch.id);
+                startActivity(intent);
             }
         };
     }

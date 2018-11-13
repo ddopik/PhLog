@@ -2,6 +2,7 @@ package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
+import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotosResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
@@ -62,6 +63,7 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/search_in_following";
     private static final String GET_SEARCH_ALBUM = BASE_URL +"/search_in_one_album";
     private static final String BRAND_SEARCH_URL = BASE_URL + "/search_in_brands";
+    private static final String INNER_BRAND_URL = BASE_URL + "/search_in_one_brands";
 
 
 
@@ -299,6 +301,14 @@ public class BaseNetworkApi {
                 .getObjectObservable(AlbumPreviewResponse.class);
     }
 
+    public static io.reactivex.Observable<BrandInnerResponse> getBrandInnerData(String token, String brandId) {
+        return Rx2AndroidNetworking.post(INNER_BRAND_URL)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addBodyParameter("id", brandId)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(BrandInnerResponse.class);
+    }
 
 //    public static io.reactivex.Observable<GeoCodeAutoCompleteResponse> getGeoGodeAutoCompleteResponse(String key){
 //        return Rx2AndroidNetworking.get()
@@ -352,4 +362,4 @@ public class BaseNetworkApi {
 //    }
 //
 
-}
+    }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -84,13 +83,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.navigation_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new HomeFragment()).commit();
+                addFragment(R.id.view_container, new HomeFragment(), HomeFragment.class.getSimpleName(), true);
                 homeBrn.setTextColor(getResources().getColor(R.color.text_input_color));
                 homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg, 0, 0);
                 homeBrn.setCompoundDrawablePadding(8);
                 break;
             case R.id.navigation_missions:
-                getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new CampaignsFragment()).commit();
+                addFragment(R.id.view_container, new CampaignsFragment(), CampaignsFragment.class.getSimpleName(), true);
                 campaignBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                 campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, campaignBtnImg, 0, 0);
                 campaignBtn.setCompoundDrawablePadding(8);
@@ -101,14 +100,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 notificationBtn.setCompoundDrawablePadding(8);
                 break;
             case R.id.navigation_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new PhotoGraphedProfileFragment()).commit();
+                addFragment(R.id.view_container, new PhotoGraphedProfileFragment(), PhotoGraphedProfileFragment.class.getSimpleName(), true);
                 myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                 myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                 myProfileBtn.setCompoundDrawablePadding(8);
                 break;
             case R.id.pic_img_home_btn:
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new GalleryImageFragment()).commit();
+                addFragment(R.id.view_container, new GalleryImageFragment(), GalleryImageFragment.class.getSimpleName(), true);
                 picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
                 break;
             default:
