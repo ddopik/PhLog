@@ -20,6 +20,7 @@ import com.example.softmills.phlog.ui.social.model.SocialData;
 
 import java.util.List;
 
+import static com.example.softmills.phlog.Utiltes.Constants.CAMPAIGN_DISPLAY_TYPE_1;
 import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_ALBUM;
 import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_BRAND;
 import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_CAMPAIGN;
@@ -63,6 +64,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                 break;
             }
             case ENTITY_CAMPAIGN: {
+                bindCampaignEntity(socialDataList.get(i).entites.get(0), socialViewHolder);
                 break;
             }
             case ENTITY_ALBUM: {
@@ -89,15 +91,19 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
     class SocialViewHolder extends RecyclerView.ViewHolder {
 
-        FrameLayout socialProfileType3, socialImageSliderType5;
+        FrameLayout socialProfileType3, socialImageSliderType5, socialCampaignType1;
 
         ImageView socialProfileIcon, socialProfileImg_1, socialProfileImg_2, socialProfileImg_3, socialProfileImg_4;
         TextView socialProfileFullName, socialProfileUserName;
         Button followSocialProfile;
-
+        /////
         CustomRecyclerView socialImgSlideRv;
         ImageView socialImfSliderIcon;
-        TextView socialImgaeName;
+        TextView socialImageName;
+        /////
+        ImageView socialCampaignIcon, socialCampaignImg;
+        TextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft;
+        Button socialJoinCampaignBtn;
 
 
         SocialViewHolder(View view) {
@@ -106,6 +112,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
             socialProfileType3 = view.findViewById(R.id.social_profile_type_3);
             socialImageSliderType5 = view.findViewById(R.id.images_slider_type_5);
+            socialCampaignType1 = view.findViewById(R.id.social_campaign_type_1);
             ////profileItemView type_1
             socialProfileIcon = view.findViewById(R.id.social_profile_icon_img);
             socialProfileFullName = view.findViewById(R.id.social_profile_full_name);
@@ -118,10 +125,18 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
 
             ////ImageSlider type_1
-
             socialImgSlideRv = view.findViewById(R.id.social_img_slider_rv);
             socialImfSliderIcon =view.findViewById(R.id.social_icon_img);
-            socialImgaeName=view.findViewById(R.id.social_image_name);
+            socialImageName = view.findViewById(R.id.social_image_name);
+
+
+            ///CampainItemView
+            socialCampaignIcon = view.findViewById(R.id.social_campaign_icon);
+            socialCampaignName = view.findViewById(R.id.social_campaign_name);
+            socialCampaignImg = view.findViewById(R.id.social_campaign_img);
+            socialCampaignTitle = view.findViewById(R.id.social_campaign_title);
+            socialCampaignDayLeft = view.findViewById(R.id.social_campaign_day_left);
+            socialJoinCampaignBtn = view.findViewById(R.id.social_join_campaign_btn);
 
         }
     }
@@ -144,6 +159,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                         .into(socialViewHolder.socialProfileIcon);
                 GlideApp.with(context)
                         .load(entite.imgs.get(0))
+                        .centerCrop()
                         .placeholder(R.drawable.default_photographer_profile)
                         .error(R.drawable.default_photographer_profile)
                         .apply(new RequestOptions().centerCrop())
@@ -151,17 +167,20 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                 GlideApp.with(context)
                         .load(entite.imgs.get(1))
                         .placeholder(R.drawable.default_photographer_profile)
+                        .centerCrop()
                         .error(R.drawable.default_photographer_profile)
                         .apply(new RequestOptions().centerCrop())
                         .into(socialViewHolder.socialProfileImg_2);
                 GlideApp.with(context)
                         .load(entite.imgs.get(2))
+                        .centerCrop()
                         .placeholder(R.drawable.default_photographer_profile)
                         .error(R.drawable.default_photographer_profile)
                         .apply(new RequestOptions().centerCrop())
                         .into(socialViewHolder.socialProfileImg_3);
                 GlideApp.with(context)
                         .load(entite.imgs.get(3))
+                        .centerCrop()
                         .placeholder(R.drawable.default_photographer_profile)
                         .error(R.drawable.default_photographer_profile)
                         .apply(new RequestOptions().centerCrop())
@@ -188,7 +207,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                         .error(R.drawable.default_photographer_profile)
                         .into(socialViewHolder.socialImfSliderIcon);
 
-                socialViewHolder.socialImgaeName.setText(title);
+                socialViewHolder.socialImageName.setText(title);
 
                 socialViewHolder.socialImageSliderType5.setVisibility(View.VISIBLE);
                 SocialImagesAdapter socialImagesAdapter = new SocialImagesAdapter(entite);
@@ -196,5 +215,36 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             }
 
         }
+    }
+
+    private void bindCampaignEntity(Entite entite, SocialViewHolder socialViewHolder) {
+        switch (entite.displayType) {
+
+            case CAMPAIGN_DISPLAY_TYPE_1:
+                socialViewHolder.socialCampaignType1.setVisibility(View.VISIBLE);
+
+
+                GlideApp.with(context)
+                        .load(entite.thumbnail)
+                        .placeholder(R.drawable.default_user_pic)
+                        .error(R.drawable.default_user_pic)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(socialViewHolder.socialCampaignIcon);
+
+                GlideApp.with(context)
+                        .load(entite.imgs.get(0))
+                        .centerCrop()
+                        .placeholder(R.drawable.default_photographer_profile)
+                        .error(R.drawable.default_photographer_profile)
+                        .into(socialViewHolder.socialCampaignImg);
+
+                socialViewHolder.socialCampaignTitle.setText(entite.titleEn);
+                socialViewHolder.socialCampaignDayLeft.setText("day left here");
+                socialViewHolder.socialCampaignName.setText(entite.nameEn);
+                socialViewHolder.socialJoinCampaignBtn.setOnClickListener(v -> {
+
+                });
+        }
+
     }
 }

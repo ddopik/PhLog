@@ -30,7 +30,7 @@ public interface Constants {
     String PROFILE_DISPLAY_TYPE_5 = "105";
     String PROFILE_DISPLAY_TYPE_6 = "106";
 
-    String CAMPAIGN_DISPLAY_TYPE_1 = "201";
+    String CAMPAIGN_DISPLAY_TYPE_1 = "401"; //todo back it to 201
     String CAMPAIGN_DISPLAY_TYPE_2 = "202";
     String CAMPAIGN_DISPLAY_TYPE_3 = "203";
     String CAMPAIGN_DISPLAY_TYPE_4 = "204";
