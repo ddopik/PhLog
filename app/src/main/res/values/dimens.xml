@@ -49,6 +49,7 @@
     <dimen name="view_holder_item_list_height_med">250dp</dimen>
     <dimen name="icon_view_holder_size_s">35dp</dimen>
     <dimen name="icon_view_holder_size_m">45dp</dimen>
+
     <!--///SignUpActivity-->
     <dimen name="sign_up_btn_size">36dp</dimen>
     <dimen name="sign_up_container_padding">36dp</dimen>
@@ -136,4 +137,11 @@
     <!--///ViewHolderSocialProfileItem////-->
     <dimen name="profile_search_icon_w">175dp</dimen>
     <dimen name="profile_search_icon_h">150dp</dimen>
+
+
+
+    <dimen name="social_img_slider_w">175dp</dimen>
+    <dimen name="social_img_slider_h">280dp</dimen>
+    <dimen name="social_profile_img_w">250dp</dimen>
+
 </resources>

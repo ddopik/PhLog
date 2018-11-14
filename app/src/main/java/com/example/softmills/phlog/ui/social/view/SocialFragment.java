@@ -13,13 +13,15 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.social.model.Entite;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 import com.example.softmills.phlog.ui.social.presenter.SocailFragmentPresenterImpl;
 import com.example.softmills.phlog.ui.social.presenter.SocialFragmentPresenter;
-import com.example.softmills.phlog.ui.social.view.controller.ProfileController;
+import com.example.softmills.phlog.ui.social.view.adapter.SocialAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_ALBUM;
@@ -33,9 +35,10 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
     private View mainView;
     private EditText homeSearch;
     private ProgressBar socialProgress;
-    private LinearLayout adapterList;
+    private CustomRecyclerView socailRv;
     private SocialFragmentPresenter socialFragmentPresenter;
-    private ProfileController profileController;
+    private SocialAdapter socialAdapter;
+    private List<SocialData> socialDataList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -68,13 +71,12 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
     @Override
     protected void initViews() {
         homeSearch=mainView.findViewById(R.id.home_search);
-        adapterList = mainView.findViewById(R.id.adapter_list);
+        socailRv = mainView.findViewById(R.id.social_rv);
         socialProgress = mainView.findViewById(R.id.social_progress);
 
-//        getLayoutInflater().inflate(R.layout.social_view_album, adapterList, true);
 
-
-        profileController = new ProfileController(adapterList,getContext());
+        this.socialAdapter = new SocialAdapter(socialDataList);
+        socailRv.setAdapter(socialAdapter);
 
 
     }
@@ -88,7 +90,9 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
 
     @Override
     public void viewSocialData(List<SocialData> socialDataList) {
-        prepareCategoryList(socialDataList);
+        this.socialDataList.addAll(socialDataList);
+        socialAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -101,35 +105,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
     }
 
 
-    private void prepareCategoryList(List<SocialData> socialDataList) {
 
-        for (int i = 0; i < socialDataList.size(); i++) {
-
-            List<Entite> entityList = socialDataList.get(i).entites;
-            switch (socialDataList.get(i).entityId) {
-
-                case ENTITY_PROFILE: {
-                    profileController.getSocialProfileView(entityList);
-
-                }
-                case ENTITY_CAMPAIGN: {
-
-                }
-                case ENTITY_ALBUM: {
-
-                }
-                case ENTITY_IMAGE: {
-
-                }
-                case ENTITY_BRAND: {
-
-                }
-
-            }
-
-
-        }
-    }
 
     @Override
     public void showMessage(String msg) {

@@ -6,8 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.ui.social.model.Entite;
 
 import java.util.List;
 
@@ -19,8 +22,8 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
     private Context context;
     private List<String> imageList;
 
-    public SocialImagesAdapter(List<String> imageList) {
-        this.imageList = imageList;
+    public SocialImagesAdapter(Entite entite) {
+        this.imageList = entite.imgs;
     }
 
     @NonNull
@@ -29,12 +32,16 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
         this.context = viewGroup.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-        return new SocialImageViewHolder(layoutInflater.inflate(R.layout.view_holder_social_img, viewGroup, false));
+        return new SocialImageViewHolder(layoutInflater.inflate(R.layout.view_holder_social_image, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull SocialImageViewHolder socialImageViewHolder, int i) {
-
+        GlideApp.with(context)
+                .load(imageList.get(i))
+                .placeholder(R.drawable.default_photographer_profile)
+                .error(R.drawable.default_photographer_profile)
+                .into(socialImageViewHolder.sliderImage);
     }
 
     @Override
@@ -43,8 +50,11 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
     }
 
     class SocialImageViewHolder extends RecyclerView.ViewHolder {
-        public SocialImageViewHolder(View view) {
+        ImageView sliderImage;
+
+        SocialImageViewHolder(View view) {
             super(view);
+            sliderImage = view.findViewById(R.id.social_slider_img);
         }
     }
 }

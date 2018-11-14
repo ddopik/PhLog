@@ -81,7 +81,7 @@
 
                     <ImageView
                         android:id="@+id/social_profile_img_1"
-                        android:layout_width="@dimen/profile_search_icon_w"
+                        android:layout_width="@dimen/social_profile_img_w"
                         android:layout_height="@dimen/profile_search_icon_h"
                         android:layout_margin="@dimen/widgets_padding"
                         android:scaleType="centerCrop"
@@ -89,7 +89,7 @@
 
                     <ImageView
                         android:id="@+id/social_profile_img_2"
-                        android:layout_width="@dimen/profile_search_icon_w"
+                        android:layout_width="@dimen/social_profile_img_w"
                         android:layout_height="@dimen/profile_search_icon_h"
                         android:layout_margin="@dimen/widgets_padding"
                         android:scaleType="centerCrop"
@@ -107,7 +107,7 @@
 
                     <ImageView
                         android:id="@+id/social_profile_img_3"
-                        android:layout_width="@dimen/profile_search_icon_w"
+                        android:layout_width="@dimen/social_profile_img_w"
                         android:layout_height="@dimen/profile_search_icon_h"
                         android:layout_margin="@dimen/widgets_padding"
 
@@ -116,7 +116,7 @@
 
                     <ImageView
                         android:id="@+id/social_profile_img_4"
-                        android:layout_width="@dimen/profile_search_icon_w"
+                        android:layout_width="@dimen/social_profile_img_w"
                         android:layout_height="@dimen/profile_search_icon_h"
                         android:layout_margin="@dimen/widgets_padding"
                         android:scaleType="centerCrop"
