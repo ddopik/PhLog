@@ -136,7 +136,12 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
             case PROFILE_DISPLAY_TYPE_3:
                 socialViewHolder.socialProfileType3.setVisibility(View.VISIBLE);
-                GlideApp.with(context).load(entite.thumbnail).apply(RequestOptions.circleCropTransform()).into(socialViewHolder.socialProfileIcon);
+                GlideApp.with(context)
+                        .load(entite.thumbnail)
+                        .placeholder(R.drawable.default_user_pic)
+                        .error(R.drawable.default_user_pic)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(socialViewHolder.socialProfileIcon);
                 GlideApp.with(context)
                         .load(entite.imgs.get(0))
                         .placeholder(R.drawable.default_photographer_profile)
@@ -177,7 +182,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
             case IMGS_DISPLAY_TYPE_5: {
                 GlideApp.with(context)
-                        .load("https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg")
+                        .load(entite.imgs.get(0))
                         .apply(RequestOptions.circleCropTransform())
                         .placeholder(R.drawable.default_photographer_profile)
                         .error(R.drawable.default_photographer_profile)

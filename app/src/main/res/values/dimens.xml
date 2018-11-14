@@ -142,6 +142,6 @@
 
     <dimen name="social_img_slider_w">175dp</dimen>
     <dimen name="social_img_slider_h">280dp</dimen>
-    <dimen name="social_profile_img_w">250dp</dimen>
+    <dimen name="social_profile_img_w">300dp</dimen>
 
 </resources>

@@ -8,7 +8,9 @@
         android:id="@+id/social_profile_type_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:layout_margin="@dimen/widgets_padding"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <include layout="@layout/view_holder_social_profile_type_3" />
     </FrameLayout>
@@ -18,8 +20,8 @@
         android:id="@+id/images_slider_type_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:layout_margin="@dimen/widgets_padding"
+        android:visibility="gone">
         <include
             layout="@layout/view_holder_social_images_slider_type_5" />
     </FrameLayout>
