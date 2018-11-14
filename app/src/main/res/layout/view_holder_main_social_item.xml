@@ -31,10 +31,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/widgets_padding"
+        android:visibility="gone">
+
+        <include layout="@layout/view_holder_social_campaign_type_1" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/social_brand_type_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/widgets_padding"
+        android:visibility="gone">
+
+        <include layout="@layout/view_holder_social_brand_type_1" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/social_album_type_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/widgets_padding"
         android:visibility="gone"
         tools:visibility="visible">
 
-        <include layout="@layout/view_holder_social_campaign_type_1" />
+        <include layout="@layout/view_holder_social_album_type_4" />
     </FrameLayout>
 
 
