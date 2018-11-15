@@ -16,13 +16,19 @@ public interface Constants {
     int QUERY_SEARCH_TIME_OUT=600;
 
 
+    //////NavigationMangerConst
+     enum NavigationHelper{
+      CAMPAIGN,PROFILE,HOME,NOTIFICATION,UPLOAD_PHOTO
+    }
+
+
+    ///////////////////////Entity-type
     int ENTITY_PROFILE=1;
     int ENTITY_CAMPAIGN=2;
     int ENTITY_ALBUM=3;
     int ENTITY_IMAGE=4;
     int ENTITY_BRAND=5;
-
-
+    ///////////////Entity Display-types
     String PROFILE_DISPLAY_TYPE_1 = "101";
     String PROFILE_DISPLAY_TYPE_2 = "102";
     String PROFILE_DISPLAY_TYPE_3 = "103";
@@ -54,7 +60,7 @@ public interface Constants {
     String BRAND_DISPLAY_TYPE_3 = "503";
     String BRAND_DISPLAY_TYPE_4 = "504";
     String BRAND_DISPLAY_TYPE_5 = "505";
-
+///////////////////////////////
 
 
 

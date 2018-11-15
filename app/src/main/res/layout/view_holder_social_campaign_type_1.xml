@@ -8,6 +8,7 @@
     app:cardElevation="@dimen/item_card_elevation">
 
     <LinearLayout
+        android:id="@+id/social_campaign_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

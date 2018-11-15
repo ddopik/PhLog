@@ -8,27 +8,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.social.model.Entite;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 import com.example.softmills.phlog.ui.social.presenter.SocailFragmentPresenterImpl;
 import com.example.softmills.phlog.ui.social.presenter.SocialFragmentPresenter;
 import com.example.softmills.phlog.ui.social.view.adapter.SocialAdapter;
+import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_ALBUM;
-import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_BRAND;
-import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_CAMPAIGN;
-import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_IMAGE;
-import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_PROFILE;
+import static com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity.USER_ID;
 
 public class SocialFragment extends BaseFragment implements SocialFragmentView {
 
@@ -86,6 +83,35 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
             Intent intent=new Intent(getActivity(), SearchActivity.class);
             startActivity(intent);
         });
+
+        socialAdapter.onSocialItemListener = new SocialAdapter.OnSocialItemListener() {
+            @Override
+            public void onSocialProfileClick(Entite entite) {
+                Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                intent.putExtra(USER_ID, entite.id);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void OnFollowSocialProfileClick(Entite entite) {
+                socialFragmentPresenter.followUser(String.valueOf(entite.id));
+            }
+
+            @Override
+            public void onSocialCampaignClicked(Entite entite) {
+                Intent intent = new Intent(getActivity(), CampaignInnerActivity.class);
+                intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID,String.valueOf(entite.id));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onSocialFollowCampaignClicked(Entite entite) {
+                socialFragmentPresenter.followSocialCampaign(String.valueOf(entite.id));
+            }
+        };
+
+
     }
 
     @Override

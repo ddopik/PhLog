@@ -10,10 +10,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
-import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
+import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
 
 /**
@@ -75,39 +76,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        clearSelected();
-        int homeBrnImg = R.drawable.ic_tab_home_on;
-        int campaignBtnImg = R.drawable.ic_tab_missions_on;
-        int notificationBtnImg = R.drawable.ic_tab_notificatin_on;
-        int myProfileBtnImg = R.drawable.ic_tab_profile_on;
+
 
         switch (v.getId()) {
             case R.id.navigation_home:
-                addFragment(R.id.view_container, new SocialFragment(), SocialFragment.class.getSimpleName(), true);
-                homeBrn.setTextColor(getResources().getColor(R.color.text_input_color));
-                homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg, 0, 0);
-                homeBrn.setCompoundDrawablePadding(8);
+                homeNavigateHelper(Constants.NavigationHelper.HOME);
                 break;
             case R.id.navigation_missions:
-                addFragment(R.id.view_container, new CampaignsFragment(), CampaignsFragment.class.getSimpleName(), true);
-                campaignBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, campaignBtnImg, 0, 0);
-                campaignBtn.setCompoundDrawablePadding(8);
+                homeNavigateHelper(Constants.NavigationHelper.CAMPAIGN);
                 break;
             case R.id.navigation_notification:
-                notificationBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg, 0, 0);
-                notificationBtn.setCompoundDrawablePadding(8);
+                homeNavigateHelper(Constants.NavigationHelper.NOTIFICATION);
                 break;
             case R.id.navigation_profile:
-                addFragment(R.id.view_container, new PhotoGraphedProfileFragment(), PhotoGraphedProfileFragment.class.getSimpleName(), true);
-                myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
-                myProfileBtn.setCompoundDrawablePadding(8);
+                homeNavigateHelper(Constants.NavigationHelper.PROFILE);
                 break;
             case R.id.pic_img_home_btn:
-                addFragment(R.id.view_container, new GalleryImageFragment(), GalleryImageFragment.class.getSimpleName(), true);
-                picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
+                homeNavigateHelper(Constants.NavigationHelper.UPLOAD_PHOTO);
                 break;
             default:
         }
@@ -144,6 +129,51 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        campaignBtn.setFocusableInTouchMode(false);
 //        notificationBtn.setFocusableInTouchMode(false);
 //        myProfileBtn.setFocusableInTouchMode(false);
+
+    }
+
+    public void homeNavigateHelper(Constants.NavigationHelper navigationHelper) {
+        clearSelected();
+        int homeBrnImg = R.drawable.ic_tab_home_on;
+        int campaignBtnImg = R.drawable.ic_tab_missions_on;
+        int notificationBtnImg = R.drawable.ic_tab_notificatin_on;
+        int myProfileBtnImg = R.drawable.ic_tab_profile_on;
+
+        switch (navigationHelper) {
+            case HOME: {
+                addFragment(R.id.view_container, new SocialFragment(), SocialFragment.class.getSimpleName(), true);
+                homeBrn.setTextColor(getResources().getColor(R.color.text_input_color));
+                homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg, 0, 0);
+                homeBrn.setCompoundDrawablePadding(8);
+                break;
+            }
+
+            case CAMPAIGN: {
+                addFragment(R.id.view_container, new CampaignsFragment(), CampaignsFragment.class.getSimpleName(), true);
+                campaignBtn.setTextColor(getResources().getColor(R.color.text_input_color));
+                campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, campaignBtnImg, 0, 0);
+                campaignBtn.setCompoundDrawablePadding(8);
+                break;
+            }
+            case NOTIFICATION: {
+                notificationBtn.setTextColor(getResources().getColor(R.color.text_input_color));
+                notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg, 0, 0);
+                notificationBtn.setCompoundDrawablePadding(8);
+                break;
+            }
+            case UPLOAD_PHOTO: {
+                addFragment(R.id.view_container, new GalleryImageFragment(), GalleryImageFragment.class.getSimpleName(), true);
+                picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
+                break;
+            }
+            case PROFILE: {
+                addFragment(R.id.view_container, new PhotoGraphedProfileFragment(), PhotoGraphedProfileFragment.class.getSimpleName(), true);
+                myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
+                myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
+                myProfileBtn.setCompoundDrawablePadding(8);
+                break;
+            }
+        }
 
     }
 

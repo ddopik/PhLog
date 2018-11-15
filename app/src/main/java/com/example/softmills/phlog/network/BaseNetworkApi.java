@@ -6,6 +6,7 @@ import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotosResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
+import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
 import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.model.SocialLoginResponse;
 import com.example.softmills.phlog.ui.photographerprofile.model.ProfilePhotoGrapherInfoResponse;
@@ -266,6 +267,16 @@ public class BaseNetworkApi {
                 .build()
                 .getObjectObservable(CampaignInnerPhotosResponse.class);
     }
+
+    public static io.reactivex.Observable<FollowCampaignResponse> followCampaign(String token, String campaignID) {
+        return Rx2AndroidNetworking.post(CAMPAIGN_PHOTOS_URL)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addBodyParameter("Campaign_id ", campaignID)
+                 .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(FollowCampaignResponse.class);
+    }
+
 
     public static io.reactivex.Observable<UserPhotosResponse> getUserProfilePhotos(String token, String userID, int page) {
         return Rx2AndroidNetworking.post(USER_PROFILE_PHOTOS)

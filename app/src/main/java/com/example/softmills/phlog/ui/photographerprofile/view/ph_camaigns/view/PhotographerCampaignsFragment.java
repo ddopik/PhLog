@@ -83,7 +83,7 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
 
         photoGrapherCampaignsAdapter.campaignLister = campaignID -> {
             Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
-            intent.putExtra("campaign_id", campaignID);
+            intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, campaignID);
             startActivity(intent);
         };
     }

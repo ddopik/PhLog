@@ -29,6 +29,7 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
 
 
     private final String TAG = CampaignInnerActivity.class.getSimpleName();
+    public static String CAMPAIGN_ID="campaign_id";
     private FrameLayout campaignImg;
     private TextView campaignTitle, campaignHostedBy, campaignDayLeft;
     private TabLayout campaignTabs;
@@ -54,13 +55,8 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
         campaignDayLeft = findViewById(R.id.campaign_day_left);
         campaignTabs = findViewById(R.id.inner_campaign_tabs);
         campaignViewPager = findViewById(R.id.inner_campaign_viewpager);
-
-
-        String campaignID = getIntent().getStringExtra("campaign_id");
-        if (!campaignID.isEmpty())
-            campaignInnerPresenter.getCampaignDetails("1");
-
-
+        if (getIntent().getStringExtra(CAMPAIGN_ID) !=null)
+            campaignInnerPresenter.getCampaignDetails( getIntent().getStringExtra(CAMPAIGN_ID));
     }
 
     @Override

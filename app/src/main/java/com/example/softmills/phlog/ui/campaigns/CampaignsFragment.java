@@ -80,7 +80,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
         };
         allCampaignsAdapter.campaignLister = campaignID -> {
             Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
-            intent.putExtra("campaign_id", campaignID);
+            intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, campaignID);
             startActivity(intent);
         };
 

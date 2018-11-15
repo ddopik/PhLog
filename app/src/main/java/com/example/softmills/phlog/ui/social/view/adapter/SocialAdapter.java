@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
@@ -39,8 +40,8 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     private Context context;
     private List<SocialData> socialDataList;
 
-    @SuppressWarnings("WeakerAccess")
-    public  OnSocialProfileListener onSocialProfileListener;
+
+    public OnSocialItemListener onSocialItemListener;
 
 
     public SocialAdapter(List<SocialData> socialDataList) {
@@ -100,11 +101,13 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         ImageView socialProfileIcon, socialProfileImg_1, socialProfileImg_2, socialProfileImg_3, socialProfileImg_4;
         TextView socialProfileFullName, socialProfileUserName;
         Button followSocialProfile;
+        LinearLayout socialProfileContainer;
         /////
         CustomRecyclerView socialImgSlideRv;
         ImageView socialImfSliderIcon;
         TextView socialImageName;
         /////
+        LinearLayout socailCampaignConatainer;
         ImageView socialCampaignIcon, socialCampaignImg;
         TextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft;
         Button socialJoinCampaignBtn;
@@ -135,11 +138,13 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialProfileImg_2 = view.findViewById(R.id.social_profile_img_2);
             socialProfileImg_3 = view.findViewById(R.id.social_profile_img_3);
             socialProfileImg_4 = view.findViewById(R.id.social_profile_img_4);
+            socialProfileContainer = view.findViewById(R.id.social_profile_container);
             /////ImageSlider type_1
             socialImgSlideRv = view.findViewById(R.id.social_img_slider_rv);
             socialImfSliderIcon =view.findViewById(R.id.social_icon_img);
             socialImageName = view.findViewById(R.id.social_image_name);
             /////CampaignItemView
+            socailCampaignConatainer = view.findViewById(R.id.social_campaign_container);
             socialCampaignIcon = view.findViewById(R.id.social_campaign_icon);
             socialCampaignName = view.findViewById(R.id.social_campaign_name);
             socialCampaignImg = view.findViewById(R.id.social_campaign_img);
@@ -168,8 +173,14 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         }
     }
 
-    public interface OnSocialProfileListener {
-        void OnSoilProfileClick(Entite entite);
+    public interface OnSocialItemListener {
+        void onSocialProfileClick(Entite entite);
+
+        void OnFollowSocialProfileClick(Entite entite);
+
+        void onSocialCampaignClicked(Entite entite);
+
+        void onSocialFollowCampaignClicked(Entite entite);
     }
 
     private void bindProfileEntity(Entite entite, SocialViewHolder socialViewHolder) {
@@ -216,10 +227,19 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                 socialViewHolder.socialProfileFullName.setText(entite.fullName);
                 socialViewHolder.socialProfileUserName.setText(entite.userName);
 
-                if (onSocialProfileListener != null)
-                    socialViewHolder.followSocialProfile.setOnClickListener(v -> {
-                        onSocialProfileListener.OnSoilProfileClick(entite);
+                if (onSocialItemListener != null) {
+
+                    socialViewHolder.socialProfileContainer.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onSocialItemListener.onSocialProfileClick(entite);
+                        }
                     });
+                    socialViewHolder.followSocialProfile.setOnClickListener(v -> {
+                        onSocialItemListener.OnFollowSocialProfileClick(entite);
+
+                    });
+                }
         }
     }
 
@@ -267,9 +287,15 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                 socialViewHolder.socialCampaignTitle.setText(entite.nameEn);
                 socialViewHolder.socialCampaignDayLeft.setText("day left here");
                 socialViewHolder.socialCampaignName.setText(entite.nameEn);
-                socialViewHolder.socialJoinCampaignBtn.setOnClickListener(v -> {
 
-                });
+                if (onSocialItemListener != null) {
+                    socialViewHolder.socialJoinCampaignBtn.setOnClickListener(v -> {
+                        onSocialItemListener.onSocialFollowCampaignClicked(entite);
+                    });
+                    socialViewHolder.socailCampaignConatainer.setOnClickListener(v -> onSocialItemListener.onSocialCampaignClicked(entite));
+
+                }
+
         }
 
     }

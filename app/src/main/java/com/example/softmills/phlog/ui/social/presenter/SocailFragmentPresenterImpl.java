@@ -2,7 +2,9 @@ package com.example.softmills.phlog.ui.social.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
@@ -43,5 +45,35 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                     socialFragmentView.viewSocialDataProgress(false);
                 });
 
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void followUser(String userId) {
+        BaseNetworkApi.followUser(PrefUtils.getUserToken(context), userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followUserResponse -> {
+                    if (followUserResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        socialFragmentView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
+                    } else {
+                        socialFragmentView.showMessage(context.getResources().getString(R.string.error_following_state));
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "followUser() ---> Error  " + throwable.getMessage());
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void followSocialCampaign(String id) {
+        BaseNetworkApi.followCampaign(PrefUtils.getUserToken(context), id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followCampaignResponse -> {
+
+                }, throwable -> {
+
+                });
     }
 }
