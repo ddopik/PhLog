@@ -2,9 +2,9 @@ package com.example.softmills.phlog.ui.userprofile.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.userprofile.model.UserProfileData;
@@ -42,12 +42,13 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                         userProfileActivityView.viewUserProfileFollowingCount(userProfileData.followingCount);
                         userProfileActivityView.viewUserProfilePhotosCount(userProfileData.imagePhotographerCount);
                     } else {
-                        Log.e(TAG, "getUserProfile() ---> Errore  " + userProfileResponse.state);
                         userProfileActivityView.showMessage(userProfileResponse.data.toString());
+                        ErrorUtils.setError(context, TAG, userProfileResponse.msg, userProfileResponse.state);
+
                     }
 
                 }, throwable -> {
-                    Log.e(TAG, "getUserProfile() ---> Errore  " + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable.getMessage());
                 });
     }
 
@@ -64,14 +65,12 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                     if (userPhotosResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
                     } else {
-                        userProfileActivityView.showMessage(userPhotosResponse.state);
-                        userProfileActivityView.showMessage(userPhotosResponse.data.toString());
-                        Log.e(TAG, "getUserProfile() ---> Errore  " + userPhotosResponse.state);
+                        ErrorUtils.setError(context, TAG, userPhotosResponse.msg, userPhotosResponse.state);
                     }
 
                 }, throwable -> {
                     userProfileActivityView.viewUserPhotosProgress(false);
-                    Log.e(TAG, "getUserProfile() ---> Errore  " + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable.getMessage());
                 });
 
     }
@@ -86,10 +85,10 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                     if (followUserResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) +" "+ followUserResponse.data);
                     } else {
-                        userProfileActivityView.showMessage(context.getResources().getString(R.string.error_following_state));
+                        ErrorUtils.setError(context, TAG, followUserResponse.msg, followUserResponse.state);
                     }
                 }, throwable -> {
-                    Log.e(TAG, "followUser() ---> Error  " + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable.getMessage());
                 });
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
@@ -99,12 +100,13 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
             @Override
             public void onAlbumImgLikeClick(AlbumImg albumImg) {
-
+                showToast("like");
             }
 
             @Override
             public void onAlbumImgCommentClick(AlbumImg albumImg) {
-
+                Intent intent=new Intent(getBaseContext(),AlbumCommentActivity.class);
+                startActivity(intent);
             }
 
             @Override

@@ -65,7 +65,44 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append(albumImgList.get(i).AlbumImgCommentsCount).append("Comments").toString());
 
         if (onAlbumImgClicked !=null){
+            albumImgViewHolder.albumImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAlbumImgClicked.onAlbumImgClick(albumImgList.get(i));
+                }
+            });
+            albumImgViewHolder.albumImgLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i));
 
+                }
+            });
+            albumImgViewHolder.albumImgComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i));
+
+                }
+            });
+            albumImgViewHolder.albumImgDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAlbumImgClicked.onAlbumImgDownloadClick(albumImgList.get(i));
+                }
+            });
+            albumImgViewHolder.albumImgLikeVal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i));
+                }
+            });
+            albumImgViewHolder.albumImgCommentVal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i));
+                }
+            });
         }
 
     }

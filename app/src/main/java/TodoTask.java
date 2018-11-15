@@ -10,5 +10,6 @@ public class TodoTask {
     // add Comment to photo (Api+layout+viewComments)
     // implement paging in social activity
     //CampaignInner Mission is null data
+    // AllAlbumImg Adapter item need more enhancement
 
 }

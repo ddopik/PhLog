@@ -20,8 +20,8 @@ import java.util.List;
 public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapter.SocialImageViewHolder> {
 
     private Context context;
-    private List<String> imageList;
-
+    private List<String> imageList; //todo sould be list of object
+    public OnSocialSliderImgClick onSocialSliderImgClick;
     public SocialImagesAdapter(Entite entite) {
         this.imageList = entite.imgs;
     }
@@ -38,10 +38,16 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
     @Override
     public void onBindViewHolder(@NonNull SocialImageViewHolder socialImageViewHolder, int i) {
         GlideApp.with(context)
-                .load(imageList.get(i))
+                .load(imageList.get(i))////todo img ob should be passed here
                 .placeholder(R.drawable.default_photographer_profile)
                 .error(R.drawable.default_photographer_profile)
                 .into(socialImageViewHolder.sliderImage);
+        if (onSocialSliderImgClick != null) {
+            socialImageViewHolder.sliderImage.setOnClickListener((View.OnClickListener) v -> {
+                onSocialSliderImgClick.onSocialSliderImgCliked(imageList.get(i)); ////todo img ob should be passed here
+
+            });
+        }
     }
 
     @Override
@@ -56,5 +62,9 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
             super(view);
             sliderImage = view.findViewById(R.id.social_slider_img);
         }
+    }
+
+    interface OnSocialSliderImgClick {
+        void onSocialSliderImgCliked(String img);////todo img ob should be passed here
     }
 }

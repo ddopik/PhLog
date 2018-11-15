@@ -104,7 +104,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         LinearLayout socialProfileContainer;
         /////
         CustomRecyclerView socialImgSlideRv;
-        ImageView socialImfSliderIcon;
+        ImageView socialItemSliderIcon;
         TextView socialImageName;
         /////
         LinearLayout socailCampaignConatainer;
@@ -141,7 +141,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialProfileContainer = view.findViewById(R.id.social_profile_container);
             /////ImageSlider type_1
             socialImgSlideRv = view.findViewById(R.id.social_img_slider_rv);
-            socialImfSliderIcon =view.findViewById(R.id.social_icon_img);
+            socialItemSliderIcon = view.findViewById(R.id.social_icon_img);
             socialImageName = view.findViewById(R.id.social_image_name);
             /////CampaignItemView
             socailCampaignConatainer = view.findViewById(R.id.social_campaign_container);
@@ -181,6 +181,12 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         void onSocialCampaignClicked(Entite entite);
 
         void onSocialFollowCampaignClicked(Entite entite);
+
+        void onSocialSlideImageClicked(Entite entite);
+
+        void onSocialBrandClicked(Entite entite);
+
+        void onSocialBrandFollowClicked(Entite entite);
     }
 
     private void bindProfileEntity(Entite entite, SocialViewHolder socialViewHolder) {
@@ -252,13 +258,21 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                         .apply(RequestOptions.circleCropTransform())
                         .placeholder(R.drawable.default_photographer_profile)
                         .error(R.drawable.default_photographer_profile)
-                        .into(socialViewHolder.socialImfSliderIcon);
+                        .into(socialViewHolder.socialItemSliderIcon);
 
                 socialViewHolder.socialImageName.setText(title);
 
                 socialViewHolder.socialImageSliderType5.setVisibility(View.VISIBLE);
-                SocialImagesAdapter socialImagesAdapter = new SocialImagesAdapter(entite);
+                SocialImagesAdapter socialImagesAdapter = new SocialImagesAdapter(entite);///todo img should be obj
+
                 socialViewHolder.socialImgSlideRv.setAdapter(socialImagesAdapter);
+
+                if (onSocialItemListener != null) {
+                    socialImagesAdapter.onSocialSliderImgClick = img -> {
+                        onSocialItemListener.onSocialSlideImageClicked(entite);///todo img should be obj
+
+                    };
+                }
             }
 
         }
@@ -322,9 +336,20 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
                 socialViewHolder.socialBrandName.setText(entite.nameEn);
                 socialViewHolder.socialBrandFollowing.setText(entite.numberOfFollowers);
-                socialViewHolder.followBrandBtn.setOnClickListener(v -> {
 
-                });
+                if (onSocialItemListener != null) {
+                    socialViewHolder.socialBrandImg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onSocialItemListener.onSocialBrandClicked(entite);
+                        }
+                    });
+                }
+                if (onSocialItemListener != null) {
+                    socialViewHolder.followBrandBtn.setOnClickListener(v -> {
+                        onSocialItemListener.onSocialBrandFollowClicked(entite);
+                    });
+                }
                 break;
             }
         }

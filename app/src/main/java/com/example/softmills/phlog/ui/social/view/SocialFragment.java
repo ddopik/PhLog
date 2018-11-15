@@ -2,6 +2,7 @@ package com.example.softmills.phlog.ui.social.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,6 +14,9 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.album.model.AlbumImg;
+import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
+import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.social.model.Entite;
@@ -25,6 +29,9 @@ import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALBUM_ID;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 import static com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity.USER_ID;
 
 public class SocialFragment extends BaseFragment implements SocialFragmentView {
@@ -88,7 +95,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
             @Override
             public void onSocialProfileClick(Entite entite) {
                 Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-                intent.putExtra(USER_ID, entite.id);
+                intent.putExtra(USER_ID, String.valueOf(entite.id));
                 startActivity(intent);
 
             }
@@ -108,6 +115,36 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
             @Override
             public void onSocialFollowCampaignClicked(Entite entite) {
                 socialFragmentPresenter.followSocialCampaign(String.valueOf(entite.id));
+            }
+
+            @Override
+            public void onSocialSlideImageClicked(Entite entite) { ///todo selected img should be passed here
+                Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
+
+//                intent.putExtra(SELECTED_IMG_ID,albumImg.albumImgId);/// todo album id should passed here
+                List<AlbumImg> albumImgList = new ArrayList<>();
+                for (int i = 0; i < entite.imgs.size(); i++) {
+                    AlbumImg albumImg = new AlbumImg();
+                    albumImg.albumImgId = String.valueOf(i);
+                    albumImg.AlbumImg = entite.imgs.get(i);
+                    albumImgList.add(albumImg);
+                }
+                intent.putExtra(ALBUM_ID, String.valueOf(entite.id));
+                intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
+                intent.putExtra(SELECTED_IMG_ID, "1"); ///todo selected img id should be passed here
+                startActivity(intent);
+            }
+
+            @Override
+            public void onSocialBrandClicked(Entite entite) {
+                Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
+                intent.putExtra(BrandInnerActivity.BRAND_ID, String.valueOf(entite.id));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onSocialBrandFollowClicked(Entite entite) {
+                socialFragmentPresenter.followSocialBrand(String.valueOf(entite.id));
             }
         };
 
@@ -129,9 +166,6 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
             socialProgress.setVisibility(View.GONE);
         }
     }
-
-
-
 
     @Override
     public void showMessage(String msg) {

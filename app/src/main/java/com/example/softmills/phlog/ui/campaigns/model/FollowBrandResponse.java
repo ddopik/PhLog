@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by abdalla_maged on 11/15/2018.
  */
-public class FollowCampaignResponse {
-    @SerializedName("msg")
-    @Expose
-    public String msg;
+public class FollowBrandResponse {  @SerializedName("msg")
+@Expose
+public String msg;
     @SerializedName("state")
     @Expose
     public String state;
+
 }

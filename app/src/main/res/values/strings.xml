@@ -104,5 +104,7 @@
     <string name="stories">Stories</string>
     <string name="brand_campaign">Brand Campaigns</string>
     <string name="about_brand">About</string>
+    <string name="campaign_followed">Campaign Followed</string>
+    <string name="brand_followed">Brand followed</string>
 
 </resources>

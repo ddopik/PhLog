@@ -32,7 +32,12 @@ public class UserProfileData {
     @SerializedName("rate")
     @Expose
     public Integer rate;
+    @SerializedName("level")
+    @Expose
+    public String level;
     @SerializedName("follow")
     @Expose
     public String follow;
+
+
 }

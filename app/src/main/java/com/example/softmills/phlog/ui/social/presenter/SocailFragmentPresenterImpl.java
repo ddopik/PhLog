@@ -71,9 +71,31 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followCampaignResponse -> {
+                    if (followCampaignResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        socialFragmentView.showMessage(context.getResources().getString(R.string.campaign_followed));
+                    } else {
+                        ErrorUtils.setError(context, TAG, followCampaignResponse.msg, followCampaignResponse.state);
+                    }
 
                 }, throwable -> {
+                    ErrorUtils.setError(context, TAG, throwable.getMessage());
+                });
+    }
+    @SuppressLint("CheckResult")
+    @Override
+    public void followSocialBrand(String id) {
+        BaseNetworkApi.followBrand(PrefUtils.getUserToken(context), id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followBrandResponse -> {
+                    if (followBrandResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        socialFragmentView.showMessage(context.getResources().getString(R.string.brand_followed));
+                    } else {
+                        ErrorUtils.setError(context, TAG, followBrandResponse.msg, followBrandResponse.state);
+                    }
 
+                }, throwable -> {
+                    ErrorUtils.setError(context, TAG, throwable.getMessage());
                 });
     }
 }
