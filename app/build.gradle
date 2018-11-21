@@ -37,6 +37,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
 
     android.defaultConfig.manifestPlaceholders = [
             facebookAppId        : "1092925927548641",
