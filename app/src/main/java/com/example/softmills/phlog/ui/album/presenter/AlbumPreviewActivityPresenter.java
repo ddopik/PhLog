@@ -7,4 +7,5 @@ public interface AlbumPreviewActivityPresenter {
 
 
     void getSelectedSearchAlbum(String albumID,String pageNum);
+
 }

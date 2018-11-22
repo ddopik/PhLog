@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.album.model.AlbumImgCommentData;
 
 /**
  * Created by abdalla_maged on 11/6/2018.
@@ -48,6 +49,10 @@ public class AlbumCommentActivity extends BaseActivity implements AlbumCommentAc
 
     }
 
+    @Override
+    public void viewPhotoComment(AlbumImgCommentData albumImgCommentData) {
+        //todo add comments to recycler here
+    }
 
     @Override
     public void showToast(String msg) {

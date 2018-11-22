@@ -60,10 +60,6 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
         initViews();
         initListener();
         socialFragmentPresenter.getSocialData();
-
-
-
-
     }
 
 

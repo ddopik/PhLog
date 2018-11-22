@@ -1,0 +1,47 @@
+package com.example.softmills.phlog.ui.album.presenter;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.network.BaseNetworkApi;
+import com.example.softmills.phlog.ui.album.view.AlbumCommentActivityView;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+/**
+ * Created by abdalla_maged On Nov,2018
+ */
+public class AlbumCommentActivityImpl implements AlbumCommentActivityPresenter {
+
+    private String TAG = AlbumCommentActivityImpl.class.getSimpleName();
+    private Context context;
+    private AlbumCommentActivityView albumCommentActivityView;
+
+    public AlbumCommentActivityImpl(Context context, AlbumCommentActivityView albumCommentActivityView) {
+        this.context = context;
+        this.albumCommentActivityView = albumCommentActivityView;
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void getImageComments(String imageId, String page) {
+        albumCommentActivityView.viewAddCommentProgress(true);
+        BaseNetworkApi.getImageComments(PrefUtils.getUserToken(context), imageId, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(albumImgCommentResponse -> {
+                    if (albumImgCommentResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        albumCommentActivityView.viewPhotoComment(albumImgCommentResponse.data);
+                    } else {
+                        ErrorUtils.setError(context, TAG, albumImgCommentResponse.msg, albumImgCommentResponse.state);
+                    }
+                    albumCommentActivityView.viewAddCommentProgress(false);
+                }, throwable -> {
+                    ErrorUtils.setError(context, TAG, throwable.toString());
+                    albumCommentActivityView.viewAddCommentProgress(false);
+                });
+    }
+}

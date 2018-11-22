@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
@@ -22,6 +23,7 @@ import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
+    private TextView toolBarTitle;
     private BottomAppBar bottomNavigation;
     private Button homeBrn, campaignBtn, notificationBtn, myProfileBtn;
     private FloatingActionButton picImgHomeBtn;
@@ -37,12 +39,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initView();
         initPresenter();
         initListener();
-        getSupportFragmentManager().beginTransaction().replace(R.id.view_container, new SocialFragment()).commit(); //default Screen
-    }
+        homeNavigateHelper(Constants.NavigationHelper.HOME);
+     }
 
     @Override
     public void initView() {
 
+        toolBarTitle=findViewById(R.id.toolbar_title);
         backBtn=findViewById(R.id.back_btn);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         homeBrn = findViewById(R.id.navigation_home);
@@ -64,11 +67,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initListener() {
-        backBtn.setOnClickListener((view)->onBackPressed());
-
+        backBtn.setOnClickListener((view)->{
+//            homeNavigateHelper(Constants.NavigationHelper.HOME);
+            onBackPressed();
+        });
     }
-
-
     @Override
     public void showToast(String msg) {
         super.showToast(msg);
@@ -145,6 +148,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 homeBrn.setTextColor(getResources().getColor(R.color.text_input_color));
                 homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg, 0, 0);
                 homeBrn.setCompoundDrawablePadding(8);
+                toolbar.setVisibility(View.GONE);
                 break;
             }
 
@@ -153,6 +157,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 campaignBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                 campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, campaignBtnImg, 0, 0);
                 campaignBtn.setCompoundDrawablePadding(8);
+                toolbar.setVisibility(View.VISIBLE);
+                toolBarTitle.setText(getResources().getString(R.string.campaigns));
                 break;
             }
             case NOTIFICATION: {
@@ -164,6 +170,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case UPLOAD_PHOTO: {
                 addFragment(R.id.view_container, new GalleryImageFragment(), GalleryImageFragment.class.getSimpleName(), true);
                 picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
+                toolbar.setVisibility(View.VISIBLE);
+                toolBarTitle.setText(getResources().getString(R.string.upload_photo));
                 break;
             }
             case PROFILE: {
@@ -171,6 +179,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                 myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                 myProfileBtn.setCompoundDrawablePadding(8);
+                toolbar.setVisibility(View.VISIBLE);
+                toolBarTitle.setText(getResources().getString(R.string.profile));
                 break;
             }
         }

@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
+import com.example.softmills.phlog.ui.album.model.AlbumImgCommentResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
 import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotosResponse;
@@ -316,6 +317,17 @@ public class BaseNetworkApi {
                 .build()
                 .getObjectObservable(AlbumPreviewResponse.class);
     }
+
+    public static io.reactivex.Observable<AlbumImgCommentResponse> getImageComments(String token, String image_id, String page) {
+        return Rx2AndroidNetworking.post(GET_SEARCH_ALBUM)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addQueryParameter("image_id",image_id)
+                .addQueryParameter(PAGER_PATH_PARAMETER,page)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(AlbumImgCommentResponse.class);
+    }
+
 
     public static io.reactivex.Observable<BrandInnerResponse> getBrandInnerData(String token, String brandId) {
         return Rx2AndroidNetworking.post(INNER_BRAND_URL)
