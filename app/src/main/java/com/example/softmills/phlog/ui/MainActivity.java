@@ -14,6 +14,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
+import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
@@ -72,6 +73,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             onBackPressed();
         });
     }
+
+
+
     @Override
     public void showToast(String msg) {
         super.showToast(msg);
@@ -162,6 +166,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             }
             case NOTIFICATION: {
+
+                addFragment(R.id.view_container, new NotificationFragment(), NotificationFragment.class.getSimpleName(), true);
                 notificationBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                 notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg, 0, 0);
                 notificationBtn.setCompoundDrawablePadding(8);
@@ -187,5 +193,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        homeNavigateHelper(Constants.NavigationHelper.HOME);
+    }
 }

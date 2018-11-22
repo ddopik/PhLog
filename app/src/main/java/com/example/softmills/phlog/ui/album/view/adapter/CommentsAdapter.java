@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.ui.album.model.UserComment;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         this.context = viewGroup.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new CommentViewHolder(layoutInflater.inflate(com.facebook.R.layout.view_holder_comment, viewGroup, false));
+        return new CommentViewHolder(layoutInflater.inflate(R.layout.view_holder_comment, viewGroup, false));
     }
 
     @Override
