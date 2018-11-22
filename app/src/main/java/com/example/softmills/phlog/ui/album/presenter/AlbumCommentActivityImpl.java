@@ -44,4 +44,25 @@ public class AlbumCommentActivityImpl implements AlbumCommentActivityPresenter {
                     albumCommentActivityView.viewAddCommentProgress(false);
                 });
     }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void submitComment(String imageId, String comment) {
+        albumCommentActivityView.viewAddCommentProgress(true);
+        BaseNetworkApi.submitImageComment(PrefUtils.getUserToken(context), imageId,comment)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(albumImgCommentResponse -> {
+                    if (albumImgCommentResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        albumCommentActivityView.viewPhotoComment(albumImgCommentResponse.data);
+                    } else {
+                        ErrorUtils.setError(context, TAG, albumImgCommentResponse.msg, albumImgCommentResponse.state);
+                    }
+                    albumCommentActivityView.viewAddCommentProgress(false);
+                }, throwable -> {
+                    ErrorUtils.setError(context, TAG, throwable.toString());
+                    albumCommentActivityView.viewAddCommentProgress(false);
+                });
+
+    }
 }

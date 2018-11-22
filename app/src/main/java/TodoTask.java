@@ -8,7 +8,8 @@ public class TodoTask {
     //edit image object through all  app model
     // add rounded frame through brand inner
     // upload photo api
-    // add Comment to photo (Api+layout+viewComments) ===>Api not ready
+    // add CommentList to photo (layout Of Comments List)
+    //Add Comment ..
     // implement paging in social activity
     //CampaignInner Mission is null data
     // AllAlbumImg Adapter item need more enhancement

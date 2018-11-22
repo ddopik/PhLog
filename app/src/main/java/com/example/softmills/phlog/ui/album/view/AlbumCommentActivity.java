@@ -9,6 +9,10 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.album.model.AlbumImgCommentData;
+import com.example.softmills.phlog.ui.album.model.UserComment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by abdalla_maged on 11/6/2018.
@@ -18,6 +22,7 @@ public class AlbumCommentActivity extends BaseActivity implements AlbumCommentAc
     private EditText comment;
     private Button sendBtn;
     private ProgressBar addCommentProgress;
+    private List<UserComment> userCommentList=new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +48,7 @@ public class AlbumCommentActivity extends BaseActivity implements AlbumCommentAc
     }
     private void initListener(){
         sendBtn.setOnClickListener(v -> {
-
         });
-
-
     }
 
     @Override

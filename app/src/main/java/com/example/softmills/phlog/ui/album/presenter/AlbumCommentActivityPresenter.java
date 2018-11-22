@@ -5,4 +5,5 @@ package com.example.softmills.phlog.ui.album.presenter;
  */
 public interface AlbumCommentActivityPresenter {
     void getImageComments(String imageId,String page);
+    void submitComment(String imageId, String comment);
 }
