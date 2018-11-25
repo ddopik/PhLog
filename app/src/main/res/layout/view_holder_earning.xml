@@ -49,6 +49,8 @@
                 android:id="@+id/earning_buyer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp2"
+                android:layout_marginBottom="@dimen/dp2"
                 android:fontFamily="@font/arial_rounded_font"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_normal"

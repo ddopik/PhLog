@@ -107,5 +107,10 @@
     <string name="campaign_followed">Campaign Followed</string>
     <string name="brand_followed">Brand followed</string>
     <string name="total_sizes">Total Sizes :</string>
+    <string name="sale_info">Sale Info</string>
+    <string name="user_id_sale">user id of sale to get more info</string>
+    <string name="by">By</string>
+    <string name="buyer">Buyer</string>
+    <string name="price">price</string>
 
 </resources>
