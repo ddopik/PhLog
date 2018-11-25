@@ -111,14 +111,13 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
             campaignTabs.setupWithViewPager(campaignViewPager);
             onMissionCampaignDataRecived.onCampaignDescription(missionDesc);
 
-
         }
     }
 
     private List<Fragment> getFragmentPagerFragment() {
         List<Fragment> fragmentList = new ArrayList<Fragment>();
         CampaignInnerMissionFragment campaignInnerMissionFragment = CampaignInnerMissionFragment.getInstance();
-        onMissionCampaignDataRecived = campaignInnerMissionFragment;
+        onMissionCampaignDataRecived = campaignInnerMissionFragment; // pass mission description to campaignInnerMissionFragment
         fragmentList.add(campaignInnerMissionFragment);
         fragmentList.add(CampaignInnerPhotosFragment.getInstance("1"));
         return fragmentList;

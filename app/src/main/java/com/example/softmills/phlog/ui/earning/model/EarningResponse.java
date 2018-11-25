@@ -1,17 +1,15 @@
-package com.example.softmills.phlog.ui.campaigns.model;
+package com.example.softmills.phlog.ui.earning.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by abdalla_maged on 11/15/2018.
+ * Created by abdalla_maged On Nov,2018
  */
-public class FollowBrandResponse {
+public class EarningResponse {
     @SerializedName("msg")
     @Expose
     public String msg;
     @SerializedName("state")
     @Expose
-    public String state;
-
-}
+    public String state;}

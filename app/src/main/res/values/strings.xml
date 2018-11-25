@@ -106,5 +106,6 @@
     <string name="about_brand">About</string>
     <string name="campaign_followed">Campaign Followed</string>
     <string name="brand_followed">Brand followed</string>
+    <string name="total_sizes">Total Sizes :</string>
 
 </resources>

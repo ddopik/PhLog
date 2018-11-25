@@ -11,7 +11,6 @@ public class TodoTask {
     // add CommentList to photo (layout Of Comments List)
     //Add Comment ..
     // implement paging in social activity
-    //CampaignInner Mission is null data
     // AllAlbumImg Adapter item need more enhancement
     //NotificationScreen
     //social page has extra padding through start and end

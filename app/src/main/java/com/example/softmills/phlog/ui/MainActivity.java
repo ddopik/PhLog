@@ -14,6 +14,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
+import com.example.softmills.phlog.ui.earning.view.EarningListFragment;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
@@ -185,7 +186,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                 myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                 myProfileBtn.setCompoundDrawablePadding(8);
-                toolbar.setVisibility(View.VISIBLE);
+                toolbar.setVisibility(View.GONE);
+                toolBarTitle.setText(getResources().getString(R.string.profile));
+                break;
+            }
+            case EARNING: {
+                addFragment(R.id.view_container, new EarningListFragment(), EarningListFragment.class.getSimpleName(), true);
+                myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
+                myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
+                myProfileBtn.setCompoundDrawablePadding(8);
+                toolbar.setVisibility(View.GONE);
                 toolBarTitle.setText(getResources().getString(R.string.profile));
                 break;
             }
@@ -198,4 +208,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
         homeNavigateHelper(Constants.NavigationHelper.HOME);
     }
+
+    //todo handle back action here
 }

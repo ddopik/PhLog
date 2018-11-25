@@ -9,6 +9,7 @@ import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerRespons
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowBrandResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
+import com.example.softmills.phlog.ui.earning.model.EarningResponse;
 import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.model.SocialLoginResponse;
 import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
@@ -75,6 +76,7 @@ public class BaseNetworkApi {
     private static final String GET_IMAGE_COMMENT = BASE_URL + "/image/comments";
     private static final String SUBMIT_IMAGE_COMMENT = BASE_URL + "/image/comment/submit";
     private static final String GET_ALL_NOTIFICATION = BASE_URL + "/notification";
+    private static final String GET_EARNING = BASE_URL + "/earning";
 
 
 
@@ -371,6 +373,15 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(NotificationResponse.class);
+    }
+
+    public static io.reactivex.Observable<EarningResponse> geEarning(String token, String page){
+        return Rx2AndroidNetworking.post(GET_EARNING)
+                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+                .addQueryParameter(PAGER_PATH_PARAMETER,page)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(EarningResponse.class);
     }
 
 //    public static io.reactivex.Observable<GeoCodeAutoCompleteResponse> getGeoGodeAutoCompleteResponse(String key){

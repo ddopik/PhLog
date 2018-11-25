@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/photographer_profile_background_img"
     android:layout_width="match_parent"
     android:layout_height="@dimen/photographer_profile_main_preview_height"
-    android:scaleType="centerInside"
     android:background="@drawable/default_photographer_profile"
-   >
+    android:scaleType="centerInside">
 
 
     <ImageView
@@ -23,15 +21,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_marginStart="@dimen/dp22"
             android:layout_marginEnd="@dimen/dp22"
+            android:padding="@dimen/widgets_padding"
+            android:gravity="center">
 
-            android:text="@string/edit"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_medium" />
+            <ImageView
+                android:id="@+id/earning_btn"
+                android:layout_width="@dimen/icon_view_holder_size_s"
+                android:layout_height="@dimen/icon_view_holder_size_s"
+                android:layout_gravity="start"
+                android:src="@drawable/ic_earning" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/edit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium" />
+
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/photographer_profile_img"
@@ -40,6 +53,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp18"
             android:src="@drawable/phlog_logo" />
+
 
         <TextView
             android:id="@+id/photographer_profile_full_name"

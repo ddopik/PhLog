@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/widgets_padding">
+
+    <LinearLayout
+        android:id="@+id/image_preview_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp8"
+        android:padding="@dimen/dp12">
+
+        <ImageView
+            android:layout_width="@dimen/logo_width"
+            android:layout_height="@dimen/logo_width"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_earning" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp12"
+            android:fontFamily="@font/arial_rounded_font"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_small"
+            android:text="Total Earnigns :100 $" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp12"
+        android:layout_marginBottom="@dimen/dp12"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arial_rounded_font"
+            android:text="@string/total_sizes"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_large" />
+
+        <TextView
+            android:id="@+id/total_size_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp4"
+            android:fontFamily="@font/arial_rounded_font"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_large"
+            tools:text="12" />
+    </LinearLayout>
+
+    <com.example.softmills.phlog.base.widgets.CustomRecyclerView
+        android:id="@+id/earning_list_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:orientation="vertical"/>
+<ProgressBar
+    android:id="@+id/earning_list_progress"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:visibility="gone"
+    tools:visibility="visible"/>
+
+</LinearLayout>

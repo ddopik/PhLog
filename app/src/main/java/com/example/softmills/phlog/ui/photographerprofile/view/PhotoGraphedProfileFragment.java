@@ -20,8 +20,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.photographerprofile.model.PhotoGrapherProfileData;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenterImpl;
@@ -38,6 +40,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     private static String TAG = PhotoGraphedProfileFragment.class.getSimpleName();
 
     private View mainView;
+    private ImageView earningBtn;
     private List<Fragment> photoGrapherProfileFragmentList = new ArrayList<Fragment>();
     private List<String> photoGrapherFragmentListTitles = new ArrayList<String>();
     private FrameLayout photographerProfileBackgroundImg;
@@ -61,6 +64,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 //        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         initViews();
         initPresenter();
+        initListener();
         photoGrapherProfileActivityPresenter.getPhotoGrapherProfileData();
     }
 
@@ -73,6 +77,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void initViews() {
 
+        earningBtn=mainView.findViewById(R.id.earning_btn);
         photographerProfileBackgroundImg = mainView.findViewById(R.id.photographer_profile_background_img);
         photographerName = mainView.findViewById(R.id.photographer_profile_full_name);
         photographeruserName = mainView.findViewById(R.id.photographer_profile_username);
@@ -158,6 +163,12 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
 
 
+    }
+
+    private void initListener(){
+        earningBtn.setOnClickListener(view -> {
+            ((MainActivity) getActivity()).homeNavigateHelper(Constants.NavigationHelper.EARNING);
+        });
     }
 
     @Override
