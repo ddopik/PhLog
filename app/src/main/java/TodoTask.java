@@ -12,10 +12,7 @@ public class TodoTask {
     //Add Comment ..
     // implement paging in social activity
     // AllAlbumImg Adapter item need more enhancement
-    //NotificationScreen
-    //social page has extra padding through start and end
-    //CampaignIneer "mission" has no data
     //userProfile photos not navigates to AllPhotos list
-    //RemoveAppBar from SocialScreen
+
 
 }

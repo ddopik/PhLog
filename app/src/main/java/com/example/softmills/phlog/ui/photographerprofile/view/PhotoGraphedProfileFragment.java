@@ -167,7 +167,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
     private void initListener(){
         earningBtn.setOnClickListener(view -> {
-            ((MainActivity) getActivity()).homeNavigateHelper(Constants.NavigationHelper.EARNING);
+            MainActivity.navigationManger.navigate(Constants.NavigationHelper.EARNING_LIST);
         });
     }
 

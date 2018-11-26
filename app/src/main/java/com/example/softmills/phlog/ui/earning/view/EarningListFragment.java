@@ -13,12 +13,15 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
+import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.earning.model.Earning;
 import com.example.softmills.phlog.ui.earning.presenter.EarningListPresenter;
 import com.example.softmills.phlog.ui.earning.presenter.EarningListPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EARNING_INNER;
 
 /**
  * Created by abdalla_maged On Nov,2018
@@ -85,7 +88,8 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
 
     private void initListener() {
         earningListAdapter.onEarningClick = earning -> {
-
+            MainActivity.navigationManger.setExtraData(earning.earningId);
+            MainActivity.navigationManger.navigate(EARNING_INNER);
         };
         pagingController = new PagingController(earningListRv) {
             @Override

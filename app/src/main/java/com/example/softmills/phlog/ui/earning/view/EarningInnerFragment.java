@@ -15,7 +15,15 @@ import com.example.softmills.phlog.base.BaseFragment;
  */
 public class EarningInnerFragment extends BaseFragment {
 
+    public String earningId;
     private View mainView;
+
+
+    public static EarningInnerFragment getInstance(String earningId) {
+        EarningInnerFragment earningInnerFragment = new EarningInnerFragment();
+        return earningInnerFragment;
+    }
+
 
     @Nullable
     @Override
@@ -38,5 +46,9 @@ public class EarningInnerFragment extends BaseFragment {
     @Override
     protected void initViews() {
 
+    }
+
+    public void setInnerID(String earningId) {
+        this.earningId = earningId;
     }
 }

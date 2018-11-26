@@ -9,7 +9,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp45"
+        android:layout_marginTop="75dp"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/item_card_corner_radius"
         app:cardElevation="@dimen/item_card_elevation">
@@ -20,8 +20,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginBottom="@dimen/dp80"
-            android:paddingStart="@dimen/widgets_padding"
-            android:paddingEnd="@dimen/widgets_padding"
+
             android:paddingTop="@dimen/widgets_padding">
 
             <TextView
@@ -172,8 +171,9 @@
                     android:fontFamily="@font/arial_rounded_font"
                     android:paddingStart="@dimen/earning_widget_start"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textSize="@dimen/font_normal"
-                    tools:text="user_softMaills.com" />
+                    android:text="user_softMaills.com" />
 
                 <TextView
                     android:id="@+id/buyer_phone"
@@ -184,7 +184,8 @@
                     android:paddingStart="@dimen/earning_widget_start"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_normal"
-                    tools:text="011223369856" />
+                    android:textStyle="bold"
+                    android:text="011223369856" />
 
 
             </LinearLayout>
@@ -196,7 +197,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/widgets_padding"
             android:layout_gravity="bottom"
-            android:background="@color/text_input_color">
+            android:background="@drawable/sqare_corener">
 
             <TextView
                 android:layout_width="match_parent"
