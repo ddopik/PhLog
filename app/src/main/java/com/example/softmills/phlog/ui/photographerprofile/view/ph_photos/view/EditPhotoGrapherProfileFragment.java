@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.earning.view;
+package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,24 +13,22 @@ import com.example.softmills.phlog.base.BaseFragment;
 /**
  * Created by abdalla_maged On Nov,2018
  */
-public class EarningInnerFragment extends BaseFragment {
-
-    public String earningId;
+public class EditPhotoGrapherProfileFragment extends BaseFragment {
     private View mainView;
 
 
-    public static EarningInnerFragment getInstance() {
-        EarningInnerFragment earningInnerFragment = new EarningInnerFragment();
-        return earningInnerFragment;
-    }
 
+    public static EditPhotoGrapherProfileFragment getInstance(){
+        EditPhotoGrapherProfileFragment editPhotoGrapherProfileFragment=new EditPhotoGrapherProfileFragment();
+
+        return editPhotoGrapherProfileFragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.fragment_earning_inner, container, false);
+        mainView = inflater.inflate(R.layout.fragment_edit_photo_grapher_profile, container, false);
         return mainView;
-
     }
 
     @Override
@@ -46,9 +44,5 @@ public class EarningInnerFragment extends BaseFragment {
     @Override
     protected void initViews() {
 
-    }
-
-    public void setInnerID(String earningId) {
-        this.earningId = earningId;
     }
 }

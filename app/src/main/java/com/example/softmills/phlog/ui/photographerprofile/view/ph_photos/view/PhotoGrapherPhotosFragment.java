@@ -1,6 +1,8 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,12 +15,17 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhoto;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presenter.FragmentPhotoGrapherPhotosPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presenter.FragmentPhotoGrapherPhotosPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALBUM_ID;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
  * Created by Abdalla_maged on 9/30/2018.
@@ -78,6 +85,18 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
                 fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(page + 1);
             }
         };
+
+        photographerSavedPhotoAdapter.photoAction=new PhotoGrapherPhotosAdapter.PhotoAction() {
+            @Override
+            public void onPhotoClicked(PhotoGrapherPhoto photoGrapherSavedPhoto) {
+                Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
+//                intent.putExtra(ALBUM_ID, albumID);
+//                intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
+//                intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) allAlbumImg);
+                startActivity(intent);
+            }
+        };
+
     }
 
 

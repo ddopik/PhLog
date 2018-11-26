@@ -18,8 +18,18 @@ import com.example.softmills.phlog.ui.earning.view.EarningInnerFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningListFragment;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.EditPhotoGrapherProfileFragment;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
+
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.CAMPAIGN;
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EARNING_INNER;
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EARNING_LIST;
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EDIT_PROFILE;
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.HOME;
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.NOTIFICATION;
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.PROFILE;
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.UPLOAD_PHOTO;
 
 /**
  * Created by abdalla_maged on 10/1/2018.
@@ -32,7 +42,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FloatingActionButton picImgHomeBtn;
     private Toolbar toolbar;
     private ImageButton backBtn;
-    public static  NavigationManger navigationManger;
+    public static NavigationManger navigationManger;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initView();
         initPresenter();
         initListener();
-        navigationManger.navigate(Constants.NavigationHelper.HOME);
+        navigationManger.navigate(HOME);
     }
 
     @Override
@@ -90,19 +101,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.navigation_home:
-                navigationManger.navigate(Constants.NavigationHelper.HOME);
+                navigationManger.navigate(HOME);
                 break;
             case R.id.navigation_missions:
-                navigationManger.navigate(Constants.NavigationHelper.CAMPAIGN);
+                navigationManger.navigate(CAMPAIGN);
                 break;
             case R.id.navigation_notification:
-                navigationManger.navigate(Constants.NavigationHelper.NOTIFICATION);
+                navigationManger.navigate(NOTIFICATION);
                 break;
             case R.id.navigation_profile:
-                navigationManger.navigate(Constants.NavigationHelper.PROFILE);
+                navigationManger.navigate(PROFILE);
                 break;
             case R.id.pic_img_home_btn:
-                navigationManger.navigate(Constants.NavigationHelper.UPLOAD_PHOTO);
+                navigationManger.navigate(UPLOAD_PHOTO);
                 break;
             default:
         }
@@ -112,11 +123,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        navigationManger.navigate(Constants.NavigationHelper.HOME);
+        navigationManger.navigate(HOME);
     }
 
     public class NavigationManger {
         private String extraData;
+        private Constants.NavigationHelper currentTab;
 
         private void clearSelected() {
 
@@ -145,7 +157,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             picImgHomeBtn.setImageResource(R.drawable.btn_upload_img);
 
 
-
         }
 
         public void navigate(Constants.NavigationHelper navigationHelper) {
@@ -157,45 +168,50 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             switch (navigationHelper) {
                 case HOME: {
-                    addFragment(R.id.view_container, new SocialFragment(), SocialFragment.class.getSimpleName(), true);
+                    addFragment(R.id.view_container, new SocialFragment(), SocialFragment.class.getSimpleName(), false);
                     homeBrn.setTextColor(getResources().getColor(R.color.text_input_color));
                     homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg, 0, 0);
                     homeBrn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.GONE);
+                    currentTab = HOME;
                     break;
                 }
 
                 case CAMPAIGN: {
-                    addFragment(R.id.view_container, new CampaignsFragment(), CampaignsFragment.class.getSimpleName(), true);
+                    addFragment(R.id.view_container, new CampaignsFragment(), CampaignsFragment.class.getSimpleName(), false);
                     campaignBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                     campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, campaignBtnImg, 0, 0);
                     campaignBtn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.VISIBLE);
                     toolBarTitle.setText(getResources().getString(R.string.campaigns));
+                    currentTab = CAMPAIGN;
                     break;
                 }
                 case NOTIFICATION: {
 
-                    addFragment(R.id.view_container, new NotificationFragment(), NotificationFragment.class.getSimpleName(), true);
+                    addFragment(R.id.view_container, new NotificationFragment(), NotificationFragment.class.getSimpleName(), false);
                     notificationBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                     notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg, 0, 0);
                     notificationBtn.setCompoundDrawablePadding(8);
+                    currentTab = NOTIFICATION;
                     break;
                 }
                 case UPLOAD_PHOTO: {
-                    addFragment(R.id.view_container, new GalleryImageFragment(), GalleryImageFragment.class.getSimpleName(), true);
+                    addFragment(R.id.view_container, new GalleryImageFragment(), GalleryImageFragment.class.getSimpleName(), false);
                     picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
                     toolbar.setVisibility(View.VISIBLE);
                     toolBarTitle.setText(getResources().getString(R.string.upload_photo));
+                    currentTab = UPLOAD_PHOTO;
                     break;
                 }
                 case PROFILE: {
-                    addFragment(R.id.view_container, new PhotoGraphedProfileFragment(), PhotoGraphedProfileFragment.class.getSimpleName(), true);
+                    addFragment(R.id.view_container, new PhotoGraphedProfileFragment(), PhotoGraphedProfileFragment.class.getSimpleName(), false);
                     myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                     myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                     myProfileBtn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.GONE);
                     toolBarTitle.setText(getResources().getString(R.string.profile));
+                    currentTab = PROFILE;
                     break;
                 }
                 case EARNING_LIST: {
@@ -205,11 +221,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     myProfileBtn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.GONE);
                     toolBarTitle.setText(getResources().getString(R.string.profile));
+                    currentTab = EARNING_LIST;
                     break;
                 }
                 case EARNING_INNER: {
-                    if (extraData !=null){
-                        EarningInnerFragment earningInnerFragment = new EarningInnerFragment();
+                    if (extraData != null) {
+                        EarningInnerFragment earningInnerFragment = EarningInnerFragment.getInstance();
                         earningInnerFragment.setInnerID(extraData);
                         addFragment(R.id.view_container, new EarningInnerFragment(), EarningInnerFragment.class.getSimpleName(), true);
                         myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
@@ -217,8 +234,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         myProfileBtn.setCompoundDrawablePadding(8);
                         toolbar.setVisibility(View.GONE);
                         toolBarTitle.setText(getResources().getString(R.string.profile));
-                        extraData=null;
+                        extraData = null;
+                        currentTab = EARNING_INNER;
                     }
+
+                    break;
+                }
+                case EDIT_PROFILE: {
+
+
+                    addFragment(R.id.view_container, EditPhotoGrapherProfileFragment.getInstance(), EditPhotoGrapherProfileFragment.class.getSimpleName(), true);
+                    myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
+                    myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
+                    myProfileBtn.setCompoundDrawablePadding(8);
+                    toolbar.setVisibility(View.GONE);
+                    toolBarTitle.setText(getResources().getString(R.string.profile));
+                    currentTab = EDIT_PROFILE;
 
                     break;
                 }
@@ -229,5 +260,39 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         public void setExtraData(String extraData) {
             this.extraData = extraData;
         }
+
+        public Constants.NavigationHelper getCurrentTab() {
+            return currentTab;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        switch (navigationManger.getCurrentTab()) {
+            case HOME: {
+                finish();
+                break;
+            }
+            case CAMPAIGN: {
+                navigationManger.navigate(HOME);
+                break;
+            }
+            case NOTIFICATION: {
+                navigationManger.navigate(HOME);
+                break;
+            }
+            case PROFILE: {
+                navigationManger.navigate(HOME);
+                break;
+            }
+            default: {
+                super.onBackPressed();
+            }
+
+
+        }
+
+
     }
 }

@@ -29,11 +29,14 @@ import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapher
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenterImpl;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.PhotographerCampaignsFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.PhotoGrapherFollowFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.EditPhotoGrapherProfileFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.PhotoGrapherPhotosFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotoGrapherSavedFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EDIT_PROFILE;
 
 public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGrapherProfileActivityView {
 
@@ -41,6 +44,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
     private View mainView;
     private ImageView earningBtn;
+    private TextView editProfileBtn;
     private List<Fragment> photoGrapherProfileFragmentList = new ArrayList<Fragment>();
     private List<String> photoGrapherFragmentListTitles = new ArrayList<String>();
     private FrameLayout photographerProfileBackgroundImg;
@@ -77,6 +81,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void initViews() {
 
+        editProfileBtn=mainView.findViewById(R.id.edit_profile_btn);
         earningBtn=mainView.findViewById(R.id.earning_btn);
         photographerProfileBackgroundImg = mainView.findViewById(R.id.photographer_profile_background_img);
         photographerName = mainView.findViewById(R.id.photographer_profile_full_name);
@@ -169,6 +174,9 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         earningBtn.setOnClickListener(view -> {
             MainActivity.navigationManger.navigate(Constants.NavigationHelper.EARNING_LIST);
         });
+
+        editProfileBtn.setOnClickListener(view -> MainActivity.navigationManger.navigate(EDIT_PROFILE));
+
     }
 
     @Override

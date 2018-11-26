@@ -112,5 +112,7 @@
     <string name="by">By</string>
     <string name="buyer">Buyer</string>
     <string name="price">price</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
 
 </resources>

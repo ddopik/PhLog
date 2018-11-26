@@ -23,7 +23,7 @@ public class PhotoGrapherPhotosAdapter extends RecyclerView.Adapter<PhotoGrapher
     private List<PhotoGrapherPhoto> photoGrapherPhotosList;
     private Context context;
     private PhotoGrapherPhotosAdapter.PhotosViewHolder photosViewHolder;
-    private PhotoAction photoAction;
+    public PhotoAction photoAction;
 
     public PhotoGrapherPhotosAdapter(Context context, List<PhotoGrapherPhoto> photoGrapherPhotosList) {
         this.context = context;
