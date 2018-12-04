@@ -41,7 +41,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                     }
                     socialFragmentView.viewSocialDataProgress(false);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                     socialFragmentView.viewSocialDataProgress(false);
                 });
 
@@ -60,7 +60,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                         socialFragmentView.showMessage(context.getResources().getString(R.string.error_following_state));
                     }
                 }, throwable -> {
-                    Log.e(TAG, "followUser() ---> Error  " + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 
@@ -78,7 +78,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                     }
 
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
     @SuppressLint("CheckResult")
@@ -95,7 +95,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                     }
 
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 }

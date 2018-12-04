@@ -48,7 +48,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                     }
 
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 
@@ -70,7 +70,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
 
                 }, throwable -> {
                     userProfileActivityView.viewUserPhotosProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
 
     }
@@ -88,7 +88,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                         ErrorUtils.setError(context, TAG, followUserResponse.msg, followUserResponse.state);
                     }
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 }

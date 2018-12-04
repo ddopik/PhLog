@@ -193,6 +193,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     notificationBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                     notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg, 0, 0);
                     notificationBtn.setCompoundDrawablePadding(8);
+                    toolbar.setVisibility(View.VISIBLE);
+                    toolBarTitle.setText(getResources().getString(R.string.notification));
                     currentTab = NOTIFICATION;
                     break;
                 }

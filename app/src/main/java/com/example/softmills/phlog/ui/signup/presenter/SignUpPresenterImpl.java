@@ -1,23 +1,32 @@
 package com.example.softmills.phlog.ui.signup.presenter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
+import com.androidnetworking.error.ANError;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.base.model.ErrorData;
+import com.example.softmills.phlog.base.model.ErrorMessageResponse;
 import com.example.softmills.phlog.network.BaseNetworkApi;
+import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.view.SignUpView;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class SignUpPresenterImp implements SignUpPresenter {
+public class SignUpPresenterImpl implements SignUpPresenter {
 
     private SignUpView signUpView;
-    private String TAG = SignUpPresenterImp.class.getSimpleName();
+    private Context context;
+    private String TAG = SignUpPresenterImpl.class.getSimpleName();
 
-    public SignUpPresenterImp(SignUpView signUpView) {
+    public SignUpPresenterImpl(Context context,SignUpView signUpView) {
         this.signUpView = signUpView;
+        this.context=context;
     }
 
     @Override
@@ -40,7 +49,7 @@ public class SignUpPresenterImp implements SignUpPresenter {
                         signUpView.showMessage(signUpResponse.message);
                     }
                 }, throwable -> {
-                    signUpView.showMessage(throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 
@@ -50,11 +59,13 @@ public class SignUpPresenterImp implements SignUpPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(allCountersRepose -> {
+                    AllCountersRepose countersRepose=allCountersRepose;
                     signUpView.showCounters(allCountersRepose.countries);
                 }, throwable -> {
-                    Log.e(TAG, "requestAllCounters() ---->Errot --->" + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 
 
 }
+

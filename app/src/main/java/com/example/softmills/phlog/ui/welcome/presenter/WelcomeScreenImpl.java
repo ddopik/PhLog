@@ -1,8 +1,9 @@
 package com.example.softmills.phlog.ui.welcome.presenter;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
+import android.content.Context;
 
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.welcome.view.WelcomeView;
 
@@ -14,8 +15,9 @@ public class WelcomeScreenImpl implements WelcomePresenter {
 
     private String TAG = WelcomeScreenImpl.class.getSimpleName();
     private WelcomeView welcomeView;
+    private Context context;
 
-    public WelcomeScreenImpl(WelcomeView welcomeView) {
+    public WelcomeScreenImpl(WelcomeView welcomeView, Context context) {
         this.welcomeView = welcomeView;
 
     }
@@ -28,16 +30,13 @@ public class WelcomeScreenImpl implements WelcomePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(welcomeScreenResponse -> {
-//                    List<String> imagesList = new ArrayList<String>();
-
-//                    for (int i = 0; i < welcomeScreenResponse.initSlider.size(); i++) {
-//                        imagesList.add(welcomeScreenResponse.initSlider.get(i).image);
-//                    }
-                    welcomeView.showWelcomeImageSlider(welcomeScreenResponse.initSlider);
+                    if (welcomeScreenResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+                        welcomeView.showWelcomeImageSlider(welcomeScreenResponse.initSlider);
+                    } else {
+                        ErrorUtils.setError(context, TAG, welcomeScreenResponse.toString(), welcomeScreenResponse.state);
+                    }
                 }, throwable -> {
-                    welcomeView.ViewBasicDefaultWelcomeImg();
-                    Log.e(TAG, "getWelcomeSlidesImages() -----> Error :" + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
-
     }
 }

@@ -13,7 +13,6 @@ public class TodoTask {
     // implement paging in social activity
     // AllAlbumImg Adapter item need more enhancement
     //userProfile photos not navigates to AllPhotos list waiting for obj edit
-    //bressing back in photographer
 
 
 }

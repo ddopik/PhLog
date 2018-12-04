@@ -36,8 +36,6 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        getSupportActionBar().hide();
-
         initView();
         initListener();
         initPresenter();
@@ -51,9 +49,11 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         signInBtn = findViewById(R.id.sign_in_btn);
         signUpBtn = findViewById(R.id.sign_up_btn);
 
-
+        InitSlider initSliderDefaultItem = new InitSlider();
+        initSliderDefaultItem.image = "";
+        initSliderDefaultItem.text = "basic Image";
+        urlList.add(initSliderDefaultItem);
         WelcomeSlideAdapter = new WelcomeSlideAdapter(getBaseContext(), urlList);
-
         slidesViewPager = findViewById(R.id.slides_view_pager);
         slidesViewPager.setAdapter(WelcomeSlideAdapter);
         indicator = findViewById(R.id.circle_indicator_pager);
@@ -64,7 +64,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
     @Override
     public void initPresenter() {
-        welcomePresenter = new WelcomeScreenImpl(this);
+        welcomePresenter = new WelcomeScreenImpl(this,getBaseContext());
     }
 
     private void initListener() {
@@ -90,15 +90,5 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         indicator.setViewPager(slidesViewPager);
     }
 
-    @Override
-    public void ViewBasicDefaultWelcomeImg() {
-        urlList.clear();
-        InitSlider initSliderDefaultItem=new InitSlider();
-        initSliderDefaultItem.image="";
-        initSliderDefaultItem.text="basic Image";
-        urlList.add(initSliderDefaultItem);
 
-//        Intent intent = new Intent(this, HomeFragment.class);
-//        startActivity(intent);
-    }
 }

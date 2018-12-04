@@ -40,7 +40,7 @@ public class AlbumCommentActivityImpl implements AlbumCommentActivityPresenter {
                     }
                     albumCommentActivityView.viewAddCommentProgress(false);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.toString());
+                    ErrorUtils.setError(context, TAG, throwable);
                     albumCommentActivityView.viewAddCommentProgress(false);
                 });
     }
@@ -60,7 +60,7 @@ public class AlbumCommentActivityImpl implements AlbumCommentActivityPresenter {
                     }
                     albumCommentActivityView.viewAddCommentProgress(false);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.toString());
+                    ErrorUtils.setError(context, TAG, throwable);
                     albumCommentActivityView.viewAddCommentProgress(false);
                 });
 

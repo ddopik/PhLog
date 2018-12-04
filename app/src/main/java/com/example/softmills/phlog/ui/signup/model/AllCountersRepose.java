@@ -8,10 +8,12 @@ import java.util.List;
 public class AllCountersRepose {
 
 
-    @SerializedName("countries")
+    @SerializedName("data")
     @Expose
     public List<Country> countries = null;
     @SerializedName("state")
     @Expose
     public String state;
+
+
 }

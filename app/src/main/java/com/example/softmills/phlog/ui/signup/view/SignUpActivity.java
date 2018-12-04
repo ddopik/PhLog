@@ -17,7 +17,7 @@ import com.example.softmills.phlog.ui.login.view.LoginActivity;
 import com.example.softmills.phlog.ui.signup.PickProfilePhotoActivity;
 import com.example.softmills.phlog.ui.signup.model.Country;
 import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenter;
-import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenterImp;
+import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +39,6 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        getSupportActionBar().hide();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
@@ -71,6 +70,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         countryInput = findViewById(R.id.country_input);
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList);
         autoCompleteTextView = findViewById(R.id.country);
+        autoCompleteTextView.setThreshold(1);
         autoCompleteTextView.setAdapter(arrayAdapter);
 
 
@@ -78,7 +78,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
 
     @Override
     public void initPresenter() {
-        signUpPresenter = new SignUpPresenterImp(this);
+        signUpPresenter = new SignUpPresenterImpl(getBaseContext(),this);
     }
 
     public void initListener() {

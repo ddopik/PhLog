@@ -21,4 +21,7 @@ public class Country {
     @SerializedName("deleted_at")
     @Expose
     public Object deletedAt;
+
+
+
 }

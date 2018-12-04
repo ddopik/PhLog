@@ -114,5 +114,7 @@
     <string name="price">price</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
+    <string name="notification">Notification</string>
+    <string name="select_img">Select Image</string>
 
 </resources>

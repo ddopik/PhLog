@@ -43,7 +43,7 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
                     }
                     albumPreviewActivityView.viewAlbumPreviewProgress(false);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.toString());
+                    ErrorUtils.setError(context, TAG, throwable);
                     albumPreviewActivityView.viewAlbumPreviewProgress(false);
                 });
 

@@ -39,7 +39,7 @@ public class NotificationPresenterImp implements NotificationPresenter {
                     notificationFragmentView.viewNotificationProgress(false);
 
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.toString());
+                    ErrorUtils.setError(context, TAG, throwable);
                     notificationFragmentView.viewNotificationProgress(false);
                 });
     }
