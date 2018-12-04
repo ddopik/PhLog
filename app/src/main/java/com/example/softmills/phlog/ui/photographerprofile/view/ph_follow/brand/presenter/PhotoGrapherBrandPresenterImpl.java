@@ -36,7 +36,7 @@ public class PhotoGrapherBrandPresenterImpl implements PhotoGrapherBrandPresente
                         photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrand(photographerFollowingBrandResponse.data.data);
                     }else {
                         photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrandProgress(false);
-                        ErrorUtils.setError(context,TAG,photographerFollowingBrandResponse.msg,photographerFollowingBrandResponse.state);
+                        ErrorUtils.setError(context,TAG,photographerFollowingBrandResponse.msg);
                      }
 
                 },throwable -> {

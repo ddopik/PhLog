@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
@@ -43,7 +44,7 @@ public class LoginPresenterImp implements LoginPresenter {
                 .subscribe(loginResponse -> {
                     loginView.showMessage(loginResponse.loginData.fullName);
                 }, throwable -> {
-                    loginView.showMessage(throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 
@@ -65,7 +66,7 @@ public class LoginPresenterImp implements LoginPresenter {
 
             @Override
             public void onError(Throwable error) {
-                Log.e(TAG, "signInWithGoogle()--->" + error.getMessage());
+                ErrorUtils.setError(context, TAG, error);
             }
 
             @Override
@@ -103,7 +104,7 @@ public class LoginPresenterImp implements LoginPresenter {
 
             @Override
             public void onError(Throwable error) {
-                Log.e(TAG, "signInWithFaceBook() --->" + error.getMessage());
+                ErrorUtils.setError(context, TAG, error);
             }
 
             @Override
@@ -125,11 +126,11 @@ public class LoginPresenterImp implements LoginPresenter {
                         PrefUtils.setUserToken(context, socialLoginResponse.token.get(0));
                         loginView.navigateToHome();
                     } else {
-                        loginView.showMessage(context.getResources().getString(R.string.error_login));
-//                        Log.e(TAG, "processFaceBookUser() Error--->" + socialLoginResponse.state +"  "+ socialLoginResponse.msg) ;
+
+                        ErrorUtils.setError(context, TAG, socialLoginResponse.state);
                     }
                 }, throwable -> {
-                    Log.e(TAG, "processFaceBookUser() Error--->" + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 }

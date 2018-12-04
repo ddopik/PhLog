@@ -37,7 +37,7 @@ public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
                     if (brandInnerResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         brandInnerActivityView.viewInnerBrandData(brandInnerResponse.data);
                     } else {
-                        ErrorUtils.setError(context,TAG,brandInnerResponse.msg,brandInnerResponse.state);
+                        ErrorUtils.setError(context,TAG,brandInnerResponse.msg);
                     }
                     brandInnerActivityView.viewInnerBrandProgressBar(false);
                 }, throwable -> {

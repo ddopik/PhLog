@@ -42,7 +42,7 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                     } else {
                         albumSearchFragmentView.showMessage(searchAlbumResponse.msg);
                         albumSearchFragmentView.showFilterSearchProgress(false);
-                        ErrorUtils.setError(context, TAG, searchAlbumResponse.msg, searchAlbumResponse.state);
+                        ErrorUtils.setError(context, TAG, searchAlbumResponse.msg);
                     }
                 }, throwable -> {
                     Log.e(TAG, "getFilters() --->Error " + throwable.getMessage());
@@ -64,7 +64,7 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                     if (albumSearchResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data.data);
                     }else {
-                        ErrorUtils.setError(context, TAG, albumSearchResponse.msg, albumSearchResponse.state);
+                        ErrorUtils.setError(context, TAG, albumSearchResponse.msg);
                     }
                     albumSearchFragmentView.showFilterSearchProgress(false);
                 }, throwable -> {

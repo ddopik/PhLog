@@ -39,7 +39,7 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
                     if (albumPreviewResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         albumPreviewActivityView.viewAlumPreview(albumPreviewResponse.data);
                     } else {
-                        ErrorUtils.setError(context, TAG, albumPreviewResponse.msg, albumPreviewResponse.state);
+                        ErrorUtils.setError(context, TAG, albumPreviewResponse.msg);
                     }
                     albumPreviewActivityView.viewAlbumPreviewProgress(false);
                 }, throwable -> {

@@ -44,8 +44,11 @@ public class BaseNetworkApi {
 
     //Network Status
     public static String STATUS_OK = "200";
+    public static final  int STATUS_BAD_REQUEST = 400;
+    public static final  int STATUS_404 = 404;
     public static String STATUS_ERROR = "405";
     public static final  int ERROR_STATE_1 = 1;
+
 
     public static String STATUS_IN_VALID_RESPONSE = "401";
     public static String NEW_FACEBOOK_USER_STATUS = "0";
@@ -55,7 +58,7 @@ public class BaseNetworkApi {
     private static final String WELCOME_SLIDES_IMAGES = BASE_URL +"/photographer/init_slider"; //done
     private static final String ALL_COUNTRES = BASE_URL + "/common/countries/list"; //done
     private static final String SIGNUP_USER = BASE_URL + "/photographer/auth/signup";
-    private static final String NORMAL_LOGIN = BASE_URL + "/login";
+    private static final String NORMAL_LOGIN = BASE_URL + "/photographer/auth/login";
     private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/signup_facebook";
     private static final String USER_PROFILE_URL = BASE_URL + "/get_info_photographer";
     private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/image_photographer";

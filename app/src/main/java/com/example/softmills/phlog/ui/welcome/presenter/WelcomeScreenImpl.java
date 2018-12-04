@@ -33,7 +33,7 @@ public class WelcomeScreenImpl implements WelcomePresenter {
                     if (welcomeScreenResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         welcomeView.showWelcomeImageSlider(welcomeScreenResponse.initSlider);
                     } else {
-                        ErrorUtils.setError(context, TAG, welcomeScreenResponse.toString(), welcomeScreenResponse.state);
+                        ErrorUtils.setError(context, TAG, welcomeScreenResponse.toString());
                     }
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);

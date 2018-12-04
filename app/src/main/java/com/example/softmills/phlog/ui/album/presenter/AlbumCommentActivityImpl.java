@@ -36,7 +36,7 @@ public class AlbumCommentActivityImpl implements AlbumCommentActivityPresenter {
                     if (albumImgCommentResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         albumCommentActivityView.viewPhotoComment(albumImgCommentResponse.data);
                     } else {
-                        ErrorUtils.setError(context, TAG, albumImgCommentResponse.msg, albumImgCommentResponse.state);
+                        ErrorUtils.setError(context, TAG, albumImgCommentResponse.msg);
                     }
                     albumCommentActivityView.viewAddCommentProgress(false);
                 }, throwable -> {
@@ -56,7 +56,7 @@ public class AlbumCommentActivityImpl implements AlbumCommentActivityPresenter {
                     if (albumImgCommentResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         albumCommentActivityView.viewPhotoComment(albumImgCommentResponse.data);
                     } else {
-                        ErrorUtils.setError(context, TAG, albumImgCommentResponse.msg, albumImgCommentResponse.state);
+                        ErrorUtils.setError(context, TAG, albumImgCommentResponse.msg);
                     }
                     albumCommentActivityView.viewAddCommentProgress(false);
                 }, throwable -> {

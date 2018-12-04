@@ -43,7 +43,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                         userProfileActivityView.viewUserProfilePhotosCount(userProfileData.imagePhotographerCount);
                     } else {
                         userProfileActivityView.showMessage(userProfileResponse.data.toString());
-                        ErrorUtils.setError(context, TAG, userProfileResponse.msg, userProfileResponse.state);
+                        ErrorUtils.setError(context, TAG, userProfileResponse.msg);
 
                     }
 
@@ -65,7 +65,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                     if (userPhotosResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
                     } else {
-                        ErrorUtils.setError(context, TAG, userPhotosResponse.msg, userPhotosResponse.state);
+                        ErrorUtils.setError(context, TAG, userPhotosResponse.msg);
                     }
 
                 }, throwable -> {
@@ -85,7 +85,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                     if (followUserResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) +" "+ followUserResponse.data);
                     } else {
-                        ErrorUtils.setError(context, TAG, followUserResponse.msg, followUserResponse.state);
+                        ErrorUtils.setError(context, TAG, followUserResponse.msg);
                     }
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);

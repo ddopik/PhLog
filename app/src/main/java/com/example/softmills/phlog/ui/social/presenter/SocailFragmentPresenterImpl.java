@@ -37,7 +37,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                     if (socialResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         socialFragmentView.viewSocialData(socialResponse.data);
                     } else {
-                        ErrorUtils.setError(context, TAG, socialResponse.msg, socialResponse.state);
+                        ErrorUtils.setError(context, TAG, socialResponse.msg);
                     }
                     socialFragmentView.viewSocialDataProgress(false);
                 }, throwable -> {
@@ -74,7 +74,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                     if (followCampaignResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         socialFragmentView.showMessage(context.getResources().getString(R.string.campaign_followed));
                     } else {
-                        ErrorUtils.setError(context, TAG, followCampaignResponse.msg, followCampaignResponse.state);
+                        ErrorUtils.setError(context, TAG, followCampaignResponse.msg);
                     }
 
                 }, throwable -> {
@@ -91,7 +91,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                     if (followBrandResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         socialFragmentView.showMessage(context.getResources().getString(R.string.brand_followed));
                     } else {
-                        ErrorUtils.setError(context, TAG, followBrandResponse.msg, followBrandResponse.state);
+                        ErrorUtils.setError(context, TAG, followBrandResponse.msg);
                     }
 
                 }, throwable -> {
