@@ -52,8 +52,8 @@ public abstract class PrefUtils {
     }
 
     public static String getUserToken(Context mContext) {
-//        return getSharedPref(mContext).getString(USER_TOKEN, "");
-        return "ac99b777bf0d1e58e8e7cd8653da52f5";
+        return getSharedPref(mContext).getString(USER_TOKEN, "0");
+
     }
 
     public static String getNotificationToken(Context mContext) {
@@ -65,7 +65,7 @@ public abstract class PrefUtils {
     }
 
     public static String getAppLang(Context context) {
-        return getSharedPref(context).getString(APP_LANG, ARABIC_LANG);
+        return getSharedPref(context).getString(APP_LANG, ENGLISH_LANG);
     }
 
     public static void setAppLang(Context context, String appLang) {

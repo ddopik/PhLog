@@ -31,6 +31,7 @@ public class LoginPresenterImp implements LoginPresenter {
     public LoginPresenterImp(Context context,LoginView loginView) {
         this.loginView = loginView;
         this.context=context;
+
     }
 
     private static final String TAG = LoginPresenterImp.class.getSimpleName();
@@ -38,13 +39,20 @@ public class LoginPresenterImp implements LoginPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void signInNormal(HashMap<String, String> loginData) {
+        loginView.viewLoginProgress(true);
         BaseNetworkApi.LoginUserNormal(loginData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loginResponse -> {
                     loginView.showMessage(loginResponse.loginData.fullName);
+                    PrefUtils.setLoginState(context, true);
+                    PrefUtils.setUserToken(context, loginResponse.loginData.token);
+                    loginView.navigateToHome();
+                    loginView.viewLoginProgress(false);
+
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);
+                    loginView.viewLoginProgress(false);
                 });
     }
 

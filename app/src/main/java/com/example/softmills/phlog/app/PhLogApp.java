@@ -142,23 +142,26 @@ public class PhLogApp extends Application {
 //    }
 
 
-    private void initFastAndroidNetworking() {
+    public static void initFastAndroidNetworking(String userToken,String userType,String lang,Context context) {
 
 /**
  * initializing block to add authentication to your Header Request
  * **/
-        BasicAuthInterceptor basicAuthInterceptor = new BasicAuthInterceptor(getApplicationContext());
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .addNetworkInterceptor(basicAuthInterceptor)
-                .build();
-        AndroidNetworking.initialize(this, okHttpClient);
-///////////////////////
-        /**
-         * default initialization
-         * */
-//        AndroidNetworking.initialize(this);
-//
+        if (userToken != null) {
+            BasicAuthInterceptor basicAuthInterceptor = new BasicAuthInterceptor(context);
+            basicAuthInterceptor.setUserToken(userToken);
+            basicAuthInterceptor.setUserType(userType);
+            basicAuthInterceptor.setLang(lang);
+            OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                    .addNetworkInterceptor(basicAuthInterceptor)
+                    .build();
+            AndroidNetworking.initialize(context, okHttpClient);
+        } else {
+            /**
+             * default initialization
+             * */
+        AndroidNetworking.initialize(context);
+        }
     }
-
 
 }

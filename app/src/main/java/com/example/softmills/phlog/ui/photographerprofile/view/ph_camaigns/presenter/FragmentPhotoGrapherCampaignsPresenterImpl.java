@@ -27,9 +27,6 @@ public class FragmentPhotoGrapherCampaignsPresenterImpl implements FragmentPhoto
     }
 
 
-    public FragmentPhotoGrapherCampaignsPresenterImpl(FragmentPhotoGrapherCampaignsView fragmentPhotoGrapherCampaignsView){
-        this.fragmentPhotoGrapherCampaignsView=fragmentPhotoGrapherCampaignsView;
-    }
 
 
     @SuppressLint("CheckResult")

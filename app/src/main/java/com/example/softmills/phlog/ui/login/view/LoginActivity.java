@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenter;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenterImp;
@@ -24,6 +27,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     private Button facebookSigning, googleSigningBtn, signUpBtn;
     private TextView mail, passWord, signUpTxt;
     private TextInputLayout mailInput, passwordInput;
+    private ProgressBar loginProgressBar;
     private LoginPresenter loginPresenter;
 
 
@@ -48,6 +52,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         passWord = findViewById(R.id.password);
         mailInput = findViewById(R.id.mail_login_input);
         passwordInput = findViewById(R.id.login_password_input);
+        loginProgressBar=findViewById(R.id.login_progress);
 
     }
 
@@ -112,8 +117,17 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void navigateToHome() {
-        Intent intent = new Intent(this, SocialFragment.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void viewLoginProgress(Boolean state) {
+        if(state){
+            loginProgressBar.setVisibility(View.VISIBLE);
+        }else {
+            loginProgressBar.setVisibility(View.GONE);
+        }
     }
 }
 

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.app.PhLogApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningInnerFragment;
@@ -52,8 +54,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         toolbar = findViewById(R.id.phlog_toolbar);
         super.setSupportActionBar(toolbar);
         navigationManger = new NavigationManger();
-        initView();
         initPresenter();
+        initView();
         initListener();
         navigationManger.navigate(HOME);
     }
@@ -74,15 +76,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initPresenter() {
+        ///set NetWork Call Header
+        PhLogApp.initFastAndroidNetworking(PrefUtils.getUserToken(getBaseContext()),"0"," en-us'",getBaseContext());
+    }
+
+    private void initListener() {
         bottomNavigation.setOnClickListener(this);
         homeBrn.setOnClickListener(this);
         campaignBtn.setOnClickListener(this);
         myProfileBtn.setOnClickListener(this);
         notificationBtn.setOnClickListener(this);
         picImgHomeBtn.setOnClickListener(this);
-    }
 
-    private void initListener() {
         backBtn.setOnClickListener((view) -> {
 //            navigate(Constants.NavigationHelper.HOME);
             onBackPressed();

@@ -67,7 +67,7 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/get_photographer_campaign";
     private static final String PHOTOGRAPHER_FOLLOWING_IN_URL = BASE_URL + "/get_following";
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/follow";
-    private static final String ALL_CAMPAIGN_URL = BASE_URL + "/get_all_campaigns_running";
+    private static final String ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/list";
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/detail_one_campaign";
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/get_photos_campaign";
     private static final String FOLLOW_CAMPAIGN_URL = BASE_URL + "/join_photographer_campaign";

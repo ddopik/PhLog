@@ -29,7 +29,7 @@ public class ErrorUtils {
         Toast.makeText(context, "Request error", Toast.LENGTH_SHORT).show();
     }
 
-    //Bad Request Calling
+    //Universal Error State From Server
     public static void setError(Context context, String contextTAG, Throwable throwable) {
         String errorData = ((ANError) throwable).getErrorBody();
         int statusCode = ((ANError) throwable).getErrorCode();
@@ -48,6 +48,7 @@ public class ErrorUtils {
 
     }
 
+    ///PreDefined Error Code From Server
     private static void viewError(Context context, String contextTAG, ErrorMessageResponse errorMessageResponse) {
         for (int i = 0; i < errorMessageResponse.errors.size(); i++) {
             if(errorMessageResponse.errors.get(i).code !=null)

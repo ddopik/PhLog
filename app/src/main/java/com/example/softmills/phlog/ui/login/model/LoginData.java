@@ -4,37 +4,53 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginData {
-    @SerializedName("id")
+    @SerializedName("is_phone_verified")
     @Expose
-    public Integer id;
-    @SerializedName("full_name")
-    @Expose
-    public String fullName;
+    public Boolean isPhoneVerified;
     @SerializedName("user_name")
     @Expose
     public String userName;
-    @SerializedName("email")
+    @SerializedName("is_email_verified")
     @Expose
-    public String email;
-    @SerializedName("is_business")
+    public Boolean isEmailVerified;
+    @SerializedName("mobile")
     @Expose
-    public Integer isBusiness;
-    @SerializedName("firebase_token")
-    @Expose
-    public String firebaseToken;
-    @SerializedName("password")
-    @Expose
-    public String password;
-    @SerializedName("token")
-    @Expose
-    public String token;
+    public String mobile;
     @SerializedName("created_at")
     @Expose
     public String createdAt;
+    @SerializedName("mobile_model")
+    @Expose
+    public String mobileModel;
+    @SerializedName("facebook_id")
+    @Expose
+    public String facebookId;
+    @SerializedName("token")
+    @Expose
+    public String token;
+    @SerializedName("password")
+    @Expose
+    public String password;
+    @SerializedName("full_name")
+    @Expose
+    public String fullName;
     @SerializedName("updated_at")
     @Expose
     public String updatedAt;
-    @SerializedName("deleted_at")
+    @SerializedName("mobile_os")
     @Expose
-    public String deletedAt;
+    public String mobileOs;
+    @SerializedName("hash")
+    @Expose
+    public String hash;
+    @SerializedName("email")
+    @Expose
+    public String email;
+    @SerializedName("country_id")
+    @Expose
+    public String countryId;
+    @SerializedName("id")
+    @Expose
+    public String id;
+
 }

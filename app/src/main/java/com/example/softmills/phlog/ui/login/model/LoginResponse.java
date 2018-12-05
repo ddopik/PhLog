@@ -6,14 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class LoginResponse {
 
 
-
     @SerializedName("data")
     @Expose
     public LoginData loginData;
-    @SerializedName("state")
-    @Expose
-    public String state;
-
-
-
 }

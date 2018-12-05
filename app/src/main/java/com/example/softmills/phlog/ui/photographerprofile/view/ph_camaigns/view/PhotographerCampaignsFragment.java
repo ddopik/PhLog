@@ -61,7 +61,7 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
 
     @Override
     protected void initPresenter() {
-        photoGrapherCampaignsPresenter = new FragmentPhotoGrapherCampaignsPresenterImpl(this);
+        photoGrapherCampaignsPresenter = new FragmentPhotoGrapherCampaignsPresenterImpl(getContext(),this);
     }
 
     @Override

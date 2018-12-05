@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PermissionUtil;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
@@ -36,15 +37,11 @@ public class CampaignPresenterImpl implements CampaignPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(campaignResponse -> {
                     campaignFragmentView.showAllCampaginProgress(false);
-                    if (campaignResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         campaignFragmentView.viewAllCampaign(campaignResponse.data.data);
-                    } else {
                         campaignFragmentView.showAllCampaginProgress(false);
-                        Log.e(TAG, "getAllCampaign --->()" + campaignResponse.state);
-                    }
                 }, throwable -> {
                     campaignFragmentView.showAllCampaginProgress(false);
-                    Log.e(TAG, "getAllCampaign --->()" + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 }

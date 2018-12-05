@@ -6,15 +6,26 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import com.bumptech.glide.request.RequestOptions;
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.features.ReturnMode;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.uploadimage.view.ImageFilterActivity;
+import com.example.softmills.phlog.ui.uploadimage.view.adapter.GalleryImageAdapter;
 
 import java.io.File;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_CAMERA;
+import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_GALLERY;
 
 public class PickProfilePhotoActivity extends BaseActivity {
 
@@ -35,9 +46,8 @@ public class PickProfilePhotoActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
         pickImage = findViewById(R.id.pick_image);
-        methodRequiresTwoPermission();
+
 
     }
 
@@ -59,51 +69,80 @@ public class PickProfilePhotoActivity extends BaseActivity {
         builder.setTitle(getResources().getString(R.string.general_photo_chooser_title));
         builder.setItems(photoChooserOptions, (dialog, option) -> {
             if (option == 0) {
+                RequestCameraPermutations();
 //                EasyImage.openCamera(this, 0);
             } else if (option == 1) {
+                requestGalleryPermutations();
 //                EasyImage.openGallery(this, 0);
             }
         }).show();
     }
 
-    @AfterPermissionGranted(CAMERA_AND_WRITE_EXTERNAL_CODE)
-    private void methodRequiresTwoPermission() {
+
+    @AfterPermissionGranted(REQUEST_CODE_CAMERA)
+    private void RequestCameraPermutations() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            // Already have permission, do the thing
-            // ...
+
+        if (EasyPermissions.hasPermissions(getBaseContext(), perms)) {
+
+            ImagePicker.cameraOnly().start(this);
+
+
         } else {
             // Do not have permissions, request them now
             EasyPermissions.requestPermissions(this, getString(R.string.camera_and_location_rationale),
-                    CAMERA_AND_WRITE_EXTERNAL_CODE, perms);
+                    REQUEST_CODE_CAMERA, perms);
         }
+
+    }
+    @AfterPermissionGranted(REQUEST_CODE_GALLERY)
+    private void requestGalleryPermutations() {
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+        if (EasyPermissions.hasPermissions(getBaseContext(), perms)) {
+            ImagePicker.create(this)
+                    .returnMode(ReturnMode.ALL) // set whether pick and / or camera action should return immediate result or not.
+                    .single() // single mode
+                    .showCamera(false)
+                    .theme(R.style.AppTheme)
+                    .start();
+        }
+        // Already have permission
+
+        else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, getString(R.string.camera_and_location_rationale),
+                    REQUEST_CODE_GALLERY, perms);
+        }
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+
+            String image = ImagePicker.getFirstImageOrNull(data).getPath();
+            Intent intent = new Intent(getBaseContext(), ImageFilterActivity.class);
+            intent.putExtra("image_uri", image);
+
+            //Header Img
+            GlideApp.with(getBaseContext())
+                    .load(ImagePicker.getFirstImageOrNull(data).getPath())
+                    .error(R.drawable.ic_launcher_foreground)
+                    .override(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(pickImage);
+
+//            startActivity(intent);
+
+        }
         super.onActivityResult(requestCode, resultCode, data);
 
-//        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
-//            @Override
-//            public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
-//                //Some error handling
-//                e.printStackTrace();
-//            }
-//            @Override
-//            public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
-//                GlideApp.with(PickProfilePhotoActivity.this)
-//                        .load(Uri.fromFile(imageFile))
-//                        .error(R.drawable.ic_launcher_foreground)
-//                        .override(612, 816)
-//                        .into(pickImage);
-//            }
-//        });
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }

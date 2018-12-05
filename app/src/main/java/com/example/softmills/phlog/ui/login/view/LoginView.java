@@ -9,4 +9,5 @@ public interface LoginView {
 
     void navigateToHome();
     void showMessage(String msg);
+    void viewLoginProgress(Boolean state);
 }
