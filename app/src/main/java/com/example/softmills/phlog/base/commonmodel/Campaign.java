@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.campaigns.model;
+package com.example.softmills.phlog.base.commonmodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,14 +6,15 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by abdalla_maged on 10/2/2018.
+ * Created by abdalla_maged On Dec,2018
  */
-public class HomeCampaign {
-
-
+public class Campaign {
     @SerializedName("end_date")
     @Expose
     public String endDate;
+    @SerializedName("image_cover")
+    @Expose
+    public String imageCover;
     @SerializedName("descrption_en")
     @Expose
     public String descrptionEn;
@@ -23,6 +24,9 @@ public class HomeCampaign {
     @SerializedName("number_images")
     @Expose
     public String numberImages;
+    @SerializedName("publish")
+    @Expose
+    public String publish;
     @SerializedName("created_at")
     @Expose
     public String createdAt;
@@ -32,9 +36,6 @@ public class HomeCampaign {
     @SerializedName("prize")
     @Expose
     public String prize;
-    @SerializedName("business_id")
-    @Expose
-    public String businessId;
     @SerializedName("start_date")
     @Expose
     public String startDate;
@@ -44,16 +45,17 @@ public class HomeCampaign {
     @SerializedName("id")
     @Expose
     public Integer id;
-    @SerializedName("campaign_tags")
+    @SerializedName("business")
     @Expose
-    public List<CampaignTag> campaignTags = null;
-    @SerializedName("publish")
+    public Business business;
+    @SerializedName("days_left")
     @Expose
-    public String publish;
+    public Integer daysLeft;
+    @SerializedName("tags")
+    @Expose
+    public List<Tag> tags = null;
     @SerializedName("no_winners")
     @Expose
     public String noWinners;
-
-
 
 }

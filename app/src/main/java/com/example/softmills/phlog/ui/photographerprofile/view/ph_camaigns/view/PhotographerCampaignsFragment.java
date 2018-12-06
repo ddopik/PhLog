@@ -13,11 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model.PhotoGrapherCampaign;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.presenter.FragmentPhotoGrapherCampaignsPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.presenter.FragmentPhotoGrapherCampaignsPresenterImpl;
 
@@ -29,7 +29,7 @@ import java.util.List;
 public class PhotographerCampaignsFragment extends BaseFragment implements FragmentPhotoGrapherCampaignsView {
 
     private View mainView;
-    private List<PhotoGrapherCampaign> campaignList = new ArrayList<PhotoGrapherCampaign>();
+    private List<Campaign> campaignList = new ArrayList<Campaign>();
     private photographerCampaignsAdapter photoGrapherCampaignsAdapter;
     private FragmentPhotoGrapherCampaignsPresenter photoGrapherCampaignsPresenter;
     private LinearLayoutManager mLayoutManager;
@@ -90,7 +90,7 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
 
 
     @Override
-    public void showCampaigns(List<PhotoGrapherCampaign> campaignList) {
+    public void showCampaigns(List<Campaign> campaignList) {
         this.campaignList.addAll(campaignList);
         photoGrapherCampaignsAdapter.notifyDataSetChanged();
     }

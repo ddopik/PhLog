@@ -16,7 +16,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.campaigns.model.HomeCampaign;
+import com.example.softmills.phlog.base.commonmodel.Campaign;
 
 import java.util.List;
 
@@ -25,11 +25,11 @@ import java.util.List;
  */
 public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapter.CampaignViewHolder> {
 
-    private List<HomeCampaign> homeCampaignList;
+    private List<Campaign> homeCampaignList;
     private Context context;
     public CampaignLister campaignLister;
 
-    public AllCampaignsAdapter(Context context, List<HomeCampaign> homeCampaignList) {
+    public AllCampaignsAdapter(Context context, List<Campaign> homeCampaignList) {
         this.context = context;
         this.homeCampaignList = homeCampaignList;
 
@@ -49,7 +49,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     @Override
     public void onBindViewHolder(@NonNull CampaignViewHolder campaignViewHolder, int i) {
 
-        HomeCampaign homeCampaign = homeCampaignList.get(i);
+        Campaign homeCampaign = homeCampaignList.get(i);
         campaignViewHolder.campaignImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,21 +58,21 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
                 }
             }
         });
-       //. todo HASHED UNTIL BACK END FEED BACK
-//        GlideApp.with(context).load(homeCampaign.imageCover)
-//                .error(R.drawable.splash_screen_background)
-//                .into(new SimpleTarget<Drawable>() {
-//                    @Override
-//                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
-//                        campaignViewHolder.campaignImage.setBackground(resource);
-//                    }
-//                });
-//        campaignViewHolder.campaignBusinessName.setText(homeCampaign.userName);
-//        campaignViewHolder.campaignTitle.setText(homeCampaign.titleEn);
-//        campaignViewHolder.campaignDayLeft.setText(homeCampaign.leftDays);
-//        campaignViewHolder.campaignDayLeft.append(" "+context.getResources().getString(R.string.days_left));
-//        GlideApp.with(context).load(homeCampaign.business.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
-        /////////////////////
+
+        GlideApp.with(context).load(homeCampaign.imageCover)
+                .error(R.drawable.splash_screen_background)
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
+                        campaignViewHolder.campaignImage.setBackground(resource);
+                    }
+                });
+        campaignViewHolder.campaignBusinessName.setText(homeCampaign.titleEn);
+        campaignViewHolder.campaignTitle.setText(homeCampaign.titleEn);
+        campaignViewHolder.campaignDayLeft.setText(String.valueOf(homeCampaign.daysLeft));
+        campaignViewHolder.campaignDayLeft.append(" "+context.getResources().getString(R.string.days_left));
+        GlideApp.with(context).load(homeCampaign.business.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
+        ///////////////////
     }
 
     @Override

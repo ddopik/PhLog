@@ -11,11 +11,11 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 
+import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
-import com.example.softmills.phlog.ui.campaigns.model.HomeCampaign;
 import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenter;
 import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenterImpl;
 
@@ -32,7 +32,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     private ProgressBar progressBar;
     private CustomRecyclerView allCampaignsRv;
     private AllCampaignsAdapter allCampaignsAdapter;
-    private List<HomeCampaign> homeCampaignList = new ArrayList<>();
+    private List<Campaign> homeCampaignList = new ArrayList<>();
     private CampaignPresenter campaignPresenter;
     private PagingController pagingController;
 
@@ -93,7 +93,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     }
 
     @Override
-    public void viewAllCampaign(List<HomeCampaign> homeCampaignList) {
+    public void viewAllCampaign(List<Campaign> homeCampaignList) {
         allCampaignsRv.setVisibility(View.VISIBLE);
         this.homeCampaignList.clear();
         this.homeCampaignList.addAll(homeCampaignList);

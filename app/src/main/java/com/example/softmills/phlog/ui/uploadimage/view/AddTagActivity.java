@@ -12,12 +12,11 @@ import android.widget.ImageView;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.base.commonmodel.Tag;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.ui.uploadimage.model.Tag;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.AutoCompleteTagMenuAdapter;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.SelectedTagAdapter;
 import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
@@ -58,7 +57,7 @@ public class AddTagActivity extends BaseActivity {
     public void initView() {
 
         Tag tag=new Tag();
-        tag.tagName="Tag";
+        tag.name="Tag";
         tagList.add(tag);
         tagList.add(tag);
         tagList.add(tag);
@@ -118,7 +117,7 @@ public class AddTagActivity extends BaseActivity {
 
             List<Tag> tempList=new ArrayList<Tag>();
             for (int i=0;i<tagList.size();i++) {
-                if(!tagList.get(i).tagName.equals(tag.tagName)){
+                if(!tagList.get(i).name.equals(tag.name)){
                     tempList.add(tagList.get(i));
                 }
 
@@ -155,7 +154,7 @@ public class AddTagActivity extends BaseActivity {
                         //Key board is visible
                     } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
                         Tag newTag = new Tag();
-                        newTag.tagName = autoCompleteTextView.getText().toString();
+                        newTag.name = autoCompleteTextView.getText().toString();
                         addSelectedTag(newTag);
                     }
                 }

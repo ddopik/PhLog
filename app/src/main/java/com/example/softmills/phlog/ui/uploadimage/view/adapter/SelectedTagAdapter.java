@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.ui.uploadimage.model.Tag;
+import com.example.softmills.phlog.base.commonmodel.Tag;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.
     @Override
     public void onBindViewHolder(@NonNull TagViewHolder tagViewHolder, int i) {
 
-        tagViewHolder.tagName.setText(tagList.get(i).tagName);
+        tagViewHolder.tagName.setText(tagList.get(i).name);
 
         if (onSelectedItemClicked != null) {
             tagViewHolder.delete.setOnClickListener((view) -> onSelectedItemClicked.onItemDeleted(tagList.get(i)));

@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model;
 
+import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +15,7 @@ public class PhotoGrapherJoinedCampaign {
     public Integer currentPage;
     @SerializedName("data")
     @Expose
-    public List<PhotoGrapherCampaign> data = null;
+    public List<Campaign> data = null;
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;

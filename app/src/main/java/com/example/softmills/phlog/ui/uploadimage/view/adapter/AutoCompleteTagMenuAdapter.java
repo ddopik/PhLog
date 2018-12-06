@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.ui.uploadimage.model.Tag;
+import com.example.softmills.phlog.base.commonmodel.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
              if (onMenuItemClicked !=null){
                 name.setOnClickListener((view)-> onMenuItemClicked.onItemSelected(tag));
              }
-            name.setText(tag.tagName);
+            name.setText(tag.name);
 
         return convertView;
     }
@@ -75,7 +74,7 @@ public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
 
             @Override
             public String convertResultToString(Object resultValue) {
-                return ((Tag) resultValue).tagName;
+                return ((Tag) resultValue).name;
             }
 
             @Override
@@ -84,7 +83,7 @@ public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
                 List<Tag> departmentsSuggestion = new ArrayList<>();
                 if (constraint != null) {
                     for (Tag tag : allTagList) {
-                        if (tag.tagName.toLowerCase().startsWith(constraint.toString().toLowerCase())  || tag.tagName.toLowerCase().contains(constraint.toString().toLowerCase())  ) {
+                        if (tag.name.toLowerCase().startsWith(constraint.toString().toLowerCase())  || tag.name.toLowerCase().contains(constraint.toString().toLowerCase())  ) {
                             departmentsSuggestion.add(tag);
                         }
                     }

@@ -1,7 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,13 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.campaigns.model.HomeCampaign;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model.PhotoGrapherCampaign;
+import com.example.softmills.phlog.base.commonmodel.Campaign;
 
 
 import java.util.List;
@@ -29,11 +23,11 @@ public class photographerCampaignsAdapter extends RecyclerView.Adapter<photograp
 
 
 
-    private List<PhotoGrapherCampaign> homeCampaignList;
+    private List<Campaign> homeCampaignList;
     private Context context;
     public CampaignLister campaignLister;
 
-    public photographerCampaignsAdapter(Context context, List<PhotoGrapherCampaign> homeCampaignList) {
+    public photographerCampaignsAdapter(Context context, List<Campaign> homeCampaignList) {
         this.context = context;
         this.homeCampaignList = homeCampaignList;
 
@@ -53,7 +47,7 @@ public class photographerCampaignsAdapter extends RecyclerView.Adapter<photograp
     @Override
     public void onBindViewHolder(@NonNull CampaignViewHolder campaignViewHolder, int i) {
 
-        HomeCampaign homeCampaign = homeCampaignList.get(i);
+        Campaign homeCampaign = homeCampaignList.get(i);
         campaignViewHolder.campaignImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
