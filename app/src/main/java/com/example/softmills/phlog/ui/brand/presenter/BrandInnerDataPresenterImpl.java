@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
 
-    private String TAG=BrandInnerDataPresenterImpl.class.getSimpleName();
+    private String TAG = BrandInnerDataPresenterImpl.class.getSimpleName();
     private Context context;
     private BrandInnerActivityView brandInnerActivityView;
 
@@ -34,15 +34,11 @@ public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(brandInnerResponse -> {
-                    if (brandInnerResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        brandInnerActivityView.viewInnerBrandData(brandInnerResponse.data);
-                    } else {
-                        ErrorUtils.setError(context,TAG,brandInnerResponse.msg);
-                    }
+                    brandInnerActivityView.viewInnerBrandData(brandInnerResponse.data);
                     brandInnerActivityView.viewInnerBrandProgressBar(false);
                 }, throwable -> {
                     brandInnerActivityView.viewInnerBrandProgressBar(false);
-                    ErrorUtils.setError(context,TAG,throwable);
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
 
     }

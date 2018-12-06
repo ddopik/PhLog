@@ -9,6 +9,8 @@ import java.util.List;
  * Created by abdalla_maged on 10/4/2018.
  */
 public class CampaignData {
+
+
     @SerializedName("current_page")
     @Expose
     public Integer currentPage;
@@ -45,7 +47,6 @@ public class CampaignData {
     @SerializedName("total")
     @Expose
     public Integer total;
-
 
 }
 

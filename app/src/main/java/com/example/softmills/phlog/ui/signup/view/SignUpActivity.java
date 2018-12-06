@@ -14,7 +14,6 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.login.view.LoginActivity;
-import com.example.softmills.phlog.ui.signup.PickProfilePhotoActivity;
 import com.example.softmills.phlog.ui.signup.model.Country;
 import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenter;
 import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenterImpl;

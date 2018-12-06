@@ -142,8 +142,8 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
         photographerName.setText(photoGrapherProfileData.fullName);
         photographeruserName.setText(photoGrapherProfileData.userName);
-        profileRating.setRating(photoGrapherProfileData.rate.floatValue());
-        photoCount.setText(photoGrapherProfileData.imagePhotographerCount);
+//        profileRating.setRating(photoGrapherProfileData.rate);
+        photoCount.setText(photoGrapherProfileData.photoCount);
         followersCount.setText(photoGrapherProfileData.followerCount);
 
         GlideApp.with(this)

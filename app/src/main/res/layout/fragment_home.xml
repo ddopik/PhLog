@@ -49,8 +49,8 @@
                     android:background="@drawable/search_edit_text_home"
                     android:hint="@string/place_autocomplete_search_hint"
                     android:padding="@dimen/widgets_padding"
+                    android:focusable="false"
                     android:paddingStart="@dimen/dp10"
-
                     android:drawableStart="@drawable/ic_search"/>
 
             </LinearLayout>

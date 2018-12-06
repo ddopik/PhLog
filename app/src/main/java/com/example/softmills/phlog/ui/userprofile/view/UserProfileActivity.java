@@ -138,17 +138,17 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     }
 
     @Override
-    public void viewUserProfilePhotosCount(String photosCount) {
+    public void viewUserProfilePhotosCount(int photosCount) {
         userProfilePhotosCount.setText(photosCount);
     }
 
     @Override
-    public void viewUserProfileFollowersCount(String followersCount) {
+    public void viewUserProfileFollowersCount(int followersCount) {
         userProfileFolloweresCount.setText(followersCount);
     }
 
     @Override
-    public void viewUserProfileFollowingCount(String followingCount) {
+    public void viewUserProfileFollowingCount(int followingCount) {
         userProfileFollowingCount.setText(followingCount);
     }
 

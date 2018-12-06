@@ -11,9 +11,9 @@ public interface UserProfileActivityView {
     void viewUserProfileProfileImg(String userImg); //
     void viewUserProfileFullName(String fullName); //
     void viewUserProfileUserName(String userName); //
-    void viewUserProfilePhotosCount(String photosCount);//
-    void viewUserProfileFollowersCount(String followersCount); //
-    void viewUserProfileFollowingCount(String followingCount); //
+    void viewUserProfilePhotosCount(int photosCount);//
+    void viewUserProfileFollowersCount(int followersCount); //
+    void viewUserProfileFollowingCount(int followingCount); //
     void viewUserPhotos(List<UserPhoto> userPhotoList);
     void viewUserPhotosProgress(boolean state);
     void showMessage(String msg);

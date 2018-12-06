@@ -10,10 +10,5 @@ public class BrandSearchResponse {
     @SerializedName("data")
     @Expose
     public BrandSearchData data;
-    @SerializedName("msg")
-    @Expose
-    public String msg;
-    @SerializedName("state")
-    @Expose
-    public String state;
+
 }

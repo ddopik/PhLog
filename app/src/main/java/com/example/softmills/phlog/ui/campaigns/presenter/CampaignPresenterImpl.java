@@ -2,15 +2,12 @@ package com.example.softmills.phlog.ui.campaigns.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.Utiltes.PermissionUtil;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.campaigns.CampaignFragmentView;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -32,7 +29,7 @@ public class CampaignPresenterImpl implements CampaignPresenter {
     @Override
     public void getAllCampaign(int page) {
         campaignFragmentView.showAllCampaginProgress(true);
-        BaseNetworkApi.getAllCampaign(PrefUtils.getUserToken(context),page)
+        BaseNetworkApi.getAllRunningCampaign(PrefUtils.getUserToken(context),page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(campaignResponse -> {

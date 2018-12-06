@@ -4,14 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
-import com.androidnetworking.error.ANError;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.base.model.ErrorData;
-import com.example.softmills.phlog.base.model.ErrorMessageResponse;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.view.SignUpView;
-import com.google.gson.Gson;
 
 import java.util.HashMap;
 

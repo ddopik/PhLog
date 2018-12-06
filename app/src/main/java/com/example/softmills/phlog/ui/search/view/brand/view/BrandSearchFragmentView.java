@@ -1,6 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.brand.view;
 
-import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearch;
+import com.example.softmills.phlog.base.commonmodel.Brand;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface BrandSearchFragmentView {
 
-    void viewBrandSearchItems(List<BrandSearch> brandSearchList);
+    void viewBrandSearchItems(List<Brand> brandSearchList);
     void viewBrandSearchProgress(boolean state);
     void showMessage(String msg);
 }

@@ -1,9 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.brand.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,13 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearch;
+import com.example.softmills.phlog.base.commonmodel.Brand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +32,11 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
     private String TAG = BrandSearchAdapter.class.getSimpleName();
     public Context context;
-    private List<BrandSearch> brandList;
-    private List<BrandSearch> brandFiltered;
+    private List<Brand> brandList;
+    private List<Brand> brandFiltered;
     public BrandAdapterListener brandAdapterListener;
 
-    public BrandSearchAdapter(Context context, List<BrandSearch> brandList) {
+    public BrandSearchAdapter(Context context, List<Brand> brandList) {
         this.context = context;
         this.brandList = brandList;
         this.brandFiltered = brandList;
@@ -69,12 +64,12 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
 
             GlideApp .with(context)
-                    .load(brandList.get(i).coverImage)
+                    .load(brandList.get(i).imageCover)
                     .centerCrop()
                     .into(brandSearchViewHolder.brandImg);
 
-            brandSearchViewHolder.brandName.setText(brandList.get(i).nameEn);
-            brandSearchViewHolder.brandFollowers.setText(new StringBuilder().append(brandList.get(i).numberOfFollowers).append(" ").append(context.getResources().getString(R.string.following)).toString());
+            brandSearchViewHolder.brandName.setText(brandList.get(i).fullName);
+            brandSearchViewHolder.brandFollowers.setText(new StringBuilder().append(brandList.get(i).numOfFollowers).append(" ").append(context.getResources().getString(R.string.following)).toString());
             brandSearchViewHolder.searchBrandContainer.setOnClickListener(v -> {
                 if (brandAdapterListener != null) {
                     brandAdapterListener.onBrandSelected(brandFiltered.get(i));
@@ -122,12 +117,12 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
                 if (charString.isEmpty()) {
                     brandFiltered = brandList;
                 } else {
-                    List<BrandSearch> filteredList = new ArrayList<>();
-                    for (BrandSearch row : brandList) {
+                    List<Brand> filteredList = new ArrayList<>();
+                    for (Brand row : brandList) {
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (row.nameEn.toLowerCase().contains(charString.toLowerCase()) ) {
+                        if (row.fullName.toLowerCase().contains(charString.toLowerCase()) ) {
                             filteredList.add(row);
                         }
                     }
@@ -141,7 +136,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                brandFiltered = (ArrayList<BrandSearch>) filterResults.values;
+                brandFiltered = (ArrayList<Brand>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
@@ -149,6 +144,6 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
 
     public interface BrandAdapterListener {
-        void onBrandSelected(BrandSearch brandSearch);
+        void onBrandSelected(Brand brandSearch);
     }
 }

@@ -62,20 +62,21 @@ public class photographerCampaignsAdapter extends RecyclerView.Adapter<photograp
                 }
             }
         });
-
-        GlideApp.with(context).load(homeCampaign.imageCover)
-                .error(R.drawable.splash_screen_background)
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
-                        campaignViewHolder.campaignImage.setBackground(resource);
-                    }
-                });
-        campaignViewHolder.campaignBusinessName.setText(homeCampaign.business.userName);
-        campaignViewHolder.campaignTitle.setText(homeCampaign.titleEn);
-        campaignViewHolder.campaignDayLeft.setText(homeCampaign.leftDays);
-        campaignViewHolder.campaignDayLeft.append(" "+context.getResources().getString(R.string.days_left));
-        GlideApp.with(context).load(homeCampaign.business.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
+//. todo HASHED UNTIL BACK END FEED BACK
+//        GlideApp.with(context).load(homeCampaign.imageCover)
+//                .error(R.drawable.splash_screen_background)
+//                .into(new SimpleTarget<Drawable>() {
+//                    @Override
+//                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
+//                        campaignViewHolder.campaignImage.setBackground(resource);
+//                    }
+//                });
+//        campaignViewHolder.campaignBusinessName.setText(homeCampaign.business.userName);
+//        campaignViewHolder.campaignTitle.setText(homeCampaign.titleEn);
+//        campaignViewHolder.campaignDayLeft.setText(homeCampaign.leftDays);
+//        campaignViewHolder.campaignDayLeft.append(" "+context.getResources().getString(R.string.days_left));
+//        GlideApp.with(context).load(homeCampaign.business.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
+        //////////////////////////////////////////
     }
 
     @Override

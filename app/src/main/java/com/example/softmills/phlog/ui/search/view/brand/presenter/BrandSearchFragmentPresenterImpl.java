@@ -4,11 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.search.view.brand.view.BrandSearchFragmentView;
-
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -38,18 +37,13 @@ public class BrandSearchFragmentPresenterImpl implements BrandSearchFragmentPres
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(brandSearchResponse -> {
-                    Log.e(TAG, "getSearchBrand() ---> new request" );
+                    Log.e(TAG, "getSearchBrand() ---> new request");
+                    brandSearchFragmentView.viewBrandSearchProgress(false);
+                    brandSearchFragmentView.viewBrandSearchItems(brandSearchResponse.data.data);
 
-                    brandSearchFragmentView.viewBrandSearchProgress(false);
-                    if (brandSearchResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        brandSearchFragmentView.viewBrandSearchItems(brandSearchResponse.data.data);
-                    } else {
-                        brandSearchFragmentView.showMessage(brandSearchResponse.msg);
-                        Log.e(TAG, "getSearchBrand() --->Error " + brandSearchResponse.toString());
-                    }
                 }, throwable -> {
+                    ErrorUtils.setError(context, TAG, throwable);
                     brandSearchFragmentView.viewBrandSearchProgress(false);
-                    Log.e(TAG, "getSearchBrand() Error--->" + throwable.getMessage());
                 });
 
     }

@@ -31,12 +31,10 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profilePhotoGrapherInfoResponse -> {
-                    if (profilePhotoGrapherInfoResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+
                         photoGrapherProfileActivityView.showPhotoGrapherProfileData(profilePhotoGrapherInfoResponse.data);
-                    } else {
-                        photoGrapherProfileActivityView.showMessage("Couldn't get profile data");
-                        Log.e(TAG, "getPhotoGrapherProfileData() --->" + profilePhotoGrapherInfoResponse.state);
-                    }
+
+
                 }, throwable -> {
                     Log.e(TAG, "getPhotoGrapherProfileData() --->" + throwable.getMessage());
                 });

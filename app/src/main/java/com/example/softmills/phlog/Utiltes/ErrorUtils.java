@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.androidnetworking.error.ANError;
-import com.example.softmills.phlog.base.model.ErrorMessageResponse;
+import com.example.softmills.phlog.base.commonmodel.ErrorMessageResponse;
 import com.google.gson.Gson;
 
 import static com.example.softmills.phlog.network.BaseNetworkApi.ERROR_STATE_1;
@@ -31,18 +31,23 @@ public class ErrorUtils {
 
     //Universal Error State From Server
     public static void setError(Context context, String contextTAG, Throwable throwable) {
-        String errorData = ((ANError) throwable).getErrorBody();
-        int statusCode = ((ANError) throwable).getErrorCode();
-        Gson gson = new Gson();
-        switch (statusCode){
-            case STATUS_BAD_REQUEST :{
-                viewError(context, contextTAG, gson.fromJson(errorData, ErrorMessageResponse.class));
-            }
-            case STATUS_404 :{
-                Log.e(TAG, contextTAG + "------>" + errorData);
-            }
+        try {
+            String errorData = ((ANError) throwable).getErrorBody();
+            int statusCode = ((ANError) throwable).getErrorCode();
+            Gson gson = new Gson();
+            switch (statusCode){
+                case STATUS_BAD_REQUEST :{
+                    viewError(context, contextTAG, gson.fromJson(errorData, ErrorMessageResponse.class));
+                }
+                case STATUS_404 :{
+                    Log.e(TAG, contextTAG + "------>" + STATUS_404);
+                }
 
+            }
+        }catch (Exception e){
+            Log.e("Error","--------------->"+e.getMessage());
         }
+
 
 
 
@@ -52,7 +57,7 @@ public class ErrorUtils {
     private static void viewError(Context context, String contextTAG, ErrorMessageResponse errorMessageResponse) {
         for (int i = 0; i < errorMessageResponse.errors.size(); i++) {
             if(errorMessageResponse.errors.get(i).code !=null)
-            switch (errorMessageResponse.errors.get(i).code) {
+            switch (errorMessageResponse.errors.get(i).code ) {
                 case (ERROR_STATE_1): {
                     Toast.makeText(context, errorMessageResponse.errors.get(i).message, Toast.LENGTH_SHORT).show();
                 }

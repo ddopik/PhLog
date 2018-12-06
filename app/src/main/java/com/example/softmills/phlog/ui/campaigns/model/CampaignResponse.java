@@ -10,12 +10,7 @@ import java.util.List;
  */
 public class CampaignResponse {
 
-
         @SerializedName("data")
         @Expose
         public CampaignData data;
-        @SerializedName("state")
-        @Expose
-        public String state;
-
 }

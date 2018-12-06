@@ -25,13 +25,15 @@ import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearchRespons
 import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearchResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
+import com.example.softmills.phlog.ui.signup.model.UploadProfileImgResponse;
 import com.example.softmills.phlog.ui.social.model.SocialResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserPhotosResponse;
-import com.example.softmills.phlog.ui.userprofile.model.UserProfileResponse;
+
 import com.example.softmills.phlog.ui.welcome.model.WelcomeScreenResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
+import java.io.File;
 import java.util.HashMap;
 
 
@@ -44,6 +46,7 @@ public class BaseNetworkApi {
 
     //Network Status
     public static String STATUS_OK = "200";
+    public static String DEFAULT_USER_TYPE = "0";
     public static final  int STATUS_BAD_REQUEST = 400;
     public static final  int STATUS_404 = 404;
     public static String STATUS_ERROR = "405";
@@ -58,16 +61,17 @@ public class BaseNetworkApi {
     private static final String WELCOME_SLIDES_IMAGES = BASE_URL +"/photographer/init_slider"; //done
     private static final String ALL_COUNTRES = BASE_URL + "/common/countries/list"; //done
     private static final String SIGNUP_USER = BASE_URL + "/photographer/auth/signup";
+    private static final String UPLOAD_PROFILE = BASE_URL +"/photographer/profile/upload";
     private static final String NORMAL_LOGIN = BASE_URL + "/photographer/auth/login";
     private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/signup_facebook";
-    private static final String USER_PROFILE_URL = BASE_URL + "/get_info_photographer";
+    private static final String USER_PROFILE_URL = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/image_photographer";
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/image_photographer";
-    private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/get_info_photographer";
+    private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/get_photographer_campaign";
     private static final String PHOTOGRAPHER_FOLLOWING_IN_URL = BASE_URL + "/get_following";
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/follow";
-    private static final String ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/list";
+    private static final String ALL_CAMPAIGN_URL = BASE_URL +"/photographer/campaign/running";
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/detail_one_campaign";
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/get_photos_campaign";
     private static final String FOLLOW_CAMPAIGN_URL = BASE_URL + "/join_photographer_campaign";
@@ -76,8 +80,8 @@ public class BaseNetworkApi {
     private static final String SEARCH_ALBUM = BASE_URL + "/search_in_album";
     private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/search_in_following";
     private static final String GET_SEARCH_ALBUM = BASE_URL +"/search_in_one_album";
-    private static final String BRAND_SEARCH_URL = BASE_URL + "/search_in_brands";
-    private static final String INNER_BRAND_URL = BASE_URL + "/search_in_one_brands";
+    private static final String BRAND_SEARCH_URL = BASE_URL +"/photographer/business/search";
+    private static final String INNER_BRAND_URL = BASE_URL + "/photographer/business/details";
     private static final String BRAND_FOLLOW_URL = BASE_URL + "/join_photographer_brand";
     private static final String SOCIAL_DATA_URL = BASE_URL + "/social";
     private static final String GET_IMAGE_COMMENT = BASE_URL + "/image/comments";
@@ -147,13 +151,13 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<UserProfileResponse> getUserProfile(String token, String userID) {
+    public static io.reactivex.Observable<ProfilePhotoGrapherInfoResponse> getUserProfile(String token, String userID) {
         return Rx2AndroidNetworking.post(USER_PROFILE_URL)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("photographer_id", userID)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(UserProfileResponse.class);
+                .getObjectObservable(ProfilePhotoGrapherInfoResponse.class);
     }
 
     public static io.reactivex.Observable<FollowUserResponse> followUser(String token,String userID){
@@ -253,7 +257,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(PhotographerFollowingBrandResponse.class);
     }
 
-    public static io.reactivex.Observable<CampaignResponse> getAllCampaign(String token, int page) {
+    public static io.reactivex.Observable<CampaignResponse> getAllRunningCampaign(String token, int page) {
         return Rx2AndroidNetworking.post(ALL_CAMPAIGN_URL)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
@@ -390,6 +394,18 @@ public class BaseNetworkApi {
                 .build()
                 .getObjectObservable(EarningResponse.class);
     }
+
+    public static io.reactivex.Observable<UploadProfileImgResponse> uploadProfileImg(String token,File imgPath){
+        return Rx2AndroidNetworking.upload(UPLOAD_PROFILE)
+                .addHeaders("x-auth-token", token)
+                .addHeaders("x-user-type", DEFAULT_USER_TYPE)
+                .addHeaders("x-lang-code", "en-us")
+                .addMultipartFile("image_profile", imgPath)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(UploadProfileImgResponse.class);
+    }
+
 
 //    public static io.reactivex.Observable<GeoCodeAutoCompleteResponse> getGeoGodeAutoCompleteResponse(String key){
 //        return Rx2AndroidNetworking.get()

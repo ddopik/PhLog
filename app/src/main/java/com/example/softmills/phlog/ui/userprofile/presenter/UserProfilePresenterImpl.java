@@ -7,7 +7,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.userprofile.model.UserProfileData;
+import com.example.softmills.phlog.ui.photographerprofile.model.ProfilePhotoGrapherInfoResponse;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivityView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,21 +31,17 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfileResponse -> {
-                    if (userProfileResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        UserProfileData userProfileData = userProfileResponse.data;
-                        userProfileActivityView.viewUserProfileUserName(userProfileData.userName);
-                        userProfileActivityView.viewUserProfileFullName(userProfileData.fullName);
-                        userProfileActivityView.viewUserProfileRating(userProfileData.rate);
-                        userProfileActivityView.viewUserProfileLevel("000");
-                        userProfileActivityView.viewUserProfileProfileImg(userProfileData.imageProfile);
-                        userProfileActivityView.viewUserProfileFollowersCount(userProfileData.followerCount);
-                        userProfileActivityView.viewUserProfileFollowingCount(userProfileData.followingCount);
-                        userProfileActivityView.viewUserProfilePhotosCount(userProfileData.imagePhotographerCount);
-                    } else {
-                        userProfileActivityView.showMessage(userProfileResponse.data.toString());
-                        ErrorUtils.setError(context, TAG, userProfileResponse.msg);
 
-                    }
+                    ProfilePhotoGrapherInfoResponse userProfileData = userProfileResponse;
+                    userProfileActivityView.viewUserProfileUserName(userProfileData.data.userName);
+                    userProfileActivityView.viewUserProfileFullName(userProfileData.data.fullName);
+                    userProfileActivityView.viewUserProfileRating(userProfileData.data.rate);
+                    userProfileActivityView.viewUserProfileLevel(userProfileData.data.level);
+                    userProfileActivityView.viewUserProfileProfileImg(userProfileData.data.imageProfile);
+                    userProfileActivityView.viewUserProfileFollowersCount(userProfileData.data.followerCount);
+                    userProfileActivityView.viewUserProfileFollowingCount(userProfileData.data.followingCount);
+                    userProfileActivityView.viewUserProfilePhotosCount(userProfileData.data.photoCount);
+
 
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);
@@ -83,7 +79,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followUserResponse -> {
                     if (followUserResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) +" "+ followUserResponse.data);
+                        userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
                     } else {
                         ErrorUtils.setError(context, TAG, followUserResponse.msg);
                     }

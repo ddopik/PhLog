@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.base.model;
+package com.example.softmills.phlog.base.commonmodel;
 
 /**
  * Created by abdalla_maged On Nov,2018

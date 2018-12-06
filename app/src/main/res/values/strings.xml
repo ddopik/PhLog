@@ -116,5 +116,6 @@
     <string name="email">Email</string>
     <string name="notification">Notification</string>
     <string name="select_img">Select Image</string>
+    <string name="about_us">About Us :</string>
 
 </resources>

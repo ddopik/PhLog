@@ -106,7 +106,7 @@
                 android:id="@+id/photos_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="101"
+                tools:text="101"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium_s" />
 
@@ -134,7 +134,7 @@
                 android:id="@id/followers_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="56"
+                tools:text="56"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium_s" />
 
@@ -163,7 +163,7 @@
                 android:id="@+id/following_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="56"
+                tools:text="56"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium_s" />
 

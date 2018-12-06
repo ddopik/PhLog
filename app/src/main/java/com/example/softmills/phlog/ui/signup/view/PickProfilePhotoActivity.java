@@ -1,15 +1,15 @@
-package com.example.softmills.phlog.ui.signup;
+package com.example.softmills.phlog.ui.signup.view;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.esafirm.imagepicker.features.ImagePicker;
@@ -17,28 +17,33 @@ import com.esafirm.imagepicker.features.ReturnMode;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.ui.uploadimage.view.ImageFilterActivity;
-import com.example.softmills.phlog.ui.uploadimage.view.adapter.GalleryImageAdapter;
+import com.example.softmills.phlog.ui.MainActivity;
+import com.example.softmills.phlog.ui.signup.presenter.PickProfilePhotoPresenter;
+import com.example.softmills.phlog.ui.signup.presenter.PickProfilePhotoPresenterImpl;
 
 import java.io.File;
+
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_CAMERA;
 import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_GALLERY;
 
-public class PickProfilePhotoActivity extends BaseActivity {
+public class PickProfilePhotoActivity extends BaseActivity implements PickProfilePhotoActivityView {
 
     private String TAG = PickProfilePhotoActivity.class.getSimpleName();
     private ImageView pickImage;
-    private final int CAMERA_AND_WRITE_EXTERNAL_CODE = 1223;
+    private Button uploadProfileBtn;
+    private Button skipUploadProfileBtn;
+    private ProgressBar uploadProfileImgProgress;
+    private PickProfilePhotoPresenter pickProfilePhotoPresenter;
+    private File imgPath;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_profile_pic);
-
-
         initPresenter();
         initView();
         initListener();
@@ -47,6 +52,9 @@ public class PickProfilePhotoActivity extends BaseActivity {
     @Override
     public void initView() {
         pickImage = findViewById(R.id.pick_image);
+        uploadProfileBtn = findViewById(R.id.upload_profile_btn);
+        skipUploadProfileBtn = findViewById(R.id.skip_upload_btn);
+        uploadProfileImgProgress = findViewById(R.id.upload_profile_img_progress);
 
 
     }
@@ -55,17 +63,26 @@ public class PickProfilePhotoActivity extends BaseActivity {
         pickImage.setOnClickListener(view -> {
             openPickerDialog();
         });
+        uploadProfileBtn.setOnClickListener(view -> {
+            if (imgPath != null)
+                pickProfilePhotoPresenter.uploadPhoto(imgPath);
+
+        });
+        skipUploadProfileBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
     }
 
     @Override
     public void initPresenter() {
-
+        pickProfilePhotoPresenter = new PickProfilePhotoPresenterImpl(getBaseContext(), this);
     }
 
 
     private void openPickerDialog() {
         CharSequence photoChooserOptions[] = new CharSequence[]{getResources().getString(R.string.general_photo_chooser_camera), getResources().getString(R.string.general_photo_chooser_gallery)};
-         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.general_photo_chooser_title));
         builder.setItems(photoChooserOptions, (dialog, option) -> {
             if (option == 0) {
@@ -95,6 +112,7 @@ public class PickProfilePhotoActivity extends BaseActivity {
         }
 
     }
+
     @AfterPermissionGranted(REQUEST_CODE_GALLERY)
     private void requestGalleryPermutations() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -120,11 +138,7 @@ public class PickProfilePhotoActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-
-            String image = ImagePicker.getFirstImageOrNull(data).getPath();
-            Intent intent = new Intent(getBaseContext(), ImageFilterActivity.class);
-            intent.putExtra("image_uri", image);
-
+            this.imgPath = new File(ImagePicker.getFirstImageOrNull(data).getPath());
             //Header Img
             GlideApp.with(getBaseContext())
                     .load(ImagePicker.getFirstImageOrNull(data).getPath())
@@ -133,11 +147,26 @@ public class PickProfilePhotoActivity extends BaseActivity {
                     .apply(RequestOptions.circleCropTransform())
                     .into(pickImage);
 
-//            startActivity(intent);
 
         }
         super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    @Override
+    public void viewUploadImageProgress(Boolean state) {
+        if (state) {
+            uploadProfileImgProgress.setVisibility(View.VISIBLE);
+        } else {
+            uploadProfileImgProgress.setVisibility(View.GONE);
+        }
+
+    }
+
+    @Override
+    public void UploadProfileImgFinished(Boolean state) {
+        Intent intent = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.base.model;
+package com.example.softmills.phlog.base.commonmodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

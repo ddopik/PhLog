@@ -14,11 +14,11 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.base.commonmodel.Brand;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
-import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearch;
 import com.example.softmills.phlog.ui.search.view.brand.presenter.BrandSearchFragmentPresenter;
 import com.example.softmills.phlog.ui.search.view.brand.presenter.BrandSearchFragmentPresenterImpl;
 import com.jakewharton.rxbinding3.widget.RxTextView;
@@ -46,7 +46,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private CustomRecyclerView searchBrandRv;
     private ProgressBar searchBrandProgress;
     private BrandSearchAdapter brandSearchAdapter;
-    private List<BrandSearch> brandSearchList = new ArrayList<>();
+    private List<Brand> brandSearchList = new ArrayList<>();
     private BrandSearchFragmentPresenter brandSearchFragmentPresenter;
     private PagingController pagingController;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -124,13 +124,10 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             }
         };
 
-        brandSearchAdapter.brandAdapterListener=new BrandSearchAdapter.BrandAdapterListener() {
-            @Override
-            public void onBrandSelected(BrandSearch brandSearch) {
-                Intent intent=new Intent(getActivity(), BrandInnerActivity.class);
-                intent.putExtra(BrandInnerActivity.BRAND_ID,brandSearch.id);
-                startActivity(intent);
-            }
+        brandSearchAdapter.brandAdapterListener= brandSearch -> {
+            Intent intent=new Intent(getActivity(), BrandInnerActivity.class);
+            intent.putExtra(BrandInnerActivity.BRAND_ID,brandSearch.id);
+            startActivity(intent);
         };
     }
 
@@ -165,7 +162,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     }
 
     @Override
-    public void viewBrandSearchItems(List<BrandSearch> brandSearchList) {
+    public void viewBrandSearchItems(List<Brand> brandSearchList) {
         this.brandSearchList.addAll(brandSearchList);
         brandSearchAdapter.notifyDataSetChanged();
         hideSoftKeyBoard();
