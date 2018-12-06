@@ -34,7 +34,7 @@ public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(brandInnerResponse -> {
-                    brandInnerActivityView.viewInnerBrandData(brandInnerResponse.data);
+                    brandInnerActivityView.viewInnerBrandData(brandInnerResponse.brand);
                     brandInnerActivityView.viewInnerBrandProgressBar(false);
                 }, throwable -> {
                     brandInnerActivityView.viewInnerBrandProgressBar(false);

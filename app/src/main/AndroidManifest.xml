@@ -22,18 +22,22 @@
         <activity android:name=".ui.splash.view.SplashActivity" />
 
 
-        <activity android:name=".ui.signup.view.SignUpActivity" >
+        <activity android:name=".ui.signup.view.SignUpActivity">
 
         </activity>
-        <activity android:name=".ui.welcome.view.WelcomeActivity"/>
-        <activity android:name=".ui.login.view.LoginActivity"/>
+        <activity android:name=".ui.welcome.view.WelcomeActivity" />
+        <activity android:name=".ui.login.view.LoginActivity" />
         <activity android:name=".ui.userprofile.view.UserProfileActivity">
 
         </activity>
         <activity
             android:name=".ui.MainActivity"
             android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.campaigns.inner.ui.CampaignInnerActivity">
 
@@ -41,14 +45,10 @@
 
 
         <activity android:name=".ui.signup.view.PickProfilePhotoActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".ui.TestActivity" >
+        <activity android:name=".ui.TestActivity">
 
         </activity>
 
@@ -57,17 +57,18 @@
         <activity android:name=".ui.uploadimage.view.PickedPhotoInfoActivity">
 
         </activity>
-        <activity android:name=".ui.uploadimage.view.AddTagActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".ui.uploadimage.view.AddTagActivity"
+            android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".ui.search.view.SearchActivity" >
+        <activity android:name=".ui.search.view.SearchActivity">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
 
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".ui.album.view.AlbumPreviewActivity" >
+        <activity android:name=".ui.album.view.AlbumPreviewActivity">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -76,17 +77,13 @@
         </activity>
         <activity android:name=".ui.album.view.AllAlbumImgActivity" />
         <activity android:name=".ui.album.view.AlbumCommentActivity" />
-        <activity android:name=".ui.brand.view.BrandInnerActivity" >
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ui.brand.view.BrandInnerActivity">
 
-            <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDryqbBvzbQcReaUwKN9dABdnyfRf0eW5A"/>
+            android:value="AIzaSyDryqbBvzbQcReaUwKN9dABdnyfRf0eW5A" />
     </application>
 
 

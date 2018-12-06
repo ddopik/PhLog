@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.brand.model;
 
+import com.example.softmills.phlog.base.commonmodel.Brand;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,11 +10,7 @@ import com.google.gson.annotations.SerializedName;
 public class BrandInnerResponse {
     @SerializedName("data")
     @Expose
-    public BrandInnerData data;
-    @SerializedName("msg")
-    @Expose
-    public String msg;
-    @SerializedName("state")
-    @Expose
-    public String state;
+    public Brand brand;
+
+
 }

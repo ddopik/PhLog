@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.brand.view;
 
+import com.example.softmills.phlog.base.commonmodel.Brand;
 import com.example.softmills.phlog.ui.brand.model.BrandInnerData;
 
 /**
@@ -7,6 +8,6 @@ import com.example.softmills.phlog.ui.brand.model.BrandInnerData;
  */
 public interface BrandInnerActivityView {
 
-    void viewInnerBrandData(BrandInnerData brandInnerData);
+    void viewInnerBrandData(Brand brandInnerData);
     void viewInnerBrandProgressBar(Boolean state);
 }

@@ -20,6 +20,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.base.commonmodel.Brand;
 import com.example.softmills.phlog.ui.brand.model.BrandInnerData;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerDataPresenterImpl;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerPresenter;
@@ -75,10 +76,10 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     }
 
     @Override
-    public void viewInnerBrandData(BrandInnerData brandInnerData) {
+    public void viewInnerBrandData(Brand brand) {
 
         GlideApp.with(this)
-                .load(brandInnerData.coverImage)
+                .load(brand.imageCover)
                 .placeholder(R.drawable.default_photographer_profile)
                 .error(R.drawable.default_photographer_profile)
                 .listener(new RequestListener<Drawable>() {
@@ -101,33 +102,34 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
                     }
                 });
 
-        GlideApp.with(this)
-                .load(brandInnerData.coverImage)
-                .placeholder(R.drawable.default_photographer_profile)
-                .error(R.drawable.default_photographer_profile)
-                .apply(RequestOptions.circleCropTransform())
-                .into(brandIconImg);
-        GlideApp.with(this).load(brandInnerData.thumbnail).apply(RequestOptions.circleCropTransform()).into(brandIconImg);
+//        GlideApp.with(this)
+//                .load(brandInnerData.coverImage)
+//                .placeholder(R.drawable.default_photographer_profile)
+//                .error(R.drawable.default_photographer_profile)
+//                .apply(RequestOptions.circleCropTransform())
+//                .into(brandIconImg);
+
+        GlideApp.with(this).load(brand.thumbnail).apply(RequestOptions.circleCropTransform()).into(brandIconImg);
 
 
-        if (brandInnerData.nameEn != null) {
-            brandName.setText(brandInnerData.nameEn);
-            aboutBrand.setText(new StringBuilder().append(getResources().getString(R.string.about_brand)).append(" : ").append(brandInnerData.nameEn).toString());
+        if (brand.fullName != null) {
+            brandName.setText(brand.fullName);
+            aboutBrand.setText(new StringBuilder().append(getResources().getString(R.string.about_brand)).append(" : ").append(brand.fullName).toString());
         }
-        if (brandInnerData.numberOfFollowers != null) {
-            brandNumFollowers.setText(new StringBuilder().append(brandInnerData.numberOfFollowers).append(" ").append(getResources().getString(R.string.followers)).toString());
+        if (brand.numOfFollowers != null) {
+            brandNumFollowers.setText(new StringBuilder().append(brand.numOfFollowers).append(" ").append(getResources().getString(R.string.followers)).toString());
         }
-        if (brandInnerData.industry != null) {
-            brandType.setText(brandInnerData.industry.name);
+//        if (brand.industry != null) {
+            brandType.setText("Brand Industry");
+//        }
+        if (brand.isBrandText != null) {
+            brandData.setText(brand.isBrandText);
         }
-        if (brandInnerData.descrption != null) {
-            brandData.setText(brandInnerData.descrption);
-        }
-        if (brandInnerData.website != null) {
-            brandWebsite.setText(brandInnerData.website);
-        }
-        if (brandInnerData.mail != null) {
-            brandWebsite.setText(brandInnerData.mail);
+//        if (brand.website != null) {
+            brandWebsite.setText("Brand website here");
+//        }
+        if (brand.email != null) {
+            brandWebsite.setText(brand.email);
 
         }
 

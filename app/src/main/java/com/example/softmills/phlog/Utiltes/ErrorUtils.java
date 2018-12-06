@@ -45,7 +45,7 @@ public class ErrorUtils {
 
             }
         }catch (Exception e){
-            Log.e("Error","--------------->"+e.getMessage());
+            Log.e(TAG,"--------------->"+e.getMessage());
         }
 
 

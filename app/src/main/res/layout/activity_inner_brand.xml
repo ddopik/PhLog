@@ -73,20 +73,13 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <ProgressBar
-        android:id="@+id/brand_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:fitsSystemWindows="true"
         android:layout_gravity="center_horizontal|bottom"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
         <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
         <TextView
@@ -128,4 +121,12 @@
 
             />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/brand_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible" />
 </android.support.design.widget.CoordinatorLayout>

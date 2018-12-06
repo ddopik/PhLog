@@ -126,7 +126,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
         brandSearchAdapter.brandAdapterListener= brandSearch -> {
             Intent intent=new Intent(getActivity(), BrandInnerActivity.class);
-            intent.putExtra(BrandInnerActivity.BRAND_ID,brandSearch.id);
+            intent.putExtra(BrandInnerActivity.BRAND_ID,String.valueOf(brandSearch.id));
             startActivity(intent);
         };
     }

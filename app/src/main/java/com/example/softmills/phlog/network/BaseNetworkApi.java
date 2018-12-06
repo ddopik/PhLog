@@ -354,8 +354,7 @@ public class BaseNetworkApi {
 
     public static io.reactivex.Observable<BrandInnerResponse> getBrandInnerData(String token, String brandId) {
         return Rx2AndroidNetworking.post(INNER_BRAND_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
-                .addBodyParameter("id", brandId)
+                .addBodyParameter("business_id", brandId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(BrandInnerResponse.class);
