@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.campaigns.inner.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -18,9 +20,13 @@ import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenterImpl;
+import com.example.softmills.phlog.ui.uploadimage.view.UploadImageActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import static com.example.softmills.phlog.network.BaseNetworkApi.IMAGE_TYPE_CAMPAIGN;
 
 /**
  * Created by abdalla_maged on 10/4/2018.
@@ -30,7 +36,10 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
 
     private final String TAG = CampaignInnerActivity.class.getSimpleName();
     public static String CAMPAIGN_ID="campaign_id";
+    private String campaignId;
+
     private FrameLayout campaignImg;
+    private Button uploadCampaignBtn;
     private TextView campaignTitle, campaignHostedBy, campaignDayLeft;
     private TabLayout campaignTabs;
     private ViewPager campaignViewPager;
@@ -43,6 +52,7 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
         setContentView(R.layout.activity_campaign_innner);
         initPresenter();
         initView();
+        initListener();
 
     }
 
@@ -53,15 +63,31 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
         campaignTitle = findViewById(R.id.campaign_title);
         campaignHostedBy = findViewById(R.id.campaign_hosted_by);
         campaignDayLeft = findViewById(R.id.campaign_day_left);
+        uploadCampaignBtn=findViewById(R.id.upload_campaign_photo_id);
         campaignTabs = findViewById(R.id.inner_campaign_tabs);
         campaignViewPager = findViewById(R.id.inner_campaign_viewpager);
-        if (getIntent().getStringExtra(CAMPAIGN_ID) !=null)
+        if (getIntent().getStringExtra(CAMPAIGN_ID) !=null){
             campaignInnerPresenter.getCampaignDetails( getIntent().getStringExtra(CAMPAIGN_ID));
+            campaignId=getIntent().getStringExtra(CAMPAIGN_ID);
+        }
+
     }
 
     @Override
     public void initPresenter() {
         campaignInnerPresenter = new CampaignInnerPresenterImpl(getBaseContext(), this);
+    }
+
+    private void initListener(){
+        uploadCampaignBtn.setOnClickListener(v->{
+            Intent intent=new Intent(this,UploadImageActivity.class);
+            Bundle extras = new Bundle();
+            HashMap<String, String> imageType=new HashMap<String, String>();
+            imageType.put(IMAGE_TYPE_CAMPAIGN,campaignId);
+            extras.putSerializable(UploadImageActivity.IMAGE_TYPE,imageType);
+            intent.putExtras(extras);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -119,7 +145,7 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
         CampaignInnerMissionFragment campaignInnerMissionFragment = CampaignInnerMissionFragment.getInstance();
         onMissionCampaignDataRecived = campaignInnerMissionFragment; // pass mission description to campaignInnerMissionFragment
         fragmentList.add(campaignInnerMissionFragment);
-        fragmentList.add(CampaignInnerPhotosFragment.getInstance("1"));
+        fragmentList.add(CampaignInnerPhotosFragment.getInstance(getIntent().getStringExtra(CAMPAIGN_ID)));
         return fragmentList;
     }
 

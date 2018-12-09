@@ -58,6 +58,11 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
                 }
             }
         });
+        campaignViewHolder.joinCampaignBtn.setOnClickListener(v -> {
+            if (campaignLister != null) {
+                campaignLister.onFollowCampaign(homeCampaign.id.toString());
+            }
+        });
 
         GlideApp.with(context).load(homeCampaign.imageCover)
                 .error(R.drawable.splash_screen_background)
@@ -70,8 +75,9 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
         campaignViewHolder.campaignBusinessName.setText(homeCampaign.titleEn);
         campaignViewHolder.campaignTitle.setText(homeCampaign.titleEn);
         campaignViewHolder.campaignDayLeft.setText(String.valueOf(homeCampaign.daysLeft));
-        campaignViewHolder.campaignDayLeft.append(" "+context.getResources().getString(R.string.days_left));
+        campaignViewHolder.campaignDayLeft.append(" " + context.getResources().getString(R.string.days_left));
         GlideApp.with(context).load(homeCampaign.business.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
+
         ///////////////////
     }
 
@@ -81,10 +87,10 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     }
 
     public class CampaignViewHolder extends RecyclerView.ViewHolder {
-        private  ImageView campaignImage;
-        private  ImageView campaignBusinessIcon;
-        private  TextView campaignBusinessName, campaignTitle, campaignDayLeft;
-        private   Button joinCampaignBtn;
+        private ImageView campaignImage;
+        private ImageView campaignBusinessIcon;
+        private TextView campaignBusinessName, campaignTitle, campaignDayLeft;
+        private Button joinCampaignBtn;
 
         public CampaignViewHolder(View view) {
             super(view);
@@ -104,6 +110,8 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     public interface CampaignLister {
 
         void onCampaignClicked(String campaignID);
+
+        void onFollowCampaign(String campaignID);
 
     }
 }

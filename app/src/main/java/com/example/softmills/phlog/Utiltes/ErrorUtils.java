@@ -9,7 +9,9 @@ import com.example.softmills.phlog.base.commonmodel.ErrorMessageResponse;
 import com.google.gson.Gson;
 
 import static com.example.softmills.phlog.network.BaseNetworkApi.ERROR_STATE_1;
+import static com.example.softmills.phlog.network.BaseNetworkApi.STATUS_401;
 import static com.example.softmills.phlog.network.BaseNetworkApi.STATUS_404;
+import static com.example.softmills.phlog.network.BaseNetworkApi.STATUS_500;
 import static com.example.softmills.phlog.network.BaseNetworkApi.STATUS_BAD_REQUEST;
 
 /**
@@ -38,9 +40,19 @@ public class ErrorUtils {
             switch (statusCode){
                 case STATUS_BAD_REQUEST :{
                     viewError(context, contextTAG, gson.fromJson(errorData, ErrorMessageResponse.class));
+                    break;
                 }
                 case STATUS_404 :{
-                    Log.e(TAG, contextTAG + "------>" + STATUS_404);
+                    Log.e(TAG, contextTAG + "------>" + STATUS_404 +"---"+throwable.toString());
+                    break;
+                }
+                case STATUS_401 :{
+                    Log.e(TAG, contextTAG + "------>" + STATUS_401+"---"+throwable.toString());
+                    break;
+                }
+                case STATUS_500 :{
+                    Log.e(TAG, contextTAG + "------>" + STATUS_500+"---"+throwable.toString());
+                    break;
                 }
 
             }
@@ -60,6 +72,7 @@ public class ErrorUtils {
             switch (errorMessageResponse.errors.get(i).code ) {
                 case (ERROR_STATE_1): {
                     Toast.makeText(context, errorMessageResponse.errors.get(i).message, Toast.LENGTH_SHORT).show();
+                    break;
                 }
                 default: {
                     Log.e(TAG, contextTAG + "------>" + errorMessageResponse.errors.get(i).message);

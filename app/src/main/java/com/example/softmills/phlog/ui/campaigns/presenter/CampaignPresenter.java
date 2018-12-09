@@ -5,4 +5,5 @@ package com.example.softmills.phlog.ui.campaigns.presenter;
  */
 public interface CampaignPresenter {
     void getAllCampaign(int page);
+    void followCampaign(String campaignID);
 }

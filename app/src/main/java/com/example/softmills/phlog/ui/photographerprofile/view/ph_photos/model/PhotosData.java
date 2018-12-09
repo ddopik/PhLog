@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model;
 
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhoto;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.SavedPhotosData;
 import com.google.gson.annotations.Expose;
@@ -16,7 +17,7 @@ public class PhotosData {
     public Integer currentPage;
     @SerializedName("data")
     @Expose
-    public List<PhotoGrapherPhoto> data = null;
+    public List<BaseImage> data = null;
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;

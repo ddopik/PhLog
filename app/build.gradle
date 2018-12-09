@@ -11,7 +11,6 @@ ext {
     facebook_stetho_version='1.5.0'
     stetho_realm_version='2.1.0'
     fast_android_network_version='1.0.1'
-    glide_version='4.6.1'
 
 }
 android {

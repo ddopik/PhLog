@@ -34,6 +34,8 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.HashMap;
+
 import io.reactivex.annotations.NonNull;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -48,6 +50,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         GoogleApiClient.ConnectionCallbacks {
 
     public static String FILTRED_IIMG = "filtered_image_path";
+    public static String IMAGE_TYPE="image_type";
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
@@ -60,6 +63,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private ImageButton locateMeBtn;
     private EditText caption;
     private MapUtls mapUtls;
+    private HashMap<String, String> imageType;
 
 
 
@@ -68,9 +72,12 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         super.onCreate(savedInstanceState);
 
 
-        if (getIntent().getStringExtra(FILTRED_IIMG) != null) {
+        Bundle bundle = this.getIntent().getExtras();
+        assert bundle != null;
+        if (getIntent().getStringExtra(FILTRED_IIMG) != null && bundle.getSerializable(IMAGE_TYPE) != null) {
             setContentView(R.layout.activity_photo_info_activity);
             imagePath = getIntent().getStringExtra(FILTRED_IIMG);
+            imageType =(HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
             initPresenter();
             initView();
             initListener();
@@ -121,6 +128,9 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         nextBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddTagActivity.class);
             intent.putExtra(AddTagActivity.IMAGE_PREVIEW, imagePath);
+            Bundle extras = new Bundle();
+            extras.putSerializable(AddTagActivity.IMAGE_TYPE,imageType); //passing image type
+            intent.putExtras(extras);
             startActivity(intent);
         });
         backBtn.setOnClickListener(v -> onBackPressed());

@@ -1,6 +1,6 @@
 package com.example.softmills.phlog.ui.campaigns.inner.ui;
 
-import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhoto;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 
 import java.util.List;
 
@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface CampaignInnerPhotosFragmentView {
 
-    void getInnerCampaignPhotos(List<CampaignInnerPhoto> campaignInnerPhotoList);
+    void getInnerCampaignPhotos(List<BaseImage> campaignInnerPhotoList);
     void viewCampaignInnerPhotosProgress(boolean state);
 }

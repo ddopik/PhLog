@@ -2,8 +2,8 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presen
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.FragmentPhotoGrapherPhotosView;
@@ -25,7 +25,6 @@ public class FragmentPhotoGrapherPhotosPresenterImpl implements FragmentPhotoGra
         this.context = context;
 
     }
-
     @SuppressLint("CheckResult")
     @Override
     public void getPhotographerPhotos(int page) {
@@ -35,19 +34,10 @@ public class FragmentPhotoGrapherPhotosPresenterImpl implements FragmentPhotoGra
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photosResponse -> {
                     fragmentPhotoGrapherPhotosView.showPhotosProgress(false);
-                    if (photosResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        Log.e(TAG, "getPhotographerPhotos() --->" + BaseNetworkApi.STATUS_OK);
-                        fragmentPhotoGrapherPhotosView.showPhotos(photosResponse.data.data);
-                    }
+                    fragmentPhotoGrapherPhotosView.showPhotos(photosResponse.data.data);
                 }, throwable -> {
+                    ErrorUtils.setError(context, TAG, throwable);
                     fragmentPhotoGrapherPhotosView.showPhotosProgress(false);
-                    try {
-                        fragmentPhotoGrapherPhotosView.showMessage(throwable.getMessage());
-                        Log.e(TAG, throwable.getMessage());
-                    } catch (Exception e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-
                 });
 
 

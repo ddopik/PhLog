@@ -24,6 +24,8 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.Ed
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
 
+import java.util.HashMap;
+
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.CAMPAIGN;
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EARNING_INNER;
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EARNING_LIST;
@@ -32,6 +34,7 @@ import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.HOM
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.NOTIFICATION;
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.PROFILE;
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.UPLOAD_PHOTO;
+import static com.example.softmills.phlog.network.BaseNetworkApi.IMAGE_TYPE_PHOTOS;
 
 /**
  * Created by abdalla_maged on 10/1/2018.
@@ -204,7 +207,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     break;
                 }
                 case UPLOAD_PHOTO: {
-                    addFragment(R.id.view_container, new GalleryImageFragment(), GalleryImageFragment.class.getSimpleName(), false);
+
+                    HashMap<String, String> imageType=new HashMap<String,String>();
+                    imageType.put(IMAGE_TYPE_PHOTOS,"true");
+                    GalleryImageFragment galleryImageFragment=GalleryImageFragment.getInstance(imageType);
+                    addFragment(R.id.view_container,galleryImageFragment, GalleryImageFragment.class.getSimpleName(), false);
                     picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
                     toolbar.setVisibility(View.VISIBLE);
                     toolBarTitle.setText(getResources().getString(R.string.upload_photo));

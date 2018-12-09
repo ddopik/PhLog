@@ -23,7 +23,7 @@ public class Campaign {
     public String updatedAt;
     @SerializedName("number_images")
     @Expose
-    public String numberImages;
+    public int numberImages;
     @SerializedName("publish")
     @Expose
     public String publish;

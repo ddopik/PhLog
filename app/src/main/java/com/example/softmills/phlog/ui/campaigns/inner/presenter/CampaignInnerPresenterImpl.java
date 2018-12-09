@@ -2,13 +2,12 @@ package com.example.softmills.phlog.ui.campaigns.inner.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivityView;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -37,15 +36,16 @@ public class CampaignInnerPresenterImpl implements CampaignInnerPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(campaignInnerResponse -> {
-                            if (campaignInnerResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                                campaignInnerActivityView.viewCampaignTitle(campaignInnerResponse.campaign.titleEn);
-                                campaignInnerActivityView.viewCampaignLeftDays(campaignInnerResponse.campaign.leftDays);
-                                campaignInnerActivityView.viewCampaignHeaderImg(campaignInnerResponse.campaign.imageCover);
-                                campaignInnerActivityView.viewCampaignHostedBy(campaignInnerResponse.business.userName);
-                                campaignInnerActivityView .viewCampaignMissionDescription(campaignInnerResponse.campaign.descrptionEn,campaignInnerResponse.campaign.numberImages);
-                            }
+                            campaignInnerActivityView.viewCampaignTitle(campaignInnerResponse.campaign.titleEn);
+                            campaignInnerActivityView.viewCampaignLeftDays(String.valueOf(campaignInnerResponse.campaign.daysLeft));
+                            campaignInnerActivityView.viewCampaignHeaderImg(campaignInnerResponse.campaign.imageCover);
+                            campaignInnerActivityView.viewCampaignHostedBy(campaignInnerResponse.campaign.business.fullName);
+                            campaignInnerActivityView.viewCampaignMissionDescription(campaignInnerResponse.campaign.descrptionEn, campaignInnerResponse.campaign.numberImages);
+
                         },
-                        throwable -> Log.e(TAG, "getCampaignDetails() --->Error " + throwable.getMessage()));
+                        throwable -> {
+                            ErrorUtils.setError(context, TAG, throwable.toString());
+                        });
     }
 
 

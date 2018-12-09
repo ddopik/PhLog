@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhoto;
 
 import java.util.List;
@@ -20,12 +21,12 @@ import java.util.List;
 public class PhotoGrapherPhotosAdapter extends RecyclerView.Adapter<PhotoGrapherPhotosAdapter.PhotosViewHolder> {
 
 
-    private List<PhotoGrapherPhoto> photoGrapherPhotosList;
+    private List<BaseImage> photoGrapherPhotosList;
     private Context context;
     private PhotoGrapherPhotosAdapter.PhotosViewHolder photosViewHolder;
     public PhotoAction photoAction;
 
-    public PhotoGrapherPhotosAdapter(Context context, List<PhotoGrapherPhoto> photoGrapherPhotosList) {
+    public PhotoGrapherPhotosAdapter(Context context, List<BaseImage> photoGrapherPhotosList) {
         this.context = context;
         this.photoGrapherPhotosList = photoGrapherPhotosList;
     }
@@ -45,7 +46,7 @@ public class PhotoGrapherPhotosAdapter extends RecyclerView.Adapter<PhotoGrapher
         GlideApp.with(context)
                 .load(photoGrapherPhotosList.get(i).image)
                 .centerCrop()
-//                .override(450,450)
+               .error(R.drawable.default_error_img)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(campaignsViewHolder.photographerPhoto);
         if (photoAction != null)
@@ -71,6 +72,6 @@ public class PhotoGrapherPhotosAdapter extends RecyclerView.Adapter<PhotoGrapher
     }
 
     public interface PhotoAction {
-        void onPhotoClicked(PhotoGrapherPhoto photoGrapherSavedPhoto);
+        void onPhotoClicked(BaseImage photoGrapherSavedPhoto);
     }
 }

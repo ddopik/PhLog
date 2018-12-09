@@ -11,10 +11,10 @@ import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhoto;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenterImpl;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhoto;
@@ -32,7 +32,7 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
     private View mainView;
     private CustomRecyclerView campaignInnerRv;
     private ProgressBar campaignInnerProgressBar;
-    private List<PhotoGrapherPhoto> photoGrapherPhotoList = new ArrayList<PhotoGrapherPhoto>();
+    private List<BaseImage> photoGrapherPhotoList = new ArrayList<BaseImage>();
     private PhotoGrapherPhotosAdapter photoGrapherPhotosAdapter;
     private PagingController pagingController;
     private CampaignInnerPhotosFragmentPresenter campaignInnerPhotosFragmentPresenter;
@@ -79,33 +79,16 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
         pagingController = new PagingController(campaignInnerRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, page + 1);
+                campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, page );
             }
         };
     }
 
-    public static void setHeightDynamically(GridView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
 
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i = i + 2) {
-            view = listAdapter.getView(i, view, listView);
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight;
-        listView.setLayoutParams(params);
-        listView.requestLayout();
-    }
 
     @Override
-    public void getInnerCampaignPhotos(List<CampaignInnerPhoto> campaignInnerPhotoList) {
-        photoGrapherPhotoList.addAll(campaignInnerPhotoList);
+    public void getInnerCampaignPhotos(List<BaseImage> campaignInnerPhotoList) {
+        this.photoGrapherPhotoList.addAll(campaignInnerPhotoList);
         photoGrapherPhotosAdapter.notifyDataSetChanged();
 
     }

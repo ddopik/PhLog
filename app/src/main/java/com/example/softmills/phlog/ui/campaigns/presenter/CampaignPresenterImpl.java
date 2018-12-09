@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.campaigns.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
@@ -28,16 +29,30 @@ public class CampaignPresenterImpl implements CampaignPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void getAllCampaign(int page) {
-        campaignFragmentView.showAllCampaginProgress(true);
+        campaignFragmentView.showAllCampaignProgress(true);
         BaseNetworkApi.getAllRunningCampaign(PrefUtils.getUserToken(context),page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(campaignResponse -> {
-                    campaignFragmentView.showAllCampaginProgress(false);
+                    campaignFragmentView.showAllCampaignProgress(false);
                         campaignFragmentView.viewAllCampaign(campaignResponse.data.data);
-                        campaignFragmentView.showAllCampaginProgress(false);
+                        campaignFragmentView.showAllCampaignProgress(false);
                 }, throwable -> {
-                    campaignFragmentView.showAllCampaginProgress(false);
+                    campaignFragmentView.showAllCampaignProgress(false);
+                    ErrorUtils.setError(context, TAG, throwable);
+                });
+
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void followCampaign(String campaignID) {
+        BaseNetworkApi.followCampaign(PrefUtils.getUserToken(context), campaignID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followCampaignResponse -> {
+                    campaignFragmentView.showMessage(context.getResources().getString(R.string.campaign_followed));
+                }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);
                 });
     }

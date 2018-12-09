@@ -2,7 +2,6 @@ package com.example.softmills.phlog.ui.social.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
@@ -71,16 +70,12 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followCampaignResponse -> {
-                    if (followCampaignResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        socialFragmentView.showMessage(context.getResources().getString(R.string.campaign_followed));
-                    } else {
-                        ErrorUtils.setError(context, TAG, followCampaignResponse.msg);
-                    }
-
+                    socialFragmentView.showMessage(context.getResources().getString(R.string.campaign_followed));
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);
                 });
     }
+
     @SuppressLint("CheckResult")
     @Override
     public void followSocialBrand(String id) {
@@ -88,11 +83,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followBrandResponse -> {
-                    if (followBrandResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         socialFragmentView.showMessage(context.getResources().getString(R.string.brand_followed));
-                    } else {
-                        ErrorUtils.setError(context, TAG, followBrandResponse.msg);
-                    }
 
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);

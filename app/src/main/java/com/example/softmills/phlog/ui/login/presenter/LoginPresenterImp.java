@@ -129,14 +129,9 @@ public class LoginPresenterImp implements LoginPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(socialLoginResponse -> {
-                    if (socialLoginResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         PrefUtils.setLoginState(context, true);
                         PrefUtils.setUserToken(context, socialLoginResponse.token.get(0));
                         loginView.navigateToHome();
-                    } else {
-
-                        ErrorUtils.setError(context, TAG, socialLoginResponse.state);
-                    }
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);
                 });

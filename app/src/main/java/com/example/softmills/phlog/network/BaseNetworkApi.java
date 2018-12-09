@@ -4,7 +4,7 @@ import com.androidnetworking.common.Priority;
 import com.example.softmills.phlog.ui.album.model.AlbumImgCommentResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
 import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
-import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotosResponse;
+import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotoResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowBrandResponse;
@@ -48,10 +48,14 @@ public class BaseNetworkApi {
     public static String STATUS_OK = "200";
     public static String DEFAULT_USER_TYPE = "0";
     public static final  int STATUS_BAD_REQUEST = 400;
+    public static final  int STATUS_401 = 401;
     public static final  int STATUS_404 = 404;
+    public static final  int STATUS_500 = 500;
     public static String STATUS_ERROR = "405";
     public static final  int ERROR_STATE_1 = 1;
 
+    public static String IMAGE_TYPE_PHOTOS ="image";
+    public static String IMAGE_TYPE_CAMPAIGN ="campaign_id";
 
     public static String STATUS_IN_VALID_RESPONSE = "401";
     public static String NEW_FACEBOOK_USER_STATUS = "0";
@@ -72,9 +76,9 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_FOLLOWING_IN_URL = BASE_URL + "/get_following";
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/follow";
     private static final String ALL_CAMPAIGN_URL = BASE_URL +"/photographer/campaign/running";
-    private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/detail_one_campaign";
-    private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/get_photos_campaign";
-    private static final String FOLLOW_CAMPAIGN_URL = BASE_URL + "/join_photographer_campaign";
+    private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/photographer/campaign/details";
+    private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/photographer/campaign/photos";
+    private static final String FOLLOW_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/join";
     private static final String USER_PROFILE_PHOTOS = BASE_URL + "/image_photographer";
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
     private static final String SEARCH_ALBUM = BASE_URL + "/search_in_album";
@@ -88,6 +92,7 @@ public class BaseNetworkApi {
     private static final String SUBMIT_IMAGE_COMMENT = BASE_URL + "/image/comment/submit";
     private static final String GET_ALL_NOTIFICATION = BASE_URL + "/notification";
     private static final String GET_EARNING = BASE_URL + "/earning";
+
 
 
 
@@ -276,19 +281,18 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<CampaignInnerPhotosResponse> getCampaignInnerPhotos(String token, String campaignID, int page) {
+    public static io.reactivex.Observable<CampaignInnerPhotoResponse> getCampaignInnerPhotos(String token, String campaignID, int page) {
         return Rx2AndroidNetworking.post(CAMPAIGN_PHOTOS_URL)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
-                .addBodyParameter("join_campaign_id", campaignID)
+                .addBodyParameter("campaign_id", campaignID)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(CampaignInnerPhotosResponse.class);
+                .getObjectObservable(CampaignInnerPhotoResponse.class);
     }
 
     public static io.reactivex.Observable<FollowCampaignResponse> followCampaign(String token, String campaignID) {
         return Rx2AndroidNetworking.post(FOLLOW_CAMPAIGN_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("campaign_id", campaignID)
                  .setPriority(Priority.HIGH)
                 .build()

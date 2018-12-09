@@ -80,6 +80,7 @@
         <activity android:name=".ui.brand.view.BrandInnerActivity">
 
         </activity>
+        <activity android:name=".ui.uploadimage.view.UploadImageActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

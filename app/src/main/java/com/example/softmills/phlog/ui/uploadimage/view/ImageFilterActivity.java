@@ -14,12 +14,15 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.signup.view.PickProfilePhotoActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.fillters.FiltersListFragment;
 import com.example.softmills.phlog.ui.uploadimage.view.fillters.PickImageViewPagerAdapter;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
+
+import java.util.HashMap;
 
 import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGallery;
 
@@ -29,6 +32,7 @@ import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGalle
 public class ImageFilterActivity extends BaseActivity implements FiltersListFragment.FiltersListFragmentListener, EditPickedImageFragment.EditImageFragmentListener {
 
     private static final String TAG = ImageFilterActivity.class.getSimpleName();
+    public static String IMAGE_TYPE="image_type";
     public static String ImageFilter="image_uri";
 
 
@@ -48,7 +52,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     private float contrastFinal = 1.0f;
 
     private  String filteredImagePath;
-
+    private HashMap<String, String> imageType;
 
     // load native image filters library
     static {
@@ -77,7 +81,11 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
-        if (getIntent().getStringExtra(ImageFilter) != null) {
+
+        Bundle bundle = this.getIntent().getExtras();
+        assert bundle != null;
+        if (getIntent().getStringExtra(ImageFilter) != null && bundle.getSerializable(IMAGE_TYPE) != null) {
+            imageType =(HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
             filteredImagePath=getIntent().getStringExtra(ImageFilter);
             loadImage(filteredImagePath);
         }
@@ -97,9 +105,11 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
         applyFilterBtn.setOnClickListener(v -> {
             if (filteredImagePath !=null){
+                Bundle extras = new Bundle();
+                extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type
                 Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
-                String s=filteredImagePath;
                 intent.putExtra(PickedPhotoInfoActivity.FILTRED_IIMG, filteredImagePath);
+                intent.putExtras(extras);
                 startActivity(intent);
             }
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
@@ -34,7 +35,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
 
     private static String TAG = PhotoGrapherPhotosFragment.class.getSimpleName();
     private View mainView;
-    private List<PhotoGrapherPhoto> photoGrapherPhotoList = new ArrayList<PhotoGrapherPhoto>();
+    private List<BaseImage> photoGrapherPhotoList = new ArrayList<BaseImage>();
     private PhotoGrapherPhotosAdapter photographerSavedPhotoAdapter;
     private FragmentPhotoGrapherPhotosPresenter fragmentPhotoGrapherPhotosPresenter;
     private LinearLayoutManager mLayoutManager;
@@ -88,7 +89,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
 
         photographerSavedPhotoAdapter.photoAction=new PhotoGrapherPhotosAdapter.PhotoAction() {
             @Override
-            public void onPhotoClicked(PhotoGrapherPhoto photoGrapherSavedPhoto) {
+            public void onPhotoClicked(BaseImage photoGrapherSavedPhoto) {
                 Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
 //                intent.putExtra(ALBUM_ID, albumID);
 //                intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
@@ -101,7 +102,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
 
 
     @Override
-    public void showPhotos(List<PhotoGrapherPhoto> photosList) {
+    public void showPhotos(List<BaseImage> photosList) {
         this.photoGrapherPhotoList.addAll(photosList);
         photographerSavedPhotoAdapter.notifyDataSetChanged();
     }

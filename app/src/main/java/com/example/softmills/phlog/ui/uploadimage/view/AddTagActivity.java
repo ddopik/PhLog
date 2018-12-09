@@ -21,6 +21,7 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ import java.util.List;
  */
 public class AddTagActivity extends BaseActivity {
     public static String IMAGE_PREVIEW="image_uri";
+    public static String IMAGE_TYPE="image_type";
     private AutoCompleteTextView autoCompleteTextView;
     private View activityRootView;
     private List<Tag> tagList=new ArrayList<Tag>();
@@ -37,14 +39,17 @@ public class AddTagActivity extends BaseActivity {
     private ImageView imagePreview;
     private String imagePreviewPath;
     private ImageButton backBtn;
+    private HashMap<String, String> imageType;
      @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tag);
 
-
-         if (getIntent().getStringExtra(IMAGE_PREVIEW) != null) {
+         Bundle bundle = this.getIntent().getExtras();
+         assert bundle != null;
+         if (getIntent().getStringExtra(IMAGE_PREVIEW) != null && bundle.getSerializable(IMAGE_TYPE) != null) {
              imagePreviewPath = getIntent().getStringExtra(IMAGE_PREVIEW);
+             imageType =(HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
              initView();
              initPresenter();
              initListener();

@@ -4,13 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by abdalla_maged on 10/8/2018.
+ * Created by abdalla_maged On Dec,2018
  */
-public class CampaignInnerPhotosResponse {
+public class CampaignInnerPhotoResponse {
     @SerializedName("data")
     @Expose
-    public CampaignInnerPhotosData data;
-    @SerializedName("state")
-    @Expose
-    public String state;
+    public CampaignInnerPhotoData data;
 }

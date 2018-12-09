@@ -78,19 +78,24 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
                 campaignPresenter.getAllCampaign(currentPage + 1);
             }
         };
-        allCampaignsAdapter.campaignLister = campaignID -> {
-            Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
-            intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, campaignID);
-            startActivity(intent);
+        allCampaignsAdapter.campaignLister =  new AllCampaignsAdapter.CampaignLister() {
+            @Override
+            public void onCampaignClicked(String campaignID) {
+                Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
+                intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(campaignID));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFollowCampaign(String campaignID) {
+                   campaignPresenter.followCampaign(campaignID);
+            }
         };
 
     }
 
 
-    @Override
-    public void showToast(String msg) {
-        super.showToast(msg);
-    }
+
 
     @Override
     public void viewAllCampaign(List<Campaign> homeCampaignList) {
@@ -102,12 +107,17 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     }
 
     @Override
-    public void showAllCampaginProgress(boolean state) {
+    public void showAllCampaignProgress(boolean state) {
         if (state) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        showToast(msg);
     }
 }

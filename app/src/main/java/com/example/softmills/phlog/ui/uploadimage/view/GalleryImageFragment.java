@@ -21,12 +21,15 @@ import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.GalleryImageAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_CAMERA;
 import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_GALLERY;
+import static com.example.softmills.phlog.ui.uploadimage.view.ImageFilterActivity.IMAGE_TYPE;
 
 
 /**
@@ -38,6 +41,14 @@ public class GalleryImageFragment extends BaseFragment {
     private GalleryImageAdapter galleryImageAdapter;
     private CustomRecyclerView galleryRv;
     private ImageButton openCameraBtn, backBtn;
+    private HashMap<String,String> ImageType;
+
+    public static GalleryImageFragment getInstance(HashMap<String,String> imageType)
+    {
+        GalleryImageFragment galleryImageFragment=new GalleryImageFragment();
+        galleryImageFragment.ImageType=imageType;
+        return  galleryImageFragment;
+    }
 
     @Nullable
     @Override
@@ -67,7 +78,6 @@ public class GalleryImageFragment extends BaseFragment {
 
         }
         // Already have permission
-
         else {
             // Do not have permissions, request them now
             EasyPermissions.requestPermissions(this, getString(R.string.camera_and_location_rationale),
@@ -92,6 +102,7 @@ public class GalleryImageFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(getActivity() instanceof MainActivity)
         ((MainActivity) getActivity()).getSupportActionBar().hide();
 
     }
@@ -99,12 +110,16 @@ public class GalleryImageFragment extends BaseFragment {
     @Override
     public void onStop() {
         super.onStop();
+        if(getActivity() instanceof MainActivity)
         ((MainActivity) getActivity()).getSupportActionBar().show();
     }
 
     private void initListeners() {
+
         galleryImageAdapter.onGalleryImageClicked = imagePath -> {
             Intent intent = new Intent(getContext(), ImageFilterActivity.class);
+            Bundle extras = new Bundle();
+            extras.putSerializable(ImageFilterActivity.IMAGE_TYPE,ImageType);
             intent.putExtra(ImageFilterActivity.ImageFilter, imagePath);
             startActivity(intent);
         };
@@ -174,7 +189,6 @@ public class GalleryImageFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-
             String image = ImagePicker.getFirstImageOrNull(data).getPath();
             Intent intent = new Intent(getContext(), ImageFilterActivity.class);
             intent.putExtra("image_uri", image);

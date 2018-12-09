@@ -11,6 +11,8 @@ public interface CampaignFragmentView {
 
     void viewAllCampaign(List<Campaign> homeCampaignList);
 
-    void showAllCampaginProgress(boolean state);
+    void showAllCampaignProgress(boolean state);
+
+    void showMessage(String msg);
 
 }
