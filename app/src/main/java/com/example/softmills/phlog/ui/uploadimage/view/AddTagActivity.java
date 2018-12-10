@@ -6,14 +6,18 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Tag;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenter;
+import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenterImpl;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.AutoCompleteTagMenuAdapter;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.SelectedTagAdapter;
 import com.google.android.flexbox.FlexDirection;
@@ -27,33 +31,48 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 10/28/2018.
  */
-public class AddTagActivity extends BaseActivity {
-    public static String IMAGE_PREVIEW="image_uri";
-    public static String IMAGE_TYPE="image_type";
+public class AddTagActivity extends BaseActivity implements AddTagActivityView {
+    public static String IMAGE_PREVIEW = "image_uri";
+    public static String IMAGE_LOCATION = "image_location";
+    public static String IMAGE_DRAFT_STATE = "image_draft_state";
+    public static String IMAGE_CAPTION = "image_caption";
+    public static String IMAGE_TYPE = "image_type";
     private AutoCompleteTextView autoCompleteTextView;
-    private View activityRootView;
-    private List<Tag> tagList=new ArrayList<Tag>();
-    private List<Tag> tagMenuList=new ArrayList<Tag>();
+    private List<Tag> tagList = new ArrayList<Tag>();
+    private List<Tag> tagMenuList = new ArrayList<Tag>();
     private SelectedTagAdapter selectedTagAdapter;
     private AutoCompleteTagMenuAdapter autoCompleteTagMenuAdapter;
     private ImageView imagePreview;
     private String imagePreviewPath;
     private ImageButton backBtn;
+    private Button uploadBrn;
+    private ProgressBar uploadImageProgress;
     private HashMap<String, String> imageType;
-     @Override
+    private String imageCaption;
+    private String draftState;
+
+    private AddTagActivityPresenter addTagActivityPresenter;
+
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tag);
 
-         Bundle bundle = this.getIntent().getExtras();
-         assert bundle != null;
-         if (getIntent().getStringExtra(IMAGE_PREVIEW) != null && bundle.getSerializable(IMAGE_TYPE) != null) {
-             imagePreviewPath = getIntent().getStringExtra(IMAGE_PREVIEW);
-             imageType =(HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
-             initView();
-             initPresenter();
-             initListener();
-         }
+        Bundle bundle = this.getIntent().getExtras();
+        assert bundle != null;
+        if (getIntent().getStringExtra(IMAGE_PREVIEW) != null && bundle.getSerializable(IMAGE_TYPE) != null) {
+            imagePreviewPath = getIntent().getStringExtra(IMAGE_PREVIEW);
+            imageType = (HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
+            if (getIntent().getStringExtra(IMAGE_CAPTION) != null)
+                imageCaption = getIntent().getStringExtra(IMAGE_CAPTION);
+            if (getIntent().getStringExtra(IMAGE_DRAFT_STATE) != null)
+                draftState = getIntent().getStringExtra(IMAGE_DRAFT_STATE);
+
+            initView();
+            initPresenter();
+            initListener();
+        }
 
 
     }
@@ -61,27 +80,28 @@ public class AddTagActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        Tag tag=new Tag();
-        tag.name="Tag";
-        tagList.add(tag);
-        tagList.add(tag);
-        tagList.add(tag);
-        tagList.add(tag);
-        tagList.add(tag);
-        tagList.add(tag);
-        tagMenuList.addAll(tagList);
+
+        uploadBrn = findViewById(R.id.upload_image_btn);
+        uploadImageProgress = findViewById(R.id.upload_image_progress);
+
+//        Tag tag = new Tag();
+//        tag.name = "Tag";
+//        tagList.add(tag);
+//        tagList.add(tag);
+//        tagList.add(tag);
+//        tagList.add(tag);
+//        tagList.add(tag);
+//        tagList.add(tag);
+//        tagMenuList.addAll(tagList);
 
 
-        imagePreview=findViewById(R.id.tag_img_preview);
+        imagePreview = findViewById(R.id.tag_img_preview);
         autoCompleteTextView = findViewById(R.id.tag_auto_complete);
         autoCompleteTagMenuAdapter = new AutoCompleteTagMenuAdapter(this, R.layout.item_drop_down, tagMenuList);
         autoCompleteTextView.setAdapter(autoCompleteTagMenuAdapter);
         autoCompleteTextView.setThreshold(1);
         autoCompleteTagMenuAdapter.notifyDataSetChanged();
-
-
-        activityRootView = findViewById(R.id.root_view);
-        backBtn=findViewById(R.id.back_btn);
+        backBtn = findViewById(R.id.back_btn);
         GlideApp.with(getBaseContext())
                 .load(imagePreviewPath)
                 .centerCrop()
@@ -107,7 +127,7 @@ public class AddTagActivity extends BaseActivity {
 
     @Override
     public void initPresenter() {
-
+        addTagActivityPresenter = new AddTagActivityPresenterImpl(getBaseContext(), this);
     }
 
     @Override
@@ -118,11 +138,11 @@ public class AddTagActivity extends BaseActivity {
     private void initListener() {
 
         autoCompleteTagMenuAdapter.onMenuItemClicked = this::addSelectedTag;
-        selectedTagAdapter.onSelectedItemClicked= tag -> {
+        selectedTagAdapter.onSelectedItemClicked = tag -> {
 
-            List<Tag> tempList=new ArrayList<Tag>();
-            for (int i=0;i<tagList.size();i++) {
-                if(!tagList.get(i).name.equals(tag.name)){
+            List<Tag> tempList = new ArrayList<Tag>();
+            for (int i = 0; i < tagList.size(); i++) {
+                if (!tagList.get(i).name.equals(tag.name)) {
                     tempList.add(tagList.get(i));
                 }
 
@@ -133,8 +153,11 @@ public class AddTagActivity extends BaseActivity {
         };
         initKeyBoardListener();
 
-        backBtn.setOnClickListener((view)->onBackPressed());
+        backBtn.setOnClickListener((view) -> onBackPressed());
 
+        uploadBrn.setOnClickListener(v -> {
+            addTagActivityPresenter.uploadPhoto(imagePreviewPath, imageType, tagList);
+        });
     }
 
 
@@ -160,7 +183,13 @@ public class AddTagActivity extends BaseActivity {
                     } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
                         Tag newTag = new Tag();
                         newTag.name = autoCompleteTextView.getText().toString();
-                        addSelectedTag(newTag);
+                        boolean tagAlreadyExsist = false;
+                        for (Tag tag : tagList) {
+                            if (tag.name.equals(newTag.name))
+                                tagAlreadyExsist = true;
+                        }
+                        if (!tagAlreadyExsist)
+                            addSelectedTag(newTag);
                     }
                 }
                 // Сохраняем текущую высоту view до следующего вызова.
@@ -176,4 +205,18 @@ public class AddTagActivity extends BaseActivity {
         autoCompleteTextView.dismissDropDown();
     }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void viewUploadProgress(boolean state) {
+        if (state) {
+            uploadImageProgress.setVisibility(View.VISIBLE);
+        } else {
+            uploadImageProgress.setVisibility(View.GONE);
+        }
+
+    }
 }

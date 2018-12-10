@@ -22,14 +22,12 @@ import com.example.softmills.phlog.ui.uploadimage.view.adapter.GalleryImageAdapt
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_CAMERA;
 import static com.example.softmills.phlog.Utiltes.Constants.REQUEST_CODE_GALLERY;
-import static com.example.softmills.phlog.ui.uploadimage.view.ImageFilterActivity.IMAGE_TYPE;
 
 
 /**
@@ -41,13 +39,12 @@ public class GalleryImageFragment extends BaseFragment {
     private GalleryImageAdapter galleryImageAdapter;
     private CustomRecyclerView galleryRv;
     private ImageButton openCameraBtn, backBtn;
-    private HashMap<String,String> ImageType;
+    private HashMap<String, String> ImageType;
 
-    public static GalleryImageFragment getInstance(HashMap<String,String> imageType)
-    {
-        GalleryImageFragment galleryImageFragment=new GalleryImageFragment();
-        galleryImageFragment.ImageType=imageType;
-        return  galleryImageFragment;
+    public static GalleryImageFragment getInstance(HashMap<String, String> imageType) {
+        GalleryImageFragment galleryImageFragment = new GalleryImageFragment();
+        galleryImageFragment.ImageType = imageType;
+        return galleryImageFragment;
     }
 
     @Nullable
@@ -85,6 +82,7 @@ public class GalleryImageFragment extends BaseFragment {
         }
 
     }
+
     @Override
     public void initViews() {
         galleryRv = mainView.findViewById(R.id.gallery_img_rv);
@@ -102,25 +100,26 @@ public class GalleryImageFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(getActivity() instanceof MainActivity)
-        ((MainActivity) getActivity()).getSupportActionBar().hide();
+        if (getActivity() instanceof MainActivity)
+            ((MainActivity) getActivity()).getSupportActionBar().hide();
 
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if(getActivity() instanceof MainActivity)
-        ((MainActivity) getActivity()).getSupportActionBar().show();
+        if (getActivity() instanceof MainActivity)
+            ((MainActivity) getActivity()).getSupportActionBar().show();
     }
 
     private void initListeners() {
 
         galleryImageAdapter.onGalleryImageClicked = imagePath -> {
-            Intent intent = new Intent(getContext(), ImageFilterActivity.class);
             Bundle extras = new Bundle();
-            extras.putSerializable(ImageFilterActivity.IMAGE_TYPE,ImageType);
+            extras.putSerializable(ImageFilterActivity.IMAGE_TYPE, ImageType);
+            Intent intent = new Intent(getContext(), ImageFilterActivity.class);
             intent.putExtra(ImageFilterActivity.ImageFilter, imagePath);
+            intent.putExtras(extras);
             startActivity(intent);
         };
         openCameraBtn.setOnClickListener((view) -> {
@@ -163,9 +162,6 @@ public class GalleryImageFragment extends BaseFragment {
         }
         return listOfAllImages;
     }
-
-
-
 
 
     @AfterPermissionGranted(REQUEST_CODE_CAMERA)

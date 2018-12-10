@@ -83,6 +83,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
 
         Bundle bundle = this.getIntent().getExtras();
+
         assert bundle != null;
         if (getIntent().getStringExtra(ImageFilter) != null && bundle.getSerializable(IMAGE_TYPE) != null) {
             imageType =(HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
@@ -104,6 +105,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         );
 
         applyFilterBtn.setOnClickListener(v -> {
+            HashMap s=imageType;
             if (filteredImagePath !=null){
                 Bundle extras = new Bundle();
                 extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type

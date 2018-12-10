@@ -139,6 +139,7 @@
                 app:srcCompat="@drawable/clock" />
 
             <Switch
+                android:id="@+id/draft_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 

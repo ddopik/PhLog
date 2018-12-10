@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
@@ -50,7 +51,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         GoogleApiClient.ConnectionCallbacks {
 
     public static String FILTRED_IIMG = "filtered_image_path";
-    public static String IMAGE_TYPE="image_type";
+    public static String IMAGE_TYPE = "image_type";
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
@@ -62,9 +63,9 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private Button backBtn, nextBtn;
     private ImageButton locateMeBtn;
     private EditText caption;
+    private Switch draftBtn;
     private MapUtls mapUtls;
     private HashMap<String, String> imageType;
-
 
 
     @Override
@@ -77,7 +78,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         if (getIntent().getStringExtra(FILTRED_IIMG) != null && bundle.getSerializable(IMAGE_TYPE) != null) {
             setContentView(R.layout.activity_photo_info_activity);
             imagePath = getIntent().getStringExtra(FILTRED_IIMG);
-            imageType =(HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
+            imageType = (HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
             initPresenter();
             initView();
             initListener();
@@ -88,7 +89,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     @Override
     public void initView() {
 
-
+        draftBtn = findViewById(R.id.draft_state);
         mapUtls = new MapUtls(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(PickedPhotoInfoActivity.this)
@@ -128,8 +129,14 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         nextBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddTagActivity.class);
             intent.putExtra(AddTagActivity.IMAGE_PREVIEW, imagePath);
+            if (placesAutoCompete.getText() != null)
+                intent.putExtra(AddTagActivity.IMAGE_LOCATION, String.valueOf(placesAutoCompete.getText()));
+            if (caption.getText() != null)
+                intent.putExtra(AddTagActivity.IMAGE_CAPTION, String.valueOf(caption.getText()));
+
+            intent.putExtra(AddTagActivity.IMAGE_DRAFT_STATE, String.valueOf(draftBtn.isChecked()));
             Bundle extras = new Bundle();
-            extras.putSerializable(AddTagActivity.IMAGE_TYPE,imageType); //passing image type
+            extras.putSerializable(AddTagActivity.IMAGE_TYPE, imageType); //passing image type
             intent.putExtras(extras);
             startActivity(intent);
         });
@@ -148,7 +155,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     @AfterPermissionGranted(REQUEST_CODE_LOCATION)
     private void requestLocation() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            mapUtls.startLocationUpdates(this,MapUtls.MapConst.UPDATE_INTERVAL_INSTANT);
+            mapUtls.startLocationUpdates(this, MapUtls.MapConst.UPDATE_INTERVAL_INSTANT);
         } else {
             // Request one permission
             EasyPermissions.requestPermissions(this, getString(R.string.need_location_permation),
@@ -176,12 +183,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     }
 
 
-
-
-
-
-    private AdapterView.OnItemClickListener mAutocompleteClickListener
-            = new AdapterView.OnItemClickListener() {
+    private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
@@ -191,7 +193,6 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
                     .getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
             Log.i(TAG, "Fetching details for ID: " + item.placeId);
-
         }
     };
 
@@ -206,25 +207,17 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         final Place place = places.get(0);
         placesAutoCompete.setText(place.getAddress());
         hideSoftKeyBoard();
-//        CharSequence attributions = places.getAttributions();
-//        mNameTextView.setText(Html.fromHtml(place.getName() + ""));
-//        mAddressTextView.setText(Html.fromHtml(place.getAddress() + ""));
-//        Toast.makeText(this, place.getName(), Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, place.getAddress(), Toast.LENGTH_SHORT).show();
-//        mIdTextView.setText(Html.fromHtml(place.getId() + ""));
-//        mPhoneTextView.setText(Html.fromHtml(place.getPhoneNumber() + ""));
-//        mWebTextView.setText(place.getWebsiteUri() + "");
-//        if (attributions != null) {
-////            mAttTextView.setText(Html.fromHtml(attributions.toString()));
-//        }
+
     };
+
     private void hideSoftKeyBoard() {
         placesAutoCompete.clearFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
+        if (imm.isAcceptingText()) { // verify if the soft keyboard is open
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
@@ -234,12 +227,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.e(TAG, "Google Places API connection failed with error code: "
-                + connectionResult.getErrorCode());
-
-//        Toast.makeText(this,
-//                "Google Places API connection failed with error code:" + connectionResult.getErrorCode(),
-//                Toast.LENGTH_LONG).show();
+        Log.e(TAG, "Google Places API connection failed with error code: " + connectionResult.getErrorCode());
     }
 
     @Override
@@ -247,8 +235,6 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         mPlaceArrayAdapter.setGoogleApiClient(null);
         Log.e(TAG, "Google Places API connection suspended.");
     }
-
-
 
 
     public class GeocodeHandler extends Handler {
@@ -270,9 +256,6 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
 
 
-    private void processed(){
-
-    }
     protected void onDestroy() {
         super.onDestroy();
 

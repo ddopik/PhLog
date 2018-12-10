@@ -98,6 +98,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
+
     @Override
     public void showToast(String msg) {
         super.showToast(msg);
@@ -131,7 +132,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        navigationManger.navigate(HOME);
+//        navigationManger.navigate(HOME);
     }
 
     public class NavigationManger {

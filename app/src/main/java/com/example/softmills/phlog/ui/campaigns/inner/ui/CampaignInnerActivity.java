@@ -80,11 +80,11 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
 
     private void initListener(){
         uploadCampaignBtn.setOnClickListener(v->{
-            Intent intent=new Intent(this,UploadImageActivity.class);
-            Bundle extras = new Bundle();
             HashMap<String, String> imageType=new HashMap<String, String>();
-            imageType.put(IMAGE_TYPE_CAMPAIGN,campaignId);
+            Bundle extras = new Bundle();
             extras.putSerializable(UploadImageActivity.IMAGE_TYPE,imageType);
+            imageType.put(IMAGE_TYPE_CAMPAIGN,campaignId);
+            Intent intent=new Intent(this,UploadImageActivity.class);
             intent.putExtras(extras);
             startActivity(intent);
         });
