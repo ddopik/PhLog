@@ -63,6 +63,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                     allAlbumImgRv.getLayoutManager().scrollToPosition(i);
                     break;
                 }
+
             }
 
 

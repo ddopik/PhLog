@@ -1,6 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view;
 
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhoto;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by abdalla_maged on 9/30/2018.
  */
 public interface PhotoGrapherSavedPhotosFragmentView {
-    void showSavedPhotos(List<PhotoGrapherSavedPhoto> photosList);
+    void showSavedPhotos(List<BaseImage> photosList);
 
     void showMessage(String msg);
 }

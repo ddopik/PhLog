@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhoto;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ import java.util.List;
 public class PhotographerSavedPhotoAdapter extends RecyclerView.Adapter<PhotographerSavedPhotoAdapter.PhotosViewHolder> {
 
 
-    private List<PhotoGrapherSavedPhoto> photoGrapherSavedPhotosList;
+    private List<BaseImage> photoGrapherSavedPhotosList;
     private Context context;
     private PhotographerSavedPhotoAdapter.PhotosViewHolder photosViewHolder;
     private PhotoAction photoAction;
 
-    public PhotographerSavedPhotoAdapter(Context context, List<PhotoGrapherSavedPhoto> photoGrapherSavedPhotosList) {
+    public PhotographerSavedPhotoAdapter(Context context, List<BaseImage> photoGrapherSavedPhotosList) {
         this.context = context;
         this.photoGrapherSavedPhotosList = photoGrapherSavedPhotosList;
     }
@@ -71,6 +71,6 @@ public class PhotographerSavedPhotoAdapter extends RecyclerView.Adapter<Photogra
     }
 
     public interface PhotoAction {
-        void onPhotoClicked(PhotoGrapherSavedPhoto photoGrapherSavedPhoto);
+        void onPhotoClicked(BaseImage photoGrapherSavedPhoto);
     }
 }

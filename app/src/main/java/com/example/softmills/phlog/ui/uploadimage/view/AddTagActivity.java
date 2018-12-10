@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.base.commonmodel.Tag;
+import com.example.softmills.phlog.base.commonmodel.Tags;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenter;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenterImpl;
@@ -38,8 +38,8 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     public static String IMAGE_CAPTION = "image_caption";
     public static String IMAGE_TYPE = "image_type";
     private AutoCompleteTextView autoCompleteTextView;
-    private List<Tag> tagList = new ArrayList<Tag>();
-    private List<Tag> tagMenuList = new ArrayList<Tag>();
+    private List<Tags> tagsList = new ArrayList<Tags>();
+    private List<Tags> tagsMenuList = new ArrayList<Tags>();
     private SelectedTagAdapter selectedTagAdapter;
     private AutoCompleteTagMenuAdapter autoCompleteTagMenuAdapter;
     private ImageView imagePreview;
@@ -50,6 +50,8 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private HashMap<String, String> imageType;
     private String imageCaption;
     private String draftState;
+    private String imageLocation;
+
 
     private AddTagActivityPresenter addTagActivityPresenter;
 
@@ -68,6 +70,9 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                 imageCaption = getIntent().getStringExtra(IMAGE_CAPTION);
             if (getIntent().getStringExtra(IMAGE_DRAFT_STATE) != null)
                 draftState = getIntent().getStringExtra(IMAGE_DRAFT_STATE);
+            if (getIntent().getStringExtra(IMAGE_LOCATION) != null)
+                imageLocation = getIntent().getStringExtra(IMAGE_LOCATION);
+
 
             initView();
             initPresenter();
@@ -84,20 +89,20 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         uploadBrn = findViewById(R.id.upload_image_btn);
         uploadImageProgress = findViewById(R.id.upload_image_progress);
 
-//        Tag tag = new Tag();
-//        tag.name = "Tag";
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagMenuList.addAll(tagList);
+//        Tags tag = new Tags();
+//        tag.name = "Tags";
+//        tagsList.add(tag);
+//        tagsList.add(tag);
+//        tagsList.add(tag);
+//        tagsList.add(tag);
+//        tagsList.add(tag);
+//        tagsList.add(tag);
+//        tagsMenuList.addAll(tagsList);
 
 
         imagePreview = findViewById(R.id.tag_img_preview);
         autoCompleteTextView = findViewById(R.id.tag_auto_complete);
-        autoCompleteTagMenuAdapter = new AutoCompleteTagMenuAdapter(this, R.layout.item_drop_down, tagMenuList);
+        autoCompleteTagMenuAdapter = new AutoCompleteTagMenuAdapter(this, R.layout.item_drop_down, tagsMenuList);
         autoCompleteTextView.setAdapter(autoCompleteTagMenuAdapter);
         autoCompleteTextView.setThreshold(1);
         autoCompleteTagMenuAdapter.notifyDataSetChanged();
@@ -120,7 +125,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         tagsRv.setLayoutManager(flexboxLayoutManager);
 
         // Set adapter object.
-        selectedTagAdapter = new SelectedTagAdapter(tagList);
+        selectedTagAdapter = new SelectedTagAdapter(tagsList);
 
         tagsRv.setAdapter(selectedTagAdapter);
     }
@@ -140,15 +145,15 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         autoCompleteTagMenuAdapter.onMenuItemClicked = this::addSelectedTag;
         selectedTagAdapter.onSelectedItemClicked = tag -> {
 
-            List<Tag> tempList = new ArrayList<Tag>();
-            for (int i = 0; i < tagList.size(); i++) {
-                if (!tagList.get(i).name.equals(tag.name)) {
-                    tempList.add(tagList.get(i));
+            List<Tags> tempList = new ArrayList<Tags>();
+            for (int i = 0; i < tagsList.size(); i++) {
+                if (!tagsList.get(i).name.equals(tag.name)) {
+                    tempList.add(tagsList.get(i));
                 }
 
             }
-            tagList.clear();
-            tagList.addAll(tempList);
+            tagsList.clear();
+            tagsList.addAll(tempList);
             selectedTagAdapter.notifyDataSetChanged();
         };
         initKeyBoardListener();
@@ -156,7 +161,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         backBtn.setOnClickListener((view) -> onBackPressed());
 
         uploadBrn.setOnClickListener(v -> {
-            addTagActivityPresenter.uploadPhoto(imagePreviewPath, imageType, tagList);
+            addTagActivityPresenter.uploadPhoto(imagePreviewPath, imageCaption, imageLocation, draftState, imageType, tagsList);
         });
     }
 
@@ -181,15 +186,15 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                     if (lastVisibleDecorViewHeight > visibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX) {
                         //Key board is visible
                     } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
-                        Tag newTag = new Tag();
-                        newTag.name = autoCompleteTextView.getText().toString();
+                        Tags newTags = new Tags();
+                        newTags.name = autoCompleteTextView.getText().toString();
                         boolean tagAlreadyExsist = false;
-                        for (Tag tag : tagList) {
-                            if (tag.name.equals(newTag.name))
+                        for (Tags tags : tagsList) {
+                            if (tags.name.equals(newTags.name))
                                 tagAlreadyExsist = true;
                         }
                         if (!tagAlreadyExsist)
-                            addSelectedTag(newTag);
+                            addSelectedTag(newTags);
                     }
                 }
                 // Сохраняем текущую высоту view до следующего вызова.
@@ -199,8 +204,8 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         });
     }
 
-    private void addSelectedTag(Tag tag) {
-        tagList.add(tag);
+    private void addSelectedTag(Tags tags) {
+        tagsList.add(tags);
         selectedTagAdapter.notifyDataSetChanged();
         autoCompleteTextView.dismissDropDown();
     }
@@ -217,6 +222,10 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         } else {
             uploadImageProgress.setVisibility(View.GONE);
         }
+    }
 
+    @Override
+    public void viewMessage(String msg) {
+        showToast(msg);
     }
 }

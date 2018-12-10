@@ -7,11 +7,8 @@ import com.google.gson.annotations.SerializedName;
  * Created by abdalla_maged on 9/30/2018.
  */
 public class PhotoGrapherSavedPhotosResponse {
-
     @SerializedName("data")
     @Expose
     public SavedPhotosData data;
-    @SerializedName("state")
-    @Expose
-    public String state;
-    }
+
+}

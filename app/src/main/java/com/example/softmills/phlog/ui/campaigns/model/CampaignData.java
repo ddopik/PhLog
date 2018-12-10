@@ -1,8 +1,6 @@
 package com.example.softmills.phlog.ui.campaigns.model;
 
-import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
-import com.example.softmills.phlog.base.commonmodel.Tag;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

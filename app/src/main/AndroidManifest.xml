@@ -81,6 +81,7 @@
 
         </activity>
         <activity android:name=".ui.uploadimage.view.UploadImageActivity" />
+        <activity android:name=".ui.campaigns.inner.ui.AllPhotographerSavedPhotosActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -10,7 +10,7 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.base.commonmodel.Tag;
+import com.example.softmills.phlog.base.commonmodel.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,21 +18,21 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 10/28/2018.
  */
-public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
+public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tags> {
 
 
     private int resourceLayout;
     private Context mContext;
-    private List<Tag> tagList;
-    private List<Tag> allTagList;
+    private List<Tags> tagsList;
+    private List<Tags> allTagsList;
     public OnMenuItemClicked onMenuItemClicked;
 
-    public AutoCompleteTagMenuAdapter(Context context, int resource, List<Tag> items) {
+    public AutoCompleteTagMenuAdapter(Context context, int resource, List<Tags> items) {
         super(context, resource, items);
         this.resourceLayout = resource;
         this.mContext = context;
-        this.tagList = new ArrayList<>(items);
-        this.allTagList = new ArrayList<>(items);
+        this.tagsList = new ArrayList<>(items);
+        this.allTagsList = new ArrayList<>(items);
     }
 
 
@@ -45,18 +45,18 @@ public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
                 LayoutInflater layoutInflater = LayoutInflater.from(mContext);
                 convertView = layoutInflater.inflate(resourceLayout, parent, false);
             }
-            Tag tag = getItem(position);
+            Tags tags = getItem(position);
             TextView name =   convertView.findViewById(R.id.tag_auto_complete_name);
              if (onMenuItemClicked !=null){
-                name.setOnClickListener((view)-> onMenuItemClicked.onItemSelected(tag));
+                name.setOnClickListener((view)-> onMenuItemClicked.onItemSelected(tags));
              }
-            name.setText(tag.name);
+            name.setText(tags.name);
 
         return convertView;
     }
 
-    public Tag getItem(int position) {
-        return tagList.get(position);
+    public Tags getItem(int position) {
+        return tagsList.get(position);
     }
 
     public long getItemId(int position) {
@@ -64,7 +64,7 @@ public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
     }
 
     public int getCount() {
-        return tagList.size();
+        return tagsList.size();
     }
 
     @Override
@@ -74,17 +74,17 @@ public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
 
             @Override
             public String convertResultToString(Object resultValue) {
-                return ((Tag) resultValue).name;
+                return ((Tags) resultValue).name;
             }
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
-                List<Tag> departmentsSuggestion = new ArrayList<>();
+                List<Tags> departmentsSuggestion = new ArrayList<>();
                 if (constraint != null) {
-                    for (Tag tag : allTagList) {
-                        if (tag.name.toLowerCase().startsWith(constraint.toString().toLowerCase())  || tag.name.toLowerCase().contains(constraint.toString().toLowerCase())  ) {
-                            departmentsSuggestion.add(tag);
+                    for (Tags tags : allTagsList) {
+                        if (tags.name.toLowerCase().startsWith(constraint.toString().toLowerCase())  || tags.name.toLowerCase().contains(constraint.toString().toLowerCase())  ) {
+                            departmentsSuggestion.add(tags);
                         }
                     }
                     filterResults.values = departmentsSuggestion;
@@ -95,18 +95,18 @@ public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                tagList.clear();
+                tagsList.clear();
                 if (results != null && results.count > 0) {
 
                     for (Object object : (List<?>) results.values) {
-                        if (object instanceof Tag) {
-                            tagList.add((Tag) object);
+                        if (object instanceof Tags) {
+                            tagsList.add((Tags) object);
                         }
                     }
                     notifyDataSetChanged();
                 } else if (constraint == null) {
                     // no filter, add entire original list back in
-                    tagList.addAll(allTagList);
+                    tagsList.addAll(allTagsList);
                     notifyDataSetInvalidated();
                 }
             }
@@ -114,7 +114,7 @@ public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
     }
 
     public interface OnMenuItemClicked{
-        void onItemSelected(Tag tag);
+        void onItemSelected(Tags tags);
      }
 }
 

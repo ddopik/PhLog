@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhoto;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.PhotoGrapherSavedFragmentPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.PhotoGrapherSavedFragmentPresenterImpl;
 
@@ -24,7 +24,7 @@ import java.util.List;
 public class PhotoGrapherSavedFragment extends BaseFragment implements PhotoGrapherSavedPhotosFragmentView {
 
     private View mainView;
-    private List<PhotoGrapherSavedPhoto> photoGrapherSavedPhotoList = new ArrayList<PhotoGrapherSavedPhoto>();
+    private List<BaseImage> photoGrapherSavedPhotoList = new ArrayList<BaseImage>();
     private PhotographerSavedPhotoAdapter photographerSavedPhotoAdapter;
     private PhotoGrapherSavedFragmentPresenter photoGrapherSavedFragmentPresenter;
 
@@ -77,7 +77,7 @@ public class PhotoGrapherSavedFragment extends BaseFragment implements PhotoGrap
 
 
     @Override
-    public void showSavedPhotos(List<PhotoGrapherSavedPhoto> photosList) {
+    public void showSavedPhotos(List<BaseImage> photosList) {
         this.photoGrapherSavedPhotoList.addAll(photosList);
         photographerSavedPhotoAdapter.notifyDataSetChanged();
     }

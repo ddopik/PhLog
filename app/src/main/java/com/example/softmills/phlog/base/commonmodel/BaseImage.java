@@ -62,4 +62,8 @@ public class BaseImage {
     @Expose
     public String comment;
 
+    @SerializedName("tags")
+    @Expose
+    public Tags tags;
+
 }

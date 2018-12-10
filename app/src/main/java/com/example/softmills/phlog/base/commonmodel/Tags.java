@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by abdalla_maged On Dec,2018
  */
-public class Tag {
+public class Tags {
     @SerializedName("name")
     @Expose
     public String name;

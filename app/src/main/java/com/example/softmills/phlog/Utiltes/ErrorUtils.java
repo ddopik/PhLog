@@ -43,21 +43,21 @@ public class ErrorUtils {
                     break;
                 }
                 case STATUS_404 :{
-                    Log.e(TAG, contextTAG + "------>" + STATUS_404 +"---"+throwable.toString());
+                    Log.e(TAG, contextTAG + "------>" + STATUS_404 +"---"+((ANError) throwable).getResponse());
                     break;
                 }
                 case STATUS_401 :{
-                    Log.e(TAG, contextTAG + "------>" + STATUS_401+"---"+throwable.toString());
+                    Log.e(TAG, contextTAG + "------>" + STATUS_401+"---"+((ANError) throwable).getResponse());
                     break;
                 }
                 case STATUS_500 :{
-                    Log.e(TAG, contextTAG + "------>" + STATUS_500+"---"+throwable.toString());
+                    Log.e(TAG, contextTAG + "------>" + STATUS_500+"---"+((ANError) throwable).getResponse());
                     break;
                 }
 
             }
         }catch (Exception e){
-            Log.e(TAG,"--------------->"+e.getMessage());
+            Log.e(TAG,"--------------->"+((ANError) throwable).getResponse());
         }
 
 

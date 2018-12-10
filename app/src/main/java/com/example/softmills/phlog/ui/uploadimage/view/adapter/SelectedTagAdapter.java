@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.base.commonmodel.Tag;
+import com.example.softmills.phlog.base.commonmodel.Tags;
 
 import java.util.List;
 
@@ -17,11 +17,11 @@ import java.util.List;
  * Created by abdalla_maged on 10/28/2018.
  */
 public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.TagViewHolder> {
-    private List<Tag> tagList;
+    private List<Tags> tagsList;
     public OnSelectedItemClicked onSelectedItemClicked;
 
-    public SelectedTagAdapter(List<Tag> tagList) {
-        this.tagList = tagList;
+    public SelectedTagAdapter(List<Tags> tagsList) {
+        this.tagsList = tagsList;
     }
 
     @NonNull
@@ -36,10 +36,10 @@ public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.
     @Override
     public void onBindViewHolder(@NonNull TagViewHolder tagViewHolder, int i) {
 
-        tagViewHolder.tagName.setText(tagList.get(i).name);
+        tagViewHolder.tagName.setText(tagsList.get(i).name);
 
         if (onSelectedItemClicked != null) {
-            tagViewHolder.delete.setOnClickListener((view) -> onSelectedItemClicked.onItemDeleted(tagList.get(i)));
+            tagViewHolder.delete.setOnClickListener((view) -> onSelectedItemClicked.onItemDeleted(tagsList.get(i)));
          }
 
     }
@@ -47,7 +47,7 @@ public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.
     @Override
     public int getItemCount() {
 
-        return tagList.size();
+        return tagsList.size();
     }
 
 
@@ -64,6 +64,6 @@ public class SelectedTagAdapter extends RecyclerView.Adapter<SelectedTagAdapter.
     }
 
     public interface OnSelectedItemClicked {
-        void onItemDeleted(Tag tag);
+        void onItemDeleted(Tags tags);
      }
 }

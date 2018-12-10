@@ -25,7 +25,7 @@ import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearchRespons
 import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearchResponse;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
-import com.example.softmills.phlog.ui.signup.model.UploadProfileImgResponse;
+import com.example.softmills.phlog.ui.signup.model.UploadImgResponse;
 import com.example.softmills.phlog.ui.social.model.SocialResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserPhotosResponse;
@@ -35,6 +35,7 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -69,7 +70,7 @@ public class BaseNetworkApi {
     private static final String NORMAL_LOGIN = BASE_URL + "/photographer/auth/login";
     private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/signup_facebook";
     private static final String USER_PROFILE_URL = BASE_URL + "/photographer/details";
-    private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/image_photographer";
+    private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/photographer/photo/list";
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/image_photographer";
     private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/get_photographer_campaign";
@@ -92,6 +93,8 @@ public class BaseNetworkApi {
     private static final String SUBMIT_IMAGE_COMMENT = BASE_URL + "/image/comment/submit";
     private static final String GET_ALL_NOTIFICATION = BASE_URL + "/notification";
     private static final String GET_EARNING = BASE_URL + "/earning";
+    private static final String UPLOAD_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/upload";
+
 
 
 
@@ -174,9 +177,8 @@ public class BaseNetworkApi {
                 .getObjectObservable(FollowUserResponse.class);
     }
 
-    public static io.reactivex.Observable<PhotoGrapherSavedPhotosResponse> getPhotoGrapherSavedPhotos(String token, int pageNumber) {
+    public static io.reactivex.Observable<PhotoGrapherSavedPhotosResponse> getPhotoGrapherSavedPhotos( int pageNumber) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_SAVED_PHOTO_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(pageNumber))
                 .setPriority(Priority.HIGH)
                 .build()
@@ -398,7 +400,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(EarningResponse.class);
     }
 
-    public static io.reactivex.Observable<UploadProfileImgResponse> uploadProfileImg(String token,File imgPath){
+    public static io.reactivex.Observable<UploadImgResponse> uploadProfileImg(String token, File imgPath){
         return Rx2AndroidNetworking.upload(UPLOAD_PROFILE)
                 .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
@@ -406,7 +408,22 @@ public class BaseNetworkApi {
                 .addMultipartFile("image_profile", imgPath)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(UploadProfileImgResponse.class);
+                .getObjectObservable(UploadImgResponse.class);
+    }
+
+
+    public static io.reactivex.Observable<UploadImgResponse> uploadPhotoGrapherPhoto(String token, String caption, String location, File imgPath, Map<String,String> tagList){
+        return Rx2AndroidNetworking.upload(UPLOAD_PHOTOGRAPHER_PHOTO)
+                .addHeaders("x-auth-token", token)
+                .addHeaders("x-user-type", DEFAULT_USER_TYPE)
+                .addHeaders("x-lang-code", "en-us")
+                .addMultipartParameter("caption",caption)
+                .addMultipartParameter("location",location)
+                .addMultipartParameter(tagList)
+                .addMultipartFile("image", imgPath)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(UploadImgResponse.class);
     }
 
 

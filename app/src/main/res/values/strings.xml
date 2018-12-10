@@ -117,5 +117,8 @@
     <string name="notification">Notification</string>
     <string name="select_img">Select Image</string>
     <string name="about_us">About Us :</string>
+    <string name="photo_uploaded">Photo Uploaded</string>
+    <string name="phone">phone</string>
+    <string name="gallery">Gallery</string>
 
 </resources>
