@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 10/1/2018.
  */
-public class PhotosData {
+public class SavedPhotosData {
     @SerializedName("current_page")
     @Expose
     public Integer currentPage;

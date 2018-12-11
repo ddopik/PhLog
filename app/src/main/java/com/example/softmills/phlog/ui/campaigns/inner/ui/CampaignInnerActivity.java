@@ -172,7 +172,7 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
             startActivity(intent);
         });
         builder.setNegativeButton(R.string.photos,  (dialog, id) -> {
-            Intent intent =new Intent(this,AllPhotographerSavedPhotosActivity.class);
+            Intent intent =new Intent(this,AllPhotographerPhotosActivity.class);
             startActivity(intent);
         });
         builder.show();

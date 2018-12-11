@@ -14,7 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.album.model.AlbumImg;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 
 import java.util.List;
 
@@ -23,11 +23,11 @@ import java.util.List;
  */
 public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.AlbumImgViewHolder> {
 
-    private List<AlbumImg> albumImgList;
+    private List<BaseImage> albumImgList;
     private Context context;
     public OnAlbumImgClicked onAlbumImgClicked;
 
-    public AllAlbumImgAdapter(List<AlbumImg> albumImgList) {
+    public AllAlbumImgAdapter(List<BaseImage> albumImgList) {
         this.albumImgList = albumImgList;
     }
 
@@ -45,7 +45,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
     public void onBindViewHolder(@NonNull AlbumImgViewHolder albumImgViewHolder, int i) {
 
         GlideApp.with(context)
-                .load(albumImgList.get(i).AlbumIcon)
+                .load(albumImgList.get(i).thumbnailUrl)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .placeholder(R.drawable.default_user_pic)
                 .error(R.drawable.phlog_logo)
@@ -53,56 +53,24 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
 
         GlideApp.with(context)
-                .load(albumImgList.get(i).AlbumImg)
+                .load(albumImgList.get(i).url)
                 .centerCrop()
                 .error(R.drawable.splash_screen_background)
                 .placeholder(R.drawable.default_user_pic)
                 .into(albumImgViewHolder.albumImg);
 
-        albumImgViewHolder.albumName.setText(albumImgList.get(i).albumName);
-        albumImgViewHolder.albumAuthor.setText(albumImgList.get(i).albumAuthorName);
-        albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append(albumImgList.get(i).AlbumImgLikesCount).append(" Likes").toString());
-        albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append(albumImgList.get(i).AlbumImgCommentsCount).append("Comments").toString());
+        albumImgViewHolder.albumName.setText(albumImgList.get(i).thumbnailUrl);
+        albumImgViewHolder.albumAuthor.setText(albumImgList.get(i).photographer.fullName);
+        albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append("number of likes here").append(" Likes").toString());
+        albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append("comment_count_here").append("Comments").toString());
 
         if (onAlbumImgClicked !=null){
-            albumImgViewHolder.albumImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onAlbumImgClicked.onAlbumImgClick(albumImgList.get(i));
-                }
-            });
-            albumImgViewHolder.albumImgLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i));
-
-                }
-            });
-            albumImgViewHolder.albumImgComment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i));
-
-                }
-            });
-            albumImgViewHolder.albumImgDownload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onAlbumImgClicked.onAlbumImgDownloadClick(albumImgList.get(i));
-                }
-            });
-            albumImgViewHolder.albumImgLikeVal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i));
-                }
-            });
-            albumImgViewHolder.albumImgCommentVal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i));
-                }
-            });
+            albumImgViewHolder.albumImg.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgClick(albumImgList.get(i)));
+            albumImgViewHolder.albumImgLike.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i)));
+            albumImgViewHolder.albumImgComment.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
+            albumImgViewHolder.albumImgDownload.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgDownloadClick(albumImgList.get(i)));
+            albumImgViewHolder.albumImgLikeVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i)));
+            albumImgViewHolder.albumImgCommentVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
         }
 
     }
@@ -133,10 +101,10 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
     }
 
     public interface OnAlbumImgClicked {
-        void onAlbumImgClick(AlbumImg albumImg);
-        void onAlbumImgLikeClick(AlbumImg albumImg);
-        void onAlbumImgCommentClick(AlbumImg albumImg);
-        void onAlbumImgDownloadClick(AlbumImg albumImg);
+        void onAlbumImgClick(BaseImage albumImg);
+        void onAlbumImgLikeClick(BaseImage albumImg);
+        void onAlbumImgCommentClick(BaseImage albumImg);
+        void onAlbumImgDownloadClick(BaseImage albumImg);
 
 
     }

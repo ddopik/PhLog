@@ -2,7 +2,6 @@ package com.example.softmills.phlog.ui.album.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
@@ -30,17 +29,13 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
 
 
     @Override
-    public void getSelectedSearchAlbum(String albumID,String pageNum) {
+    public void getSelectedSearchAlbum(String albumID, String pageNum) {
         albumPreviewActivityView.viewAlbumPreviewProgress(true);
-        BaseNetworkApi.getSearchSelectedAlbum(PrefUtils.getUserToken(context),albumID, pageNum)
+        BaseNetworkApi.getSearchSelectedAlbum(PrefUtils.getUserToken(context), albumID, pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumPreviewResponse -> {
-                    if (albumPreviewResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        albumPreviewActivityView.viewAlumPreview(albumPreviewResponse.data);
-                    } else {
-                        ErrorUtils.setError(context, TAG, albumPreviewResponse.msg);
-                    }
+                    albumPreviewActivityView.viewAlumPreview(albumPreviewResponse.data);
                     albumPreviewActivityView.viewAlbumPreviewProgress(false);
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);
@@ -49,8 +44,6 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
 
 
     }
-
-
 
 
 }

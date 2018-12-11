@@ -7,24 +7,25 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by abdalla_maged On Nov,2018
+ * Created by abdalla_maged On Dec,2018
  */
-public class Photographer implements Parcelable {
+public class Tag implements Parcelable {
 
+    public Tag(){
+
+    }
+    @SerializedName("name")
+    @Expose
+    public String name;
     @SerializedName("id")
     @Expose
     public Integer id;
-    @SerializedName("user_name")
-    @Expose
-    public String userName;
-    @SerializedName("full_name")
-    @Expose
-    public String fullName;
 
-    protected Photographer(Parcel in) {
+
+
+    protected Tag(Parcel in) {
+        name = in.readString();
         id = in.readByte() == 0x00 ? null : in.readInt();
-        userName = in.readString();
-        fullName = in.readString();
     }
 
     @Override
@@ -34,26 +35,25 @@ public class Photographer implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
         if (id == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeInt(id);
         }
-        dest.writeString(userName);
-        dest.writeString(fullName);
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Photographer> CREATOR = new Parcelable.Creator<Photographer>() {
+    public static final Parcelable.Creator<Tag> CREATOR = new Parcelable.Creator<Tag>() {
         @Override
-        public Photographer createFromParcel(Parcel in) {
-            return new Photographer(in);
+        public Tag createFromParcel(Parcel in) {
+            return new Tag(in);
         }
 
         @Override
-        public Photographer[] newArray(int size) {
-            return new Photographer[size];
+        public Tag[] newArray(int size) {
+            return new Tag[size];
         }
     };
 }

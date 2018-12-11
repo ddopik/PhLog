@@ -6,7 +6,7 @@ import android.content.Context;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
-import com.example.softmills.phlog.base.commonmodel.Tags;
+import com.example.softmills.phlog.base.commonmodel.Tag;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.uploadimage.view.AddTagActivityView;
 
@@ -33,23 +33,42 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void uploadPhoto(String imagePath, String imageCaption, String location, String draftState, HashMap<String, String> imageType, List<Tags> tagsList) {
+    public void uploadPhoto(String imagePath, String imageCaption, String location, String draftState, HashMap<String, String> imageType, List<Tag> tagList) {
         addTagActivityView.viewUploadProgress(true);
         HashMap<String, String> tagsSelected = new HashMap<String, String>();
-        for (int i = 0; i < tagsList.size(); i++) {
-            tagsSelected.put("tags[" + i + "]", tagsList.get(i).name);
+        for (int i = 0; i < tagList.size(); i++) {
+            tagsSelected.put("tags[" + i + "]", tagList.get(i).name);
         }
 
-        BaseNetworkApi.uploadPhotoGrapherPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( uploadImgResponse -> {
-                    addTagActivityView.viewUploadProgress(false);
-                    addTagActivityView.viewMessage(context.getResources().getString(R.string.photo_uploaded));
-                },throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable.toString());
-                    addTagActivityView.viewUploadProgress(false);
-                });
+
+        if(imageType.get(BaseNetworkApi.IMAGE_TYPE_CAMPAIGN) !=null){
+//            --->user Uploading CampaignPhoto
+            BaseNetworkApi.uploadCampaignPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected,imageType)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(uploadImgResponse -> {
+                        addTagActivityView.viewUploadProgress(false);
+                        addTagActivityView.viewMessage(context.getResources().getString(R.string.photo_uploaded));
+                    }, throwable -> {
+                        ErrorUtils.setError(context, TAG, throwable);
+                        addTagActivityView.viewUploadProgress(false);
+                    });
+
+        }else {
+            //user is uploading Normal Photo
+            BaseNetworkApi.uploadPhotoGrapherPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(uploadImgResponse -> {
+                        addTagActivityView.viewUploadProgress(false);
+                        addTagActivityView.viewMessage(context.getResources().getString(R.string.photo_uploaded));
+                    }, throwable -> {
+                        ErrorUtils.setError(context, TAG, throwable);
+                        addTagActivityView.viewUploadProgress(false);
+                    });
+        }
+
+
     }
 
 

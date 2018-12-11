@@ -8,9 +8,14 @@ import java.util.List;
 /**
  * Created by abdalla_maged On Dec,2018
  */
+/**
+ * Custom Obj for custom Requests
+ * in case 500.401,....
+ */
+
 public class ErrorMessageResponse {
     @SerializedName("errors")
     @Expose
-    public List<ErrorData> errors = null;
+    public List<BaseErrorResponse> errors = null;
 
 }

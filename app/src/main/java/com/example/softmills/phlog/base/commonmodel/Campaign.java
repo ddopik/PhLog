@@ -53,7 +53,7 @@ public class Campaign {
     public Integer daysLeft;
     @SerializedName("tags")
     @Expose
-    public List<Tags> tags = null;
+    public List<Tag> tags = null;
     @SerializedName("no_winners")
     @Expose
     public String noWinners;

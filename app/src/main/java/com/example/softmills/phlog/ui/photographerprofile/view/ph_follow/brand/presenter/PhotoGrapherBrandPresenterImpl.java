@@ -31,18 +31,14 @@ public class PhotoGrapherBrandPresenterImpl implements PhotoGrapherBrandPresente
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photographerFollowingBrandResponse -> {
-                    if (photographerFollowingBrandResponse.state.equals(BaseNetworkApi.STATUS_OK)){
+
                         photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrandProgress(false);
                         photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrand(photographerFollowingBrandResponse.data.data);
-                    }else {
-                        photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrandProgress(false);
-                        ErrorUtils.setError(context,TAG,photographerFollowingBrandResponse.msg);
-                     }
+
 
                 },throwable -> {
                     photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrandProgress(false);
-                    ErrorUtils.setError(context,TAG,throwable);
-                    Log.e(TAG,"getFollowingBrand() ---->"+throwable.getMessage());
+
                 });
     }
 }

@@ -23,7 +23,7 @@ public class PhotographerSavedPhotoAdapter extends RecyclerView.Adapter<Photogra
     private List<BaseImage> photoGrapherSavedPhotosList;
     private Context context;
     private PhotographerSavedPhotoAdapter.PhotosViewHolder photosViewHolder;
-    private PhotoAction photoAction;
+    public PhotoAction photoAction;
 
     public PhotographerSavedPhotoAdapter(Context context, List<BaseImage> photoGrapherSavedPhotosList) {
         this.context = context;
@@ -44,7 +44,7 @@ public class PhotographerSavedPhotoAdapter extends RecyclerView.Adapter<Photogra
 
 
         GlideApp.with(context)
-                .load(photoGrapherSavedPhotosList.get(i).image)
+                .load(photoGrapherSavedPhotosList.get(i).url)
                 .centerCrop()
 //                .override(450,450)
                 .placeholder(R.drawable.ic_launcher_foreground)

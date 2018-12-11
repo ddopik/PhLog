@@ -43,6 +43,7 @@
                     android:layout_gravity="start"
                     android:text="album name"
                     android:textColor="@color/white"
+                    android:visibility="gone"
                     android:textSize="@dimen/text_medium_s" />
 
                 <TextView

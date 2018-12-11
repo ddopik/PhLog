@@ -23,8 +23,6 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.present
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALBUM_ID;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
@@ -35,7 +33,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
 
     private static String TAG = PhotoGrapherPhotosFragment.class.getSimpleName();
     private View mainView;
-    private List<BaseImage> photoGrapherPhotoList = new ArrayList<BaseImage>();
+    private List<BaseImage> photoGrapherPhotoList;
     private PhotoGrapherPhotosAdapter photographerSavedPhotoAdapter;
     private FragmentPhotoGrapherPhotosPresenter fragmentPhotoGrapherPhotosPresenter;
     private LinearLayoutManager mLayoutManager;
@@ -72,6 +70,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
 
     @Override
     protected void initViews() {
+        photoGrapherPhotoList= new ArrayList<BaseImage>();
         photographerSavedPhotoAdapter = new PhotoGrapherPhotosAdapter(getContext(), photoGrapherPhotoList);
         photosRv = mainView.findViewById(R.id.photos_rv);
         photosRv.setAdapter(photographerSavedPhotoAdapter);
@@ -83,22 +82,19 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         pagingController = new PagingController(photosRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(page + 1);
+                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(page);
             }
         };
 
-        photographerSavedPhotoAdapter.photoAction=new PhotoGrapherPhotosAdapter.PhotoAction() {
-            @Override
-            public void onPhotoClicked(BaseImage photoGrapherSavedPhoto) {
-                Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
-//                intent.putExtra(ALBUM_ID, albumID);
-//                intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
-//                intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) allAlbumImg);
-                startActivity(intent);
-            }
+        photographerSavedPhotoAdapter.photoAction= photoGrapherSavedPhoto -> {
+            Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
+            intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
+            intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherPhotoList);
+            startActivity(intent);
         };
 
     }
+
 
 
     @Override

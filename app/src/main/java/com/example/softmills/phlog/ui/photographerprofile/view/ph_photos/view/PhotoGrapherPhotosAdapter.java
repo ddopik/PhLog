@@ -44,7 +44,7 @@ public class PhotoGrapherPhotosAdapter extends RecyclerView.Adapter<PhotoGrapher
 
 
         GlideApp.with(context)
-                .load(photoGrapherPhotosList.get(i).image)
+                .load(photoGrapherPhotosList.get(i).url)
                 .centerCrop()
                .error(R.drawable.default_error_img)
                 .placeholder(R.drawable.ic_launcher_foreground)

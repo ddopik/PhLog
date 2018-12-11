@@ -13,8 +13,8 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.ui.album.model.AlbumImg;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
@@ -29,7 +29,7 @@ import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALBUM_ID;
+
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 import static com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity.USER_ID;
@@ -118,14 +118,13 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
                 Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
 
 //                intent.putExtra(SELECTED_IMG_ID,albumImg.albumImgId);/// todo album id should passed here
-                List<AlbumImg> albumImgList = new ArrayList<>();
+                List<BaseImage> albumImgList = new ArrayList<>();
                 for (int i = 0; i < entite.imgs.size(); i++) {
-                    AlbumImg albumImg = new AlbumImg();
-                    albumImg.albumImgId = String.valueOf(i);
-                    albumImg.AlbumImg = entite.imgs.get(i);
+                    BaseImage albumImg = new BaseImage();
+                    albumImg.id = i;
+                    albumImg.url = entite.imgs.get(i);
                     albumImgList.add(albumImg);
                 }
-                intent.putExtra(ALBUM_ID, String.valueOf(entite.id));
                 intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
                 intent.putExtra(SELECTED_IMG_ID, "1"); ///todo selected img id should be passed here
                 startActivity(intent);

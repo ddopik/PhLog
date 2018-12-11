@@ -57,7 +57,7 @@ public class ErrorUtils {
 
             }
         }catch (Exception e){
-            Log.e(TAG,"--------------->"+((ANError) throwable).getResponse());
+            Log.e(TAG,contextTAG+"--------------->"+((ANError) throwable).getResponse());
         }
 
 
@@ -82,5 +82,4 @@ public class ErrorUtils {
 
     }
 }
-// ErrorUtils.setError(context, TAG, albumPreviewResponse.msg, albumPreviewResponse.state);
-// ErrorUtils.setError(context, TAG, throwable.toString());
+// ErrorUtils.setError(context, TAG, throwable);

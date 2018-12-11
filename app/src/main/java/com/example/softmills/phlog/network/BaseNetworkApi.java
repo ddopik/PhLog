@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
+import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumImgCommentResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
 import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
@@ -70,8 +71,8 @@ public class BaseNetworkApi {
     private static final String NORMAL_LOGIN = BASE_URL + "/photographer/auth/login";
     private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/signup_facebook";
     private static final String USER_PROFILE_URL = BASE_URL + "/photographer/details";
-    private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/photographer/photo/list";
-    private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/image_photographer";
+    private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/photographer/photo/saved";
+    private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/photographer/photo/list";
     private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/get_photographer_campaign";
     private static final String PHOTOGRAPHER_FOLLOWING_IN_URL = BASE_URL + "/get_following";
@@ -84,7 +85,7 @@ public class BaseNetworkApi {
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
     private static final String SEARCH_ALBUM = BASE_URL + "/search_in_album";
     private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/search_in_following";
-    private static final String GET_SEARCH_ALBUM = BASE_URL +"/search_in_one_album";
+    private static final String GET_SEARCH_ALBUM = BASE_URL +"/photographer/album/search";
     private static final String BRAND_SEARCH_URL = BASE_URL +"/photographer/business/search";
     private static final String INNER_BRAND_URL = BASE_URL + "/photographer/business/details";
     private static final String BRAND_FOLLOW_URL = BASE_URL + "/join_photographer_brand";
@@ -94,6 +95,7 @@ public class BaseNetworkApi {
     private static final String GET_ALL_NOTIFICATION = BASE_URL + "/notification";
     private static final String GET_EARNING = BASE_URL + "/earning";
     private static final String UPLOAD_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/upload";
+    private static final String LIKE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/like";
 
 
 
@@ -186,9 +188,9 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<PhotoGrapherPhotosResponse> getPhotoGrapherPhotos(String token, int pageNumber) {
+
+    public static io.reactivex.Observable<PhotoGrapherPhotosResponse> getPhotoGrapherPhotos( int pageNumber) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_ALL_PHOTO_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(pageNumber))
                 .setPriority(Priority.HIGH)
                 .build()
@@ -312,6 +314,14 @@ public class BaseNetworkApi {
                 .getObjectObservable(UserPhotosResponse.class);
     }
 
+
+    public static io.reactivex.Observable<BaseStateResponse> likePhoto(int imageId) {
+        return Rx2AndroidNetworking.post(LIKE_PHOTOGRAPHER_PHOTO)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(BaseStateResponse.class);
+    }
+
     public static io.reactivex.Observable<SearchFiltersResponse> getFilters(String token) {
         return Rx2AndroidNetworking.post(USER_SEARCH_FILTERS)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
@@ -420,6 +430,21 @@ public class BaseNetworkApi {
                 .addMultipartParameter("caption",caption)
                 .addMultipartParameter("location",location)
                 .addMultipartParameter(tagList)
+                .addMultipartFile("image", imgPath)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(UploadImgResponse.class);
+    }
+
+    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token, String caption, String location, File imgPath, Map<String,String> tagList,Map CampagnId){
+        return Rx2AndroidNetworking.upload(UPLOAD_PHOTOGRAPHER_PHOTO)
+                .addHeaders("x-auth-token", token)
+                .addHeaders("x-user-type", DEFAULT_USER_TYPE)
+                .addHeaders("x-lang-code", "en-us")
+                .addMultipartParameter("caption",caption)
+                .addMultipartParameter("location",location)
+                .addMultipartParameter(tagList)
+                .addMultipartParameter(CampagnId)
                 .addMultipartFile("image", imgPath)
                 .setPriority(Priority.HIGH)
                 .build()

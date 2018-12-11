@@ -1,6 +1,6 @@
 package com.example.softmills.phlog.ui.campaigns.model;
 
-import com.example.softmills.phlog.base.commonmodel.ErrorData;
+import com.example.softmills.phlog.base.commonmodel.BaseErrorResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class FollowBrandResponse {
     @SerializedName("errors")
     @Expose
-    public List<ErrorData> errors = null;
+    public List<BaseErrorResponse> errors = null;
     @SerializedName("msg")
     @Expose
     public String msg;

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -12,10 +11,10 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.model.AlbumGroup;
-import com.example.softmills.phlog.ui.album.model.AlbumImg;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponseData;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenter;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenterImpl;
@@ -24,7 +23,6 @@ import com.example.softmills.phlog.ui.album.view.adapter.AlbumAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALBUM_ID;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
  import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
@@ -37,7 +35,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     public static final String ALBUM_PREVIEW_ID="album_preview_id";
     private String albumID;
     private List<AlbumGroup> albumGroupList=new ArrayList<>();
-    private   List<AlbumImg>  allAlbumImg=new ArrayList<>();
+    private   List<BaseImage>  allAlbumImg=new ArrayList<>();
      private AlbumAdapter albumAdapter;
      private ImageView albumPreviewImg;
     private ProgressBar albumPreviewProgress;
@@ -91,8 +89,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         albumAdapter.onAlbumImageClicked = albumImg -> {
 
             Intent intent =new Intent(this,AllAlbumImgActivity.class);
-             intent.putExtra(ALBUM_ID,albumID);
-             intent.putExtra(SELECTED_IMG_ID,albumImg.albumImgId);
+             intent.putExtra(SELECTED_IMG_ID,albumImg.id);
              intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) allAlbumImg);
              startActivity(intent);
 
@@ -124,7 +121,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
         }
         GlideApp.with(this)
-                .load(albumGroupList.get(0).albumGroupList.get(0).AlbumImg)
+                .load(albumGroupList.get(0).albumGroupList.get(0).url)
                 .placeholder(R.drawable.default_photographer_profile)
                 .error(R.drawable.default_photographer_profile)
                 .into(albumPreviewImg);

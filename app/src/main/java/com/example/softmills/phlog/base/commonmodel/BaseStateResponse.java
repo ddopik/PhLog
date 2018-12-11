@@ -6,11 +6,8 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by abdalla_maged On Dec,2018
  */
-public class Tags {
-    @SerializedName("name")
+public class BaseStateResponse {
+    @SerializedName("msg")
     @Expose
-    public String name;
-    @SerializedName("id")
-    @Expose
-    public Integer id;
+    public String msg;
 }

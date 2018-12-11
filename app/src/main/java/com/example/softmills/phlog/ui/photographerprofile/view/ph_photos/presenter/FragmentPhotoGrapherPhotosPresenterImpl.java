@@ -29,7 +29,7 @@ public class FragmentPhotoGrapherPhotosPresenterImpl implements FragmentPhotoGra
     @Override
     public void getPhotographerPhotos(int page) {
         fragmentPhotoGrapherPhotosView.showPhotosProgress(true);
-        BaseNetworkApi.getPhotoGrapherPhotos(PrefUtils.getUserToken(context), page)
+        BaseNetworkApi.getPhotoGrapherPhotos(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photosResponse -> {

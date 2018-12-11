@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by abdalla_maged On Dec,2018
  */
-public interface AllPhotographerSavedPhotosActivityView {
+public interface AllPhotographerPhotosActivityView {
 
     void showSavedPhotos(List<BaseImage> photosList);
     void showMessage(String msg);

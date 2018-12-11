@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by Abdalla_maged on 9/30/2018.
  */
-public class PhotoGrapherSavedFragment extends BaseFragment implements PhotoGrapherSavedPhotosFragmentView {
+public class PhotoGrapherFragment extends BaseFragment implements PhotoGrapherPhotosFragmentView {
 
     private View mainView;
     private List<BaseImage> photoGrapherSavedPhotoList = new ArrayList<BaseImage>();
@@ -32,8 +32,8 @@ public class PhotoGrapherSavedFragment extends BaseFragment implements PhotoGrap
     private PagingController pagingController;
 
 
-    public static PhotoGrapherSavedFragment getInstance() {
-        return new PhotoGrapherSavedFragment();
+    public static PhotoGrapherFragment getInstance() {
+        return new PhotoGrapherFragment();
     }
 
 

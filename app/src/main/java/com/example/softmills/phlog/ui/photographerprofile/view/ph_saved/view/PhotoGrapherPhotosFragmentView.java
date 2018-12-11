@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 9/30/2018.
  */
-public interface PhotoGrapherSavedPhotosFragmentView {
+public interface PhotoGrapherPhotosFragmentView {
     void showSavedPhotos(List<BaseImage> photosList);
 
     void showMessage(String msg);
