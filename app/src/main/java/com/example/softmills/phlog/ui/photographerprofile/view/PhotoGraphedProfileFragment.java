@@ -30,7 +30,7 @@ import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapher
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.PhotographerCampaignsFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.PhotoGrapherFollowFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.PhotoGrapherPhotosFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotoGrapherFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotoGrapherSavedPhotosFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +114,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
         this.photoGrapherProfileFragmentList.clear();
         PhotoGrapherPhotosFragment photoGrapherPhotosFragment = PhotoGrapherPhotosFragment.getInstance();
-        PhotoGrapherFragment photoGrapherSavedFragment = PhotoGrapherFragment.getInstance();
+        PhotoGrapherSavedPhotosFragment photoGrapherSavedFragment = PhotoGrapherSavedPhotosFragment.getInstance();
 
 
         this.photoGrapherProfileFragmentList.add(photoGrapherPhotosFragment);

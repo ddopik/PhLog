@@ -20,7 +20,7 @@ import com.example.softmills.phlog.ui.earning.view.EarningInnerFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningListFragment;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.EditPhotoGrapherProfileFragment;
+import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragment;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
 

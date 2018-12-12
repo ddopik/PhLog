@@ -28,12 +28,15 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
     @SuppressLint("CheckResult")
     @Override
     public void likePhoto(int photoId) {
+        allAlbumImgActivityView.viewAlbumImageListProgress(true);
         BaseNetworkApi.likePhoto(photoId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(baseStateResponse -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     allAlbumImgActivityView.showMessage("Like");
                 },throwable -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     ErrorUtils.setError(context, TAG, throwable);
                 });
     }

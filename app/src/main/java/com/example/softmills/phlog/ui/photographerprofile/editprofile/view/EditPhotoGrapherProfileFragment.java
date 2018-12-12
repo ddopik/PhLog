@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view;
+package com.example.softmills.phlog.ui.photographerprofile.editprofile.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

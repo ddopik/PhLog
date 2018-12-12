@@ -10,6 +10,8 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgPresnter;
+import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgPresnterImpl;
 import com.example.softmills.phlog.ui.album.view.adapter.AllAlbumImgAdapter;
 
 import java.util.ArrayList;
@@ -26,19 +28,15 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     private AllAlbumImgAdapter allAlbumImgAdapter;
     private List<BaseImage> albumImgList = new ArrayList<>();
     private ProgressBar albumImgProgress;
+    private AllAlbumImgPresnter allAlbumImgPresnter;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_album_img);
-
-
         initPresenter();
         initView();
-
-
-
     }
 
 
@@ -81,7 +79,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
     @Override
     public void initPresenter() {
-
+        allAlbumImgPresnter=new AllAlbumImgPresnterImpl(this,this);
     }
 
     private void initListener() {
@@ -95,7 +93,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
             @Override
             public void onAlbumImgLikeClick(BaseImage albumImg) {
-//                /api/photographer/photo/like
+              allAlbumImgPresnter.likePhoto(albumImg.id);
             }
 
             @Override

@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by Abdalla_maged on 9/30/2018.
  */
-public class PhotoGrapherFragment extends BaseFragment implements PhotoGrapherPhotosFragmentView {
+public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements PhotoGrapherPhotosFragmentView {
 
     private View mainView;
     private List<BaseImage> photoGrapherSavedPhotoList = new ArrayList<BaseImage>();
@@ -32,8 +32,8 @@ public class PhotoGrapherFragment extends BaseFragment implements PhotoGrapherPh
     private PagingController pagingController;
 
 
-    public static PhotoGrapherFragment getInstance() {
-        return new PhotoGrapherFragment();
+    public static PhotoGrapherSavedPhotosFragment getInstance() {
+        return new PhotoGrapherSavedPhotosFragment();
     }
 
 
@@ -70,7 +70,7 @@ public class PhotoGrapherFragment extends BaseFragment implements PhotoGrapherPh
         pagingController = new PagingController(savedPhotosRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(page + 1);
+                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(page);
             }
         };
     }
