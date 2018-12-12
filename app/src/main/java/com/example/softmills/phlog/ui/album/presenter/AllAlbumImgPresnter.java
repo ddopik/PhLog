@@ -5,7 +5,7 @@ package com.example.softmills.phlog.ui.album.presenter;
  */
 public interface AllAlbumImgPresnter {
 
-    void likePhoto(int photoId);
+    void likePhoto(String photoId);
 
     void downLoadPhoto(int photoID);
 }

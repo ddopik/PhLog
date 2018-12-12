@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
+import com.example.softmills.phlog.base.commonmodel.Tag;
 
 import java.util.List;
 
@@ -59,12 +60,17 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
                 .placeholder(R.drawable.default_user_pic)
                 .into(albumImgViewHolder.albumImg);
 
+        String tagS="";
+        for (Tag tag : albumImgList.get(i).tags) {
+            tagS=tagS +" #"+ tag.name ;
+        }
+        albumImgViewHolder.imageCommentTagVal.setText(tagS);
         albumImgViewHolder.albumName.setText(albumImgList.get(i).thumbnailUrl);
         albumImgViewHolder.albumAuthor.setText(albumImgList.get(i).photographer.fullName);
         albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append("number of likes here").append(" Likes").toString());
         albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append("comment_count_here").append("Comments").toString());
 
-        if (onAlbumImgClicked !=null){
+        if (onAlbumImgClicked != null) {
             albumImgViewHolder.albumImg.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgLike.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgComment.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
@@ -83,7 +89,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
     public class AlbumImgViewHolder extends RecyclerView.ViewHolder {
 
         ImageView albumIcon, albumImg;
-        TextView albumName, albumAuthor, albumImgLikeVal, albumImgCommentVal;
+        TextView albumName, albumAuthor, imageCommentTagVal, albumImgLikeVal, albumImgCommentVal;
         ImageButton albumImgLike, albumImgComment, albumImgDownload;
 
         AlbumImgViewHolder(View view) {
@@ -91,10 +97,11 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumIcon = view.findViewById(R.id.album_icon);
             albumImg = view.findViewById(R.id.album_img);
             albumName = view.findViewById(R.id.album_name);
+            imageCommentTagVal = view.findViewById(R.id.image_comment_tag_val);
             albumAuthor = view.findViewById(R.id.album_author);
-            albumImgLikeVal = view.findViewById(R.id.album_img_like_val);
-            albumImgCommentVal = view.findViewById(R.id.album_img_comment_val);
-            albumImgLike = view.findViewById(R.id.album_img_like);
+            albumImgLikeVal = view.findViewById(R.id.album_img_like_count);
+            albumImgCommentVal = view.findViewById(R.id.album_img_comment_count);
+            albumImgLike = view.findViewById(R.id.album_img_like_btn);
             albumImgComment = view.findViewById(R.id.album_img_comment);
             albumImgDownload = view.findViewById(R.id.album_img_download);
         }
@@ -102,8 +109,11 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
     public interface OnAlbumImgClicked {
         void onAlbumImgClick(BaseImage albumImg);
+
         void onAlbumImgLikeClick(BaseImage albumImg);
+
         void onAlbumImgCommentClick(BaseImage albumImg);
+
         void onAlbumImgDownloadClick(BaseImage albumImg);
 
 

@@ -19,15 +19,16 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
 
     private Context context;
     public AllAlbumImgActivityView allAlbumImgActivityView;
-    public AllAlbumImgPresnterImpl(Context context,AllAlbumImgActivityView allAlbumImgActivityView){
-        this.context=context;
-        this.allAlbumImgActivityView=allAlbumImgActivityView;
+
+    public AllAlbumImgPresnterImpl(Context context, AllAlbumImgActivityView allAlbumImgActivityView) {
+        this.context = context;
+        this.allAlbumImgActivityView = allAlbumImgActivityView;
     }
 
 
     @SuppressLint("CheckResult")
     @Override
-    public void likePhoto(int photoId) {
+    public void likePhoto(String photoId) {
         allAlbumImgActivityView.viewAlbumImageListProgress(true);
         BaseNetworkApi.likePhoto(photoId)
                 .subscribeOn(Schedulers.io())
@@ -35,12 +36,11 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                 .subscribe(baseStateResponse -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     allAlbumImgActivityView.showMessage("Like");
-                },throwable -> {
+                }, throwable -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     ErrorUtils.setError(context, TAG, throwable);
                 });
     }
-
 
 
     @Override

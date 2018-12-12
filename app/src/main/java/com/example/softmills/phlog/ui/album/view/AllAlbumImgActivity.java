@@ -87,18 +87,20 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         allAlbumImgAdapter.onAlbumImgClicked = new AllAlbumImgAdapter.OnAlbumImgClicked() {
             @Override
             public void onAlbumImgClick(BaseImage albumImg) {
-                Intent intent=new Intent(getBaseContext(),AlbumCommentActivity.class);
+                Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
+                intent.putExtra(ImageCommentActivity.IMAGE_DATA,albumImg);
                 startActivity(intent);
             }
 
             @Override
             public void onAlbumImgLikeClick(BaseImage albumImg) {
-              allAlbumImgPresnter.likePhoto(albumImg.id);
+              allAlbumImgPresnter.likePhoto(String.valueOf(albumImg.id));
             }
 
             @Override
             public void onAlbumImgCommentClick(BaseImage albumImg) {
-                Intent intent=new Intent(getBaseContext(),AlbumCommentActivity.class);
+                Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
+                intent.putExtra(ImageCommentActivity.IMAGE_DATA,albumImg);
                 startActivity(intent);
             }
 

@@ -76,7 +76,7 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.album.view.AllAlbumImgActivity" />
-        <activity android:name=".ui.album.view.AlbumCommentActivity" />
+        <activity android:name=".ui.album.view.ImageCommentActivity" />
         <activity android:name=".ui.brand.view.BrandInnerActivity">
 
         </activity>

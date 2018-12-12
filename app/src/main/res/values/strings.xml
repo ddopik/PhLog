@@ -120,5 +120,8 @@
     <string name="photo_uploaded">Photo Uploaded</string>
     <string name="phone">phone</string>
     <string name="gallery">Gallery</string>
+    <string name="like">Like</string>
+    <string name="comment">Comments</string>
+    <string name="comment_cant_not_be_null">Comment can\'t be null</string>
 
 </resources>

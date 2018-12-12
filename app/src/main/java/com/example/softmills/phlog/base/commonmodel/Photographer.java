@@ -11,20 +11,79 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Photographer implements Parcelable {
 
-    @SerializedName("id")
+    @SerializedName("is_phone_verified")
     @Expose
-    public Integer id;
+    public Boolean isPhoneVerified;
     @SerializedName("user_name")
     @Expose
     public String userName;
+    @SerializedName("is_email_verified")
+    @Expose
+    public Boolean isEmailVerified;
+    @SerializedName("mobile")
+    @Expose
+    public String mobile;
+    @SerializedName("created_at")
+    @Expose
+    public String createdAt;
+    @SerializedName("mobile_model")
+    @Expose
+    public String mobileModel;
+    @SerializedName("facebook_id")
+    @Expose
+    public String facebookId;
+    @SerializedName("token")
+    @Expose
+    public String token;
+    @SerializedName("password")
+    @Expose
+    public String password;
     @SerializedName("full_name")
     @Expose
     public String fullName;
+    @SerializedName("updated_at")
+    @Expose
+    public String updatedAt;
+    @SerializedName("image_profile")
+    @Expose
+    public String imageProfile;
+    @SerializedName("mobile_os")
+    @Expose
+    public String mobileOs;
+    @SerializedName("hash")
+    @Expose
+    public String hash;
+    @SerializedName("email")
+    @Expose
+    public String email;
+    @SerializedName("country_id")
+    @Expose
+    public String countryId;
+    @SerializedName("id")
+    @Expose
+    public Integer id;
+
 
     protected Photographer(Parcel in) {
-        id = in.readByte() == 0x00 ? null : in.readInt();
+        byte isPhoneVerifiedVal = in.readByte();
+        isPhoneVerified = isPhoneVerifiedVal == 0x02 ? null : isPhoneVerifiedVal != 0x00;
         userName = in.readString();
+        byte isEmailVerifiedVal = in.readByte();
+        isEmailVerified = isEmailVerifiedVal == 0x02 ? null : isEmailVerifiedVal != 0x00;
+        mobile = in.readString();
+        createdAt = in.readString();
+        mobileModel = in.readString();
+        facebookId = in.readString();
+        token = in.readString();
+        password = in.readString();
         fullName = in.readString();
+        updatedAt = in.readString();
+        imageProfile = in.readString();
+        mobileOs = in.readString();
+        hash = in.readString();
+        email = in.readString();
+        countryId = in.readString();
+        id = in.readByte() == 0x00 ? null : in.readInt();
     }
 
     @Override
@@ -34,14 +93,36 @@ public class Photographer implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        if (isPhoneVerified == null) {
+            dest.writeByte((byte) (0x02));
+        } else {
+            dest.writeByte((byte) (isPhoneVerified ? 0x01 : 0x00));
+        }
+        dest.writeString(userName);
+        if (isEmailVerified == null) {
+            dest.writeByte((byte) (0x02));
+        } else {
+            dest.writeByte((byte) (isEmailVerified ? 0x01 : 0x00));
+        }
+        dest.writeString(mobile);
+        dest.writeString(createdAt);
+        dest.writeString(mobileModel);
+        dest.writeString(facebookId);
+        dest.writeString(token);
+        dest.writeString(password);
+        dest.writeString(fullName);
+        dest.writeString(updatedAt);
+        dest.writeString(imageProfile);
+        dest.writeString(mobileOs);
+        dest.writeString(hash);
+        dest.writeString(email);
+        dest.writeString(countryId);
         if (id == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeInt(id);
         }
-        dest.writeString(userName);
-        dest.writeString(fullName);
     }
 
     @SuppressWarnings("unused")

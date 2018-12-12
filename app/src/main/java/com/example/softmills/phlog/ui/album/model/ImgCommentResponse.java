@@ -6,15 +6,8 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by abdalla_maged On Nov,2018
  */
-public class AlbumImgCommentResponse {
+public class ImgCommentResponse {
     @SerializedName("data")
     @Expose
-    public AlbumImgCommentData data;
-    @SerializedName("msg")
-    @Expose
-    public String msg;
-    @SerializedName("state")
-    @Expose
-    public String state;
-
+    public ImageCommentData data;
 }
