@@ -1,8 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view;
 
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhoto;
-
 import java.util.List;
 
 /**

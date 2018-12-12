@@ -1,6 +1,6 @@
 package com.example.softmills.phlog.ui.userprofile.view;
 
-import com.example.softmills.phlog.ui.userprofile.model.UserPhoto;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface UserProfileActivityView {
     void viewUserProfilePhotosCount(int photosCount);//
     void viewUserProfileFollowersCount(int followersCount); //
     void viewUserProfileFollowingCount(int followingCount); //
-    void viewUserPhotos(List<UserPhoto> userPhotoList);
+    void viewUserPhotos(List<BaseImage> userPhotoList);
     void viewUserPhotosProgress(boolean state);
     void showMessage(String msg);
 }

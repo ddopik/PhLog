@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.userprofile.model;
 
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +15,7 @@ public class UserPhotoData {
     public String currentPage;
     @SerializedName("data")
     @Expose
-    public List<UserPhoto> data = null;
+    public List<BaseImage> data = null;
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;

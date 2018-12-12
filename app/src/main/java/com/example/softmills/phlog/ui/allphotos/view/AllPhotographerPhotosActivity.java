@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.campaigns.inner.ui;
+package com.example.softmills.phlog.ui.allphotos.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,9 +10,8 @@ import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
-import com.example.softmills.phlog.ui.campaigns.inner.presenter.AllPhotographerPhotosPresenter;
-import com.example.softmills.phlog.ui.campaigns.inner.presenter.AllPhotographerPhotosPresenterImpl;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotographerSavedPhotoAdapter;
+import com.example.softmills.phlog.ui.allphotos.presenter.AllPhotographerPhotosPresenter;
+import com.example.softmills.phlog.ui.allphotos.presenter.AllPhotographerPhotosPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +20,8 @@ import java.util.List;
  * Created by abdalla_maged On Dec,2018
  */
 
-/***
- *
+ /***
+ *this activity currently view PhotoGrapher Photos as to upload one of them to campaign
  * **/
 public class AllPhotographerPhotosActivity extends BaseActivity implements AllPhotographerPhotosActivityView {
 
@@ -31,7 +30,7 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
     private String SELECT_MODE_UPLOAD = "upload";
     private CustomRecyclerView savedPhotosRv;
     private ProgressBar savedPhotosProgress;
-    private PhotographerSavedPhotoAdapter photographerSavedPhotoAdapter;
+    private PhotosListAdapter photographerPhotoAdapter;
     private List<BaseImage> imageList = new ArrayList<>();
     private PagingController pagingController;
     private AllPhotographerPhotosPresenter allPhotographerPhotosPresenter;
@@ -52,9 +51,9 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
     public void initView() {
         savedPhotosRv = findViewById(R.id.saved_photos_rv);
         savedPhotosProgress = findViewById(R.id.saved_photos_progress_bar);
-        photographerSavedPhotoAdapter = new PhotographerSavedPhotoAdapter(this, imageList);
+        photographerPhotoAdapter = new PhotosListAdapter(this, imageList);
         savedPhotosRv = findViewById(R.id.saved_photos_rv);
-        savedPhotosRv.setAdapter(photographerSavedPhotoAdapter);
+        savedPhotosRv.setAdapter(photographerPhotoAdapter);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
             }
         };
 
-        photographerSavedPhotoAdapter.photoAction = photoGrapherSavedPhoto -> {
+        photographerPhotoAdapter.photoAction = photoGrapherSavedPhoto -> {
             if (getIntent().getStringExtra(SELECT_MODEL).equals(SELECT_MODE_NORMAL)) {
             } else if (getIntent().getStringExtra(SELECT_MODEL).equals(SELECT_MODE_UPLOAD)) {
 //                allPhotographerPhotosPresenter.uploadCampaignPhoto(); <----- pending from BackEnd
@@ -79,9 +78,9 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
     }
 
     @Override
-    public void showSavedPhotos(List<BaseImage> photosList) {
+    public void showPhotosList(List<BaseImage> photosList) {
         this.imageList.addAll(photosList);
-        photographerSavedPhotoAdapter.notifyDataSetChanged();
+        photographerPhotoAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -90,7 +89,7 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
     }
 
     @Override
-    public void showSavedImageProgress(boolean state) {
+    public void showImageListProgress(boolean state) {
         if (state) {
             savedPhotosProgress.setVisibility(View.VISIBLE);
         } else {

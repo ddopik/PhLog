@@ -1,11 +1,11 @@
-package com.example.softmills.phlog.ui.campaigns.inner.presenter;
+package com.example.softmills.phlog.ui.allphotos.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.campaigns.inner.ui.AllPhotographerPhotosActivityView;
+import com.example.softmills.phlog.ui.allphotos.view.AllPhotographerPhotosActivityView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -26,16 +26,16 @@ public class AllPhotographerPhotosPresenterImpl implements AllPhotographerPhotos
     @SuppressLint("CheckResult")
     @Override
     public void getPhotographerPhotos(int Page) {
-        allPhotographerPhotosActivityView.showSavedImageProgress(true);
+        allPhotographerPhotosActivityView.showImageListProgress(true);
         BaseNetworkApi.getPhotoGrapherPhotos(Page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherPhotosResponse -> {
-                    allPhotographerPhotosActivityView.showSavedImageProgress(false);
-                    allPhotographerPhotosActivityView.showSavedPhotos(photoGrapherPhotosResponse.data.data);
+                    allPhotographerPhotosActivityView.showImageListProgress(false);
+                    allPhotographerPhotosActivityView.showPhotosList(photoGrapherPhotosResponse.data.data);
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);
-                    allPhotographerPhotosActivityView.showSavedImageProgress(false);
+                    allPhotographerPhotosActivityView.showImageListProgress(false);
                 });
 
     }

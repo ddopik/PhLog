@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragmentView;
@@ -38,15 +39,11 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherFollowingInResponse -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
-                    if (photoGrapherFollowingInResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         photoGrapherFollowingFragmentView.viewPhotographerFollowingIn(photoGrapherFollowingInResponse.data.data);
-                    } else {
-                        photoGrapherFollowingFragmentView.viewMessage(photoGrapherFollowingInResponse.state);
-                        Log.e(TAG, "getPhotoGrapherFollowing() ---> Error  " + photoGrapherFollowingInResponse.state);
-                    }
+
                 }, throwable -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
-                    Log.e(TAG, "getPhotoGrapherFollowing() ---> Error  " + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 
@@ -63,15 +60,12 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherFollowingInResponse -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
-                    if (photoGrapherFollowingInResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
+
                         photoGrapherFollowingFragmentView.viewPhotographerFollowingSearch(photoGrapherFollowingInResponse.data.data);
-                    } else {
-                        photoGrapherFollowingFragmentView.viewMessage(photoGrapherFollowingInResponse.state);
-                        Log.e(TAG, "getPhotoGrapherFollowingSearch() ---> Error  " + photoGrapherFollowingInResponse.state);
-                    }
+
                 }, throwable -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
-                    Log.e(TAG, "getPhotoGrapherFollowingSearch() ---> Error  " + throwable.getMessage());
+                    ErrorUtils.setError(context, TAG, throwable);
                 });
     }
 }

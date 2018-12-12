@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.campaigns.inner.ui;
+package com.example.softmills.phlog.ui.allphotos.view;
 
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface AllPhotographerPhotosActivityView {
 
-    void showSavedPhotos(List<BaseImage> photosList);
+    void showPhotosList(List<BaseImage> photosList);
     void showMessage(String msg);
-    void showSavedImageProgress(boolean state);
+    void showImageListProgress(boolean state);
 }

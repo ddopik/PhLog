@@ -18,7 +18,7 @@ import com.example.softmills.phlog.ui.photographerprofile.model.ProfilePhotoGrap
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.model.PhotoGrapherCampaignResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.model.PhotographerFollowingBrandResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model.PhotoGrapherFollowingInResponse;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhotosResponse;
+import com.example.softmills.phlog.ui.allphotos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.model.PhotoGrapherSavedPhotosResponse;
 import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearchResponse;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchFiltersResponse;

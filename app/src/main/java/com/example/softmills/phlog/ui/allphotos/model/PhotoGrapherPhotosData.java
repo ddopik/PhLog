@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model;
+package com.example.softmills.phlog.ui.allphotos.model;
 
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.google.gson.annotations.Expose;
@@ -7,9 +7,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by abdalla_maged on 10/1/2018.
+ * Created by abdalla_maged On Dec,2018
  */
-public class SavedPhotosData {
+public class PhotoGrapherPhotosData {
+
     @SerializedName("current_page")
     @Expose
     public Integer currentPage;
@@ -39,11 +40,12 @@ public class SavedPhotosData {
     public Integer perPage;
     @SerializedName("prev_page_url")
     @Expose
-    public Object prevPageUrl;
+    public String prevPageUrl;
     @SerializedName("to")
     @Expose
     public Integer to;
     @SerializedName("total")
     @Expose
     public Integer total;
+
 }

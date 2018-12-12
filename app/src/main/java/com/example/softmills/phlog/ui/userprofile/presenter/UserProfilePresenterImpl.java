@@ -58,12 +58,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {
                     userProfileActivityView.viewUserPhotosProgress(false);
-                    if (userPhotosResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
-                    } else {
-                        ErrorUtils.setError(context, TAG, userPhotosResponse.msg);
-                    }
-
+                    userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
                 }, throwable -> {
                     userProfileActivityView.viewUserPhotosProgress(false);
                     ErrorUtils.setError(context, TAG, throwable);
@@ -78,11 +73,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followUserResponse -> {
-                    if (followUserResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
-                    } else {
-                        ErrorUtils.setError(context, TAG, followUserResponse.msg);
-                    }
+                    userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);
                 });

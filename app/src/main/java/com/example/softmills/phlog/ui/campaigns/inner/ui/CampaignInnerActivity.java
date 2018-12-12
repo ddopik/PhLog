@@ -20,6 +20,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.allphotos.view.AllPhotographerPhotosActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenterImpl;
 import com.example.softmills.phlog.ui.uploadimage.view.UploadImageActivity;

@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.campaigns.inner.presenter;
+package com.example.softmills.phlog.ui.allphotos.presenter;
 
 /**
  * Created by abdalla_maged On Dec,2018

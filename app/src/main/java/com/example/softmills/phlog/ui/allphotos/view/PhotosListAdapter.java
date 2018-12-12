@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.userprofile.view;
+package com.example.softmills.phlog.ui.allphotos.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,53 +13,52 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
 
 import java.util.List;
 
-import io.reactivex.annotations.NonNull;
+import androidx.annotation.NonNull;
 
 /**
- * Created by abdalla_maged on 10/11/2018.
+ * Created by abdalla_maged On Dec,2018
  */
-public class UserProfilePhotosAdapter extends RecyclerView.Adapter<UserProfilePhotosAdapter.PhotosViewHolder> {
+public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.PhotosViewHolder> {
 
 
-    private List<BaseImage> userPhotoList;
+    private List<BaseImage> photosList;
     private Context context;
-    private UserProfilePhotosAdapter.PhotosViewHolder photosViewHolder;
-    private PhotoAction photoAction;
+    private PhotosListAdapter.PhotosViewHolder photosViewHolder;
+    public PhotoAction photoAction;
 
-    public UserProfilePhotosAdapter(Context context, List<BaseImage> userPhotoList) {
+    public PhotosListAdapter(Context context, List<BaseImage> photosList) {
         this.context = context;
-        this.userPhotoList = userPhotoList;
+        this.photosList = photosList;
     }
 
     @NonNull
     @Override
-    public UserProfilePhotosAdapter.PhotosViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public PhotosListAdapter.PhotosViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new PhotosViewHolder(layoutInflater.inflate(R.layout.view_holder_photo, viewGroup, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserProfilePhotosAdapter.PhotosViewHolder campaignsViewHolder, int i) {
+    public void onBindViewHolder(@NonNull PhotosListAdapter.PhotosViewHolder photosViewHolder, int i) {
 
 
         GlideApp.with(context)
-                .load(userPhotoList.get(i).url)
+                .load(photosList.get(i).url)
                 .centerCrop()
-//                .override(450,450)
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(campaignsViewHolder.photographerPhoto);
+                .error(R.drawable.default_error_img)
+                .placeholder(R.drawable.default_place_holder)
+                .into(photosViewHolder.photographerPhoto);
         if (photoAction != null)
-            campaignsViewHolder.photographerPhoto.setOnClickListener(view -> {
-                photoAction.onPhotoClicked(userPhotoList.get(i));
+            photosViewHolder.photographerPhoto.setOnClickListener(view -> {
+                photoAction.onPhotoClicked(photosList.get(i));
             });
     }
 
     @Override
     public int getItemCount() {
-        return userPhotoList.size();
+        return photosList.size();
     }
-
 
     class PhotosViewHolder extends RecyclerView.ViewHolder {
 

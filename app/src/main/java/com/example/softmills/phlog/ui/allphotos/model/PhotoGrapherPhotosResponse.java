@@ -1,5 +1,4 @@
-package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model;
-
+package com.example.softmills.phlog.ui.allphotos.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,6 +9,6 @@ public class PhotoGrapherPhotosResponse {
 
     @SerializedName("data")
     @Expose
-    public SavedPhotosData data;
+    public PhotoGrapherPhotosData data;
 
 }

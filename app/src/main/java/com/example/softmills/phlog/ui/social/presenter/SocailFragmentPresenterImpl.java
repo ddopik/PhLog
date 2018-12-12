@@ -53,11 +53,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followUserResponse -> {
-                    if (followUserResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        socialFragmentView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
-                    } else {
-                        socialFragmentView.showMessage(context.getResources().getString(R.string.error_following_state));
-                    }
+                    socialFragmentView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);
                 });
@@ -83,7 +79,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followBrandResponse -> {
-                        socialFragmentView.showMessage(context.getResources().getString(R.string.brand_followed));
+                    socialFragmentView.showMessage(context.getResources().getString(R.string.brand_followed));
 
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);

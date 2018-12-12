@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.ui.userprofile.model.UserPhoto;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
 
@@ -37,7 +37,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private CustomRecyclerView userProfilePhotosRv;
     private UserProfilePhotosAdapter userProfilePhotosAdapter;
     private UserProfilePresenter userProfilePresenter;
-    private List<UserPhoto> userPhotoList = new ArrayList<UserPhoto>();
+    private List<BaseImage> userPhotoList = new ArrayList<BaseImage>();
     private ProgressBar userProfilePhotosProgressBar;
     private Button followUser;
     private PagingController pagingController;
@@ -153,7 +153,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     }
 
     @Override
-    public void viewUserPhotos(List<UserPhoto> userPhotoList) {
+    public void viewUserPhotos(List<BaseImage> userPhotoList) {
         this.userPhotoList.addAll(userPhotoList);
         this.userPhotoList.addAll(userPhotoList);
         userProfilePhotosAdapter.notifyDataSetChanged();

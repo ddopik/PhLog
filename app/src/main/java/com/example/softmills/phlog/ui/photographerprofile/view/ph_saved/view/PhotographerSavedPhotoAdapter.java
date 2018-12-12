@@ -39,18 +39,18 @@ public class PhotographerSavedPhotoAdapter extends RecyclerView.Adapter<Photogra
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PhotographerSavedPhotoAdapter.PhotosViewHolder campaignsViewHolder, int i) {
+    public void onBindViewHolder(@NonNull PhotographerSavedPhotoAdapter.PhotosViewHolder photosViewHolder, int i) {
 
 
 
         GlideApp.with(context)
                 .load(photoGrapherSavedPhotosList.get(i).url)
                 .centerCrop()
-//                .override(450,450)
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(campaignsViewHolder.photographerPhoto);
+                .error(R.drawable.default_error_img)
+                .placeholder(R.drawable.default_place_holder)
+                .into(photosViewHolder.photographerPhoto);
         if (photoAction != null)
-            campaignsViewHolder.photographerPhoto.setOnClickListener(view -> {
+            photosViewHolder.photographerPhoto.setOnClickListener(view -> {
                 photoAction.onPhotoClicked(photoGrapherSavedPhotosList.get(i));
             });
     }

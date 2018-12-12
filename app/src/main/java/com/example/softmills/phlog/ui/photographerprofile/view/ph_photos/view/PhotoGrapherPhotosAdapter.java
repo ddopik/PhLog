@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.model.PhotoGrapherPhoto;
 
 import java.util.List;
 
@@ -46,8 +45,8 @@ public class PhotoGrapherPhotosAdapter extends RecyclerView.Adapter<PhotoGrapher
         GlideApp.with(context)
                 .load(photoGrapherPhotosList.get(i).url)
                 .centerCrop()
-               .error(R.drawable.default_error_img)
-                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.default_error_img)
+                .placeholder(R.drawable.default_place_holder)
                 .into(campaignsViewHolder.photographerPhoto);
         if (photoAction != null)
             campaignsViewHolder.photographerPhoto.setOnClickListener(view -> {
