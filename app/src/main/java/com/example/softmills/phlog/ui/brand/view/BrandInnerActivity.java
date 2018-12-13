@@ -116,22 +116,22 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
             brandName.setText(brand.fullName);
             aboutBrand.setText(new StringBuilder().append(getResources().getString(R.string.about_brand)).append(" : ").append(brand.fullName).toString());
         }
-        if (brand.numOfFollowers != null) {
-            brandNumFollowers.setText(new StringBuilder().append(brand.numOfFollowers).append(" ").append(getResources().getString(R.string.followers)).toString());
+        if (brand.followersCount != null) {
+            brandNumFollowers.setText(new StringBuilder().append(brand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
         }
 //        if (brand.industry != null) {
             brandType.setText("Brand Industry");
 //        }
         if (brand.isBrandText != null) {
-            brandData.setText(brand.isBrandText);
+            brandData.setText(brand.description);
         }
-//        if (brand.website != null) {
-            brandWebsite.setText("Brand website here");
+        if (brand.website != null) {
+            brandWebsite.setText(brand.website);
+        }
+//        if (brand.email != null) {
+//            brandWebsite.setText(brand.email);
+//
 //        }
-        if (brand.email != null) {
-            brandWebsite.setText(brand.email);
-
-        }
 
     }
 

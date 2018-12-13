@@ -27,18 +27,15 @@ public class PhotoGrapherBrandPresenterImpl implements PhotoGrapherBrandPresente
     @SuppressLint("CheckResult")
     @Override
     public void getFollowingBrand(String key, String page) {
-        BaseNetworkApi.getProfileBrand(PrefUtils.getUserToken(context),key,page)
+        BaseNetworkApi.getProfileBrand(key,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photographerFollowingBrandResponse -> {
-
                         photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrandProgress(false);
                         photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrand(photographerFollowingBrandResponse.data.data);
 
-
                 },throwable -> {
                     photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrandProgress(false);
-
                 });
     }
 }

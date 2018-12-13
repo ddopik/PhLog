@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +13,10 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.Brand;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.model.PhotographerFollowingBrand;
+import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.presenter.PhotoGrapherBrandPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.presenter.PhotoGrapherBrandPresenterImpl;
 import com.jakewharton.rxbinding3.widget.RxTextView;
@@ -39,7 +41,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
     private ProgressBar photographerBrandSearchProgressBar;
     private EditText searchPhotographerBrand;
     private PhotoGrapherFollowingBrandAdapter photoGrapherFollowingBrandAdapter;
-    private List<PhotographerFollowingBrand> photographerFollowingBrands = new ArrayList<>();
+    private List<Brand> photographerFollowingBrands = new ArrayList<>();
     private PagingController pagingController;
     private CompositeDisposable disposable = new CompositeDisposable();
     private PhotoGrapherBrandPresenter photoGrapherBrandPresenter;
@@ -100,7 +102,6 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
 
 
         disposable.add(
-
                 RxTextView.textChangeEvents(searchPhotographerBrand)
                         .skipInitialValue()
                         .debounce(Constants.QUERY_SEARCH_TIME_OUT, TimeUnit.MILLISECONDS)
@@ -110,11 +111,12 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
                         .subscribeWith(searchQuery()));
 
 
-//        photoGrapherFollowingAdapter.followingAdapterListener= photoGrapherFollowingObj -> {
-//            Intent intent=new Intent(getActivity(), UserProfileActivity.class);
-//            intent.putExtra(UserProfileActivity.USER_ID,photoGrapherFollowingObj.userNameId);
-//            getContext().startActivity(intent);
-//        };
+        photoGrapherFollowingBrandAdapter.brandAdapterListener= brand -> {
+            Intent intent=new Intent(getActivity(),BrandInnerActivity.class);
+            intent.putExtra(BrandInnerActivity.BRAND_ID,String.valueOf(brand.id));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        };
 
     }
 
@@ -122,7 +124,6 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-//                photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
                 // user cleared search get default data
                 if (searchPhotographerBrand.getText().length() == 0) {
                     photographerFollowingBrands.clear();
@@ -150,7 +151,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
 
 
     @Override
-    public void viewPhotoGrapherFollowingBrand(List<PhotographerFollowingBrand> brandSearchList) {
+    public void viewPhotoGrapherFollowingBrand(List<Brand> brandSearchList) {
         this.photographerFollowingBrands.addAll(brandSearchList);
         photoGrapherFollowingBrandAdapter.notifyDataSetChanged();
 
@@ -161,6 +162,8 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
 
         if (state){
             photographerBrandSearchProgressBar.setVisibility(View.VISIBLE);
+        }else {
+            photographerBrandSearchProgressBar.setVisibility(View.GONE);
         }
     }
 

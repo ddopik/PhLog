@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.model;
 
+import com.example.softmills.phlog.base.commonmodel.Brand;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +15,7 @@ public class PhotographerFollowingBrandData {
     public String currentPage;
     @SerializedName("data")
     @Expose
-    public List<PhotographerFollowingBrand> data = null;
+    public List<Brand> data = null;
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;

@@ -13,40 +13,34 @@ public class Brand {
     @SerializedName("thumbnail")
     @Expose
     public String thumbnail;
-    @SerializedName("password")
-    @Expose
-    public String password;
     @SerializedName("full_name")
     @Expose
     public String fullName;
-    @SerializedName("updated_at")
-    @Expose
-    public String updatedAt;
     @SerializedName("phone")
     @Expose
     public String phone;
     @SerializedName("user_name")
     @Expose
     public String userName;
-    @SerializedName("created_at")
-    @Expose
-    public String createdAt;
     @SerializedName("is_brand")
     @Expose
     public Integer isBrand;
-    @SerializedName("email")
-    @Expose
-    public String email;
-    @SerializedName("token")
-    @Expose
-    public String token;
     @SerializedName("id")
     @Expose
     public Integer id;
-    @SerializedName("num_of_followers")
+    @SerializedName("followers_count")
     @Expose
-    public Integer numOfFollowers;
+    public Integer followersCount;
+    @SerializedName("is_follow")
+    @Expose
+    public Boolean isFollow;
     @SerializedName("is_brand_text")
     @Expose
     public String isBrandText;
+    @SerializedName("website")
+    @Expose
+    public String website;
+    @SerializedName("description")
+    @Expose
+    public String description;
 }

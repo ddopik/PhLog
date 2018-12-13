@@ -69,7 +69,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
                     .into(brandSearchViewHolder.brandImg);
 
             brandSearchViewHolder.brandName.setText(brandList.get(i).fullName);
-            brandSearchViewHolder.brandFollowers.setText(new StringBuilder().append(brandList.get(i).numOfFollowers).append(" ").append(context.getResources().getString(R.string.following)).toString());
+            brandSearchViewHolder.brandFollowers.setText(new StringBuilder().append(brandList.get(i).followersCount).append(" ").append(context.getResources().getString(R.string.following)).toString());
             brandSearchViewHolder.searchBrandContainer.setOnClickListener(v -> {
                 if (brandAdapterListener != null) {
                     brandAdapterListener.onBrandSelected(brandFiltered.get(i));

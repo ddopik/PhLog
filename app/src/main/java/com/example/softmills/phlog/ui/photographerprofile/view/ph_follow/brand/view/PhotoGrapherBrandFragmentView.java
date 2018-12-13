@@ -1,6 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.view;
 
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.model.PhotographerFollowingBrand;
+import com.example.softmills.phlog.base.commonmodel.Brand;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface PhotoGrapherBrandFragmentView {
 
-    void viewPhotoGrapherFollowingBrand(List<PhotographerFollowingBrand> brandSearchList);
+    void viewPhotoGrapherFollowingBrand(List<Brand> brandSearchList);
     void viewPhotoGrapherFollowingBrandProgress(boolean state);
     void showMessage(String msg);
 }

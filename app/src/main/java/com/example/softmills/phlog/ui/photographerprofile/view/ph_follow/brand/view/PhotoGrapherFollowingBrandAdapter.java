@@ -2,7 +2,6 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.model.PhotographerFollowingBrand;
+import com.example.softmills.phlog.base.commonmodel.Brand;
 
 import java.util.List;
 
@@ -28,11 +27,11 @@ public class PhotoGrapherFollowingBrandAdapter extends RecyclerView.Adapter<Phot
 
     private String TAG = PhotoGrapherFollowingBrandAdapter.class.getSimpleName();
     public Context context;
-    private List<PhotographerFollowingBrand> brandList;
+    private List<Brand> brandList;
 //    private List<BrandSearch> brandFiltered;
     public BrandAdapterListener brandAdapterListener;
 
-    public PhotoGrapherFollowingBrandAdapter( List<PhotographerFollowingBrand> brandList) {
+    public PhotoGrapherFollowingBrandAdapter( List<Brand> brandList) {
 
         this.brandList = brandList;
 //        this.brandFiltered = brandList;
@@ -52,30 +51,29 @@ public class PhotoGrapherFollowingBrandAdapter extends RecyclerView.Adapter<Phot
     public void onBindViewHolder(@NonNull BrandViewHolder brandViewHolder, int i) {
 
 
-        try {
-
             GlideApp.with(context)
                     .load(brandList.get(i).thumbnail)
+                    .placeholder(R.drawable.default_place_holder)
+                    .error(R.drawable.default_error_img)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .into(brandViewHolder.brandIconImg);
 
 
             GlideApp.with(context)
-                    .load(brandList.get(i).coverImage)
+                    .load(brandList.get(i).imageCover)
+                    .placeholder(R.drawable.default_place_holder)
+                    .error(R.drawable.default_error_img)
                     .centerCrop()
                     .into(brandViewHolder.brandImg);
 
-            brandViewHolder.brandName.setText(brandList.get(i).nameEn);
-            brandViewHolder.brandFollowers.setText(new StringBuilder().append(brandList.get(i).numberOfFollowers).append(" ").append(context.getResources().getString(R.string.following)).toString());
+            brandViewHolder.brandName.setText(brandList.get(i).fullName);
+            brandViewHolder.brandFollowers.setText(new StringBuilder().append(brandList.get(i).followersCount).append(" ").append(context.getResources().getString(R.string.following)).toString());
             brandViewHolder.searchBrandContainer.setOnClickListener(v -> {
                 if (brandAdapterListener != null) {
                     brandAdapterListener.onBrandSelected(brandList.get(i));
                 }
             });
-        } catch (Exception e) {
-            Log.e(TAG, "onBindViewHolder () Error--->" + e.getMessage());
 
-        }
 
     }
 
@@ -141,6 +139,6 @@ public class PhotoGrapherFollowingBrandAdapter extends RecyclerView.Adapter<Phot
 
 
     public interface BrandAdapterListener {
-        void onBrandSelected(PhotographerFollowingBrand photographerFollowingBrand);
+        void onBrandSelected(Brand brand);
     }
 }
