@@ -56,18 +56,24 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         GlideApp.with(context)
                 .load(albumImgList.get(i).url)
                 .centerCrop()
-                .error(R.drawable.splash_screen_background)
+                .error(R.drawable.default_error_img)
                 .placeholder(R.drawable.default_user_pic)
                 .into(albumImgViewHolder.albumImg);
 
-        String tagS="";
-        for (Tag tag : albumImgList.get(i).tags) {
-            tagS=tagS +" #"+ tag.name ;
+        String tagS = "";
+        if (albumImgList.get(i).tags !=null) {
+            for (Tag tag : albumImgList.get(i).tags) {
+                tagS = tagS + " #" + tag.name;
+            }
         }
         albumImgViewHolder.imageCommentTagVal.setText(tagS);
+        if(albumImgList.get(i).thumbnailUrl !=null)
         albumImgViewHolder.albumName.setText(albumImgList.get(i).thumbnailUrl);
+        if(albumImgList.get(i).photographer !=null)
         albumImgViewHolder.albumAuthor.setText(albumImgList.get(i).photographer.fullName);
+        if(albumImgList.get(i).likeCount !=null)
         albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append("number of likes here").append(" Likes").toString());
+        if(albumImgList.get(i).commentCount !=null)
         albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append("comment_count_here").append("Comments").toString());
 
         if (onAlbumImgClicked != null) {

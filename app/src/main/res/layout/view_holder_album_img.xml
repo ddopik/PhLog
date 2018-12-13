@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp8"
                     android:layout_marginBottom="@dimen/dp8"
-                    android:text="10 Likes" />
+                    />
 
                 <TextView
                     android:id="@+id/album_img_comment_count"
@@ -153,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp8"
                     android:layout_marginBottom="@dimen/dp8"
-                    android:text="35 comments" />
+                    />
 
             </LinearLayout>
 

@@ -1,6 +1,8 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,11 +14,15 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.PhotoGrapherSavedFragmentPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presenter.PhotoGrapherSavedFragmentPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
  * Created by Abdalla_maged on 9/30/2018.
@@ -24,7 +30,7 @@ import java.util.List;
 public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements PhotoGrapherPhotosFragmentView {
 
     private View mainView;
-    private List<BaseImage> photoGrapherSavedPhotoList = new ArrayList<BaseImage>();
+    private List<BaseImage> photoGrapherSavedPhotoList;
     private PhotographerSavedPhotoAdapter photographerSavedPhotoAdapter;
     private PhotoGrapherSavedFragmentPresenter photoGrapherSavedFragmentPresenter;
 
@@ -60,6 +66,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
 
     @Override
     protected void initViews() {
+        photoGrapherSavedPhotoList = new ArrayList<BaseImage>();
         photographerSavedPhotoAdapter = new PhotographerSavedPhotoAdapter(getContext(), photoGrapherSavedPhotoList);
         savedPhotosRv = mainView.findViewById(R.id.saved_photos_rv);
         savedPhotosRv.setAdapter(photographerSavedPhotoAdapter);
@@ -71,6 +78,16 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
             @Override
             public void getPagingControllerCallBack(int page) {
                 photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(page);
+            }
+        };
+
+        photographerSavedPhotoAdapter.photoAction=new PhotographerSavedPhotoAdapter.PhotoAction() {
+            @Override
+            public void onPhotoClicked(BaseImage photoGrapherSavedPhoto) {
+                Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
+                intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
+                intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherSavedPhotoList);
+                startActivity(intent);
             }
         };
     }

@@ -53,8 +53,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
 
         if (getItemViewType(i) == 0) {
-            commentViewHolder.imageAuthorName.setText(previewImage.photographer.fullName);
-            commentViewHolder.imageAuthorUserName.setText(previewImage.photographer.userName);
+            if(previewImage.photographer !=null) {
+                commentViewHolder.imageAuthorName.setText(previewImage.photographer.fullName);
+                commentViewHolder.imageAuthorUserName.setText(previewImage.photographer.userName);
+            }
             GlideApp.with(context)
                     .load(previewImage.url)
                     .error(R.drawable.default_error_img)
@@ -63,6 +65,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                     .into(commentViewHolder.commentImg);
 
             String tagS="";
+            if(previewImage.tags !=null)
             for (Tag tag : previewImage.tags) {
                 tagS=tagS +" #"+ tag.name ;
             }

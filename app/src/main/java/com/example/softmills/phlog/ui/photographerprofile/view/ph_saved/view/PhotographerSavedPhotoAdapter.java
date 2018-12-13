@@ -42,7 +42,6 @@ public class PhotographerSavedPhotoAdapter extends RecyclerView.Adapter<Photogra
     public void onBindViewHolder(@NonNull PhotographerSavedPhotoAdapter.PhotosViewHolder photosViewHolder, int i) {
 
 
-
         GlideApp.with(context)
                 .load(photoGrapherSavedPhotosList.get(i).url)
                 .centerCrop()
