@@ -77,14 +77,22 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
         pagingController = new PagingController(campaignsRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                photoGrapherCampaignsPresenter.getPhotographerCampaigns(page + 1);
+                photoGrapherCampaignsPresenter.getPhotographerCampaigns(page);
             }
         };
 
-        photoGrapherCampaignsAdapter.campaignLister = campaignID -> {
-            Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
-            intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, campaignID);
-            startActivity(intent);
+        photoGrapherCampaignsAdapter.campaignLister = new photographerCampaignsAdapter.CampaignLister() {
+            @Override
+            public void onCampaignClicked(String campaignID) {
+                Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
+                intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, campaignID);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCampaignJoinClicked(String campaignID) {
+             photoGrapherCampaignsPresenter.followCampaign(campaignID);
+            }
         };
     }
 
@@ -93,5 +101,10 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
     public void showCampaigns(List<Campaign> campaignList) {
         this.campaignList.addAll(campaignList);
         photoGrapherCampaignsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        showToast(msg);
     }
 }

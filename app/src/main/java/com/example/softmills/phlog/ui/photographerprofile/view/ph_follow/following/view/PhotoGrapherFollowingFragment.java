@@ -102,12 +102,11 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         pagingController = new PagingController(followingRV) {
             @Override
             public void getPagingControllerCallBack(int page) {
-//                photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(page + 1);
                 if(searchEditText.getText().length() ==0){
                     //default following list paging
-                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(page-1);
+                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(page);
                 }else {
-                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(page-1,searchEditText.getText().toString());
+                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(page,searchEditText.getText().toString());
                 }
 
             }
@@ -133,7 +132,6 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-//                photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
                 // user cleared search get default data
                 if (searchEditText.getText().length() == 0) {
                     photoGrapherFollowingList.clear();

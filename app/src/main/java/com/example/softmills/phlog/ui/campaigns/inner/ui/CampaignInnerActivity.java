@@ -65,7 +65,7 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
         campaignImg = findViewById(R.id.campaign_header_img);
         campaignTitle = findViewById(R.id.campaign_title);
         campaignHostedBy = findViewById(R.id.campaign_hosted_by);
-        campaignDayLeft = findViewById(R.id.campaign_day_left);
+        campaignDayLeft = findViewById(R.id.campaign_header_day_left);
         uploadCampaignBtn = findViewById(R.id.upload_campaign_photo_id);
         campaignTabs = findViewById(R.id.inner_campaign_tabs);
         campaignViewPager = findViewById(R.id.inner_campaign_viewpager);

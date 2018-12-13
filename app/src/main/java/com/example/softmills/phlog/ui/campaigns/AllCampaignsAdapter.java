@@ -99,7 +99,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
             campaignImage = view.findViewById(R.id.campaign_img);
             campaignBusinessName = view.findViewById(R.id.campaign_name);
             campaignTitle = view.findViewById(R.id.campaign_title);
-            campaignDayLeft = view.findViewById(R.id.campaign_day_left);
+            campaignDayLeft = view.findViewById(R.id.campaign_header_day_left);
 //            readMeBtn = view.findViewById(R.id.remind_me_btn);
             joinCampaignBtn = view.findViewById(R.id.join_campaign_btn);
 

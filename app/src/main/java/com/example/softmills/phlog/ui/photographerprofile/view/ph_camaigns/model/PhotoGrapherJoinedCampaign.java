@@ -30,7 +30,7 @@ public class PhotoGrapherJoinedCampaign {
     public String lastPageUrl;
     @SerializedName("next_page_url")
     @Expose
-    public Object nextPageUrl;
+    public String nextPageUrl;
     @SerializedName("path")
     @Expose
     public String path;
@@ -39,7 +39,7 @@ public class PhotoGrapherJoinedCampaign {
     public Integer perPage;
     @SerializedName("prev_page_url")
     @Expose
-    public Object prevPageUrl;
+    public String prevPageUrl;
     @SerializedName("to")
     @Expose
     public Integer to;

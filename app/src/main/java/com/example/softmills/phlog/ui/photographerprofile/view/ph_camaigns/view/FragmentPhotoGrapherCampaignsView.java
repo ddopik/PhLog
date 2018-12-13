@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface FragmentPhotoGrapherCampaignsView {
     void showCampaigns(List<Campaign> campaignList);
+    void showMessage(String msg);
 }

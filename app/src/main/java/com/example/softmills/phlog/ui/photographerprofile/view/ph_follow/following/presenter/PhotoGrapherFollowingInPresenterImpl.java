@@ -9,8 +9,6 @@ import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragmentView;
 
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -33,13 +31,12 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
     @Override
     public void getPhotoGrapherFollowing(int page) {
         photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(true);
-//        BaseNetworkApi.getPhotoGrapherProfileFollowingIn(PrefUtils.getUserToken(context), page)
-        BaseNetworkApi.getPhotoGrapherProfileFollowingIn(PrefUtils.getUserToken(context) ,page)
+        BaseNetworkApi.getPhotoGrapherProfileFollowingIn(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherFollowingInResponse -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
-                        photoGrapherFollowingFragmentView.viewPhotographerFollowingIn(photoGrapherFollowingInResponse.data.data);
+                    photoGrapherFollowingFragmentView.viewPhotographerFollowingIn(photoGrapherFollowingInResponse.data.data);
 
                 }, throwable -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
@@ -61,7 +58,7 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
                 .subscribe(photoGrapherFollowingInResponse -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
 
-                        photoGrapherFollowingFragmentView.viewPhotographerFollowingSearch(photoGrapherFollowingInResponse.data.data);
+                    photoGrapherFollowingFragmentView.viewPhotographerFollowingSearch(photoGrapherFollowingInResponse.data.data);
 
                 }, throwable -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
