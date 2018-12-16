@@ -31,7 +31,7 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
     @Override
     public void getSelectedSearchAlbum(String albumID, String pageNum) {
         albumPreviewActivityView.viewAlbumPreviewProgress(true);
-        BaseNetworkApi.getSearchSelectedAlbum(PrefUtils.getUserToken(context), albumID, pageNum)
+        BaseNetworkApi.getSearchSelectedAlbum(albumID, pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumPreviewResponse -> {

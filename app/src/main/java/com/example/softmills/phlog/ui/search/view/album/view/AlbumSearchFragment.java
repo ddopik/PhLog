@@ -15,7 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
-
+import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchAdapter;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
@@ -174,11 +174,11 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             }
         };
 
-        albumSearchAdapter.onAlbumPreview = albumSearch -> {
+        albumSearchAdapter.setOnAlbumPreview(albumSearch -> {
             Intent intent = new Intent(getActivity(), AlbumPreviewActivity.class);
-            intent.putExtra(ALBUM_PREVIEW_ID, albumSearch.id);
+            intent.putExtra(ALBUM_PREVIEW_ID, albumSearch.getId());
             startActivity(intent);
-        };
+        });
     }
 
 

@@ -36,7 +36,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumFlexIte
     @NonNull
     @Override
     public AlbumFlexItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = LayoutInflater.from(context).inflate(R.layout.view_holder_flex_album, viewGroup, false);
         AlbumFlexItem albumFlexItem = new AlbumFlexItem(view);
         return albumFlexItem;
@@ -52,9 +51,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumFlexIte
         if (albumGroupList.get(position).albumGroupList.size() >= 1){
             GlideApp.with(context)
                     .load(albumGroupList.get(position).albumGroupList.get(0).url)
-                    .placeholder(R.drawable.default_user_pic)
+                    .placeholder(R.drawable.default_place_holder)
+                    .error(R.drawable.default_error_img)
                     .apply(requestOptions)
-                    .error(R.drawable.default_photographer_profile)
                     .into(albumFlexItem.albumImg1);
 
             if (onAlbumImageClicked !=null)
@@ -64,9 +63,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumFlexIte
         if (albumGroupList.get(position).albumGroupList.size() >= 2) {
             GlideApp.with(context)
                     .load(albumGroupList.get(position).albumGroupList.get(1).url)
-                    .placeholder(R.drawable.default_user_pic)
+                    .placeholder(R.drawable.default_place_holder)
+                    .error(R.drawable.default_error_img)
                     .apply(requestOptions)
-                    .error(R.drawable.default_photographer_profile)
                     .into(albumFlexItem.albumImg2);
             if (onAlbumImageClicked !=null)
                 albumFlexItem.albumImg2.setOnClickListener((v)->onAlbumImageClicked.onImageClicked( albumGroupList.get(position).albumGroupList.get(1)));
@@ -74,9 +73,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumFlexIte
         if (albumGroupList.get(position).albumGroupList.size() >= 3) {
             GlideApp.with(context)
                     .load(albumGroupList.get(position).albumGroupList.get(2).url)
-                    .placeholder(R.drawable.default_user_pic)
+                    .placeholder(R.drawable.default_place_holder)
+                    .error(R.drawable.default_error_img)
                     .apply(requestOptions)
-                    .error(R.drawable.default_photographer_profile)
                     .into(albumFlexItem.albumImg3);
             if (onAlbumImageClicked !=null)
                 albumFlexItem.albumImg3.setOnClickListener((v)->onAlbumImageClicked.onImageClicked( albumGroupList.get(position).albumGroupList.get(2)));
@@ -84,9 +83,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumFlexIte
         if (albumGroupList.get(position).albumGroupList.size() >= 4) {
             GlideApp.with(context)
                     .load(albumGroupList.get(position).albumGroupList.get(3).url)
-                    .placeholder(R.drawable.default_user_pic)
-                    .apply(requestOptions)
+                    .placeholder(R.drawable.default_place_holder)
                     .error(R.drawable.default_photographer_profile)
+                    .apply(requestOptions)
                     .into(albumFlexItem.albumImg4);
             if (onAlbumImageClicked !=null)
                 albumFlexItem.albumImg4.setOnClickListener((v)->onAlbumImageClicked.onImageClicked( albumGroupList.get(position).albumGroupList.get(3)));

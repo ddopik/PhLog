@@ -83,8 +83,8 @@ public class BaseNetworkApi {
     private static final String USER_PROFILE_PHOTOS = BASE_URL + "/image_photographer";
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
     private static final String SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
-    private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL +"/photographer/following/list";
-    private static final String GET_SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
+    private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/photographer/following/list";
+    private static final String GET_SEARCH_ALBUM = BASE_URL + "/photographer/album/details";
     private static final String BRAND_SEARCH_URL = BASE_URL + "/photographer/business/following/list";
     private static final String INNER_BRAND_URL = BASE_URL + "/photographer/business/details";
     private static final String BRAND_FOLLOW_URL = BASE_URL + "/join_photographer_brand";
@@ -166,7 +166,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(ProfilePhotoGrapherInfoResponse.class);
     }
 
-    public static io.reactivex.Observable<FollowUserResponse> followUser( String userID) {
+    public static io.reactivex.Observable<FollowUserResponse> followUser(String userID) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOW_USER_URL)
                 .addBodyParameter("photographer_id", userID)
                 .setPriority(Priority.HIGH)
@@ -336,10 +336,10 @@ public class BaseNetworkApi {
                 .getObjectObservable(AlbumSearchResponse.class);
     }
 
-    public static io.reactivex.Observable<AlbumPreviewResponse> getSearchSelectedAlbum(String token, String albumId, String page) {
+    public static io.reactivex.Observable<AlbumPreviewResponse> getSearchSelectedAlbum(String albumId, String page) {
         return Rx2AndroidNetworking.post(GET_SEARCH_ALBUM)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addQueryParameter(PAGER_PATH_PARAMETER, page)
+                .addBodyParameter("album_id", albumId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AlbumPreviewResponse.class);

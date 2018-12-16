@@ -47,8 +47,8 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_preview);
-        if (getIntent().getStringExtra(ALBUM_PREVIEW_ID) !=null){
-            albumID=getIntent().getStringExtra(ALBUM_PREVIEW_ID);
+        if (getIntent().getIntExtra(ALBUM_PREVIEW_ID,0) !=0){
+            albumID=String.valueOf(getIntent().getIntExtra(ALBUM_PREVIEW_ID,0));
             initPresenter();
             initView();
             initListener();
@@ -82,7 +82,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         pagingController = new PagingController(albumRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                albumPreviewActivityPresenter.getSelectedSearchAlbum("albumID", String.valueOf(page));
+                albumPreviewActivityPresenter.getSelectedSearchAlbum(albumID, String.valueOf(page));
             }
         };
 
@@ -105,7 +105,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
     @Override
     public void viewAlumPreview(AlbumPreviewResponseData albumPreviewResponseData) {
-        allAlbumImg = albumPreviewResponseData.data;
+        allAlbumImg = albumPreviewResponseData.data.photos;
         AlbumGroup singleGroup = new AlbumGroup();
          int albumGroupCounter = 0;
         for (int i = 0; i < allAlbumImg.size(); i++) {
@@ -117,8 +117,6 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
                 albumGroupCounter = 0;
                 singleGroup = new AlbumGroup();
             }
-
-
         }
         GlideApp.with(this)
                 .load(albumGroupList.get(0).albumGroupList.get(0).url)
