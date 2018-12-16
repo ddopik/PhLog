@@ -24,9 +24,10 @@ public class AlbumSearchAdapter extends RecyclerView.Adapter<AlbumSearchAdapter.
 
     private List<AlbumSearch> albumSearchList;
     private Context context;
-public OnAlbumPreview onAlbumPreview;
-    public AlbumSearchAdapter(List<AlbumSearch> albumSearchList){
-        this.albumSearchList=albumSearchList;
+    public OnAlbumPreview onAlbumPreview;
+
+    public AlbumSearchAdapter(List<AlbumSearch> albumSearchList) {
+        this.albumSearchList = albumSearchList;
 
     }
 
@@ -42,32 +43,35 @@ public OnAlbumPreview onAlbumPreview;
     @Override
     public void onBindViewHolder(@NonNull AlbumSearchViewHolder albumSearchViewHolder, int i) {
 
-        GlideApp.with(context)
-                .load(albumSearchList.get(i).covers.get(0))
-                .placeholder(R.drawable.default_photographer_profile)
-                .error(R.drawable.default_photographer_profile)
-                .into(albumSearchViewHolder.image1);
-        GlideApp.with(context)
-                .load(albumSearchList.get(i).covers.get(1))
-                .placeholder(R.drawable.default_photographer_profile)
-                .error(R.drawable.default_photographer_profile)
-                .into(albumSearchViewHolder.image2);
-
-        GlideApp.with(context)
-                .load(albumSearchList.get(i).covers.get(2))
-                .placeholder(R.drawable.default_photographer_profile)
-                .error(R.drawable.default_photographer_profile)
-                .into(albumSearchViewHolder.image3);
+        if (albumSearchList.get(i).photos.get(0) != null)
+            GlideApp.with(context)
+                    .load(albumSearchList.get(i).photos.get(0))
+                    .placeholder(R.drawable.default_photographer_profile)
+                    .error(R.drawable.default_photographer_profile)
+                    .into(albumSearchViewHolder.image1);
+        if (albumSearchList.get(i).photos.get(1) != null)
+            GlideApp.with(context)
+                    .load(albumSearchList.get(i).photos.get(1))
+                    .placeholder(R.drawable.default_photographer_profile)
+                    .error(R.drawable.default_photographer_profile)
+                    .into(albumSearchViewHolder.image2);
+        if (albumSearchList.get(i).photos.get(2) != null)
+            GlideApp.with(context)
+                    .load(albumSearchList.get(i).photos.get(2))
+                    .placeholder(R.drawable.default_photographer_profile)
+                    .error(R.drawable.default_photographer_profile)
+                    .into(albumSearchViewHolder.image3);
 
 //        albumSearchViewHolder.albumName.setText(albumSearchList.get(i).name);
 //        albumSearchViewHolder.albumPhotoCount.setText(albumSearchList.get(i).numberOfPhotos);
+
         albumSearchViewHolder.albumName.setText("Album name");
         albumSearchViewHolder.albumPhotoCount.setText("254 number");
 
 
-if(onAlbumPreview !=null){
-    albumSearchViewHolder.albumSearchListItemContainer.setOnClickListener(v-> onAlbumPreview.openAlbumPreviewListener(albumSearchList.get(i)));
-}
+        if (onAlbumPreview != null) {
+            albumSearchViewHolder.albumSearchListItemContainer.setOnClickListener(v -> onAlbumPreview.openAlbumPreviewListener(albumSearchList.get(i)));
+        }
 
     }
 
@@ -86,7 +90,7 @@ if(onAlbumPreview !=null){
 
         AlbumSearchViewHolder(View view) {
             super(view);
-            albumSearchListItemContainer=view.findViewById(R.id.album_search_list_item_container);
+            albumSearchListItemContainer = view.findViewById(R.id.album_search_list_item_container);
             openAlbumPreview = view.findViewById(R.id.open_album_preview);
             image1 = view.findViewById(R.id.album_search_img_1);
             image2 = view.findViewById(R.id.album_search_img_2);
@@ -98,7 +102,7 @@ if(onAlbumPreview !=null){
         }
     }
 
-    public interface OnAlbumPreview{
+    public interface OnAlbumPreview {
         void openAlbumPreviewListener(AlbumSearch albumSearch);
     }
 }

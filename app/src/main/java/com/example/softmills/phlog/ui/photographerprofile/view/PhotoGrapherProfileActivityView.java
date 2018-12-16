@@ -1,10 +1,10 @@
 package com.example.softmills.phlog.ui.photographerprofile.view;
 
-import com.example.softmills.phlog.ui.photographerprofile.model.PhotoGrapherProfileData;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 
 public interface PhotoGrapherProfileActivityView {
 
- void showPhotoGrapherProfileData(PhotoGrapherProfileData photoGrapherProfileData);
+ void showPhotoGrapherProfileData(Photographer photoGrapherProfileData);
  void showMessage(String msg);
  void showProfileProgress(boolean State);
 }

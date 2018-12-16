@@ -54,6 +54,9 @@ public class ErrorUtils {
                     Log.e(TAG, contextTAG + "------>" + STATUS_500+"---"+((ANError) throwable).getResponse());
                     break;
                 }
+                default:{
+                    Log.e(TAG,contextTAG+"--------------->"+((ANError) throwable).getResponse());
+                }
 
             }
         }catch (Exception e){

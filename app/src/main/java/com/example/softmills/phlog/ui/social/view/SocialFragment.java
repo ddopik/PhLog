@@ -114,19 +114,16 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
             }
 
             @Override
-            public void onSocialSlideImageClicked(Entite entite) { ///todo selected img should be passed here
+            public void onSocialSlideImageClicked(Entite entite) {
                 Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
-
-//                intent.putExtra(SELECTED_IMG_ID,albumImg.albumImgId);/// todo album id should passed here
                 List<BaseImage> albumImgList = new ArrayList<>();
                 for (int i = 0; i < entite.imgs.size(); i++) {
                     BaseImage albumImg = new BaseImage();
-                    albumImg.id = i;
                     albumImg.url = entite.imgs.get(i);
                     albumImgList.add(albumImg);
                 }
                 intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
-                intent.putExtra(SELECTED_IMG_ID, "1"); ///todo selected img id should be passed here
+                intent.putExtra(SELECTED_IMG_ID, entite.id);
                 startActivity(intent);
             }
 

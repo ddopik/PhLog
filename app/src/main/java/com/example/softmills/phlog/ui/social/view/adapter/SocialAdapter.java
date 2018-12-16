@@ -39,8 +39,6 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
     private Context context;
     private List<SocialData> socialDataList;
-
-
     public OnSocialItemListener onSocialItemListener;
 
 
@@ -256,8 +254,8 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                 GlideApp.with(context)
                         .load(entite.imgs.get(0))
                         .apply(RequestOptions.circleCropTransform())
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .error(R.drawable.default_photographer_profile)
+                        .placeholder(R.drawable.default_place_holder)
+                        .error(R.drawable.default_error_img)
                         .into(socialViewHolder.socialItemSliderIcon);
 
                 socialViewHolder.socialImageName.setText(title);

@@ -11,8 +11,6 @@ import java.util.List;
  */
 public class BaseApiResponse {
 
-
-
     @SerializedName("errors")
     @Expose
     public List<BaseErrorResponse> errors = null;

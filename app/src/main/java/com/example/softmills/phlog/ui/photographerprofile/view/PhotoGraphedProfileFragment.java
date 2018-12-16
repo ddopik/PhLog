@@ -23,8 +23,8 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.ui.MainActivity;
-import com.example.softmills.phlog.ui.photographerprofile.model.PhotoGrapherProfileData;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.presenter.PhotoGrapherProfileActivityPresenterImpl;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.PhotographerCampaignsFragment;
@@ -136,14 +136,14 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     }
 
     @Override
-    public void showPhotoGrapherProfileData(PhotoGrapherProfileData photoGrapherProfileData) {
+    public void showPhotoGrapherProfileData(Photographer photoGrapherProfileData) {
 
 
         photographerName.setText(photoGrapherProfileData.fullName);
         photographeruserName.setText(photoGrapherProfileData.userName);
 //        profileRating.setRating(photoGrapherProfileData.rate);
-        photoCount.setText(photoGrapherProfileData.photoCount);
-        followersCount.setText(photoGrapherProfileData.followerCount);
+//        photoCount.setText(photoGrapherProfileData.photoCount);
+//        followersCount.setText(photoGrapherProfileData.followerCount);
 
         GlideApp.with(this)
                 .load(photoGrapherProfileData.imageProfile)

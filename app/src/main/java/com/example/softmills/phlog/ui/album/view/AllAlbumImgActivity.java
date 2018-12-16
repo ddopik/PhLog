@@ -58,8 +58,8 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                 }
 
             }
-            initListener();
 
+            initListener();
         }
 
 

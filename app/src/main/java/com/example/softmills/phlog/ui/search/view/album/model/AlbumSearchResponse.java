@@ -11,10 +11,5 @@ public class AlbumSearchResponse {
     @SerializedName("data")
     @Expose
     public AlbumSearchData data;
-    @SerializedName("msg")
-    @Expose
-    public String msg;
-    @SerializedName("state")
-    @Expose
-    public String state;
+
 }

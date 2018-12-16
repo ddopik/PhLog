@@ -32,18 +32,12 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
     @Override
     public void getSearchFilters() {
         albumSearchFragmentView.showFilterSearchProgress(true);
-        BaseNetworkApi.getFilters(PrefUtils.getUserToken(context))
+        BaseNetworkApi.getFilters()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchAlbumResponse -> {
-                    if (searchAlbumResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        albumSearchFragmentView.viewSearchFilters(searchAlbumResponse.data);
-                        albumSearchFragmentView.showFilterSearchProgress(false);
-                    } else {
-                        albumSearchFragmentView.showMessage(searchAlbumResponse.msg);
-                        albumSearchFragmentView.showFilterSearchProgress(false);
-                        ErrorUtils.setError(context, TAG, searchAlbumResponse.msg);
-                    }
+                    albumSearchFragmentView.viewSearchFilters(searchAlbumResponse.data);
+                    albumSearchFragmentView.showFilterSearchProgress(false);
                 }, throwable -> {
                     Log.e(TAG, "getFilters() --->Error " + throwable.getMessage());
                     albumSearchFragmentView.showFilterSearchProgress(false);
@@ -55,17 +49,13 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getAlbumSearch(String key,int page) {
+    public void getAlbumSearch(String key, int page) {
         albumSearchFragmentView.showFilterSearchProgress(true);
-        BaseNetworkApi.getSearchAlbum(PrefUtils.getUserToken(context), key, String.valueOf(page))
+        BaseNetworkApi.getSearchAlbum(key, String.valueOf(page))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumSearchResponse -> {
-                    if (albumSearchResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data.data);
-                    }else {
-                        ErrorUtils.setError(context, TAG, albumSearchResponse.msg);
-                    }
+                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data.data);
                     albumSearchFragmentView.showFilterSearchProgress(false);
                 }, throwable -> {
                     ErrorUtils.setError(context, TAG, throwable);

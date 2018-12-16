@@ -75,20 +75,20 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/list";
     private static final String PHOTOGRAPHER_FOLLOWING_IN_URL = BASE_URL + "/photographer/following/list";
-    private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/follow";
+    private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/photographer/follow";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/running";
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/photographer/campaign/details";
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/photographer/campaign/photos";
     private static final String FOLLOW_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/join";
     private static final String USER_PROFILE_PHOTOS = BASE_URL + "/image_photographer";
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
-    private static final String SEARCH_ALBUM = BASE_URL + "/search_in_album";
+    private static final String SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
     private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL +"/photographer/following/list";
     private static final String GET_SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
     private static final String BRAND_SEARCH_URL = BASE_URL + "/photographer/business/following/list";
     private static final String INNER_BRAND_URL = BASE_URL + "/photographer/business/details";
     private static final String BRAND_FOLLOW_URL = BASE_URL + "/join_photographer_brand";
-    private static final String SOCIAL_DATA_URL = BASE_URL + "/social";
+    private static final String SOCIAL_DATA_URL = BASE_URL + "/photographer/social/dummy";
     private static final String GET_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment/list";
     private static final String SUBMIT_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment";
     private static final String GET_ALL_NOTIFICATION = BASE_URL + "/notification";
@@ -158,19 +158,17 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<ProfilePhotoGrapherInfoResponse> getUserProfile(String token, String userID) {
+    public static io.reactivex.Observable<ProfilePhotoGrapherInfoResponse> getUserProfile(String userID) {
         return Rx2AndroidNetworking.post(USER_PROFILE_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("photographer_id", userID)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(ProfilePhotoGrapherInfoResponse.class);
     }
 
-    public static io.reactivex.Observable<FollowUserResponse> followUser(String token, String userID) {
+    public static io.reactivex.Observable<FollowUserResponse> followUser( String userID) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOW_USER_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
-                .addBodyParameter("user_names_id_to", userID)
+                .addBodyParameter("photographer_id", userID)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(FollowUserResponse.class);
@@ -321,18 +319,18 @@ public class BaseNetworkApi {
                 .getObjectObservable(BaseStateResponse.class);
     }
 
-    public static io.reactivex.Observable<SearchFiltersResponse> getFilters(String token) {
-        return Rx2AndroidNetworking.post(USER_SEARCH_FILTERS)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+    public static io.reactivex.Observable<SearchFiltersResponse> getFilters() {
+        return Rx2AndroidNetworking.get(USER_SEARCH_FILTERS)
+
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(SearchFiltersResponse.class);
     }
 
-    public static io.reactivex.Observable<AlbumSearchResponse> getSearchAlbum(String token, String key, String page) {
+    public static io.reactivex.Observable<AlbumSearchResponse> getSearchAlbum(String key, String page) {
         return Rx2AndroidNetworking.post(SEARCH_ALBUM)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addQueryParameter(PAGER_PATH_PARAMETER, page)
+                .addQueryParameter("keyword", key)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AlbumSearchResponse.class);
@@ -386,8 +384,7 @@ public class BaseNetworkApi {
     }
 
     public static io.reactivex.Observable<SocialResponse> getSocialData(String token) {
-        return Rx2AndroidNetworking.post(SOCIAL_DATA_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+        return Rx2AndroidNetworking.get(SOCIAL_DATA_URL)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(SocialResponse.class);

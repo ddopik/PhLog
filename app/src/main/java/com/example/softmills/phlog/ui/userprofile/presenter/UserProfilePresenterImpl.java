@@ -27,20 +27,29 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
     @SuppressLint("CheckResult")
     @Override
     public void getUserProfileData(String userID) {
-        BaseNetworkApi.getUserProfile(PrefUtils.getUserToken(context), userID)
+        BaseNetworkApi.getUserProfile(userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfileResponse -> {
 
                     ProfilePhotoGrapherInfoResponse userProfileData = userProfileResponse;
+                    if(userProfileData.data.userName !=null)
                     userProfileActivityView.viewUserProfileUserName(userProfileData.data.userName);
+                    if(userProfileData.data.fullName !=null)
                     userProfileActivityView.viewUserProfileFullName(userProfileData.data.fullName);
-                    userProfileActivityView.viewUserProfileRating(userProfileData.data.rate);
-                    userProfileActivityView.viewUserProfileLevel(userProfileData.data.level);
+
+//                    userProfileActivityView.viewUserProfileRating(userProfileData.data.rate);
+//                    if(userProfileData.data.level !=null)
+//                    userProfileActivityView.viewUserProfileLevel(userProfileData.data.level);
+                    if(userProfileData.data.imageProfile !=null)
                     userProfileActivityView.viewUserProfileProfileImg(userProfileData.data.imageProfile);
-                    userProfileActivityView.viewUserProfileFollowersCount(userProfileData.data.followerCount);
-                    userProfileActivityView.viewUserProfileFollowingCount(userProfileData.data.followingCount);
-                    userProfileActivityView.viewUserProfilePhotosCount(userProfileData.data.photoCount);
+
+//                    userProfileActivityView.viewUserProfileFollowersCount(userProfileData.data.followerCount);
+//
+//                    if(userProfileData.data.followingCount !=null)
+//                    userProfileActivityView.viewUserProfileFollowingCount(userProfileData.data.followingCount);
+
+//                    userProfileActivityView.viewUserProfilePhotosCount(userProfileData.data.photoCount);
 
 
                 }, throwable -> {
@@ -57,8 +66,8 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {
-                    userProfileActivityView.viewUserPhotosProgress(false);
-                    userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
+//                    userProfileActivityView.viewUserPhotosProgress(false);
+//                    userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
                 }, throwable -> {
                     userProfileActivityView.viewUserPhotosProgress(false);
                     ErrorUtils.setError(context, TAG, throwable);
@@ -69,7 +78,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
     @SuppressLint("CheckResult")
     @Override
     public void followUser(String userId) {
-        BaseNetworkApi.followUser(PrefUtils.getUserToken(context), userId)
+        BaseNetworkApi.followUser(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followUserResponse -> {
