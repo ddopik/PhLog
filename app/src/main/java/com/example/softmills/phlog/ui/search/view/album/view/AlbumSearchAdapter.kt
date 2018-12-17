@@ -5,10 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 
 import com.example.softmills.phlog.R
 import com.example.softmills.phlog.Utiltes.GlideApp
@@ -17,7 +14,7 @@ import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearch
 /**
  * Created by abdalla_maged on 11/6/2018.
  */
-class AlbumSearchAdapter(private var albumSearchList: List<AlbumSearch> ?) : RecyclerView.Adapter<AlbumSearchAdapter.AlbumSearchViewHolder>() {
+class AlbumSearchAdapter(private var albumSearchList: List<AlbumSearch>?) : RecyclerView.Adapter<AlbumSearchAdapter.AlbumSearchViewHolder>() {
     private var context: Context? = null
     var onAlbumPreview: OnAlbumPreview? = null
 
@@ -31,39 +28,51 @@ class AlbumSearchAdapter(private var albumSearchList: List<AlbumSearch> ?) : Rec
     override fun onBindViewHolder(albumSearchViewHolder: AlbumSearchViewHolder, i: Int) {
 
 
+        takeIf { albumSearchList?.get(i)?.photos?.getOrNull(2) != null }?.apply {
+            albumSearchViewHolder.multiImageContainer.visibility = View.VISIBLE
             albumSearchList?.get(i)?.photos?.getOrNull(0).let {
-            GlideApp.with(context!!)
-                    .load(it?.url)
-                    .placeholder(R.drawable.default_place_holder)
-                    .error(R.drawable.default_error_img)
-                    .into(albumSearchViewHolder.image1)
-        }
-        albumSearchList?.get(i)?.photos?.getOrNull(1).let {
+                GlideApp.with(context!!)
+                        .load(it?.url)
+                        .placeholder(R.drawable.default_place_holder)
+                        .error(R.drawable.default_error_img)
+                        .into(albumSearchViewHolder.image1)
+            }
+            albumSearchList?.get(i)?.photos?.getOrNull(1).let {
 
                 GlideApp.with(context!!)
                         .load(it?.url)
                         .placeholder(R.drawable.default_place_holder)
                         .error(R.drawable.default_error_img)
                         .into(albumSearchViewHolder.image2)
-        }
-        albumSearchList?.get(i)?.photos?.getOrNull(2).let {
+            }
+            albumSearchList?.get(i)?.photos?.getOrNull(2).let {
 
                 GlideApp.with(context!!)
                         .load(it?.url)
                         .placeholder(R.drawable.default_place_holder)
                         .error(R.drawable.default_error_img)
                         .into(albumSearchViewHolder.image3)
+            }
+        } ?: run {
+            albumSearchViewHolder.singleImageContainer.visibility = View.VISIBLE
+            albumSearchList?.get(i)?.photos?.getOrNull(0).let {
+                GlideApp.with(context!!)
+                        .load(it?.url)
+                        .placeholder(R.drawable.default_place_holder)
+                        .error(R.drawable.default_error_img)
+                        .into(albumSearchViewHolder.imageSingle)
+            }
         }
         albumSearchList?.get(i)?.name?.let {
             albumSearchViewHolder.albumName.text = it
         }
         albumSearchList?.get(i)?.photosCount?.let {
-            albumSearchViewHolder.albumPhotoCount.text = this.toString()
+            albumSearchViewHolder.albumPhotoCount.text = it.toString()+" "+context?.resources?.getString(R.string.photos)
         }
 
 
         if (onAlbumPreview != null) {
-            albumSearchViewHolder.albumSearchListItemContainer.setOnClickListener { onAlbumPreview!!.openAlbumPreviewListener(albumSearchList?.get(i) !!) }
+            albumSearchViewHolder.albumSearchListItemContainer.setOnClickListener { onAlbumPreview!!.openAlbumPreviewListener(albumSearchList?.get(i)!!) }
         }
 
     }
@@ -72,20 +81,26 @@ class AlbumSearchAdapter(private var albumSearchList: List<AlbumSearch> ?) : Rec
         return albumSearchList?.size!!
     }
 
-     inner class AlbumSearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class AlbumSearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var albumSearchListItemContainer: FrameLayout
+
         var openAlbumPreview: ImageButton
+        var imageSingle: ImageView
         var image1: ImageView
         var image2: ImageView
         var image3: ImageView
         var albumName: TextView
         var albumPhotoCount: TextView
-
+        var singleImageContainer: FrameLayout
+        var multiImageContainer: LinearLayout
 
         init {
             albumSearchListItemContainer = view.findViewById(R.id.album_search_list_item_container)
+            singleImageContainer = view.findViewById(R.id.single_image_container)
+            multiImageContainer = view.findViewById(R.id.multi_image_container)
             openAlbumPreview = view.findViewById(R.id.open_album_preview)
+            imageSingle = view.findViewById(R.id.album_search_img_single)
             image1 = view.findViewById(R.id.album_search_img_1)
             image2 = view.findViewById(R.id.album_search_img_2)
             image3 = view.findViewById(R.id.album_search_img_3)

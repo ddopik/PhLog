@@ -10,10 +10,14 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -43,45 +47,49 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
     private View mainView;
     private ImageView earningBtn;
-    private TextView editProfileBtn;
     private List<Fragment> photoGrapherProfileFragmentList = new ArrayList<Fragment>();
     private List<String> photoGrapherFragmentListTitles = new ArrayList<String>();
-    private FrameLayout photographerProfileBackgroundImg;
+    private ImageView photographerProfileBackgroundImg;
     private ImageView photographerProfileImg;
     private TextView photographerName, photographeruserName, photoCount, followersCount, followingCount;
     private RatingBar profileRating;
     private PhotoGrapherProfileActivityPresenter photoGrapherProfileActivityPresenter;
     private AppBarLayout mAppBarLayout;
     private ProgressBar photographerProfileProgressBar;
+    private Toolbar profileFragmentToolBar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_photographer_profile, container, false);
+        setHasOptionsMenu(true);
         return mainView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         initViews();
         initPresenter();
         initListener();
+        ((MainActivity) getActivity()).setSupportActionBar(profileFragmentToolBar);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setHasOptionsMenu(true);
         photoGrapherProfileActivityPresenter.getPhotoGrapherProfileData();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
+
+
 
     @Override
     public void initViews() {
-
-        editProfileBtn=mainView.findViewById(R.id.edit_profile_btn);
-        earningBtn=mainView.findViewById(R.id.earning_btn);
+        profileFragmentToolBar = mainView.findViewById(R.id.profile_tool_bar);
+//        editProfileBtn = mainView.findViewById(R.id.edit_profile_btn);
+        earningBtn = mainView.findViewById(R.id.earning_btn);
         photographerProfileBackgroundImg = mainView.findViewById(R.id.photographer_profile_background_img);
         photographerName = mainView.findViewById(R.id.photographer_profile_full_name);
         photographeruserName = mainView.findViewById(R.id.photographer_profile_username);
@@ -141,17 +149,25 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
         photographerName.setText(photoGrapherProfileData.fullName);
         photographeruserName.setText(photoGrapherProfileData.userName);
-//        profileRating.setRating(photoGrapherProfileData.rate);
-//        photoCount.setText(photoGrapherProfileData.photoCount);
-//        followersCount.setText(photoGrapherProfileData.followerCount);
 
-        GlideApp.with(this)
-                .load(photoGrapherProfileData.imageProfile)
-                .centerCrop()
-                .placeholder(R.drawable.ic_check_black_24dp)
-                .error(R.drawable.ic_launcher_foreground)
-                .into(photographerProfileImg);
 
+        if (photoGrapherProfileData.rate != null)
+            profileRating.setRating(Float.valueOf(photoGrapherProfileData.rate));
+        if (photoGrapherProfileData.photosCount != null)
+            photoCount.setText(String.valueOf(photoGrapherProfileData.photosCount));
+        if (photoGrapherProfileData.followersCount != null)
+            followersCount.setText(String.valueOf(photoGrapherProfileData.followersCount));
+
+        if (photoGrapherProfileData.followingCount != null)
+            followingCount.setText(String.valueOf(photoGrapherProfileData.followingCount));
+
+        if (photoGrapherProfileData.imageProfile != null)
+            GlideApp.with(this)
+                    .load(photoGrapherProfileData.imageProfile)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_check_black_24dp)
+                    .error(R.drawable.ic_launcher_foreground)
+                    .into(photographerProfileImg);
 
 
 //        GlideApp.with(this).
@@ -165,18 +181,51 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 //                });
 
 
-
-
     }
 
-    private void initListener(){
+    private void initListener() {
         earningBtn.setOnClickListener(view -> {
             MainActivity.navigationManger.navigate(Constants.NavigationHelper.EARNING_LIST);
         });
 
-        editProfileBtn.setOnClickListener(view -> MainActivity.navigationManger.navigate(EDIT_PROFILE));
 
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.menu_profile_edit, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit_profile:
+                MainActivity.navigationManger.navigate(EDIT_PROFILE);
+                break;
+            case R.id.action_logout:
+                showToast("logout");
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+//    @Override
+//    public boolean onMenuItemClick(MenuItem menuItem) {
+//
+//        switch (menuItem.getItemId()) {
+//            case R.id.action_edit_profile:
+//                MainActivity.navigationManger.navigate(EDIT_PROFILE);
+//                return true;
+//            case R.id.action_logout:
+//                showToast("logout");
+//                return true;
+//            default:
+//                return false;
+//        }
+//    }
 
     @Override
     public void showMessage(String msg) {

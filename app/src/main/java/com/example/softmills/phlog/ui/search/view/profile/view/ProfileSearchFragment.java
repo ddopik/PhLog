@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
+import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearch;
 import com.example.softmills.phlog.ui.search.view.profile.presenter.ProdileSearchPresenter;
 import com.example.softmills.phlog.ui.search.view.profile.presenter.ProdileSearchPresenterImpl;
@@ -43,9 +45,10 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     private String TAG=ProfileSearchFragment.class.getSimpleName();
     private View mainView;
     private EditText profileSearch;
+    private TextView searchResultCount;
     private ProgressBar profileSearchProgress;
     private CustomRecyclerView profileSearchRv;
-    private OnSearchProfile onSearchProfile;
+    private OnSearchTabSelected onSearchTabSelected;
     private PagingController pagingController;
     private ProfileSearchAdapter profileSearchAdapter;
     private List<ProfileSearch> profileSearchList = new ArrayList<>();
@@ -71,7 +74,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
         super.onViewCreated(view, savedInstanceState);
 
 
-        if (onSearchProfile !=null){
+        if (onSearchTabSelected !=null){
 
             initPresenter();
             initViews();
@@ -79,7 +82,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
             if (profileSearch.getText().toString().length() > 0) {
                 profileSearchList.clear();
-                prodileSearchPresenter.getProfileSearchList(onSearchProfile.getSearchView().getText().toString().trim(),0);
+                prodileSearchPresenter.getProfileSearchList(onSearchTabSelected.getSearchView().getText().toString().trim(),0);
             }
 
         }
@@ -92,7 +95,8 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
         profileSearchRv = mainView.findViewById(R.id.profile_search_rv);
         profileSearchProgress = mainView.findViewById(R.id.profile_search_progress_bar);
-        profileSearch = onSearchProfile.getSearchView();
+        profileSearch = onSearchTabSelected.getSearchView();
+        searchResultCount = onSearchTabSelected.getSearchResultCount();
         profileSearchAdapter = new ProfileSearchAdapter(getContext(), profileSearchList);
         profileSearchRv.setAdapter(profileSearchAdapter);
 
@@ -168,6 +172,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     public void viewProfileSearchItems(List<ProfileSearch> profileSearchList) {
         this.profileSearchList.addAll(profileSearchList);
         profileSearchAdapter.notifyDataSetChanged();
+        searchResultCount.setText(new StringBuilder().append(this.profileSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
     }
 
@@ -194,11 +199,9 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
     }
-    public void setOnSearchProfile(OnSearchProfile onSearchProfile) {
-        this.onSearchProfile = onSearchProfile;
+    public void setOnSearchProfile(OnSearchTabSelected onSearchTabSelected) {
+        this.onSearchTabSelected = onSearchTabSelected;
     }
 
-    public interface OnSearchProfile {
-        EditText getSearchView();
-    }
+
 }

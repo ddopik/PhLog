@@ -11,14 +11,16 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
-import com.example.softmills.phlog.base.commonmodel.Brand;
-import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.Brand;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
+import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.brand.presenter.BrandSearchFragmentPresenter;
 import com.example.softmills.phlog.ui.search.view.brand.presenter.BrandSearchFragmentPresenterImpl;
 import com.jakewharton.rxbinding3.widget.RxTextView;
@@ -43,6 +45,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private String TAG = BrandSearchFragment.class.getSimpleName();
     private View mainView;
     private EditText brandSearch;
+    private TextView searchResultCount;
     private CustomRecyclerView searchBrandRv;
     private ProgressBar searchBrandProgress;
     private BrandSearchAdapter brandSearchAdapter;
@@ -50,8 +53,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private BrandSearchFragmentPresenter brandSearchFragmentPresenter;
     private PagingController pagingController;
     private CompositeDisposable disposable = new CompositeDisposable();
-
-    private OnSearchBrand onSearchBrand;
+    private OnSearchTabSelected onSearchTabSelected;
 
     public static BrandSearchFragment getInstance() {
         BrandSearchFragment brandSearchFragment = new BrandSearchFragment();
@@ -69,17 +71,16 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (onSearchBrand.getSearchView() != null) {
+        if (onSearchTabSelected.getSearchView() != null) {
             initPresenter();
             initViews();
             initListener();
 
         }
 
-        if(brandSearch.getText().toString().length() >0)
+        if (brandSearch.getText().toString().length() > 0)
             brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
     }
-
 
 
     @Override
@@ -91,7 +92,8 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     protected void initViews() {
 
 //        brandSearch = mainView.findViewById(R.id.search_brand);
-        brandSearch = onSearchBrand.getSearchView();
+        brandSearch = onSearchTabSelected.getSearchView();
+        searchResultCount = onSearchTabSelected.getSearchResultCount();
         searchBrandRv = mainView.findViewById(R.id.search_brand_rv);
         searchBrandProgress = mainView.findViewById(R.id.search_brand_progress_bar);
 
@@ -118,15 +120,15 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             @Override
             public void getPagingControllerCallBack(int page) {
 
-                    brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page - 1);
+                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page - 1);
 
 
             }
         };
 
-        brandSearchAdapter.brandAdapterListener= brandSearch -> {
-            Intent intent=new Intent(getActivity(), BrandInnerActivity.class);
-            intent.putExtra(BrandInnerActivity.BRAND_ID,String.valueOf(brandSearch.id));
+        brandSearchAdapter.brandAdapterListener = brandSearch -> {
+            Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
+            intent.putExtra(BrandInnerActivity.BRAND_ID, String.valueOf(brandSearch.id));
             startActivity(intent);
         };
     }
@@ -135,7 +137,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-                 // user cleared search get default data
+                // user cleared search get default data
                 if (brandSearch.getText().length() == 0) {
                     brandSearchList.clear();
                     brandSearchAdapter.notifyDataSetChanged();
@@ -165,6 +167,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     public void viewBrandSearchItems(List<Brand> brandSearchList) {
         this.brandSearchList.addAll(brandSearchList);
         brandSearchAdapter.notifyDataSetChanged();
+        searchResultCount.setText(new StringBuilder().append(this.brandSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
     }
 
@@ -189,18 +192,15 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         disposable.clear();
     }
 
-    public void setBrandSearchView(OnSearchBrand onSearchBrand) {
-        this.onSearchBrand = onSearchBrand;
+    public void setBrandSearchView(OnSearchTabSelected onSearchTabSelected) {
+        this.onSearchTabSelected = onSearchTabSelected;
     }
 
-    public interface OnSearchBrand {
-        EditText getSearchView();
-    }
 
     private void hideSoftKeyBoard() {
         brandSearch.clearFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
-        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
+        if (imm.isAcceptingText()) { // verify if the soft keyboard is open
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
     }

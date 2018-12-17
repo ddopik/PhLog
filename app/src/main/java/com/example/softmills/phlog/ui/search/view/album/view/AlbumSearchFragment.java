@@ -15,13 +15,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
-import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchAdapter;
+import android.widget.TextView;
+
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.view.AlbumPreviewActivity;
+import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearch;
 import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
@@ -52,6 +54,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private String TAG = AlbumSearchFragment.class.getSimpleName();
     private View mainView;
     private EditText albumSearch;
+    private TextView searchResultCount;
     private ExpandableListAdapter expandableListAdapter;
     private CustomRecyclerView albumSearchRv;
     private ExpandableListView filterExpListView;
@@ -63,7 +66,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private AlbumSearchAdapter albumSearchAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
     private PagingController pagingController;
-    private OnSearchBrand onSearchBrand;
+    private OnSearchTabSelected onSearchTabSelected;
 
     public static AlbumSearchFragment getInstance() {
         AlbumSearchFragment albumSearchFragment = new AlbumSearchFragment();
@@ -74,7 +77,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_album_search, container, false);
-
         return mainView;
     }
 
@@ -83,7 +85,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
         super.onViewCreated(view, savedInstanceState);
 
-        if (onSearchBrand.getSearchView() != null) {
+        if (onSearchTabSelected.getSearchView() != null) {
             initPresenter();
             initViews();
             initListener();
@@ -107,7 +109,8 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     @Override
     protected void initViews() {
 
-        albumSearch = onSearchBrand.getSearchView();
+        albumSearch = onSearchTabSelected.getSearchView();
+        searchResultCount = onSearchTabSelected.getSearchResultCount();
         progressBar = mainView.findViewById(R.id.album_search_filter_progress);
         filterExpListView = mainView.findViewById(R.id.filters_expand);
         albumSearchRv = mainView.findViewById(R.id.album_search_rv);
@@ -220,6 +223,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
         this.albumSearchList.addAll(albumSearchList);
         albumSearchAdapter.notifyDataSetChanged();
+        searchResultCount.setText(new StringBuilder().append(this.albumSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
     }
 
@@ -279,11 +283,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
     }
-    public void setBrandSearchView(OnSearchBrand onSearchBrand) {
-        this.onSearchBrand = onSearchBrand;
+    public void setAlbumSearchView(OnSearchTabSelected onSearchTabSelected) {
+        this.onSearchTabSelected = onSearchTabSelected;
     }
-    public interface OnSearchBrand {
-        EditText getSearchView();
-    }
+
+
 
 }

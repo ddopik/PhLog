@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/photographer_profile_background_img"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/photographer_profile_main_preview_height"
-    android:background="@drawable/default_photographer_profile"
-    android:scaleType="centerInside">
+    android:layout_height="@dimen/photographer_profile_main_preview_height">
 
+    <ImageView
+        android:id="@+id/photographer_profile_background_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_photographer_profile" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -21,13 +25,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <FrameLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/profile_tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp22"
-            android:layout_marginEnd="@dimen/dp22"
-            android:padding="@dimen/widgets_padding"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="@dimen/widgets_padding">
 
             <ImageView
                 android:id="@+id/earning_btn"
@@ -36,16 +39,9 @@
                 android:layout_gravity="start"
                 android:src="@drawable/ic_earning" />
 
-            <TextView
-                android:id="@+id/edit_profile_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="@string/edit"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_medium" />
 
-        </FrameLayout>
+
+        </android.support.v7.widget.Toolbar>
 
         <ImageView
             android:id="@+id/photographer_profile_img"
@@ -84,8 +80,7 @@
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="@dimen/user_profile_rating_bar_width"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:rating="2" />
+            android:layout_gravity="center" />
 
     </LinearLayout>
 
@@ -106,9 +101,9 @@
                 android:id="@+id/photos_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="101"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_medium_s" />
+                android:textSize="@dimen/text_medium_s"
+                tools:text="101" />
 
             <TextView
                 android:id="@+id/total_photos_tag"
@@ -134,9 +129,9 @@
                 android:id="@id/followers_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="56"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_medium_s" />
+                android:textSize="@dimen/text_medium_s"
+                tools:text="56" />
 
             <TextView
                 android:id="@+id/followers_tag"
@@ -163,9 +158,9 @@
                 android:id="@+id/following_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="56"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_medium_s" />
+                android:textSize="@dimen/text_medium_s"
+                tools:text="56" />
 
             <TextView
                 android:id="@+id/following_tag"

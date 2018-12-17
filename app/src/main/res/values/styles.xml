@@ -22,6 +22,11 @@
 
         <!--//this is requred by in api 21-->
         <!--<item name="android:navigationBarColor">@color/theme_color</item>-->
+       <!--////Custom dropDownMenu -->
+        <item name="android:actionOverflowButtonStyle">@style/custom_menu_btn</item>
+    </style>
+    <style name="custom_menu_btn">
+        <item name="android:src">@drawable/ic_menu</item>
     </style>
 
     <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">

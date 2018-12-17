@@ -3,8 +3,12 @@ package com.example.softmills.phlog.base.commonmodel;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.softmills.phlog.ui.earning.model.Earning;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by abdalla_maged On Nov,2018
@@ -64,6 +68,31 @@ public class Photographer implements Parcelable {
     public Integer id;
 
 
+
+    @SerializedName("followers_count")
+    @Expose
+    public Integer followersCount;
+    @SerializedName("following_count")
+    @Expose
+    public Integer followingCount;
+    @SerializedName("photos_count")
+    @Expose
+    public Integer photosCount;
+
+
+    @SerializedName("country")
+    @Expose
+    public String country;
+    @SerializedName("rate")
+    @Expose
+    public String rate;
+    @SerializedName("level")
+    @Expose
+    public String level;
+    @SerializedName("earnings")
+    @Expose
+    public List<Earning> earnings = null;
+
     protected Photographer(Parcel in) {
         byte isPhoneVerifiedVal = in.readByte();
         isPhoneVerified = isPhoneVerifiedVal == 0x02 ? null : isPhoneVerifiedVal != 0x00;
@@ -84,6 +113,18 @@ public class Photographer implements Parcelable {
         email = in.readString();
         countryId = in.readString();
         id = in.readByte() == 0x00 ? null : in.readInt();
+        followersCount = in.readByte() == 0x00 ? null : in.readInt();
+        followingCount = in.readByte() == 0x00 ? null : in.readInt();
+        photosCount = in.readByte() == 0x00 ? null : in.readInt();
+        country = in.readString();
+        rate = in.readString();
+        level = in.readString();
+        if (in.readByte() == 0x01) {
+            earnings = new ArrayList<Earning>();
+            in.readList(earnings, Earning.class.getClassLoader());
+        } else {
+            earnings = null;
+        }
     }
 
     @Override
@@ -122,6 +163,33 @@ public class Photographer implements Parcelable {
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeInt(id);
+        }
+        if (followersCount == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(followersCount);
+        }
+        if (followingCount == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(followingCount);
+        }
+        if (photosCount == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(photosCount);
+        }
+        dest.writeString(country);
+        dest.writeString(rate);
+        dest.writeString(level);
+        if (earnings == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(earnings);
         }
     }
 

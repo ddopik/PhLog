@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
- import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
  * Created by abdalla_maged on 11/4/2018.
@@ -32,12 +32,12 @@ import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_
 public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewActivityView {
 
 
-    public static final String ALBUM_PREVIEW_ID="album_preview_id";
+    public static final String ALBUM_PREVIEW_ID = "album_preview_id";
     private String albumID;
-    private List<AlbumGroup> albumGroupList=new ArrayList<>();
-    private   List<BaseImage>  allAlbumImg=new ArrayList<>();
-     private AlbumAdapter albumAdapter;
-     private ImageView albumPreviewImg;
+    private List<AlbumGroup> albumGroupList = new ArrayList<>();
+    private List<BaseImage> allAlbumImg = new ArrayList<>();
+    private AlbumAdapter albumAdapter;
+    private ImageView albumPreviewImg;
     private ProgressBar albumPreviewProgress;
     private CustomRecyclerView albumRv;
     private PagingController pagingController;
@@ -47,8 +47,8 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_preview);
-        if (getIntent().getIntExtra(ALBUM_PREVIEW_ID,0) !=0){
-            albumID=String.valueOf(getIntent().getIntExtra(ALBUM_PREVIEW_ID,0));
+        if (getIntent().getIntExtra(ALBUM_PREVIEW_ID, 0) != 0) {
+            albumID = String.valueOf(getIntent().getIntExtra(ALBUM_PREVIEW_ID, 0));
             initPresenter();
             initView();
             initListener();
@@ -57,18 +57,16 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     }
 
 
-
-
     @Override
     public void initView() {
-        albumPreviewImg=findViewById(R.id.album_preview_img);
+        albumPreviewImg = findViewById(R.id.album_preview_img);
         albumRv = findViewById(R.id.album_rv);
         albumPreviewProgress = findViewById(R.id.user_profile_progress_bar);
 
         // Set adapter object.
         albumAdapter = new AlbumAdapter(getBaseContext(), albumGroupList);
         albumRv.setAdapter(albumAdapter);
-        albumPreviewActivityPresenter.getSelectedSearchAlbum(albumID,"0");
+        albumPreviewActivityPresenter.getSelectedSearchAlbum(albumID, "0");
     }
 
     @Override
@@ -88,10 +86,10 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
         albumAdapter.onAlbumImageClicked = albumImg -> {
 
-            Intent intent =new Intent(this,AllAlbumImgActivity.class);
-             intent.putExtra(SELECTED_IMG_ID,albumImg.id);
-             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) allAlbumImg);
-             startActivity(intent);
+            Intent intent = new Intent(this, AllAlbumImgActivity.class);
+            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+            intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) allAlbumImg);
+            startActivity(intent);
 
         };
     }
@@ -102,12 +100,11 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     }
 
 
-
     @Override
     public void viewAlumPreview(AlbumPreviewResponseData albumPreviewResponseData) {
         allAlbumImg = albumPreviewResponseData.data.photos;
         AlbumGroup singleGroup = new AlbumGroup();
-         int albumGroupCounter = 0;
+        int albumGroupCounter = 0;
         for (int i = 0; i < allAlbumImg.size(); i++) {
             albumGroupCounter++;
             singleGroup.albumGroupList.add(allAlbumImg.get(i));

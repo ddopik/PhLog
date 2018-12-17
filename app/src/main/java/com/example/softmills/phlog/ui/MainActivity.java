@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,8 +21,8 @@ import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningInnerFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningListFragment;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
-import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
 
@@ -80,7 +82,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initPresenter() {
         ///set NetWork Call Header
-        PhLogApp.initFastAndroidNetworking(PrefUtils.getUserToken(getBaseContext()),"0"," en-us'",getBaseContext());
+        PhLogApp.initFastAndroidNetworking(PrefUtils.getUserToken(getBaseContext()), "0", " en-us'", getBaseContext());
     }
 
     private void initListener() {
@@ -96,7 +98,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             onBackPressed();
         });
     }
-
 
 
     @Override
@@ -135,6 +136,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        navigationManger.navigate(HOME);
     }
 
+
+
+
+    ////////
     public class NavigationManger {
         private String extraData;
         private Constants.NavigationHelper currentTab;
@@ -209,10 +214,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 case UPLOAD_PHOTO: {
 
-                    HashMap<String, String> imageType=new HashMap<String,String>();
-                    imageType.put(IMAGE_TYPE_PHOTOS,"true");
-                    GalleryImageFragment galleryImageFragment=GalleryImageFragment.getInstance(imageType);
-                    addFragment(R.id.view_container,galleryImageFragment, GalleryImageFragment.class.getSimpleName(), false);
+                    HashMap<String, String> imageType = new HashMap<String, String>();
+                    imageType.put(IMAGE_TYPE_PHOTOS, "true");
+                    GalleryImageFragment galleryImageFragment = GalleryImageFragment.getInstance(imageType);
+                    addFragment(R.id.view_container, galleryImageFragment, GalleryImageFragment.class.getSimpleName(), false);
                     picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
                     toolbar.setVisibility(View.VISIBLE);
                     toolBarTitle.setText(getResources().getString(R.string.upload_photo));
@@ -224,8 +229,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                     myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                     myProfileBtn.setCompoundDrawablePadding(8);
-                    toolbar.setVisibility(View.GONE);
-                    toolBarTitle.setText(getResources().getString(R.string.profile));
+//                    toolbar.setVisibility(View.GONE);
+//                    toolBarTitle.setText(getResources().getString(R.string.profile));
                     currentTab = PROFILE;
                     break;
                 }
@@ -276,10 +281,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             this.extraData = extraData;
         }
 
-        public Constants.NavigationHelper getCurrentTab() {
+        Constants.NavigationHelper getCurrentTab() {
             return currentTab;
         }
+
     }
+
+
+    ///////
 
     @Override
     public void onBackPressed() {
@@ -310,4 +319,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     }
+
 }

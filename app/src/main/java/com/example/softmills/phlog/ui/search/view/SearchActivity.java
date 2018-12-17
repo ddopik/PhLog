@@ -19,10 +19,11 @@ import com.example.softmills.phlog.ui.search.view.profile.view.ProfileSearchFrag
 public class SearchActivity extends BaseActivity {
 
     private EditText searchView;
-    private TextView brandTab, profileTab, albumTab, filterTab;
+    private TextView brandTab, profileTab, albumTab, filterTab, searchResult;
     private FrameLayout searchContainer;
     private AlbumSearchFragment albumSearchFragment;
     private OnFilterClicked onFilterClicked;
+    private OnSearchTabSelected onSearchTabSelected;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class SearchActivity extends BaseActivity {
         albumTab = findViewById(R.id.tab_album);
         searchContainer = findViewById(R.id.search_container);
         filterTab = findViewById(R.id.filter_ic);
+        searchResult = findViewById(R.id.search_result);
 
     }
 
@@ -51,20 +53,31 @@ public class SearchActivity extends BaseActivity {
 
     }
 
-    private void initListener(){
+    private void initListener() {
 
+        onSearchTabSelected=new OnSearchTabSelected() {
+            @Override
+            public EditText getSearchView() {
+                return searchView;
+            }
+
+            @Override
+            public TextView getSearchResultCount() {
+                return searchResult;
+            }
+        };
 
         brandTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_brand);
             BrandSearchFragment brandSearchFragment = BrandSearchFragment.getInstance();
-            brandSearchFragment.setBrandSearchView(() -> searchView);
+            brandSearchFragment.setBrandSearchView(onSearchTabSelected);
             addFragment(R.id.search_container, brandSearchFragment, BrandSearchFragment.class.getSimpleName(), false);
 
         });
         profileTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_profile);
-            ProfileSearchFragment profileSearchFragment=ProfileSearchFragment.getInstance();
-            profileSearchFragment.setOnSearchProfile(() -> searchView);
+            ProfileSearchFragment profileSearchFragment = ProfileSearchFragment.getInstance();
+            profileSearchFragment.setOnSearchProfile(onSearchTabSelected);
             addFragment(R.id.search_container, profileSearchFragment, ProfileSearchFragment.class.getSimpleName(), false);
 
         });
@@ -74,7 +87,7 @@ public class SearchActivity extends BaseActivity {
             filterTab.setVisibility(View.VISIBLE);
             albumSearchFragment = AlbumSearchFragment.getInstance();
             onFilterClicked = albumSearchFragment;
-            albumSearchFragment.setBrandSearchView(() -> searchView);
+            albumSearchFragment.setAlbumSearchView(onSearchTabSelected);
             addFragment(R.id.search_container, albumSearchFragment, AlbumSearchFragment.class.getSimpleName(), false);
         });
 

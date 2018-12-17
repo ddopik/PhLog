@@ -65,7 +65,8 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
         });
 
         GlideApp.with(context).load(homeCampaign.imageCover)
-                .error(R.drawable.splash_screen_background)
+                .error(R.drawable.default_error_img)
+                .placeholder(R.drawable.default_place_holder)
                 .into(new SimpleTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
@@ -76,7 +77,11 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
         campaignViewHolder.campaignTitle.setText(homeCampaign.titleEn);
         campaignViewHolder.campaignDayLeft.setText(String.valueOf(homeCampaign.daysLeft));
         campaignViewHolder.campaignDayLeft.append(" " + context.getResources().getString(R.string.days_left));
-        GlideApp.with(context).load(homeCampaign.business.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
+        GlideApp.with(context).load(homeCampaign.business.thumbnail)
+                .error(R.drawable.default_error_img)
+                .placeholder(R.drawable.default_place_holder)
+                .apply(RequestOptions.circleCropTransform())
+                .into(campaignViewHolder.campaignBusinessIcon);
 
         ///////////////////
     }

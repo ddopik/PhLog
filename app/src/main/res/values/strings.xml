@@ -123,5 +123,8 @@
     <string name="like">Like</string>
     <string name="comment">Comments</string>
     <string name="comment_cant_not_be_null">Comment can\'t be null</string>
+    <string name="result">Result</string>
+    <string name="action_logout">LogOut</string>
+    <string name="action_edit">Edit</string>
 
 </resources>
