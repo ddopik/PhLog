@@ -72,8 +72,6 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                 draftState = getIntent().getStringExtra(IMAGE_DRAFT_STATE);
             if (getIntent().getStringExtra(IMAGE_LOCATION) != null)
                 imageLocation = getIntent().getStringExtra(IMAGE_LOCATION);
-
-
             initView();
             initPresenter();
             initListener();
@@ -88,17 +86,6 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
         uploadBrn = findViewById(R.id.upload_image_btn);
         uploadImageProgress = findViewById(R.id.upload_image_progress);
-
-//        Tag tag = new Tag();
-//        tag.name = "Tag";
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagList.add(tag);
-//        tagMenuList.addAll(tagList);
-
 
         imagePreview = findViewById(R.id.tag_img_preview);
         autoCompleteTextView = findViewById(R.id.tag_auto_complete);

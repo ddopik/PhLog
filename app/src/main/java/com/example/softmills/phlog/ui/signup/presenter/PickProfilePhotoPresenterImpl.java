@@ -30,7 +30,7 @@ public class PickProfilePhotoPresenterImpl implements PickProfilePhotoPresenter 
     @Override
     public void uploadPhoto(File imagePath) {
         pickProfilePhotoActivityView.viewUploadImageProgress(true);
-        BaseNetworkApi.uploadProfileImg(PrefUtils.getUserToken(context),imagePath)
+        BaseNetworkApi.uploadProfileImg(imagePath)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(uploadProfileImgResponse -> {

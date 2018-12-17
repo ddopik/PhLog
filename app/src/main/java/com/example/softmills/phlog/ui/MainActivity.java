@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -137,8 +135,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-
-
     ////////
     public class NavigationManger {
         private String extraData;
@@ -225,12 +221,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     break;
                 }
                 case PROFILE: {
+                    toolBarTitle.setText(getResources().getString(R.string.profile));
+                    toolbar.setVisibility(View.GONE);
                     addFragment(R.id.view_container, new PhotoGraphedProfileFragment(), PhotoGraphedProfileFragment.class.getSimpleName(), false);
                     myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                     myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                     myProfileBtn.setCompoundDrawablePadding(8);
-//                    toolbar.setVisibility(View.GONE);
-//                    toolBarTitle.setText(getResources().getString(R.string.profile));
                     currentTab = PROFILE;
                     break;
                 }

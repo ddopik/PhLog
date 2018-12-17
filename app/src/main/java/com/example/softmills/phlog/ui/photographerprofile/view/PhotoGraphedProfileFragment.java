@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.photographerprofile.view;
  * Created by Abdalla_maged on 9/30/2018.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,11 +36,15 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.PhotoGrapherFollowFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.PhotoGrapherPhotosFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotoGrapherSavedPhotosFragment;
+import com.example.softmills.phlog.ui.uploadimage.view.UploadImageActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EDIT_PROFILE;
+import static com.example.softmills.phlog.network.BaseNetworkApi.IMAGE_TYPE_PROFILE;
+import static com.example.softmills.phlog.ui.uploadimage.view.UploadImageActivity.IMAGE_TYPE;
 
 public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGrapherProfileActivityView {
 
@@ -82,9 +87,6 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-
-
     @Override
     public void initViews() {
         profileFragmentToolBar = mainView.findViewById(R.id.profile_tool_bar);
@@ -188,7 +190,15 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
             MainActivity.navigationManger.navigate(Constants.NavigationHelper.EARNING_LIST);
         });
 
-
+        photographerProfileImg.setOnClickListener(v->{
+            HashMap<String, String> imageType=new HashMap<String, String>();
+            imageType.put(IMAGE_TYPE_PROFILE, "true");
+            Bundle extras = new Bundle();
+            extras.putSerializable(UploadImageActivity.IMAGE_TYPE,imageType);
+            Intent intent=new Intent(getActivity(),UploadImageActivity.class);
+            intent.putExtras(extras);
+            startActivity(intent);
+        });
     }
 
     @Override

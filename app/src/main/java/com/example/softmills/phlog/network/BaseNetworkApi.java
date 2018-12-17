@@ -57,6 +57,7 @@ public class BaseNetworkApi {
 
     public static String IMAGE_TYPE_PHOTOS = "image";
     public static String IMAGE_TYPE_CAMPAIGN = "campaign_id";
+    public static String IMAGE_TYPE_PROFILE = "image_profile";
 
     public static String STATUS_IN_VALID_RESPONSE = "401";
     public static String NEW_FACEBOOK_USER_STATUS = "0";
@@ -409,12 +410,11 @@ public class BaseNetworkApi {
                 .getObjectObservable(EarningResponse.class);
     }
 
-    public static io.reactivex.Observable<UploadImgResponse> uploadProfileImg(String token, File imgPath) {
+    public static io.reactivex.Observable<UploadImgResponse> uploadProfileImg(File imgPath) {
         return Rx2AndroidNetworking.upload(UPLOAD_PROFILE)
-                .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
                 .addHeaders("x-lang-code", "en-us")
-                .addMultipartFile("image_profile", imgPath)
+                .addMultipartFile(IMAGE_TYPE_PROFILE, imgPath)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(UploadImgResponse.class);
