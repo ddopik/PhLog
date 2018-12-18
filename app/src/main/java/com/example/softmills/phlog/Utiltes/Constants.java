@@ -24,7 +24,7 @@ public interface Constants {
 
 
     enum UploadImageTypes{
-         USER_PROFILE_IMG,USER_PROFILE_COVER_IMG,CAMPAIGN_IMG,NORMAL_IMG
+         CAMPAIGN_IMG,NORMAL_IMG
     }
     ///////////////////////Entity-type For socialFragment
     int ENTITY_PROFILE=1;

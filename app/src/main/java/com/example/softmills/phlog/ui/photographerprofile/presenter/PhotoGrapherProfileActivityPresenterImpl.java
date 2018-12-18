@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGrapherProfileActivityView;
+
+import java.io.File;
 
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -39,5 +42,20 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
                     Log.e(TAG, "getPhotoGrapherProfileData() --->" + throwable.getMessage());
                 });
 
+    }
+    @SuppressLint("CheckResult")
+    @Override
+    public void uploadPhoto(File imagePath) {
+        photoGrapherProfileActivityView.showProfileProgress(true);
+        BaseNetworkApi.uploadProfileImg(imagePath)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(uploadProfileImgResponse -> {
+                    photoGrapherProfileActivityView.UploadProfileImgFinished(true);
+                    photoGrapherProfileActivityView.showProfileProgress(false);
+                },throwable -> {
+                    ErrorUtils.setError(context, TAG, throwable);
+                    photoGrapherProfileActivityView.showProfileProgress(false);
+                });
     }
 }

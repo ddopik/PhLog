@@ -14,14 +14,14 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by abdalla_maged on 11/1/2018.
  */
-public class ProdileSearchPresenterImpl implements ProdileSearchPresenter {
+public class ProfileSearchPresenterImpl implements ProfileSearchPresenter {
 
-    private String TAG = ProdileSearchPresenterImpl.class.getSimpleName();
+    private String TAG = ProfileSearchPresenterImpl.class.getSimpleName();
 
     private Context context;
     private ProfileSearchFragmentView profileSearchFragmentView;
 
-    public ProdileSearchPresenterImpl(Context context, ProfileSearchFragmentView profileSearchFragmentView) {
+    public ProfileSearchPresenterImpl(Context context, ProfileSearchFragmentView profileSearchFragmentView) {
         this.context = context;
         this.profileSearchFragmentView = profileSearchFragmentView;
     }
@@ -30,13 +30,12 @@ public class ProdileSearchPresenterImpl implements ProdileSearchPresenter {
     @Override
     public void getProfileSearchList(String key, int page) {
         profileSearchFragmentView.viewProfileSearchProgress(true);
-        BaseNetworkApi.getProfileSearch(PrefUtils.getUserToken(context), key, page)
+        BaseNetworkApi.getProfileSearch(key, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profileSearchResponse -> {
-
                     profileSearchFragmentView.viewProfileSearchProgress(false);
-                    profileSearchFragmentView.viewProfileSearchItems(profileSearchResponse.data.data);
+                    profileSearchFragmentView.viewProfileSearchItems(profileSearchResponse.data);
                 }, throwable -> {
                     profileSearchFragmentView.viewProfileSearchProgress(false);
                     Log.e(TAG, "getProfileSearchList() ---> Error " + throwable.getMessage());

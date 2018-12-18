@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.profile.model;
 
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model.PhotoGrapherFollowingObj;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -16,7 +17,7 @@ public class ProfileSearchData {
     public String currentPage;
     @SerializedName("data")
     @Expose
-    public List<ProfileSearch> data =new ArrayList<>();
+    public List<Photographer> data =new ArrayList<>();
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;

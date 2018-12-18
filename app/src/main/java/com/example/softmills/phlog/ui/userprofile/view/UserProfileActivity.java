@@ -64,6 +64,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
 
         if(getIntent().getStringExtra(USER_ID) != null)
+
             this.userID=getIntent().getStringExtra(USER_ID);
             userProfileLevel = findViewById(R.id.user_profile_level);
             userProfileRating = findViewById(R.id.profile_rating);

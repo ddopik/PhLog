@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,9 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearch;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
@@ -30,11 +27,11 @@ public class ProfileSearchAdapter extends RecyclerView.Adapter<ProfileSearchAdap
 
     private String TAG = ProfileSearchAdapter.class.getSimpleName();
     public Context context;
-    private List<ProfileSearch> profileList;
-    private List<ProfileSearch>profileFiltered;
+    private List<Photographer> profileList;
+    private List<Photographer>profileFiltered;
     public ProfileAdapterListener profileAdapterListener;
 
-    public ProfileSearchAdapter(Context context, List<ProfileSearch> profileList) {
+    public ProfileSearchAdapter(Context context, List<Photographer> profileList) {
         this.context = context;
         this.profileList = profileList;
         //todo no need to filter result as list always filter by server for each Change
@@ -66,12 +63,12 @@ public class ProfileSearchAdapter extends RecyclerView.Adapter<ProfileSearchAdap
                 profileSearchViewHolder.profileFullName.setText(profileList.get(i).fullName);
             if (profileList.get(i).userName != null)
                 profileSearchViewHolder.profileUserName.setText(profileList.get(i).userName);
-            if (profileList.get(i).followerCount != null)
-                profileSearchViewHolder.profileFollowersCount.setText(new StringBuilder().append(profileList.get(i).followerCount).append(" ").append(context.getResources().getString(R.string.followers)).toString());
+            if (profileList.get(i).followingCount != null)
+                profileSearchViewHolder.profileFollowersCount.setText(new StringBuilder().append(profileList.get(i).followersCount).append(" ").append(context.getResources().getString(R.string.followers)).toString());
             if (profileList.get(i).followingCount != null)
                 profileSearchViewHolder.profileCountFollowingCount.setText(new StringBuilder().append(profileList.get(i).followingCount).append(" ").append(context.getResources().getString(R.string.following)).toString());
-            if (profileList.get(i).imagePhotographerCount != null)
-                profileSearchViewHolder.photosCount.setText(new StringBuilder().append(profileList.get(i).imagePhotographerCount).append(" ").append(context.getResources().getString(R.string.photos)).toString());
+            if (profileList.get(i).photosCount != null)
+                profileSearchViewHolder.photosCount.setText(new StringBuilder().append(profileList.get(i).photosCount).append(" ").append(context.getResources().getString(R.string.photos)).toString());
 
             profileSearchViewHolder.profileContainer.setOnClickListener(v -> {
                 if (profileAdapterListener != null) {
@@ -146,7 +143,7 @@ public class ProfileSearchAdapter extends RecyclerView.Adapter<ProfileSearchAdap
 //    }
 
     public interface ProfileAdapterListener {
-        void onProfileSelected(ProfileSearch profileSearch);
+        void onProfileSelected(Photographer profileSearch);
     }
 
 }

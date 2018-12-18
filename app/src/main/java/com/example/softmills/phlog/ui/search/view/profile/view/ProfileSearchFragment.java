@@ -16,12 +16,12 @@ import android.widget.TextView;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
-import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearch;
-import com.example.softmills.phlog.ui.search.view.profile.presenter.ProdileSearchPresenter;
-import com.example.softmills.phlog.ui.search.view.profile.presenter.ProdileSearchPresenterImpl;
+import com.example.softmills.phlog.ui.search.view.profile.presenter.ProfileSearchPresenter;
+import com.example.softmills.phlog.ui.search.view.profile.presenter.ProfileSearchPresenterImpl;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
@@ -51,9 +51,9 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     private OnSearchTabSelected onSearchTabSelected;
     private PagingController pagingController;
     private ProfileSearchAdapter profileSearchAdapter;
-    private List<ProfileSearch> profileSearchList = new ArrayList<>();
+    private List<Photographer> profileSearchList = new ArrayList<>();
 
-    private ProdileSearchPresenter prodileSearchPresenter;
+    private ProfileSearchPresenter profileSearchPresenter;
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public static ProfileSearchFragment getInstance() {
@@ -82,7 +82,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
             if (profileSearch.getText().toString().length() > 0) {
                 profileSearchList.clear();
-                prodileSearchPresenter.getProfileSearchList(onSearchTabSelected.getSearchView().getText().toString().trim(),0);
+                profileSearchPresenter.getProfileSearchList(onSearchTabSelected.getSearchView().getText().toString().trim(),0);
             }
 
         }
@@ -104,7 +104,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
     @Override
     protected void initPresenter() {
-        prodileSearchPresenter = new ProdileSearchPresenterImpl(getContext(), this);
+        profileSearchPresenter = new ProfileSearchPresenterImpl(getContext(), this);
     }
 
 
@@ -126,7 +126,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
             @Override
             public void getPagingControllerCallBack(int page) {
                 if (profileSearch.getText().length() > 0) {
-                    prodileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), page - 1);
+                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), page - 1);
 
                 }
 
@@ -136,7 +136,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
         profileSearchAdapter.profileAdapterListener = profileSearch -> {
             Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-            intent.putExtra(UserProfileActivity.USER_ID,profileSearch.userNameId);
+            intent.putExtra(UserProfileActivity.USER_ID,String.valueOf( profileSearch.id));
             startActivity(intent);
         };
     }
@@ -147,11 +147,11 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
                 // user cleared search get default data
                 if (profileSearch.getText().length() == 0) {
                     profileSearchList.clear();
-                    prodileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
+                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
                 } else {
                     // user is searching clear default value and get new search List
                     profileSearchList.clear();
-                    prodileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
+                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
                 }
                 Log.e(TAG, "search string: " + profileSearch.getText().toString());
 
@@ -169,7 +169,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
         };
     }
     @Override
-    public void viewProfileSearchItems(List<ProfileSearch> profileSearchList) {
+    public void viewProfileSearchItems(List<Photographer> profileSearchList) {
         this.profileSearchList.addAll(profileSearchList);
         profileSearchAdapter.notifyDataSetChanged();
         searchResultCount.setText(new StringBuilder().append(this.profileSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());

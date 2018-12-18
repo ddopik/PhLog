@@ -33,7 +33,7 @@
                 android:layout_width="@dimen/user_profile_rating_bar_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:rating="2" />
+                 />
         </LinearLayout>
 
         <LinearLayout

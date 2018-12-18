@@ -73,7 +73,6 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
     @Override
     public void initView() {
-//        RequestPermutations(); //todo back to GalleryImageActivity
         imagePreview = findViewById(R.id.filtered_image_preview);
         applyFilterBtn = findViewById(R.id.btn_apply_filter);
         closeFilterBtn = findViewById(R.id.btn_close_filter);

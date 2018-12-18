@@ -85,7 +85,8 @@ public class BaseNetworkApi {
     private static final String USER_PROFILE_PHOTOS = BASE_URL + "/image_photographer";
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
     private static final String SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
-    private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/photographer/following/list";
+    private static final String PHOTOGRAPHER_SEARCH_URL = BASE_URL + "/photographer/list";
+    private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/photographer/list";
     private static final String GET_SEARCH_ALBUM = BASE_URL + "/photographer/album/details";
     private static final String BRAND_SEARCH_URL = BASE_URL + "/photographer/business/following/list";
     private static final String INNER_BRAND_URL = BASE_URL + "/photographer/business/details";
@@ -238,9 +239,8 @@ public class BaseNetworkApi {
                 .getObjectObservable(BrandSearchResponse.class);
     }
 
-    public static io.reactivex.Observable<ProfileSearchResponse> getProfileSearch(String token, String key, int page) {
-        return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOWING_SEARCH_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
+    public static io.reactivex.Observable<ProfileSearchResponse> getProfileSearch( String key, int page) {
+        return Rx2AndroidNetworking.post(PHOTOGRAPHER_SEARCH_URL)
                 .addBodyParameter("keyword", key)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
                 .getResponseOnlyFromNetwork()

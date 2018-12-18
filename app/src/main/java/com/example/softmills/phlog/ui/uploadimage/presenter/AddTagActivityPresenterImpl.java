@@ -59,21 +59,6 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
                         });
                 break;
             }
-            case USER_PROFILE_IMG: {
-                //user is uploading Profile Photo
-                addTagActivityView.viewUploadProgress(true);
-                BaseNetworkApi.uploadProfileImg(new File(imagePath))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(uploadProfileImgResponse -> {
-                            addTagActivityView.viewUploadProgress(false);
-                            MainActivity.navigationManger.navigate(Constants.NavigationHelper.PROFILE);
-                        }, throwable -> {
-                            ErrorUtils.setError(context, TAG, throwable);
-                            addTagActivityView.viewUploadProgress(false);
-                        });
-                break;
-            }
             case CAMPAIGN_IMG: {
 
                 //            --->user Uploading CampaignPhoto
