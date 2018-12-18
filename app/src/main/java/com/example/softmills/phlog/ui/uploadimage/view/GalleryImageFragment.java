@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.GalleryImageAdapter;
@@ -39,9 +40,9 @@ public class GalleryImageFragment extends BaseFragment {
     private GalleryImageAdapter galleryImageAdapter;
     private CustomRecyclerView galleryRv;
     private ImageButton openCameraBtn, backBtn;
-    private HashMap<String, String> ImageType;
+    private UploadImageType ImageType;
 
-    public static GalleryImageFragment getInstance(HashMap<String, String> imageType) {
+    public static GalleryImageFragment getInstance(UploadImageType imageType) {
         GalleryImageFragment galleryImageFragment = new GalleryImageFragment();
         galleryImageFragment.ImageType = imageType;
         return galleryImageFragment;
@@ -50,8 +51,6 @@ public class GalleryImageFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
         mainView = inflater.inflate(R.layout.fragment_gallery_image, container, false);
         return mainView;
     }
@@ -116,9 +115,10 @@ public class GalleryImageFragment extends BaseFragment {
 
         galleryImageAdapter.onGalleryImageClicked = imagePath -> {
             Bundle extras = new Bundle();
+            ImageType.setImageUrl(imagePath);
             extras.putSerializable(ImageFilterActivity.IMAGE_TYPE, ImageType);
             Intent intent = new Intent(getContext(), ImageFilterActivity.class);
-            intent.putExtra(ImageFilterActivity.ImageFilter, imagePath);
+//            intent.putExtra(ImageFilterActivity.ImageFilter, imagePath);
             intent.putExtras(extras);
             startActivity(intent);
         };

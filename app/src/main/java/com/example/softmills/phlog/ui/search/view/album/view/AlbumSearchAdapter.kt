@@ -30,6 +30,7 @@ class AlbumSearchAdapter(private var albumSearchList: List<AlbumSearch>?) : Recy
 
         takeIf { albumSearchList?.get(i)?.photos?.getOrNull(2) != null }?.apply {
             albumSearchViewHolder.multiImageContainer.visibility = View.VISIBLE
+            albumSearchViewHolder.singleImageContainer.visibility = View.GONE
             albumSearchList?.get(i)?.photos?.getOrNull(0).let {
                 GlideApp.with(context!!)
                         .load(it?.url)
@@ -55,6 +56,7 @@ class AlbumSearchAdapter(private var albumSearchList: List<AlbumSearch>?) : Recy
             }
         } ?: run {
             albumSearchViewHolder.singleImageContainer.visibility = View.VISIBLE
+            albumSearchViewHolder.multiImageContainer.visibility = View.GONE
             albumSearchList?.get(i)?.photos?.getOrNull(0).let {
                 GlideApp.with(context!!)
                         .load(it?.url)

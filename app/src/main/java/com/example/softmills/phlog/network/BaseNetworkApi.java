@@ -2,6 +2,7 @@ package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
 import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
+import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
 import com.example.softmills.phlog.ui.album.model.ImgCommentResponse;
 import com.example.softmills.phlog.ui.allphotos.model.PhotoGrapherPhotosResponse;
@@ -434,7 +435,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(UploadImgResponse.class);
     }
 
-    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, Map CampagnId) {
+    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, UploadImageType uploadImageType) {
         return Rx2AndroidNetworking.upload(UPLOAD_PHOTOGRAPHER_PHOTO)
                 .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
@@ -442,7 +443,7 @@ public class BaseNetworkApi {
                 .addMultipartParameter("caption", caption)
                 .addMultipartParameter("location", location)
                 .addMultipartParameter(tagList)
-                .addMultipartParameter(CampagnId)
+                .addMultipartParameter(IMAGE_TYPE_CAMPAIGN,uploadImageType.getImageId())
                 .addMultipartFile("image", imgPath)
                 .setPriority(Priority.HIGH)
                 .build()

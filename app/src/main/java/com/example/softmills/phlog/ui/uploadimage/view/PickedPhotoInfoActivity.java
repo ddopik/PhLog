@@ -24,6 +24,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.Utiltes.MapUtls;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.PlaceArrayAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -34,8 +35,6 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.HashMap;
 
 import io.reactivex.annotations.NonNull;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -50,8 +49,8 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
 
-    public static String FILTRED_IIMG = "filtered_image_path";
     public static String IMAGE_TYPE = "image_type";
+
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
@@ -65,7 +64,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private EditText caption;
     private Switch draftBtn;
     private MapUtls mapUtls;
-    private HashMap<String, String> imageType;
+    private UploadImageType imageType;
 
 
     @Override
@@ -75,10 +74,11 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
-        if (getIntent().getStringExtra(FILTRED_IIMG) != null && bundle.getSerializable(IMAGE_TYPE) != null) {
+        if (bundle.getSerializable(IMAGE_TYPE) != null) {
             setContentView(R.layout.activity_photo_info_activity);
-            imagePath = getIntent().getStringExtra(FILTRED_IIMG);
-            imageType = (HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
+
+            imageType = (UploadImageType) bundle.getSerializable(IMAGE_TYPE);
+            imagePath = imageType.getImageUrl();
             initPresenter();
             initView();
             initListener();
@@ -127,16 +127,21 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
     private void initListener() {
         nextBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddTagActivity.class);
-            intent.putExtra(AddTagActivity.IMAGE_PREVIEW, imagePath);
-            if (placesAutoCompete.getText() != null)
-                intent.putExtra(AddTagActivity.IMAGE_LOCATION, String.valueOf(placesAutoCompete.getText()));
-            if (caption.getText() != null)
-                intent.putExtra(AddTagActivity.IMAGE_CAPTION, String.valueOf(caption.getText()));
-
-            intent.putExtra(AddTagActivity.IMAGE_DRAFT_STATE, String.valueOf(draftBtn.isChecked()));
             Bundle extras = new Bundle();
-            extras.putSerializable(AddTagActivity.IMAGE_TYPE, imageType); //passing image type
+
+            if (placesAutoCompete.getText() != null)
+                imageType.setImageLocation(String.valueOf(placesAutoCompete.getText()));
+            if (caption.getText() != null)
+                imageType.setImageCaption(String.valueOf(caption.getText()));
+
+            imageType.setDraft(draftBtn.isChecked());
+
+            Intent intent = new Intent(this, AddTagActivity.class);
+//            intent.putExtra(AddTagActivity.IMAGE_PREVIEW, imagePath);
+//            intent.putExtra(AddTagActivity.IMAGE_DRAFT_STATE, String.valueOf(draftBtn.isChecked()));
+//            Bundle extras = new Bundle();
+//            extras.putSerializable(AddTagActivity.IMAGE_TYPE, imageType); //passing image type
+            extras.putSerializable(AddTagActivity.IMAGE_TYPE, imageType);
             intent.putExtras(extras);
             startActivity(intent);
         });
@@ -253,7 +258,6 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
             Log.e("location Address=", locationAddress);
         }
     }
-
 
 
     protected void onDestroy() {

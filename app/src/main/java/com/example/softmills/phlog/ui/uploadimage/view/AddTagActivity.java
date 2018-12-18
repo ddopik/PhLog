@@ -15,6 +15,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Tag;
+import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenter;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenterImpl;
@@ -25,18 +26,15 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by abdalla_maged on 10/28/2018.
  */
 public class AddTagActivity extends BaseActivity implements AddTagActivityView {
-    public static String IMAGE_PREVIEW = "image_uri";
-    public static String IMAGE_LOCATION = "image_location";
-    public static String IMAGE_DRAFT_STATE = "image_draft_state";
-    public static String IMAGE_CAPTION = "image_caption";
+
     public static String IMAGE_TYPE = "image_type";
+
     private AutoCompleteTextView autoCompleteTextView;
     private List<Tag> tagList = new ArrayList<Tag>();
     private List<Tag> tagMenuList = new ArrayList<Tag>();
@@ -47,7 +45,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private ImageButton backBtn;
     private Button uploadBrn;
     private ProgressBar uploadImageProgress;
-    private HashMap<String, String> imageType;
+    private  UploadImageType imageType;
     private String imageCaption;
     private String draftState;
     private String imageLocation;
@@ -63,15 +61,17 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
-        if (getIntent().getStringExtra(IMAGE_PREVIEW) != null && bundle.getSerializable(IMAGE_TYPE) != null) {
-            imagePreviewPath = getIntent().getStringExtra(IMAGE_PREVIEW);
-            imageType = (HashMap<String, String>) bundle.getSerializable(IMAGE_TYPE);
-            if (getIntent().getStringExtra(IMAGE_CAPTION) != null)
-                imageCaption = getIntent().getStringExtra(IMAGE_CAPTION);
-            if (getIntent().getStringExtra(IMAGE_DRAFT_STATE) != null)
-                draftState = getIntent().getStringExtra(IMAGE_DRAFT_STATE);
-            if (getIntent().getStringExtra(IMAGE_LOCATION) != null)
-                imageLocation = getIntent().getStringExtra(IMAGE_LOCATION);
+        if ( bundle.getSerializable(IMAGE_TYPE) != null) {
+            imageType=(UploadImageType) bundle.getSerializable(IMAGE_TYPE);
+            imagePreviewPath =imageType.getImageUrl();
+            draftState =String.valueOf(imageType.isDraft());
+
+            if (imageType.getImageCaption() != null)
+                imageCaption = imageType.getImageCaption();
+
+            if (imageType.getImageLocation() != null)
+                imageLocation = imageType.getImageLocation();
+
             initView();
             initPresenter();
             initListener();

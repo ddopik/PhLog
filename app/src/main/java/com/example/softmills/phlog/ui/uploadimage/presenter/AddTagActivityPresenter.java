@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.uploadimage.presenter;
 
 import com.example.softmills.phlog.base.commonmodel.Tag;
+import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,5 +12,5 @@ import java.util.List;
 public interface AddTagActivityPresenter {
 
 
-    void uploadPhoto(String imagePath,String imageCaption,String location,String draftState, HashMap<String, String> imageType, List<Tag> tagList);
+    void uploadPhoto(String imagePath, String imageCaption, String location, String draftState, UploadImageType imageType, List<Tag> tagList);
 }

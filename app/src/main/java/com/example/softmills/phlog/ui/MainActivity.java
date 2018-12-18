@@ -15,6 +15,7 @@ import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.app.PhLogApp;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningInnerFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningListFragment;
@@ -210,8 +211,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 case UPLOAD_PHOTO: {
 
-                    HashMap<String, String> imageType = new HashMap<String, String>();
-                    imageType.put(IMAGE_TYPE_PHOTOS, "true");
+                    UploadImageType imageType = new UploadImageType();
+                    imageType.setUploadImageType(Constants.UploadImageTypes.NORMAL_IMG);
                     GalleryImageFragment galleryImageFragment = GalleryImageFragment.getInstance(imageType);
                     addFragment(R.id.view_container, galleryImageFragment, GalleryImageFragment.class.getSimpleName(), false);
                     picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);

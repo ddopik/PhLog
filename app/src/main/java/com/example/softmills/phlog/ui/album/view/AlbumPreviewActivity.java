@@ -105,23 +105,27 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         allAlbumImg = albumPreviewResponseData.data.photos;
         AlbumGroup singleGroup = new AlbumGroup();
         int albumGroupCounter = 0;
-        for (int i = 0; i < allAlbumImg.size(); i++) {
-            albumGroupCounter++;
-            singleGroup.albumGroupList.add(allAlbumImg.get(i));
 
-            if (albumGroupCounter == 4 || i == allAlbumImg.size() - 1) {
-                albumGroupList.add(singleGroup);
-                albumGroupCounter = 0;
-                singleGroup = new AlbumGroup();
+        if(allAlbumImg.size() > 0 ) {
+            for (int i = 0; i < allAlbumImg.size(); i++) {
+                albumGroupCounter++;
+                singleGroup.albumGroupList.add(allAlbumImg.get(i));
+
+                if (albumGroupCounter == 4 || i == allAlbumImg.size() - 1) {
+                    albumGroupList.add(singleGroup);
+                    albumGroupCounter = 0;
+                    singleGroup = new AlbumGroup();
+                }
             }
-        }
-        GlideApp.with(this)
-                .load(albumGroupList.get(0).albumGroupList.get(0).url)
-                .placeholder(R.drawable.default_photographer_profile)
-                .error(R.drawable.default_photographer_profile)
-                .into(albumPreviewImg);
 
-        albumAdapter.notifyDataSetChanged();
+            GlideApp.with(this)
+                    .load(albumGroupList.get(0).albumGroupList.get(0).url)
+                    .placeholder(R.drawable.default_photographer_profile)
+                    .error(R.drawable.default_photographer_profile)
+                    .into(albumPreviewImg);
+
+            albumAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

@@ -18,18 +18,17 @@ import android.widget.TextView;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.allphotos.view.AllPhotographerPhotosActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenterImpl;
 import com.example.softmills.phlog.ui.uploadimage.view.UploadImageActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import static com.example.softmills.phlog.network.BaseNetworkApi.IMAGE_TYPE_CAMPAIGN;
 
 /**
  * Created by abdalla_maged on 10/4/2018.
@@ -164,16 +163,24 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
 
         builder.setMessage(message);
         builder.setPositiveButton(R.string.phone, (dialog, id) -> {
-            HashMap<String, String> imageType=new HashMap<String, String>();
+
+            UploadImageType uploadImageType = new UploadImageType();
+            uploadImageType.setUploadImageType(Constants.UploadImageTypes.CAMPAIGN_IMG);
+            uploadImageType.setImageId(campaignId);
+
+//            HashMap<String, String> imageType=new HashMap<String, String>();
+//            extras.putSerializable(UploadImageActivity.IMAGE_TYPE,imageType);
+//            imageType.put(IMAGE_TYPE_CAMPAIGN,campaignId);
+//
             Bundle extras = new Bundle();
-            extras.putSerializable(UploadImageActivity.IMAGE_TYPE,imageType);
-            imageType.put(IMAGE_TYPE_CAMPAIGN,campaignId);
-            Intent intent=new Intent(this,UploadImageActivity.class);
+            extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageType);
+
+            Intent intent = new Intent(this, UploadImageActivity.class);
             intent.putExtras(extras);
             startActivity(intent);
         });
-        builder.setNegativeButton(R.string.photos,  (dialog, id) -> {
-            Intent intent =new Intent(this,AllPhotographerPhotosActivity.class);
+        builder.setNegativeButton(R.string.photos, (dialog, id) -> {
+            Intent intent = new Intent(this, AllPhotographerPhotosActivity.class);
             startActivity(intent);
         });
         builder.show();

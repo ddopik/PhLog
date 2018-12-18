@@ -13,6 +13,7 @@ public interface Constants {
 
 
 
+
     int QUERY_SEARCH_TIME_OUT=600;
 
 
@@ -22,7 +23,10 @@ public interface Constants {
     }
 
 
-    ///////////////////////Entity-type
+    enum UploadImageTypes{
+         USER_PROFILE_IMG,USER_PROFILE_COVER_IMG,CAMPAIGN_IMG,NORMAL_IMG
+    }
+    ///////////////////////Entity-type For socialFragment
     int ENTITY_PROFILE=1;
     int ENTITY_CAMPAIGN=2;
     int ENTITY_ALBUM=3;
