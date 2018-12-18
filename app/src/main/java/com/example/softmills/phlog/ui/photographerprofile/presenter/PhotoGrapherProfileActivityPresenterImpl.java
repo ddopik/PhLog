@@ -27,7 +27,7 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
     @SuppressLint("CheckResult")
     @Override
     public void getPhotoGrapherProfileData() {
-        BaseNetworkApi.getProfileInfo(PrefUtils.getUserToken(context))
+        BaseNetworkApi.getProfileInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profilePhotoGrapherInfoResponse -> {

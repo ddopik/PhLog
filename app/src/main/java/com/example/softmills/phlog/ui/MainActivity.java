@@ -257,8 +257,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     break;
                 }
                 case EDIT_PROFILE: {
-
-
                     addFragment(R.id.view_container, EditPhotoGrapherProfileFragment.getInstance(), EditPhotoGrapherProfileFragment.class.getSimpleName(), true);
                     myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                     myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
@@ -266,7 +264,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     toolbar.setVisibility(View.GONE);
                     toolBarTitle.setText(getResources().getString(R.string.profile));
                     currentTab = EDIT_PROFILE;
-
                     break;
                 }
             }
@@ -304,6 +301,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
             case PROFILE: {
                 navigationManger.navigate(HOME);
+                break;
+            }
+            case EDIT_PROFILE: {
+                navigationManger.navigate(PROFILE);
                 break;
             }
             default: {

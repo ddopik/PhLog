@@ -201,9 +201,8 @@ public class BaseNetworkApi {
                 .getObjectObservable(PhotoGrapherCampaignResponse.class);
     }
 
-    public static io.reactivex.Observable<ProfilePhotoGrapherInfoResponse> getProfileInfo(String token) {
+    public static io.reactivex.Observable<ProfilePhotoGrapherInfoResponse> getProfileInfo() {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_PROFILE_INFO)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(ProfilePhotoGrapherInfoResponse.class);

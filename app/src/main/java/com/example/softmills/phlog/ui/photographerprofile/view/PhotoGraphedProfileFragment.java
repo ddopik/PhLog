@@ -11,7 +11,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,7 +43,6 @@ import java.util.List;
 
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EDIT_PROFILE;
 import static com.example.softmills.phlog.network.BaseNetworkApi.IMAGE_TYPE_PROFILE;
-import static com.example.softmills.phlog.ui.uploadimage.view.UploadImageActivity.IMAGE_TYPE;
 
 public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGrapherProfileActivityView {
 
@@ -62,6 +60,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     private AppBarLayout mAppBarLayout;
     private ProgressBar photographerProfileProgressBar;
     private Toolbar profileFragmentToolBar;
+    private Photographer photographer;
 
     @Nullable
     @Override
@@ -87,10 +86,10 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public void initViews() {
         profileFragmentToolBar = mainView.findViewById(R.id.profile_tool_bar);
-//        editProfileBtn = mainView.findViewById(R.id.edit_profile_btn);
         earningBtn = mainView.findViewById(R.id.earning_btn);
         photographerProfileBackgroundImg = mainView.findViewById(R.id.photographer_profile_background_img);
         photographerName = mainView.findViewById(R.id.photographer_profile_full_name);
@@ -148,7 +147,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void showPhotoGrapherProfileData(Photographer photoGrapherProfileData) {
 
-
+        this.photographer = photoGrapherProfileData;
         photographerName.setText(photoGrapherProfileData.fullName);
         photographeruserName.setText(photoGrapherProfileData.userName);
 
@@ -190,12 +189,12 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
             MainActivity.navigationManger.navigate(Constants.NavigationHelper.EARNING_LIST);
         });
 
-        photographerProfileImg.setOnClickListener(v->{
-            HashMap<String, String> imageType=new HashMap<String, String>();
+        photographerProfileImg.setOnClickListener(v -> {
+            HashMap<String, String> imageType = new HashMap<String, String>();
             imageType.put(IMAGE_TYPE_PROFILE, "true");
             Bundle extras = new Bundle();
-            extras.putSerializable(UploadImageActivity.IMAGE_TYPE,imageType);
-            Intent intent=new Intent(getActivity(),UploadImageActivity.class);
+            extras.putSerializable(UploadImageActivity.IMAGE_TYPE, imageType);
+            Intent intent = new Intent(getActivity(), UploadImageActivity.class);
             intent.putExtras(extras);
             startActivity(intent);
         });
@@ -203,10 +202,10 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         inflater.inflate(R.menu.menu_profile_edit, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -221,21 +220,6 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    @Override
-//    public boolean onMenuItemClick(MenuItem menuItem) {
-//
-//        switch (menuItem.getItemId()) {
-//            case R.id.action_edit_profile:
-//                MainActivity.navigationManger.navigate(EDIT_PROFILE);
-//                return true;
-//            case R.id.action_logout:
-//                showToast("logout");
-//                return true;
-//            default:
-//                return false;
-//        }
-//    }
 
     @Override
     public void showMessage(String msg) {
