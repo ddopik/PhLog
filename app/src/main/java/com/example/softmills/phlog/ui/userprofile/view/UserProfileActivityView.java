@@ -15,6 +15,7 @@ public interface UserProfileActivityView {
     void viewUserProfileFollowersCount(int followersCount); //
     void viewUserProfileFollowingCount(int followingCount); //
     void viewUserPhotos(List<BaseImage> userPhotoList);
-    void viewUserPhotosProgress(boolean state);
+    void viewUserFollowingState(Boolean state);
+    void viewUserPhotosProgress(Boolean state);
     void showMessage(String msg);
 }

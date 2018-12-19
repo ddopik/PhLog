@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="@dimen/dp120">
+        android:paddingTop="@dimen/dp80">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,8 +70,19 @@
                 android:paddingStart="@dimen/dp12"
                 android:paddingEnd="@dimen/dp12"
                 android:text="brand type"
+                android:layout_marginBottom="@dimen/dp12"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_small" />
+
+            <Button
+                android:id="@+id/follow_brand_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/brand_type_view_height"
+                android:textColor="@color/white"
+                android:text="@string/follow"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="@dimen/dp12"
+                android:background="@drawable/rounded_orange_btn"/>
         </LinearLayout>
 
 

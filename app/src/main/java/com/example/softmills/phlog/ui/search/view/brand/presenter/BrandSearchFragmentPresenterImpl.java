@@ -33,15 +33,14 @@ public class BrandSearchFragmentPresenterImpl implements BrandSearchFragmentPres
     @Override
     public void getSearchBrand(String key, int page) {
         brandSearchFragmentView.viewBrandSearchProgress(true);
-        BaseNetworkApi.getBrandSearch(PrefUtils.getUserToken(context), key, page)
+        BaseNetworkApi.getBrandSearch( key, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(brandSearchResponse -> {
                     brandSearchFragmentView.viewBrandSearchProgress(false);
                     brandSearchFragmentView.viewBrandSearchItems(brandSearchResponse.data.data);
-
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     brandSearchFragmentView.viewBrandSearchProgress(false);
                 });
 

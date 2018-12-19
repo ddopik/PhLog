@@ -85,13 +85,17 @@ public class Photographer implements Parcelable {
     public String country;
     @SerializedName("rate")
     @Expose
-    public String rate;
+    public int rate;
     @SerializedName("level")
     @Expose
     public String level;
     @SerializedName("earnings")
     @Expose
     public List<Earning> earnings = null;
+
+    @SerializedName("is_follow")
+    @Expose
+    public Boolean isFollow;
 
     protected Photographer(Parcel in) {
         byte isPhoneVerifiedVal = in.readByte();
@@ -117,7 +121,7 @@ public class Photographer implements Parcelable {
         followingCount = in.readByte() == 0x00 ? null : in.readInt();
         photosCount = in.readByte() == 0x00 ? null : in.readInt();
         country = in.readString();
-        rate = in.readString();
+        rate = in.readInt();
         level = in.readString();
         if (in.readByte() == 0x01) {
             earnings = new ArrayList<Earning>();
@@ -125,6 +129,8 @@ public class Photographer implements Parcelable {
         } else {
             earnings = null;
         }
+        byte isFollowVal = in.readByte();
+        isFollow = isFollowVal == 0x02 ? null : isFollowVal != 0x00;
     }
 
     @Override
@@ -183,13 +189,18 @@ public class Photographer implements Parcelable {
             dest.writeInt(photosCount);
         }
         dest.writeString(country);
-        dest.writeString(rate);
+        dest.writeInt(rate);
         dest.writeString(level);
         if (earnings == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(earnings);
+        }
+        if (isFollow == null) {
+            dest.writeByte((byte) (0x02));
+        } else {
+            dest.writeByte((byte) (isFollow ? 0x01 : 0x00));
         }
     }
 

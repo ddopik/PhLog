@@ -37,7 +37,7 @@ public class PickProfilePhotoPresenterImpl implements PickProfilePhotoPresenter 
                     pickProfilePhotoActivityView.UploadProfileImgFinished(true);
                     pickProfilePhotoActivityView.viewUploadImageProgress(false);
                 },throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     pickProfilePhotoActivityView.viewUploadImageProgress(false);
                 });
     }

@@ -34,7 +34,7 @@ public class AllPhotographerPhotosPresenterImpl implements AllPhotographerPhotos
                     allPhotographerPhotosActivityView.showImageListProgress(false);
                     allPhotographerPhotosActivityView.showPhotosList(photoGrapherPhotosResponse.data.data);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     allPhotographerPhotosActivityView.showImageListProgress(false);
                 });
 

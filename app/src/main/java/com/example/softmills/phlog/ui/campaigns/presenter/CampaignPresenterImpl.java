@@ -39,7 +39,7 @@ public class CampaignPresenterImpl implements CampaignPresenter {
                         campaignFragmentView.showAllCampaignProgress(false);
                 }, throwable -> {
                     campaignFragmentView.showAllCampaignProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
     }
@@ -53,7 +53,7 @@ public class CampaignPresenterImpl implements CampaignPresenter {
                 .subscribe(followCampaignResponse -> {
                     campaignFragmentView.showMessage(context.getResources().getString(R.string.campaign_followed));
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 }

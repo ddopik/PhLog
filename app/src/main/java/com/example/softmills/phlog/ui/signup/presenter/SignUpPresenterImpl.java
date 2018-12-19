@@ -43,7 +43,7 @@ public class SignUpPresenterImpl implements SignUpPresenter {
                         signUpView.showMessage("What should we do now");
 
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 
@@ -56,7 +56,7 @@ public class SignUpPresenterImpl implements SignUpPresenter {
                     AllCountersRepose countersRepose=allCountersRepose;
                     signUpView.showCounters(allCountersRepose.countries);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 

@@ -126,5 +126,7 @@
     <string name="result">Result</string>
     <string name="action_logout">LogOut</string>
     <string name="action_edit">Edit</string>
+    <string name="followed">Followed</string>
+    <string name="un_follow">Un follow</string>
 
 </resources>

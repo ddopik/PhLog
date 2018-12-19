@@ -84,16 +84,14 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         initViews();
         initPresenter();
         initListener();
-        ((MainActivity) getActivity()).setSupportActionBar(profileFragmentToolBar);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-        setHasOptionsMenu(true);
+        if (getActivity() != null) {
+            ((MainActivity) getActivity()).setSupportActionBar(profileFragmentToolBar);
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+            setHasOptionsMenu(true);
+        }
         photoGrapherProfileActivityPresenter.getPhotoGrapherProfileData();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void initViews() {
@@ -160,8 +158,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         photographeruserName.setText(photoGrapherProfileData.userName);
 
 
-        if (photoGrapherProfileData.rate != null)
-            profileRating.setRating(Float.valueOf(photoGrapherProfileData.rate));
+        profileRating.setRating((float) photoGrapherProfileData.rate);
         if (photoGrapherProfileData.photosCount != null)
             photoCount.setText(String.valueOf(photoGrapherProfileData.photosCount));
         if (photoGrapherProfileData.followersCount != null)

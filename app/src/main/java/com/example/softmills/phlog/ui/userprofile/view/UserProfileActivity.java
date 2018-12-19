@@ -79,8 +79,6 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             followUser=findViewById(R.id.follow_user);
             userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
             userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
-
-
             userProfilePresenter.getUserProfileData(userID); //todo static call here
             userProfilePresenter.getUserPhotos(userID,0);
 
@@ -109,7 +107,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
     @Override
     public void viewUserProfileLevel(String userLevel) {
-        userProfileLevel.setText(userLevel);
+        userProfileLevel.setText(String.valueOf(userLevel));
     }
 
     @Override
@@ -139,17 +137,17 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
     @Override
     public void viewUserProfilePhotosCount(int photosCount) {
-        userProfilePhotosCount.setText(photosCount);
+        userProfilePhotosCount.setText(String.valueOf(photosCount));
     }
 
     @Override
     public void viewUserProfileFollowersCount(int followersCount) {
-        userProfileFolloweresCount.setText(followersCount);
+        userProfileFolloweresCount.setText(String.valueOf(followersCount));
     }
 
     @Override
     public void viewUserProfileFollowingCount(int followingCount) {
-        userProfileFollowingCount.setText(followingCount);
+        userProfileFollowingCount.setText(String.valueOf(followingCount));
     }
 
     @Override
@@ -160,7 +158,16 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     }
 
     @Override
-    public void viewUserPhotosProgress(boolean state) {
+    public void viewUserFollowingState(Boolean state) {
+        if (state){
+            followUser.setText(getResources().getString(R.string.un_follow));
+        }else {
+            followUser.setText(getResources().getString(R.string.follow));
+        }
+    }
+
+    @Override
+    public void viewUserPhotosProgress(Boolean state) {
         if (state) {
             userProfilePhotosProgressBar.setVisibility(View.VISIBLE);
         } else {

@@ -36,7 +36,7 @@ public class FragmentPhotoGrapherPhotosPresenterImpl implements FragmentPhotoGra
                     fragmentPhotoGrapherPhotosView.showPhotosProgress(false);
                     fragmentPhotoGrapherPhotosView.showPhotos(photosResponse.data.data);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     fragmentPhotoGrapherPhotosView.showPhotosProgress(false);
                 });
 

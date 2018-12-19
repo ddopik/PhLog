@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.brand.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
@@ -38,8 +39,36 @@ public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
                     brandInnerActivityView.viewInnerBrandProgressBar(false);
                 }, throwable -> {
                     brandInnerActivityView.viewInnerBrandProgressBar(false);
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void followBrand(String id) {
+        BaseNetworkApi.followBrand(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followBrandResponse -> {
+                    brandInnerActivityView.showMessage(context.getResources().getString(R.string.brand_followed));
+                    brandInnerActivityView.viewInnerBrandData(followBrandResponse.data.brand);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void unFollowBrand(String id) {
+        BaseNetworkApi.unFollowBrand(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followBrandResponse -> {
+                    brandInnerActivityView.showMessage(context.getResources().getString(R.string.brand_followed));
+                    brandInnerActivityView.viewInnerBrandData(followBrandResponse.data.brand);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
     }
 }

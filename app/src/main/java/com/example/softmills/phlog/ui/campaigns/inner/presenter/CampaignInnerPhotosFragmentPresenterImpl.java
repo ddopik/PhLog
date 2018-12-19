@@ -41,7 +41,7 @@ public class CampaignInnerPhotosFragmentPresenterImpl implements CampaignInnerPh
                     campaignInnerPhotosFragmentView.getInnerCampaignPhotos(campaignInnerPhotosResponse.data.data);
                 }, throwable -> {
                     campaignInnerPhotosFragmentView.viewCampaignInnerPhotosProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
 

@@ -5,13 +5,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGrapherProfileActivityView;
 
 import java.io.File;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -22,9 +20,9 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
     private PhotoGrapherProfileActivityView photoGrapherProfileActivityView;
     private Context context;
 
-    public PhotoGrapherProfileActivityPresenterImpl(Context context,PhotoGrapherProfileActivityView photoGrapherProfileActivityView) {
+    public PhotoGrapherProfileActivityPresenterImpl(Context context, PhotoGrapherProfileActivityView photoGrapherProfileActivityView) {
         this.photoGrapherProfileActivityView = photoGrapherProfileActivityView;
-        this.context=context;
+        this.context = context;
     }
 
     @SuppressLint("CheckResult")
@@ -34,15 +32,13 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profilePhotoGrapherInfoResponse -> {
-
-                        photoGrapherProfileActivityView.showPhotoGrapherProfileData(profilePhotoGrapherInfoResponse.data);
-
-
+                    photoGrapherProfileActivityView.showPhotoGrapherProfileData(profilePhotoGrapherInfoResponse.data);
                 }, throwable -> {
                     Log.e(TAG, "getPhotoGrapherProfileData() --->" + throwable.getMessage());
                 });
 
     }
+
     @SuppressLint("CheckResult")
     @Override
     public void uploadPhoto(File imagePath) {
@@ -53,8 +49,8 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
                 .subscribe(uploadProfileImgResponse -> {
                     photoGrapherProfileActivityView.UploadProfileImgFinished(true);
                     photoGrapherProfileActivityView.showProfileProgress(false);
-                },throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     photoGrapherProfileActivityView.showProfileProgress(false);
                 });
     }

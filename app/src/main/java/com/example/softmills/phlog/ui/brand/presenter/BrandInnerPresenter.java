@@ -6,4 +6,6 @@ package com.example.softmills.phlog.ui.brand.presenter;
 public interface BrandInnerPresenter {
 
     void getBrandInnerData(String brandID);
+    void followBrand(String brandID);
+     void unFollowBrand(String id);
 }

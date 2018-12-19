@@ -35,7 +35,7 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="false"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -68,65 +68,63 @@
                 android:text="asdasjdbas;nal;xnnnnnnnnnnnasdasjdbas;nal;xnnnnnnnnnnnn
                 nnnaaaaaaaasdasjdbas;nal;xnaaaaaasdjkasd" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brand_data"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+                <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+                <TextView
+                    android:id="@+id/brand_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@color/gray200"
+                    android:fontFamily="@font/arial_rounded_font"
+                    android:gravity="center|start"
+                    android:padding="@dimen/widgets_padding"
+                    android:text="www.brand.come"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/brand_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@color/gray200"
+                    android:fontFamily="@font/arial_rounded_font"
+                    android:gravity="center|start"
+                    android:padding="@dimen/widgets_padding"
+                    android:text="@string/mail"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/brand_campaign"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/widgets_padding"
+                    android:drawableEnd="@drawable/ic_navigate_brand_forward_24dp"
+                    android:fontFamily="@font/arial_rounded_font"
+                    android:gravity="end"
+                    android:text="@string/brand_campaign"
+                    android:textColor="@color/text_input_color"
+                    android:textSize="@dimen/text_medium_s"
+
+                    />
+            </LinearLayout>
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_gravity="center_horizontal|bottom"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical">
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-        <TextView
-            android:id="@+id/brand_website"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/gray200"
-            android:fontFamily="@font/arial_rounded_font"
-            android:gravity="center|start"
-            android:padding="@dimen/widgets_padding"
-            android:text="www.brand.come"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/brand_mail"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/gray200"
-            android:fontFamily="@font/arial_rounded_font"
-            android:gravity="center|start"
-            android:padding="@dimen/widgets_padding"
-            android:text="@string/mail"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/brand_campaign"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/widgets_padding"
-            android:drawableEnd="@drawable/ic_navigate_brand_forward_24dp"
-            android:fontFamily="@font/arial_rounded_font"
-            android:gravity="end"
-            android:text="@string/brand_campaign"
-            android:textColor="@color/text_input_color"
-            android:textSize="@dimen/text_medium_s"
-
-            />
-    </LinearLayout>
-
     <ProgressBar
         android:id="@+id/brand_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center|bottom"
         android:visibility="gone"
         tools:visibility="visible" />
 </android.support.design.widget.CoordinatorLayout>

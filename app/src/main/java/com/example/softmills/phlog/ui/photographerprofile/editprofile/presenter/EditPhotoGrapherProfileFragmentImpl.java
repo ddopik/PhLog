@@ -33,7 +33,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
                 .subscribe(profilePhotoGrapherInfoResponse -> {
                     editPhotoGrapherProfileFragmentView.showPhotoGrapherProfileData(profilePhotoGrapherInfoResponse.data);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 

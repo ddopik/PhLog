@@ -45,7 +45,7 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingSearch(photoGrapherFollowingInResponse.data.data);
                 }, throwable -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 }

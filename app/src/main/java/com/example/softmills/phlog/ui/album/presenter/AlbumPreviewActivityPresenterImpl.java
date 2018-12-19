@@ -38,7 +38,7 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
                     albumPreviewActivityView.viewAlumPreview(albumPreviewResponse.data);
                     albumPreviewActivityView.viewAlbumPreviewProgress(false);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     albumPreviewActivityView.viewAlbumPreviewProgress(false);
                 });
 

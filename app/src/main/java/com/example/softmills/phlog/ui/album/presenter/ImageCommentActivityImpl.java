@@ -38,7 +38,7 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
                     imageCommentActivityView.viewPhotoComment(albumImgCommentResponse.data.comments);
                     imageCommentActivityView.viewAddCommentProgress(false);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     imageCommentActivityView.viewAddCommentProgress(false);
                 });
     }
@@ -55,7 +55,7 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
 //                    imageCommentActivityView.viewPhotoComment(albumImgCommentResponse.data.comments);
                     imageCommentActivityView.viewAddCommentProgress(false);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     imageCommentActivityView.viewAddCommentProgress(false);
                 });
 
@@ -73,7 +73,7 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
                     imageCommentActivityView.viewMessage("Like");
                 },throwable -> {
                     imageCommentActivityView.viewAddCommentProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 }

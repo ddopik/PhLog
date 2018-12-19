@@ -44,7 +44,7 @@ public class CampaignInnerPresenterImpl implements CampaignInnerPresenter {
 
                         },
                         throwable -> {
-                            ErrorUtils.setError(context, TAG, throwable.toString());
+                            ErrorUtils.Companion.setError(context, TAG, throwable.toString());
                         });
     }
 

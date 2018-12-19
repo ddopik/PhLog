@@ -96,11 +96,8 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         searchResultCount = onSearchTabSelected.getSearchResultCount();
         searchBrandRv = mainView.findViewById(R.id.search_brand_rv);
         searchBrandProgress = mainView.findViewById(R.id.search_brand_progress_bar);
-
         brandSearchAdapter = new BrandSearchAdapter(getContext(), brandSearchList);
         searchBrandRv.setAdapter(brandSearchAdapter);
-
-
     }
 
     private void initListener() {

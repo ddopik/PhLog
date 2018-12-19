@@ -6,4 +6,5 @@ public interface SocialFragmentPresenter {
     void followUser(String userId);
     void followSocialCampaign(String id);
     void followSocialBrand(String id);
+    void unFollowSocialBrand(String id);
  }

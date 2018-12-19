@@ -51,7 +51,7 @@ public class LoginPresenterImp implements LoginPresenter {
                     loginView.viewLoginProgress(false);
 
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     loginView.viewLoginProgress(false);
                 });
     }
@@ -74,7 +74,7 @@ public class LoginPresenterImp implements LoginPresenter {
 
             @Override
             public void onError(Throwable error) {
-                ErrorUtils.setError(context, TAG, error);
+                ErrorUtils.Companion.setError(context, TAG, error);
             }
 
             @Override
@@ -112,7 +112,7 @@ public class LoginPresenterImp implements LoginPresenter {
 
             @Override
             public void onError(Throwable error) {
-                ErrorUtils.setError(context, TAG, error);
+                ErrorUtils.Companion.setError(context, TAG, error);
             }
 
             @Override
@@ -133,7 +133,7 @@ public class LoginPresenterImp implements LoginPresenter {
                         PrefUtils.setUserToken(context, socialLoginResponse.token.get(0));
                         loginView.navigateToHome();
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 }

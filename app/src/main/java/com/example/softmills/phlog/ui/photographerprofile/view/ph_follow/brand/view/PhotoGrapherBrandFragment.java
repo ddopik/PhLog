@@ -83,7 +83,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
 
         photoGrapherFollowingBrandAdapter = new PhotoGrapherFollowingBrandAdapter(photographerFollowingBrands);
         followingBrandRv.setAdapter(photoGrapherFollowingBrandAdapter);
-        photoGrapherBrandPresenter.getFollowingBrand("0", "");
+        photoGrapherBrandPresenter.getFollowingBrand("0", "0");
 
     }
 
@@ -93,8 +93,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
         pagingController = new PagingController(followingBrandRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-
-                photoGrapherBrandPresenter.getFollowingBrand(String.valueOf(page - 1), searchPhotographerBrand.getText().toString());
+                photoGrapherBrandPresenter.getFollowingBrand(String.valueOf(page ), searchPhotographerBrand.getText().toString());
             }
 
 

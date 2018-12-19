@@ -41,7 +41,7 @@ public class EarningListPresenterImpl implements EarningListPresenter {
                     earningListFragmentView.viewEaringListProgress(false);
                 }, throwable -> {
                     earningListFragmentView.viewEaringListProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 

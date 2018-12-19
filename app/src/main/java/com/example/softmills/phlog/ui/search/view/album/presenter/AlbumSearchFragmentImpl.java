@@ -41,7 +41,7 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                 }, throwable -> {
                     Log.e(TAG, "getFilters() --->Error " + throwable.getMessage());
                     albumSearchFragmentView.showFilterSearchProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
 
@@ -58,7 +58,7 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                     albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data.data);
                     albumSearchFragmentView.showFilterSearchProgress(false);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     albumSearchFragmentView.showFilterSearchProgress(false);
                 });
     }

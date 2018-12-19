@@ -33,7 +33,7 @@ public class PhotoGrapherSavedFragmentPresenterImpl implements PhotoGrapherSaved
                 .subscribe(photoGrapherPhotosResponse -> {
                     photoGrapherPhotosFragmentView.showSavedPhotos(photoGrapherPhotosResponse.data.data);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
     }

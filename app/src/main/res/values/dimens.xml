@@ -129,7 +129,6 @@
     <dimen name="item_flex_height_s">175dp</dimen>
     <dimen name="ic_size">24dp</dimen>
     <dimen name="dp1">1dp</dimen>
-    <dimen name="dp120">120dp</dimen>
 
 
     <!--//////////////////////BrandInner/////////////////////////////////-->

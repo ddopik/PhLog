@@ -36,7 +36,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                     socialFragmentView.viewSocialData(socialResponse.data);
                     socialFragmentView.viewSocialDataProgress(false);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     socialFragmentView.viewSocialDataProgress(false);
                 });
 
@@ -51,7 +51,7 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                 .subscribe(followUserResponse -> {
                     socialFragmentView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 
@@ -64,20 +64,33 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
                 .subscribe(followCampaignResponse -> {
                     socialFragmentView.showMessage(context.getResources().getString(R.string.campaign_followed));
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void followSocialBrand(String id) {
-        BaseNetworkApi.followBrand(PrefUtils.getUserToken(context), id)
+        BaseNetworkApi.followBrand(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followBrandResponse -> {
                     socialFragmentView.showMessage(context.getResources().getString(R.string.brand_followed));
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void unFollowSocialBrand(String id) {
+        BaseNetworkApi.unFollowBrand(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followBrandResponse -> {
+                    socialFragmentView.showMessage(context.getResources().getString(R.string.brand_followed));
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 }

@@ -37,7 +37,7 @@ public class FragmentPhotoGrapherCampaignsPresenterImpl implements FragmentPhoto
                 .subscribe(campaignResponse -> {
                     fragmentPhotoGrapherCampaignsView.showCampaigns(campaignResponse.data.data);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
 
@@ -52,7 +52,7 @@ public class FragmentPhotoGrapherCampaignsPresenterImpl implements FragmentPhoto
                 .subscribe(followCampaignResponse -> {
                     fragmentPhotoGrapherCampaignsView.showMessage(context.getResources().getString(R.string.campaign_followed));
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 }

@@ -38,7 +38,7 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                     allAlbumImgActivityView.showMessage("Like");
                 }, throwable -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 

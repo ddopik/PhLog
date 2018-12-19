@@ -10,7 +10,7 @@ import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotoResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
-import com.example.softmills.phlog.ui.campaigns.model.FollowBrandResponse;
+import com.example.softmills.phlog.ui.brand.model.FollowBrandResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
 import com.example.softmills.phlog.ui.earning.model.EarningResponse;
 import com.example.softmills.phlog.ui.login.model.LoginResponse;
@@ -86,11 +86,13 @@ public class BaseNetworkApi {
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
     private static final String SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
     private static final String PHOTOGRAPHER_SEARCH_URL = BASE_URL + "/photographer/list";
-    private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/photographer/following/list";
+    private static final String PROFILE_FOLLOWING_SEARCH_URL = BASE_URL + "/photographer/following/list";
     private static final String GET_SEARCH_ALBUM = BASE_URL + "/photographer/album/details";
-    private static final String BRAND_SEARCH_URL = BASE_URL + "/photographer/business/following/list";
+    private static final String BRAND_SEARCH_URL = BASE_URL + "/photographer/business/search";
+    private static final String PROFILE_BRAND_SEARCH_URL = BASE_URL + "/photographer/business/following/list";
     private static final String INNER_BRAND_URL = BASE_URL + "/photographer/business/details";
-    private static final String BRAND_FOLLOW_URL = BASE_URL + "/join_photographer_brand";
+    private static final String BRAND_FOLLOW_URL = BASE_URL + "/photographer/business/follow";
+    private static final String BRAND_UN_FOLLOW_URL = BASE_URL + "/photographer/business/unfollow";
     private static final String SOCIAL_DATA_URL = BASE_URL + "/photographer/social/dummy";
     private static final String GET_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment/list";
     private static final String SUBMIT_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment";
@@ -214,7 +216,7 @@ public class BaseNetworkApi {
 
 
     public static io.reactivex.Observable<PhotoGrapherFollowingInResponse> getPhotoGrapherProfileFollowingSearch(String token, String key, int page) {
-        return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOWING_SEARCH_URL)
+        return Rx2AndroidNetworking.post(PROFILE_FOLLOWING_SEARCH_URL)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("keyword", key)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
@@ -223,9 +225,8 @@ public class BaseNetworkApi {
                 .getObjectObservable(PhotoGrapherFollowingInResponse.class);
     }
 
-    public static io.reactivex.Observable<BrandSearchResponse> getBrandSearch(String token, String key, int page) {
+    public static io.reactivex.Observable<BrandSearchResponse> getBrandSearch( String key, int page) {
         return Rx2AndroidNetworking.post(BRAND_SEARCH_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("keyword", key)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
                 .setPriority(Priority.HIGH)
@@ -244,7 +245,7 @@ public class BaseNetworkApi {
     }
 
     public static io.reactivex.Observable<PhotographerFollowingBrandResponse> getProfileBrand(String key, String page) {
-        return Rx2AndroidNetworking.post(BRAND_SEARCH_URL)
+        return Rx2AndroidNetworking.post(PROFILE_BRAND_SEARCH_URL)
                 .addBodyParameter("keyword", key)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
                 .getResponseOnlyFromNetwork()
@@ -368,11 +369,19 @@ public class BaseNetworkApi {
                 .getObjectObservable(BrandInnerResponse.class);
     }
 
-    public static io.reactivex.Observable<FollowBrandResponse> followBrand(String token, String brandId) {
+    public static io.reactivex.Observable<FollowBrandResponse> followBrand(String brandId) {
         return Rx2AndroidNetworking.post(BRAND_FOLLOW_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .getResponseOnlyFromNetwork()
-                .addBodyParameter("brand_id", brandId)
+                .addBodyParameter("business_id", brandId)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(FollowBrandResponse.class);
+    }
+
+ public static io.reactivex.Observable<FollowBrandResponse> unFollowBrand(String brandId) {
+        return Rx2AndroidNetworking.post(BRAND_UN_FOLLOW_URL)
+                .getResponseOnlyFromNetwork()
+                .addBodyParameter("business_id", brandId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(FollowBrandResponse.class);

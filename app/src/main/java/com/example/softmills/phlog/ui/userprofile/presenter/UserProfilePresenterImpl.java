@@ -38,22 +38,27 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                     if(userProfileData.data.fullName !=null)
                     userProfileActivityView.viewUserProfileFullName(userProfileData.data.fullName);
 
-//                    userProfileActivityView.viewUserProfileRating(userProfileData.data.rate);
-//                    if(userProfileData.data.level !=null)
-//                    userProfileActivityView.viewUserProfileLevel(userProfileData.data.level);
+
+                    userProfileActivityView.viewUserProfileRating(userProfileData.data.rate);
+
+                    if(userProfileData.data.level !=null)
+                    userProfileActivityView.viewUserProfileLevel(userProfileData.data.level);
+
                     if(userProfileData.data.imageProfile !=null)
                     userProfileActivityView.viewUserProfileProfileImg(userProfileData.data.imageProfile);
 
-//                    userProfileActivityView.viewUserProfileFollowersCount(userProfileData.data.followerCount);
-//
-//                    if(userProfileData.data.followingCount !=null)
-//                    userProfileActivityView.viewUserProfileFollowingCount(userProfileData.data.followingCount);
+                    if(userProfileData.data.followersCount !=null)
+                    userProfileActivityView.viewUserProfileFollowersCount(userProfileData.data.followersCount);
 
-//                    userProfileActivityView.viewUserProfilePhotosCount(userProfileData.data.photoCount);
+                    if(userProfileData.data.followingCount !=null)
+                    userProfileActivityView.viewUserProfileFollowingCount(userProfileData.data.followingCount);
 
+                    userProfileActivityView.viewUserProfilePhotosCount(userProfileData.data.photosCount);
+                    if(userProfileData.data.isFollow !=null)
+                        userProfileActivityView.viewUserFollowingState(userProfileData.data.isFollow);
 
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 
@@ -66,11 +71,11 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {
-//                    userProfileActivityView.viewUserPhotosProgress(false);
-//                    userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
+                    userProfileActivityView.viewUserPhotosProgress(false);
+                    userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
                 }, throwable -> {
                     userProfileActivityView.viewUserPhotosProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
     }
@@ -84,7 +89,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .subscribe(followUserResponse -> {
                     userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 }

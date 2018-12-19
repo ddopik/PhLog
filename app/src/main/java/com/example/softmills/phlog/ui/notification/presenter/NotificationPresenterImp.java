@@ -34,12 +34,12 @@ public class NotificationPresenterImp implements NotificationPresenter {
                     if (notificationResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         notificationFragmentView.viewNotificationList(notificationResponse.data);
                     } else {
-                        ErrorUtils.setError(context, TAG, notificationResponse.msg);
+                        ErrorUtils.Companion.setError(context, TAG, notificationResponse.msg);
                     }
                     notificationFragmentView.viewNotificationProgress(false);
 
                 }, throwable -> {
-                    ErrorUtils.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     notificationFragmentView.viewNotificationProgress(false);
                 });
     }

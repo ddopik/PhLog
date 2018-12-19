@@ -5,23 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Brand;
-import com.example.softmills.phlog.ui.brand.model.BrandInnerData;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerDataPresenterImpl;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerPresenter;
 
@@ -32,9 +28,11 @@ import io.reactivex.annotations.NonNull;
  */
 public class BrandInnerActivity extends BaseActivity implements BrandInnerActivityView {
 
-    public static String BRAND_ID="brand_id";
+    public static String BRAND_ID = "brand_id";
+    private Brand currentBrand;
     private FrameLayout brandHeaderImg;
     private ImageView brandIconImg;
+    private Button followBrandBtn;
     private TextView brandName, brandNumFollowers, brandType, aboutBrand, brandData, brandWebsite, brandMail, brandCampaign;
     private BrandInnerPresenter brandInnerPresenter;
     private ProgressBar progressBar;
@@ -58,7 +56,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
         brandHeaderImg = findViewById(R.id.header_background_img);
         brandIconImg = findViewById(R.id.brand_img_icon);
-         brandName = findViewById(R.id.brand_name);
+        brandName = findViewById(R.id.brand_name);
         brandNumFollowers = findViewById(R.id.brand_num_followers);
         brandType = findViewById(R.id.brand_type);
         aboutBrand = findViewById(R.id.about_brand);
@@ -67,6 +65,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         brandMail = findViewById(R.id.brand_mail);
         brandCampaign = findViewById(R.id.brand_campaign);
         progressBar = findViewById(R.id.brand_progress_bar);
+        followBrandBtn = findViewById(R.id.follow_brand_btn);
 
     }
 
@@ -77,67 +76,68 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
     @Override
     public void viewInnerBrandData(Brand brand) {
+        try {
+            this.currentBrand = brand;
+            GlideApp.with(this)
+                    .load(brand.imageCover)
+                    .placeholder(R.drawable.default_place_holder)
+                    .error(R.drawable.default_error_img)
+                    .into(new SimpleTarget<Drawable>() {
+                        @Override
+                        public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
+                            brandHeaderImg.setBackground(resource);
+                        }
+                    });
 
-        GlideApp.with(this)
-                .load(brand.imageCover)
-                .placeholder(R.drawable.default_photographer_profile)
-                .error(R.drawable.default_photographer_profile)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        // log exception
-                        Log.e("TAG", "Error loading image", e);
-                        return false; // important to return false so the error placeholder can be placed
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
-                        brandHeaderImg.setBackground(resource);
-                    }
-                });
-
-//        GlideApp.with(this)
-//                .load(brandInnerData.coverImage)
-//                .placeholder(R.drawable.default_photographer_profile)
-//                .error(R.drawable.default_photographer_profile)
-//                .apply(RequestOptions.circleCropTransform())
-//                .into(brandIconImg);
-
-        GlideApp.with(this).load(brand.thumbnail).apply(RequestOptions.circleCropTransform()).into(brandIconImg);
+            GlideApp.with(this).load(brand.thumbnail)
+                    .placeholder(R.drawable.default_place_holder)
+                    .error(R.drawable.default_error_img)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(brandIconImg);
 
 
-        if (brand.fullName != null) {
-            brandName.setText(brand.fullName);
-            aboutBrand.setText(new StringBuilder().append(getResources().getString(R.string.about_brand)).append(" : ").append(brand.fullName).toString());
-        }
-        if (brand.followersCount != null) {
-            brandNumFollowers.setText(new StringBuilder().append(brand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
-        }
+            if (brand.fullName != null) {
+                brandName.setText(brand.fullName);
+                aboutBrand.setText(new StringBuilder().append(getResources().getString(R.string.about_brand)).append(" : ").append(brand.fullName).toString());
+            }
+            if (brand.followersCount != null) {
+                brandNumFollowers.setText(new StringBuilder().append(brand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
+            }
 //        if (brand.industry != null) {
             brandType.setText("Brand Industry");
 //        }
-        if (brand.isBrandText != null) {
-            brandData.setText(brand.description);
-        }
-        if (brand.website != null) {
-            brandWebsite.setText(brand.website);
-        }
+            if (brand.isBrandText != null) {
+                brandData.setText(brand.description);
+            }
+            if (brand.website != null) {
+                brandWebsite.setText(brand.website);
+            }
+            if (brand.isFollow) {
+                followBrandBtn.setText(getResources().getString(R.string.un_follow));
+            } else {
+                followBrandBtn.setText(getResources().getString(R.string.follow));
+            }
 //        if (brand.email != null) {
 //            brandWebsite.setText(brand.email);
 //
 //        }
-
+        }catch (Exception e){
+            Log.e(BrandInnerActivity.class.getSimpleName(),"Error =====>"+e.getMessage());
+        }
     }
 
     private void intiListeners() {
+        followBrandBtn.setOnClickListener(v -> {
+            if (currentBrand != null){
+                if(currentBrand.isFollow){
+                    brandInnerPresenter.unFollowBrand(String.valueOf(currentBrand.id));
+                }else {
+                    brandInnerPresenter.followBrand(String.valueOf(currentBrand.id));
+                }
 
+            }
 
+        });
     }
 
 
@@ -148,5 +148,12 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         } else {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+
+
+    @Override
+    public void showMessage(String msg) {
+        showToast(msg);
     }
 }

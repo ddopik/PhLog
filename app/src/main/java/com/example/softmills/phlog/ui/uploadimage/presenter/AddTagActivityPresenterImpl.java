@@ -54,7 +54,7 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
                             addTagActivityView.viewUploadProgress(false);
                             addTagActivityView.viewMessage(context.getResources().getString(R.string.photo_uploaded));
                         }, throwable -> {
-                            ErrorUtils.setError(context, TAG, throwable);
+                            ErrorUtils.Companion.setError(context, TAG, throwable);
                             addTagActivityView.viewUploadProgress(false);
                         });
                 break;
@@ -70,7 +70,7 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
                             addTagActivityView.viewUploadProgress(false);
                             addTagActivityView.viewMessage(context.getResources().getString(R.string.photo_uploaded));
                         }, throwable -> {
-                            ErrorUtils.setError(context, TAG, throwable);
+                            ErrorUtils.Companion.setError(context, TAG, throwable);
                             addTagActivityView.viewUploadProgress(false);
                         });
                 break;
