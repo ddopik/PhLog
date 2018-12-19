@@ -120,7 +120,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             @Override
             public void getPagingControllerCallBack(int page) {
 
-                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page - 1);
+                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page );
 
 
             }
@@ -138,15 +138,10 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
                 // user cleared search get default data
-                if (brandSearch.getText().length() == 0) {
-                    brandSearchList.clear();
-                    brandSearchAdapter.notifyDataSetChanged();
-                } else {
-                    // user is searching clear default value and get new search List
-                    brandSearchList.clear();
-                    brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
-                }
 
+                brandSearchList.clear();
+                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
+                brandSearchAdapter.notifyDataSetChanged();
                 Log.e(TAG, "search string: " + brandSearch.getText().toString());
 
             }

@@ -1,7 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.profile.model;
 
 import com.example.softmills.phlog.base.commonmodel.Photographer;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model.PhotoGrapherFollowingObj;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

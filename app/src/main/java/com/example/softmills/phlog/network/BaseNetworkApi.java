@@ -76,7 +76,7 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/photographer/photo/list";
     private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/list";
-    private static final String PHOTOGRAPHER_FOLLOWING_IN_URL = BASE_URL + "/photographer/following/list";
+
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/photographer/follow";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/running";
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/photographer/campaign/details";
@@ -86,7 +86,7 @@ public class BaseNetworkApi {
     private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
     private static final String SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
     private static final String PHOTOGRAPHER_SEARCH_URL = BASE_URL + "/photographer/list";
-    private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/photographer/list";
+    private static final String PHOTOGRAPHER_FOLLOWING_SEARCH_URL = BASE_URL + "/photographer/following/list";
     private static final String GET_SEARCH_ALBUM = BASE_URL + "/photographer/album/details";
     private static final String BRAND_SEARCH_URL = BASE_URL + "/photographer/business/following/list";
     private static final String INNER_BRAND_URL = BASE_URL + "/photographer/business/details";
@@ -211,13 +211,7 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<PhotoGrapherFollowingInResponse> getPhotoGrapherProfileFollowingIn(int page) {
-        return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOWING_IN_URL)
-                .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
-                .setPriority(Priority.HIGH)
-                .build()
-                .getObjectObservable(PhotoGrapherFollowingInResponse.class);
-    }
+
 
     public static io.reactivex.Observable<PhotoGrapherFollowingInResponse> getPhotoGrapherProfileFollowingSearch(String token, String key, int page) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOWING_SEARCH_URL)

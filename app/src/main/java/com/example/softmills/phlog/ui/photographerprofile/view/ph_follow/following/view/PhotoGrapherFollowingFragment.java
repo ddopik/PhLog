@@ -13,10 +13,10 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model.PhotoGrapherFollowingObj;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.presenter.PhotoGrapherFollowingInPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.presenter.PhotoGrapherFollowingInPresenterImpl;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
@@ -38,7 +38,7 @@ import io.reactivex.schedulers.Schedulers;
 public class PhotoGrapherFollowingFragment extends BaseFragment implements PhotoGrapherFollowingFragmentView {
 
 
-    private List<PhotoGrapherFollowingObj> photoGrapherFollowingList = new ArrayList<PhotoGrapherFollowingObj>();
+    private List<Photographer> photoGrapherFollowingList = new ArrayList<Photographer>();
     private PhotoGrapherFollowingAdapter photoGrapherFollowingAdapter;
     private View mainView;
     private CustomRecyclerView followingRV;
@@ -66,7 +66,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         initViews();
         initListener();
         //default following list
-        photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
+        photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0,"");
     }
 
     @Override
@@ -94,7 +94,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
 
         photoGrapherFollowingAdapter.followingAdapterListener= photoGrapherFollowingObj -> {
             Intent intent=new Intent(getActivity(), UserProfileActivity.class);
-            intent.putExtra(UserProfileActivity.USER_ID,photoGrapherFollowingObj.userNameId);
+            intent.putExtra(UserProfileActivity.USER_ID,String.valueOf(photoGrapherFollowingObj.id));
             getContext().startActivity(intent);
         };
 
@@ -102,18 +102,9 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         pagingController = new PagingController(followingRV) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                if(searchEditText.getText().length() ==0){
-                    //default following list paging
-                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(page);
-                }else {
                     photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(page,searchEditText.getText().toString());
-                }
-
             }
         };
-
-
-
 
         disposable.add(
 
@@ -132,17 +123,9 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-                // user cleared search get default data
-                if (searchEditText.getText().length() == 0) {
-                    photoGrapherFollowingList.clear();
-                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowing(0);
-                }else {
+                photoGrapherFollowingList.clear();
                     // user is searching clear default value and get new search List
-                    photoGrapherFollowingList.clear();
                     photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, searchEditText.getText().toString());
-                }
-
-
 
             }
 
@@ -158,13 +141,13 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         };
     }
     @Override
-    public void viewPhotographerFollowingIn(List<PhotoGrapherFollowingObj> photoGrapherFollowingObjList) {
+    public void viewPhotographerFollowingIn(List<Photographer> photoGrapherFollowingObjList) {
         this.photoGrapherFollowingList.addAll(photoGrapherFollowingObjList);
         photoGrapherFollowingAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void viewPhotographerFollowingSearch(List<PhotoGrapherFollowingObj> photoGrapherFollowingObjList) {
+    public void viewPhotographerFollowingSearch(List<Photographer> photoGrapherFollowingObjList) {
         this.photoGrapherFollowingList.addAll(photoGrapherFollowingObjList);
         photoGrapherFollowingAdapter.notifyDataSetChanged();
     }

@@ -27,22 +27,7 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
 
     }
 
-    @SuppressLint("CheckResult")
-    @Override
-    public void getPhotoGrapherFollowing(int page) {
-        photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(true);
-        BaseNetworkApi.getPhotoGrapherProfileFollowingIn(page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(photoGrapherFollowingInResponse -> {
-                    photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
-                    photoGrapherFollowingFragmentView.viewPhotographerFollowingIn(photoGrapherFollowingInResponse.data.data);
 
-                }, throwable -> {
-                    photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
-                    ErrorUtils.setError(context, TAG, throwable);
-                });
-    }
 
     @SuppressLint("CheckResult")
     @Override
@@ -57,9 +42,7 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherFollowingInResponse -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
-
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingSearch(photoGrapherFollowingInResponse.data.data);
-
                 }, throwable -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
                     ErrorUtils.setError(context, TAG, throwable);

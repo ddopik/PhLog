@@ -125,16 +125,8 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
                 // user cleared search get default data
-                if (searchPhotographerBrand.getText().length() == 0) {
-                    photographerFollowingBrands.clear();
-                    photoGrapherBrandPresenter.getFollowingBrand("0", "");
-                } else {
-                    // user is searching clear default value and get new search List
                     photographerFollowingBrands.clear();
                     photoGrapherBrandPresenter.getFollowingBrand("0", searchPhotographerBrand.getText().toString());
-                }
-
-
             }
 
             @Override

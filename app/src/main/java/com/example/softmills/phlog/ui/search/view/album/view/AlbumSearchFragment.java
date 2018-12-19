@@ -92,7 +92,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
         }
 
-        if (albumSearch.getText().toString().length() > 0){
+        if (albumSearch.getText().toString().length() > 0) {
             albumSearchList.clear();
             albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
         } //there is A search query exist
@@ -148,15 +148,11 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             @Override
             public void getPagingControllerCallBack(int page) {
                 if (albumSearch.getText().length() > 0) {
-                    albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), page - 1);
+                    albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), page);
                 }
 
             }
         };
-
-
-
-
 
 
         expandableListAdapter.onChildViewListener = filterOption -> {
@@ -189,32 +185,27 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-
                 // user cleared search get default data
-                if (albumSearch.getText().length() == 0) {
-                    albumSearchList.clear();
-                    albumSearchAdapter.notifyDataSetChanged();
-                } else {
-                    // user is searching clear default value and request get new search List
-                    albumSearchList.clear();
-                    albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
-                }
+                albumSearchList.clear();
+                albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
+                Log.e(TAG,"search string: "+albumSearch.getText().toString());
 
-                Log.e(TAG, "search string: " + albumSearch.getText().toString());
+        }
 
-            }
+        @Override
+        public void onError (Throwable e){
 
-            @Override
-            public void onError(Throwable e) {
+        }
 
-            }
+        @Override
+        public void onComplete () {
 
-            @Override
-            public void onComplete() {
-
-            }
-        };
+        }
     }
+
+    ;
+}
+
     @Override
     public void viewSearchAlbum(List<AlbumSearch> albumSearchList) {
         filterExpListView.setVisibility(View.GONE);
@@ -283,10 +274,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
     }
+
     public void setAlbumSearchView(OnSearchTabSelected onSearchTabSelected) {
         this.onSearchTabSelected = onSearchTabSelected;
     }
-
 
 
 }

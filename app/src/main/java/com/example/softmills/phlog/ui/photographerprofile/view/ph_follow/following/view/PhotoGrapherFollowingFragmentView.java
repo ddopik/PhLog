@@ -1,6 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view;
 
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model.PhotoGrapherFollowingObj;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import java.util.List;
  */
 public interface PhotoGrapherFollowingFragmentView {
 
-    void viewPhotographerFollowingIn(List<PhotoGrapherFollowingObj> photoGrapherFollowingObjList);
-    void viewPhotographerFollowingSearch(List<PhotoGrapherFollowingObj> photoGrapherFollowingObjList);
+    void viewPhotographerFollowingIn(List<Photographer> photoGrapherFollowingObjList);
+    void viewPhotographerFollowingSearch(List<Photographer> photoGrapherFollowingObjList);
     void viewPhotographerFollowingInProgress(boolean state);
     void viewMessage(String msg);
 }

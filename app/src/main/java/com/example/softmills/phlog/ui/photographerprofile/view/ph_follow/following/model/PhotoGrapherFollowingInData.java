@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.model;
 
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +15,7 @@ public class PhotoGrapherFollowingInData {
     public Integer currentPage;
     @SerializedName("data")
     @Expose
-    public List<PhotoGrapherFollowingObj> data = null;
+    public List<Photographer> data = null;
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;

@@ -42,7 +42,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  */
 public class ProfileSearchFragment extends BaseFragment implements ProfileSearchFragmentView {
 
-    private String TAG=ProfileSearchFragment.class.getSimpleName();
+    private String TAG = ProfileSearchFragment.class.getSimpleName();
     private View mainView;
     private EditText profileSearch;
     private TextView searchResultCount;
@@ -74,7 +74,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
         super.onViewCreated(view, savedInstanceState);
 
 
-        if (onSearchTabSelected !=null){
+        if (onSearchTabSelected != null) {
 
             initPresenter();
             initViews();
@@ -82,7 +82,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
             if (profileSearch.getText().toString().length() > 0) {
                 profileSearchList.clear();
-                profileSearchPresenter.getProfileSearchList(onSearchTabSelected.getSearchView().getText().toString().trim(),0);
+                profileSearchPresenter.getProfileSearchList(onSearchTabSelected.getSearchView().getText().toString().trim(), 0);
             }
 
         }
@@ -109,11 +109,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
 
     private void initListener() {
-
-
-
         disposable.add(
-
                 RxTextView.textChangeEvents(profileSearch)
                         .skipInitialValue()
                         .debounce(Constants.QUERY_SEARCH_TIME_OUT, TimeUnit.MILLISECONDS)
@@ -136,23 +132,17 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
         profileSearchAdapter.profileAdapterListener = profileSearch -> {
             Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-            intent.putExtra(UserProfileActivity.USER_ID,String.valueOf( profileSearch.id));
+            intent.putExtra(UserProfileActivity.USER_ID, String.valueOf(profileSearch.id));
             startActivity(intent);
         };
     }
+
     private DisposableObserver<TextViewTextChangeEvent> searchQuery() {
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-                // user cleared search get default data
-                if (profileSearch.getText().length() == 0) {
-                    profileSearchList.clear();
-                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
-                } else {
-                    // user is searching clear default value and get new search List
-                    profileSearchList.clear();
-                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
-                }
+                profileSearchList.clear();
+                profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
                 Log.e(TAG, "search string: " + profileSearch.getText().toString());
 
             }
@@ -168,6 +158,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
             }
         };
     }
+
     @Override
     public void viewProfileSearchItems(List<Photographer> profileSearchList) {
         this.profileSearchList.addAll(profileSearchList);
@@ -195,10 +186,11 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     private void hideSoftKeyBoard() {
         profileSearch.clearFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
-        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
+        if (imm.isAcceptingText()) { // verify if the soft keyboard is open
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
     }
+
     public void setOnSearchProfile(OnSearchTabSelected onSearchTabSelected) {
         this.onSearchTabSelected = onSearchTabSelected;
     }
