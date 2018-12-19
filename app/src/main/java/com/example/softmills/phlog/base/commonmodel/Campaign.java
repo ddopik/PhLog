@@ -57,5 +57,8 @@ public class Campaign {
     @SerializedName("no_winners")
     @Expose
     public String noWinners;
+    @SerializedName("is_joined")
+    @Expose
+    public Boolean isJoined;
 
 }

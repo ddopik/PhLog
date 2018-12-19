@@ -57,8 +57,8 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void followSocialCampaign(String id) {
-        BaseNetworkApi.followCampaign(PrefUtils.getUserToken(context), id)
+    public void joinSocialCampaign(String id) {
+        BaseNetworkApi.followCampaign(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followCampaignResponse -> {

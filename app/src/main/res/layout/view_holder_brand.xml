@@ -49,8 +49,7 @@
                 android:background="@drawable/rounded_orange_btn"
                 android:fontFamily="@string/filters"
                 android:text="@string/follow"
-                android:textColor="@color/white"
-                android:visibility="invisible"/>
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <FrameLayout

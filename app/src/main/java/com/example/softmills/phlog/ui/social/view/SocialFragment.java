@@ -110,7 +110,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
 
             @Override
             public void onSocialFollowCampaignClicked(Entite entite) {
-                socialFragmentPresenter.followSocialCampaign(String.valueOf(entite.id));
+                socialFragmentPresenter.joinSocialCampaign(String.valueOf(entite.id));
             }
 
             @Override

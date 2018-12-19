@@ -1,71 +1,72 @@
-package com.example.softmills.phlog.ui.campaigns;
+package com.example.softmills.phlog.ui.brand.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
-
+import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
-import com.example.softmills.phlog.base.widgets.PagingController;
-import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
+import com.example.softmills.phlog.ui.brand.presenter.BrandCampaignsPresenter;
+import com.example.softmills.phlog.ui.brand.presenter.BrandCampaignsPresenterImpl;
+import com.example.softmills.phlog.ui.campaigns.AllCampaignsAdapter;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
-import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenter;
-import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.security.AccessController.getContext;
+
 /**
- * Created by abdalla_maged on 10/1/2018.
+ * Created by abdalla_maged On Dec,2018
  */
-public class CampaignsFragment extends BaseFragment implements CampaignFragmentView {
+public class BrandCampaignsActivity extends BaseActivity implements BrandCampaignsView {
 
 
-    private View mainView;
+    public static String BRAND_ID="brand_id";
+    private String brandId;
     private ProgressBar progressBar;
     private CustomRecyclerView allCampaignsRv;
     private AllCampaignsAdapter allCampaignsAdapter;
     private List<Campaign> homeCampaignList = new ArrayList<>();
-    private CampaignPresenter campaignPresenter;
+    private BrandCampaignsPresenter campaignPresenter;
     private PagingController pagingController;
 
-    @Nullable
+
+
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.fragment_campaigns, container, false);
-        return mainView;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_brand_campains);
+
+        if (getIntent().getIntExtra(BRAND_ID,0) !=0) {
+            brandId=String.valueOf(getIntent().getIntExtra(BRAND_ID,0));
+            initPresenter();
+            initView();
+            initListener();
+            campaignPresenter.getBrandCampaigns(brandId,"0");
+        }
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initPresenter();
-        initViews();
-        initListener();
-        campaignPresenter.getAllCampaign(0);
-    }
 
-
-    @Override
-    protected void initViews() {
-        progressBar = mainView.findViewById(R.id.all_home_campaign_progress_bar);
-        allCampaignsRv = mainView.findViewById(R.id.all_campaigns_rv);
-        allCampaignsAdapter = new AllCampaignsAdapter(getContext(), homeCampaignList);
+    public void initView() {
+        progressBar = findViewById(R.id.all_home_campaign_progress_bar);
+        allCampaignsRv = findViewById(R.id.all_campaigns_rv);
+        allCampaignsAdapter = new AllCampaignsAdapter(this, homeCampaignList);
         allCampaignsRv.setAdapter(allCampaignsAdapter);
 
 
     }
 
     @Override
-    protected void initPresenter() {
-        campaignPresenter = new CampaignPresenterImpl(getContext(), this);
+    public void initPresenter() {
+        campaignPresenter = new BrandCampaignsPresenterImpl(this, this);
     }
 
     private void initListener() {
@@ -73,26 +74,24 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
         pagingController = new PagingController(allCampaignsRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                campaignPresenter.getAllCampaign(page);
+                campaignPresenter.getBrandCampaigns(brandId,String.valueOf(page));
             }
         };
-        allCampaignsAdapter.campaignLister =  new AllCampaignsAdapter.CampaignLister() {
+        allCampaignsAdapter.campaignLister = new AllCampaignsAdapter.CampaignLister() {
             @Override
             public void onCampaignClicked(String campaignID) {
-                Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
+                Intent intent = new Intent(BrandCampaignsActivity.this, CampaignInnerActivity.class);
                 intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(campaignID));
                 startActivity(intent);
             }
 
             @Override
             public void onFollowCampaign(String campaignID) {
-                   campaignPresenter.joinCampaign(campaignID);
+                campaignPresenter.joinCampaign(campaignID);
             }
         };
 
     }
-
-
 
 
     @Override

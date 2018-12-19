@@ -7,10 +7,10 @@ import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
 import com.example.softmills.phlog.ui.album.model.ImgCommentResponse;
 import com.example.softmills.phlog.ui.allphotos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
+import com.example.softmills.phlog.ui.brand.model.FollowBrandResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotoResponse;
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
-import com.example.softmills.phlog.ui.brand.model.FollowBrandResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
 import com.example.softmills.phlog.ui.earning.model.EarningResponse;
 import com.example.softmills.phlog.ui.login.model.LoginResponse;
@@ -79,6 +79,7 @@ public class BaseNetworkApi {
 
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/photographer/follow";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/running";
+    private static final String ALL_BRAND_CAMPAIGN_URL = BASE_URL + "/photographer/business/campaigns";
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/photographer/campaign/details";
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/photographer/campaign/photos";
     private static final String FOLLOW_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/join";
@@ -213,8 +214,6 @@ public class BaseNetworkApi {
     }
 
 
-
-
     public static io.reactivex.Observable<PhotoGrapherFollowingInResponse> getPhotoGrapherProfileFollowingSearch(String token, String key, int page) {
         return Rx2AndroidNetworking.post(PROFILE_FOLLOWING_SEARCH_URL)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
@@ -225,7 +224,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(PhotoGrapherFollowingInResponse.class);
     }
 
-    public static io.reactivex.Observable<BrandSearchResponse> getBrandSearch( String key, int page) {
+    public static io.reactivex.Observable<BrandSearchResponse> getBrandSearch(String key, int page) {
         return Rx2AndroidNetworking.post(BRAND_SEARCH_URL)
                 .addBodyParameter("keyword", key)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
@@ -234,7 +233,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(BrandSearchResponse.class);
     }
 
-    public static io.reactivex.Observable<ProfileSearchResponse> getProfileSearch( String key, int page) {
+    public static io.reactivex.Observable<ProfileSearchResponse> getProfileSearch(String key, int page) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_SEARCH_URL)
                 .addBodyParameter("keyword", key)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
@@ -254,10 +253,18 @@ public class BaseNetworkApi {
                 .getObjectObservable(PhotographerFollowingBrandResponse.class);
     }
 
-    public static io.reactivex.Observable<CampaignResponse> getAllRunningCampaign(String token, int page) {
+    public static io.reactivex.Observable<CampaignResponse> getAllRunningCampaign(String page) {
         return Rx2AndroidNetworking.post(ALL_CAMPAIGN_URL)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(CampaignResponse.class);
+    }
+
+    public static io.reactivex.Observable<CampaignResponse> getCampaignBrands(String brandId, String page) {
+        return Rx2AndroidNetworking.post(ALL_BRAND_CAMPAIGN_URL)
+                .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
+                .addQueryParameter("business_id", brandId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(CampaignResponse.class);
@@ -284,7 +291,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(CampaignInnerPhotoResponse.class);
     }
 
-    public static io.reactivex.Observable<FollowCampaignResponse> followCampaign(String token, String campaignID) {
+    public static io.reactivex.Observable<FollowCampaignResponse> followCampaign(String campaignID) {
         return Rx2AndroidNetworking.post(FOLLOW_CAMPAIGN_URL)
                 .addBodyParameter("campaign_id", campaignID)
                 .setPriority(Priority.HIGH)
@@ -378,7 +385,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(FollowBrandResponse.class);
     }
 
- public static io.reactivex.Observable<FollowBrandResponse> unFollowBrand(String brandId) {
+    public static io.reactivex.Observable<FollowBrandResponse> unFollowBrand(String brandId) {
         return Rx2AndroidNetworking.post(BRAND_UN_FOLLOW_URL)
                 .getResponseOnlyFromNetwork()
                 .addBodyParameter("business_id", brandId)
@@ -446,7 +453,7 @@ public class BaseNetworkApi {
                 .addMultipartParameter("caption", caption)
                 .addMultipartParameter("location", location)
                 .addMultipartParameter(tagList)
-                .addMultipartParameter(IMAGE_TYPE_CAMPAIGN,uploadImageType.getImageId())
+                .addMultipartParameter(IMAGE_TYPE_CAMPAIGN, uploadImageType.getImageId())
                 .addMultipartFile("image", imgPath)
                 .setPriority(Priority.HIGH)
                 .build()

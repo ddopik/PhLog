@@ -1,44 +1,43 @@
-package com.example.softmills.phlog.ui.campaigns.presenter;
+package com.example.softmills.phlog.ui.brand.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.campaigns.CampaignFragmentView;
+import com.example.softmills.phlog.ui.brand.view.BrandCampaignsView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by abdalla_maged on 10/2/2018.
+ * Created by abdalla_maged On Dec,2018
  */
-public class CampaignPresenterImpl implements CampaignPresenter {
+public class BrandCampaignsPresenterImpl implements BrandCampaignsPresenter {
 
-    private static final String TAG = CampaignPresenterImpl.class.getSimpleName();
-    private CampaignFragmentView campaignFragmentView;
+    private static final String TAG = BrandCampaignsPresenterImpl.class.getSimpleName();
+    private BrandCampaignsView brandCampaignsView;
     private Context context;
 
-    public CampaignPresenterImpl(Context context, CampaignFragmentView campaignFragmentView) {
-        this.campaignFragmentView = campaignFragmentView;
+    public BrandCampaignsPresenterImpl(Context context, BrandCampaignsView brandCampaignsView) {
+        this.brandCampaignsView = brandCampaignsView;
         this.context = context;
     }
 
     @SuppressLint("CheckResult")
     @Override
-    public void getAllCampaign(int page) {
-        campaignFragmentView.showAllCampaignProgress(true);
-        BaseNetworkApi.getAllRunningCampaign(String.valueOf(page))
+    public void getBrandCampaigns(String brandId,String page) {
+        brandCampaignsView.showAllCampaignProgress(true);
+        BaseNetworkApi.getCampaignBrands(brandId,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(campaignResponse -> {
-                    campaignFragmentView.showAllCampaignProgress(false);
-                        campaignFragmentView.viewAllCampaign(campaignResponse.data.data);
-                        campaignFragmentView.showAllCampaignProgress(false);
+                    brandCampaignsView.showAllCampaignProgress(false);
+                    brandCampaignsView.viewAllCampaign(campaignResponse.data.data);
+                    brandCampaignsView.showAllCampaignProgress(false);
                 }, throwable -> {
-                    campaignFragmentView.showAllCampaignProgress(false);
+                    brandCampaignsView.showAllCampaignProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
@@ -51,7 +50,7 @@ public class CampaignPresenterImpl implements CampaignPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followCampaignResponse -> {
-                    campaignFragmentView.showMessage(context.getResources().getString(R.string.campaign_followed));
+                    brandCampaignsView.showMessage(context.getResources().getString(R.string.campaign_followed));
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });

@@ -9,6 +9,7 @@ import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivityView;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -53,9 +54,13 @@ public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
                 .subscribe(followBrandResponse -> {
                     brandInnerActivityView.showMessage(context.getResources().getString(R.string.brand_followed));
                     brandInnerActivityView.viewInnerBrandData(followBrandResponse.data.brand);
+
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
+
+
+
     }
 
     @SuppressLint("CheckResult")

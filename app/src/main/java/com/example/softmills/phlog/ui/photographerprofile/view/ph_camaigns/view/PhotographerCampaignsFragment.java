@@ -91,7 +91,7 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
 
             @Override
             public void onCampaignJoinClicked(String campaignID) {
-             photoGrapherCampaignsPresenter.followCampaign(campaignID);
+             photoGrapherCampaignsPresenter.joinCampaign(campaignID);
             }
         };
     }

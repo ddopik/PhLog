@@ -45,8 +45,8 @@ public class FragmentPhotoGrapherCampaignsPresenterImpl implements FragmentPhoto
 
     @SuppressLint("CheckResult")
     @Override
-    public void followCampaign(String campaignId) {
-        BaseNetworkApi.followCampaign(PrefUtils.getUserToken(context), String.valueOf(campaignId))
+    public void joinCampaign(String campaignId) {
+        BaseNetworkApi.followCampaign(String.valueOf(campaignId))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followCampaignResponse -> {

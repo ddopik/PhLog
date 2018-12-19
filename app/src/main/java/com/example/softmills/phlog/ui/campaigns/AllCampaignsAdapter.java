@@ -58,6 +58,12 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
                 }
             }
         });
+
+        if(homeCampaign.isJoined){
+            campaignViewHolder.joinCampaignBtn.setVisibility(View.INVISIBLE);
+        }else {
+            campaignViewHolder.joinCampaignBtn.setVisibility(View.VISIBLE);
+        }
         campaignViewHolder.joinCampaignBtn.setOnClickListener(v -> {
             if (campaignLister != null) {
                 campaignLister.onFollowCampaign(homeCampaign.id.toString());

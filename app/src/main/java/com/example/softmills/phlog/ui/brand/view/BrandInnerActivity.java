@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.brand.view;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -136,7 +137,12 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
                 }
 
             }
+        });
 
+        brandCampaign.setOnClickListener(v->{
+            Intent intent=new Intent(this,BrandCampaignsActivity.class);
+            intent.putExtra(BrandCampaignsActivity.BRAND_ID,currentBrand.id);
+            startActivity(intent);
         });
     }
 
