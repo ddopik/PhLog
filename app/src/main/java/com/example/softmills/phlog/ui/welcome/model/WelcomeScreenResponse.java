@@ -9,12 +9,8 @@ public class WelcomeScreenResponse {
 
 
 
-        @SerializedName("init_slider")
+        @SerializedName("data")
         @Expose
-        public List<InitSlider> initSlider = null;
-        @SerializedName("state")
-        @Expose
-        public String state;
-
+        public List<InitSlider> data = null;
 
 }

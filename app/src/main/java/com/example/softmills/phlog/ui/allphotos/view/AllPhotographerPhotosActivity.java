@@ -21,13 +21,11 @@ import java.util.List;
  */
 
  /***
- *this activity currently view PhotoGrapher Photos as to upload one of them to campaign
+ *this activity currently view PhotoGrapher Photos  to upload one of them to campaign
  * **/
 public class AllPhotographerPhotosActivity extends BaseActivity implements AllPhotographerPhotosActivityView {
 
-    public String SELECT_MODEL = "select_mode";
-    private String SELECT_MODE_NORMAL = "normal";
-    private String SELECT_MODE_UPLOAD = "upload";
+    public static String CAMPAIGN_ID="campaign_id";
     private CustomRecyclerView savedPhotosRv;
     private ProgressBar savedPhotosProgress;
     private PhotosListAdapter photographerPhotoAdapter;
@@ -58,7 +56,7 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
 
     @Override
     public void initPresenter() {
-        allPhotographerPhotosPresenter = new AllPhotographerPhotosPresenterImpl(getBaseContext(), this);
+        allPhotographerPhotosPresenter = new AllPhotographerPhotosPresenterImpl(this, this);
     }
 
     private void initListener() {
@@ -70,10 +68,8 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
         };
 
         photographerPhotoAdapter.photoAction = photoGrapherSavedPhoto -> {
-            if (getIntent().getStringExtra(SELECT_MODEL).equals(SELECT_MODE_NORMAL)) {
-            } else if (getIntent().getStringExtra(SELECT_MODEL).equals(SELECT_MODE_UPLOAD)) {
-//                allPhotographerPhotosPresenter.uploadCampaignPhoto(); <----- pending from BackEnd
-            }
+            if(getIntent().getStringExtra(CAMPAIGN_ID) !=null)
+            allPhotographerPhotosPresenter.uploadCampaignExistingPhoto(getIntent().getStringExtra(CAMPAIGN_ID),String.valueOf(photoGrapherSavedPhoto.id));
         };
     }
 

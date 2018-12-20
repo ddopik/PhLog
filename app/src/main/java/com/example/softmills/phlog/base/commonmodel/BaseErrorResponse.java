@@ -12,5 +12,5 @@ public class BaseErrorResponse {
     public String message;
     @SerializedName("code")
     @Expose
-    public Integer code;
+    public String code;
 }

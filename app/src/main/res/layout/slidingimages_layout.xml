@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_background"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_photographer_profile"/>
 
     <TextView
         android:id="@+id/image_description"

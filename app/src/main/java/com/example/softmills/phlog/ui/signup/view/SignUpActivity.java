@@ -54,7 +54,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
 //        userName = findViewById(R.id.user_name);
         mail = findViewById(R.id.mail);
         registerPassword = findViewById(R.id.register_password);
-        confirmRegister_password = findViewById(R.id.confirm_register_password);
+//        confirmRegister_password = findViewById(R.id.confirm_register_password);
         mobile = findViewById(R.id.mobile);
         registerCancel = findViewById(R.id.register_cancel);
         register_signUp = findViewById(R.id.register_sign_up);
@@ -64,12 +64,11 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
 //        userNameInput = findViewById(R.id.user_name_input);
         mailInput = findViewById(R.id.mail_input);
         registerPasswordInput = findViewById(R.id.register_password_input);
-        confirmRegister_passwordInput = findViewById(R.id.confirm_register_password_input);
         mobileInput = findViewById(R.id.mobile_input);
         countryInput = findViewById(R.id.country_input);
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList);
         autoCompleteTextView = findViewById(R.id.country);
-        autoCompleteTextView.setThreshold(1);
+        autoCompleteTextView.setThreshold(0);
         autoCompleteTextView.setAdapter(arrayAdapter);
 
 
@@ -153,13 +152,14 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
             registerPasswordInput.setErrorEnabled(false);
             failedStates.add(1, true);
         }
-        if (!registerPassword.getText().toString().equals(confirmRegister_password.getText().toString())) {
-            confirmRegister_passwordInput.setError(getResources().getString(R.string.password_not_matched));
-            failedStates.add(2, false);
-        } else {
-            confirmRegister_passwordInput.setErrorEnabled(false);
-            failedStates.add(2, true);
-        }
+//        if (!registerPassword.getText().toString().equals(confirmRegister_password.getText().toString())) {
+//            confirmRegister_passwordInput.setError(getResources().getString(R.string.password_not_matched));
+//            failedStates.add(2, false);
+//        }
+//        else {
+//            confirmRegister_passwordInput.setErrorEnabled(false);
+//            failedStates.add(2, true);
+//        }
 //        if (mobile.getText().toString().equals("") || !android.util.Patterns.PHONE.matcher(mobile.getText()).matches()) {
 //            mobileInput.setError(getString(R.string.invalid_phone_number));
 //            failedStates.add(5, false);

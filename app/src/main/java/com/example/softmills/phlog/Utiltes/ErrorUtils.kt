@@ -32,7 +32,8 @@ class ErrorUtils {
                     val gson = Gson()
                     when (statusCode) {
                         STATUS_BAD_REQUEST -> {
-                            viewError(context, contextTAG, gson.fromJson(errorData, ErrorMessageResponse::class.java))
+                            var errorMessageResponse:ErrorMessageResponse = gson.fromJson(errorData, ErrorMessageResponse::class.java)
+                            viewError(context, contextTAG,errorMessageResponse)
                         }
                         STATUS_404 -> {
                             Log.e(TAG, contextTAG + "------>" + STATUS_404 + "---" + throwable.response)

@@ -25,7 +25,7 @@
     <string name="mobile">Mobile</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="cancel">Cancel</string>
-    <string name="sign_up_terms_notifier">By creating An account you are agree to our user Agreement and privacy Policy</string>
+    <string name="sign_up_terms_notifier">By creating an account you are agree to our user agreement and privacy policy</string>
     <string name="sign_in_to_continue">Sign In to continue</string>
     <string name="do_not_have_account">Don\'t Have an account?" "</string>
     <string name="or">OR</string>

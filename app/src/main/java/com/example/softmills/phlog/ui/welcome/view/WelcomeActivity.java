@@ -82,8 +82,6 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     public void showWelcomeImageSlider(List<InitSlider> images) {
         urlList.clear();
         InitSlider initSliderDefaultItem=new InitSlider();
-        initSliderDefaultItem.image="";
-        initSliderDefaultItem.text="basic Image";
         urlList.add(initSliderDefaultItem);
         urlList.addAll(images);
         WelcomeSlideAdapter.notifyDataSetChanged();

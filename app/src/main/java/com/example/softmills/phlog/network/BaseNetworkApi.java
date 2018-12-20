@@ -54,7 +54,7 @@ public class BaseNetworkApi {
     public static final int STATUS_404 = 404;
     public static final int STATUS_500 = 500;
     public static String STATUS_ERROR = "405";
-    public static final int ERROR_STATE_1 = 1;
+    public static final String ERROR_STATE_1 = "1";
 
     public static String IMAGE_TYPE_PHOTOS = "image";
     public static String IMAGE_TYPE_CAMPAIGN = "campaign_id";
@@ -65,9 +65,10 @@ public class BaseNetworkApi {
     //
 //    private static final String BASE_URL = "http://178.128.162.10/public/api/photographer";
     private static final String BASE_URL = "http://178.128.162.10/api";
-    private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider"; //done
+    private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider";
     private static final String ALL_COUNTRES = BASE_URL + "/common/countries/list"; //done
     private static final String SIGNUP_USER = BASE_URL + "/photographer/auth/signup";
+    private static final String UPLOAD_CAMPAIGN_EXSISTING_PHOTO = BASE_URL + "/photographer/campaign/photo/assign";
     private static final String UPLOAD_PROFILE = BASE_URL + "/photographer/profile/upload";
     private static final String NORMAL_LOGIN = BASE_URL + "/photographer/auth/login";
     private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/signup_facebook";
@@ -426,6 +427,16 @@ public class BaseNetworkApi {
                 .build()
                 .getObjectObservable(EarningResponse.class);
     }
+
+
+    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignExistingPhoto(Map<String,String> data) {
+        return Rx2AndroidNetworking.post(UPLOAD_CAMPAIGN_EXSISTING_PHOTO)
+                .addBodyParameter(data)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(UploadImgResponse.class);
+    }
+
 
     public static io.reactivex.Observable<UploadImgResponse> uploadProfileImg(File imgPath) {
         return Rx2AndroidNetworking.upload(UPLOAD_PROFILE)

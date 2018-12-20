@@ -83,9 +83,7 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
     private void initListener() {
         uploadCampaignBtn.setOnClickListener(v -> {
 
-
             showPhotoDialog(this, "title", "Message");
-
 
         });
     }
@@ -174,13 +172,13 @@ public class CampaignInnerActivity extends BaseActivity implements CampaignInner
 //
             Bundle extras = new Bundle();
             extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageType);
-
             Intent intent = new Intent(this, UploadImageActivity.class);
             intent.putExtras(extras);
             startActivity(intent);
         });
         builder.setNegativeButton(R.string.photos, (dialog, id) -> {
             Intent intent = new Intent(this, AllPhotographerPhotosActivity.class);
+            intent.putExtra(AllPhotographerPhotosActivity.CAMPAIGN_ID,String.valueOf(campaignId));
             startActivity(intent);
         });
         builder.show();

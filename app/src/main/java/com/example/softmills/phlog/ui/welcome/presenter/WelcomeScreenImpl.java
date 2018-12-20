@@ -30,11 +30,7 @@ public class WelcomeScreenImpl implements WelcomePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(welcomeScreenResponse -> {
-                    if (welcomeScreenResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        welcomeView.showWelcomeImageSlider(welcomeScreenResponse.initSlider);
-                    } else {
-                        ErrorUtils.Companion.setError(context, TAG, welcomeScreenResponse.toString());
-                    }
+                        welcomeView.showWelcomeImageSlider(welcomeScreenResponse.data);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });

@@ -38,7 +38,6 @@ public class SignUpPresenterImpl implements SignUpPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(signUpResponse -> {
                     Log.e(TAG,"signUpUser() --->"+signUpResponse.toString());
-
                         signUpView.showMessage(signUpResponse.token);
                         signUpView.showMessage("What should we do now");
 

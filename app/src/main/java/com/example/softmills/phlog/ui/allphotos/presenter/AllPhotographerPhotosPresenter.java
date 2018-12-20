@@ -5,4 +5,5 @@ package com.example.softmills.phlog.ui.allphotos.presenter;
  */
 public interface AllPhotographerPhotosPresenter {
     void getPhotographerPhotos(int Page);
+    void uploadCampaignExistingPhoto(String campaignId, String imageId);
 }
