@@ -78,6 +78,7 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/list";
 
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/photographer/follow";
+    private static final String PHOTOGRAPHER_UN_FOLLOW_USER_URL = BASE_URL + "/photographer/unfollow";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/running";
     private static final String ALL_BRAND_CAMPAIGN_URL = BASE_URL + "/photographer/business/campaigns";
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/photographer/campaign/details";
@@ -174,6 +175,12 @@ public class BaseNetworkApi {
 
     public static io.reactivex.Observable<FollowUserResponse> followUser(String userID) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_FOLLOW_USER_URL)
+                .addBodyParameter("photographer_id", userID)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(FollowUserResponse.class);
+    }  public static io.reactivex.Observable<FollowUserResponse> unFollowUser(String userID) {
+        return Rx2AndroidNetworking.post(PHOTOGRAPHER_UN_FOLLOW_USER_URL)
                 .addBodyParameter("photographer_id", userID)
                 .setPriority(Priority.HIGH)
                 .build()

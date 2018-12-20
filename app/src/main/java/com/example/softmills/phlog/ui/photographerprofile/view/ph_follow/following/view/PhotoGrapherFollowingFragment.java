@@ -66,7 +66,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         initViews();
         initListener();
         //default following list
-        photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0,"");
+
     }
 
     @Override
@@ -82,12 +82,18 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
 
     @Override
     protected void initViews() {
-
         followingProgressBar = mainView.findViewById(R.id.photographer_following_progress_bar);
         followingRV = mainView.findViewById(R.id.photographer_following_rv);
         photoGrapherFollowingAdapter = new PhotoGrapherFollowingAdapter(getContext(), photoGrapherFollowingList);
         followingRV.setAdapter(photoGrapherFollowingAdapter);
         searchEditText = mainView.findViewById(R.id.search_following);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        photoGrapherFollowingList.clear();
+        photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0,"");
     }
 
     private void initListener() {

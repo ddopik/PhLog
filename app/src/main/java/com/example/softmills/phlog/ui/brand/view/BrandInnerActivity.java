@@ -21,6 +21,7 @@ import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Brand;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerDataPresenterImpl;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerPresenter;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.PhotoGrapherFollowFragment;
 
 import io.reactivex.annotations.NonNull;
 
@@ -67,7 +68,6 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         brandCampaign = findViewById(R.id.brand_campaign);
         progressBar = findViewById(R.id.brand_progress_bar);
         followBrandBtn = findViewById(R.id.follow_brand_btn);
-
     }
 
     @Override
@@ -114,7 +114,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
                 brandWebsite.setText(brand.website);
             }
             if (brand.isFollow) {
-                followBrandBtn.setText(getResources().getString(R.string.un_follow));
+                followBrandBtn.setText(getResources().getString(R.string.following));
             } else {
                 followBrandBtn.setText(getResources().getString(R.string.follow));
             }
@@ -146,6 +146,14 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         });
     }
 
+    @Override
+    public void viwBrandFollowedState(Boolean state) {
+        if (state) {
+            followBrandBtn.setText(getResources().getString(R.string.following));
+        } else {
+            followBrandBtn.setText(getResources().getString(R.string.follow));
+        }
+    }
 
     @Override
     public void viewInnerBrandProgressBar(Boolean state) {

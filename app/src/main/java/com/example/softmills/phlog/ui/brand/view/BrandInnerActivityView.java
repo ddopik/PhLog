@@ -10,5 +10,6 @@ public interface BrandInnerActivityView {
 
     void viewInnerBrandData(Brand brandInnerData);
     void viewInnerBrandProgressBar(Boolean state);
+    void viwBrandFollowedState(Boolean state);
     void showMessage(String msg);
 }

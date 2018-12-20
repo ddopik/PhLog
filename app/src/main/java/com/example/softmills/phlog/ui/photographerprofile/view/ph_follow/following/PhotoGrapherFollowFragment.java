@@ -30,6 +30,7 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
     private PhotoGrapherFollowViewPagerAdapter photoGrapherFollowViewPagerAdapter;
 
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,16 +60,19 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
         followTableLayout = mainView.findViewById(R.id.photographer_follow_tabs);
         followViewPager = mainView.findViewById(R.id.photographer_follow_pager);
         photoGrapherFollowViewPagerAdapter = new PhotoGrapherFollowViewPagerAdapter(getChildFragmentManager(), getFragmentList());
+
         followViewPager.setAdapter(photoGrapherFollowViewPagerAdapter);
         followTableLayout.setupWithViewPager(followViewPager);
+        followTableLayout.getTabAt(0).setIcon(R.drawable.tab_follow_following);
+        followTableLayout.getTabAt(1).setIcon(R.drawable.tab_follow_brand);
+//        followViewPager.setCurrentItem(CURRENT_TAP);
 
-        followTableLayout.setupWithViewPager(followViewPager);
-//        for (int i = 0; i < followTableLayout.getTabCount(); i++) {
-            followTableLayout.getTabAt(0).setIcon(R.drawable.tab_follow_following);
-            followTableLayout.getTabAt(1).setIcon(R.drawable.tab_follow_brand);
-//        }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void showToast(String msg) {

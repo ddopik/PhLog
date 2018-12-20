@@ -52,7 +52,7 @@ public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followBrandResponse -> {
-                    brandInnerActivityView.showMessage(context.getResources().getString(R.string.brand_followed));
+                    brandInnerActivityView.viwBrandFollowedState(true);
                     brandInnerActivityView.viewInnerBrandData(followBrandResponse.data.brand);
 
                 }, throwable -> {
@@ -70,7 +70,7 @@ public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followBrandResponse -> {
-                    brandInnerActivityView.showMessage(context.getResources().getString(R.string.brand_followed));
+                    brandInnerActivityView.viwBrandFollowedState(false);
                     brandInnerActivityView.viewInnerBrandData(followBrandResponse.data.brand);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);

@@ -7,7 +7,6 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.photographerprofile.model.ProfilePhotoGrapherInfoResponse;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivityView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,32 +30,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userProfileResponse -> {
-
-                    ProfilePhotoGrapherInfoResponse userProfileData = userProfileResponse;
-                    if(userProfileData.data.userName !=null)
-                    userProfileActivityView.viewUserProfileUserName(userProfileData.data.userName);
-                    if(userProfileData.data.fullName !=null)
-                    userProfileActivityView.viewUserProfileFullName(userProfileData.data.fullName);
-
-
-                    userProfileActivityView.viewUserProfileRating(userProfileData.data.rate);
-
-                    if(userProfileData.data.level !=null)
-                    userProfileActivityView.viewUserProfileLevel(userProfileData.data.level);
-
-                    if(userProfileData.data.imageProfile !=null)
-                    userProfileActivityView.viewUserProfileProfileImg(userProfileData.data.imageProfile);
-
-                    if(userProfileData.data.followersCount !=null)
-                    userProfileActivityView.viewUserProfileFollowersCount(userProfileData.data.followersCount);
-
-                    if(userProfileData.data.followingCount !=null)
-                    userProfileActivityView.viewUserProfileFollowingCount(userProfileData.data.followingCount);
-
-                    userProfileActivityView.viewUserProfilePhotosCount(userProfileData.data.photosCount);
-                    if(userProfileData.data.isFollow !=null)
-                        userProfileActivityView.viewUserFollowingState(userProfileData.data.isFollow);
-
+                    userProfileActivityView.viewUserData(userProfileResponse.data);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
@@ -88,8 +62,24 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followUserResponse -> {
                     userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
+                    userProfileActivityView.viewUserFollowingState(true);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void unFollowUser(String userID) {
+        BaseNetworkApi.unFollowUser(userID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followUserResponse -> {
+                    userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
+                    userProfileActivityView.viewUserFollowingState(false);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+
     }
 }

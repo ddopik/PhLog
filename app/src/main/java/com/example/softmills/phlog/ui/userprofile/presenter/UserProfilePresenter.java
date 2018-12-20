@@ -7,4 +7,5 @@ public interface UserProfilePresenter {
     void getUserPhotos(String userID,int page);
 
     void followUser(String userId);
+    void unFollowUser(String userID);
 }

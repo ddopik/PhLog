@@ -60,8 +60,6 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
         allCampaignsRv = findViewById(R.id.all_campaigns_rv);
         allCampaignsAdapter = new AllCampaignsAdapter(this, homeCampaignList);
         allCampaignsRv.setAdapter(allCampaignsAdapter);
-
-
     }
 
     @Override

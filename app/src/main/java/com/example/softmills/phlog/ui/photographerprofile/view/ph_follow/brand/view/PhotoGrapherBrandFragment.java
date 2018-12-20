@@ -1,6 +1,5 @@
 package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.view;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,15 +12,14 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
-import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Brand;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
-import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.presenter.PhotoGrapherBrandPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.presenter.PhotoGrapherBrandPresenterImpl;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.PhotoGrapherFollowFragment;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 
@@ -33,6 +31,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+
+
 
 /**
  * Created by abdalla_maged on 10/14/2018.
@@ -83,14 +83,17 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
         searchPhotographerBrand = mainView.findViewById(R.id.search_photographer_brand);
         followingBrandRv = mainView.findViewById(R.id.photographer_search_brand_rv);
         photographerBrandSearchProgressBar = mainView.findViewById(R.id.photographer_brand_progress_bar);
-
         photoGrapherFollowingBrandAdapter = new PhotoGrapherFollowingBrandAdapter(photographerFollowingBrands);
         followingBrandRv.setAdapter(photoGrapherFollowingBrandAdapter);
-        photoGrapherBrandPresenter.getFollowingBrand("0", "0");
-
     }
 
-    @SuppressLint("CheckResult")
+    @Override
+    public void onResume() {
+        super.onResume();
+        photographerFollowingBrands.clear();
+        photoGrapherBrandPresenter.getFollowingBrand("0", "0");
+    }
+
     private void initListener() {
 
 
@@ -115,28 +118,11 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
 
 
         photoGrapherFollowingBrandAdapter.brandAdapterListener= brand -> {
-
-            BaseNetworkApi.followBrand(String.valueOf(brand.id))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(followBrandResponse -> {
-                         showMessage("Horaoooo");
-
-                    }, throwable -> {
-                        showMessage("throwable");
-                    });
-
             Intent intent=new Intent(getActivity(),BrandInnerActivity.class);
             intent.putExtra(BrandInnerActivity.BRAND_ID,String.valueOf(brand.id));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
-
-
         };
-
-
-
-
 
     }
 
