@@ -3,6 +3,7 @@ package com.example.softmills.phlog.network;
 import com.androidnetworking.common.Priority;
 import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
+import com.example.softmills.phlog.ui.album.model.AlbumPreviewImagesResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
 import com.example.softmills.phlog.ui.album.model.ImgCommentResponse;
 import com.example.softmills.phlog.ui.allphotos.model.PhotoGrapherPhotosResponse;
@@ -77,7 +78,7 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/photographer/photo/list";
     private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/list";
-
+    private static final String GET_ALBUM_IMAGES_PREVIEW = BASE_URL +"/album/photos";
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/photographer/follow";
     private static final String PHOTOGRAPHER_UN_FOLLOW_USER_URL = BASE_URL + "/photographer/unfollow";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/running";
@@ -354,6 +355,15 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AlbumPreviewResponse.class);
+    }
+
+    public static io.reactivex.Observable<AlbumPreviewImagesResponse> getAlbumImagesPreview(String albumId, String page) {
+        return Rx2AndroidNetworking.post(GET_ALBUM_IMAGES_PREVIEW)
+                .addQueryParameter(PAGER_PATH_PARAMETER,page)
+                .addBodyParameter("album_id",albumId)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(AlbumPreviewImagesResponse.class);
     }
 
     public static io.reactivex.Observable<ImgCommentResponse> getImageComments(String image_id, String page) {

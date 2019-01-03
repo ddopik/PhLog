@@ -8,7 +8,9 @@ import java.util.List;
  * Created by abdalla_maged on 11/5/2018.
  */
 public interface AllAlbumImgActivityView  {
+
+    void showMessage(String msg);
+
     void viewAlbumImageList(List<BaseImage> albumImgList);
     void viewAlbumImageListProgress(boolean state);
-    void showMessage(String msg);
 }
