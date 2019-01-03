@@ -143,6 +143,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
             tagList.addAll(tempList);
             selectedTagAdapter.notifyDataSetChanged();
         };
+
         initKeyBoardListener();
 
         backBtn.setOnClickListener((view) -> onBackPressed());

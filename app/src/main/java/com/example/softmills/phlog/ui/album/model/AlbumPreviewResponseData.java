@@ -16,6 +16,12 @@ public class AlbumPreviewResponseData {
     @SerializedName("data")
     @Expose
     public AlbumPreviewData data;
+
+
+    @SerializedName("preview")
+    @Expose
+    public String preview;
+
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;
@@ -30,7 +36,7 @@ public class AlbumPreviewResponseData {
     public String lastPageUrl;
     @SerializedName("next_page_url")
     @Expose
-    public Object nextPageUrl;
+    public String nextPageUrl;
     @SerializedName("path")
     @Expose
     public String path;

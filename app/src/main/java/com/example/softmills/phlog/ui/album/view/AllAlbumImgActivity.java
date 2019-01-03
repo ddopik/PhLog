@@ -23,6 +23,7 @@ import java.util.List;
 public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActivityView {
 
 
+    public static String ALBUM_ID = "album_id";
     public static String ALL_ALBUM_IMAGES = "album_list";
     public static String SELECTED_IMG_ID = "selected_img_id";
     private AllAlbumImgAdapter allAlbumImgAdapter;

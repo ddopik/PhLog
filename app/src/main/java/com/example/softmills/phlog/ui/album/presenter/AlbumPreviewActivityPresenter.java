@@ -6,7 +6,8 @@ package com.example.softmills.phlog.ui.album.presenter;
 public interface AlbumPreviewActivityPresenter {
 
 
-    void getSelectedSearchAlbum(String albumID, String pageNum);
+    void getSelectedSearchAlbum(int albumID, String pageNum);
 
+    void getAlbumPreviewImages(int albumId, int page);
 
 }
