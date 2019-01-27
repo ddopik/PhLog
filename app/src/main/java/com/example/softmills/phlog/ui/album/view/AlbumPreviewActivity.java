@@ -2,7 +2,6 @@ package com.example.softmills.phlog.ui.album.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,7 +22,6 @@ import com.example.softmills.phlog.ui.album.view.adapter.AlbumAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
@@ -32,10 +30,10 @@ import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELE
 public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewActivityView {
 
 
-    public static final String ALBUM_PREVIEW_ID = "album_preview_id";
-    private String albumID;
-    private List<AlbumGroup> albumGroupList = new ArrayList<>();
-    private List<BaseImage> allAlbumImg = new ArrayList<>();
+    public static final String ALBUM_PREVIEW_ID="album_preview_id";
+    private int albumID;
+    private List<AlbumGroup> albumGroupList=new ArrayList<>();
+
     private AlbumAdapter albumAdapter;
     private ImageView albumPreviewImg;
     private ProgressBar albumPreviewProgress;
@@ -43,12 +41,13 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     private PagingController pagingController;
     private AlbumPreviewActivityPresenter albumPreviewActivityPresenter;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_preview);
         if (getIntent().getIntExtra(ALBUM_PREVIEW_ID, 0) != 0) {
-            albumID = String.valueOf(getIntent().getIntExtra(ALBUM_PREVIEW_ID, 0));
+            albumID = getIntent().getIntExtra(ALBUM_PREVIEW_ID, 0);
             initPresenter();
             initView();
             initListener();
@@ -57,16 +56,20 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     }
 
 
+
+
     @Override
     public void initView() {
-        albumPreviewImg = findViewById(R.id.album_preview_img);
+        albumPreviewImg=findViewById(R.id.album_preview_img);
         albumRv = findViewById(R.id.album_rv);
         albumPreviewProgress = findViewById(R.id.user_profile_progress_bar);
 
         // Set adapter object.
         albumAdapter = new AlbumAdapter(getBaseContext(), albumGroupList);
         albumRv.setAdapter(albumAdapter);
-        albumPreviewActivityPresenter.getSelectedSearchAlbum(albumID, "0");
+        albumPreviewActivityPresenter.getSelectedSearchAlbum(albumID,"0");
+        albumPreviewActivityPresenter.getAlbumPreviewImages(albumID, 0);
+
     }
 
     @Override
@@ -80,15 +83,15 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         pagingController = new PagingController(albumRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                albumPreviewActivityPresenter.getSelectedSearchAlbum(albumID, String.valueOf(page));
+                albumPreviewActivityPresenter.getAlbumPreviewImages(albumID, page);
             }
         };
 
         albumAdapter.onAlbumImageClicked = albumImg -> {
 
-            Intent intent = new Intent(this, AllAlbumImgActivity.class);
+            Intent intent =new Intent(this,AllAlbumImgActivity.class);
+            intent.putExtra(AllAlbumImgActivity.ALBUM_ID,albumID);
             intent.putExtra(SELECTED_IMG_ID, albumImg.id);
-            intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) allAlbumImg);
             startActivity(intent);
 
         };
@@ -100,32 +103,36 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     }
 
 
+
+
     @Override
-    public void viewAlumPreview(AlbumPreviewResponseData albumPreviewResponseData) {
-        allAlbumImg = albumPreviewResponseData.data.photos;
-        AlbumGroup singleGroup = new AlbumGroup();
-        int albumGroupCounter = 0;
+    public void viwAlbumPreviewImages(List<BaseImage> baseImageList) {
 
-        if(allAlbumImg.size() > 0 ) {
-            for (int i = 0; i < allAlbumImg.size(); i++) {
-                albumGroupCounter++;
-                singleGroup.albumGroupList.add(allAlbumImg.get(i));
+        if (baseImageList.size() > 0) {
 
-                if (albumGroupCounter == 4 || i == allAlbumImg.size() - 1) {
-                    albumGroupList.add(singleGroup);
-                    albumGroupCounter = 0;
-                    singleGroup = new AlbumGroup();
+
+            for (int i = 0; i < baseImageList.size(); i++) {
+
+                if (albumGroupList.size() == 0) {
+                    AlbumGroup albumGroup = new AlbumGroup();
+                    albumGroup.albumGroupList.add(baseImageList.get(i));
+                    albumGroupList.add(albumGroup);
+                } else if (albumGroupList.get(albumGroupList.size() - 1).albumGroupList.size() < 4) {
+                    albumGroupList.get(albumGroupList.size() - 1).albumGroupList.add(baseImageList.get(i));
+                } else {
+                    AlbumGroup albumGroup = new AlbumGroup();
+                    albumGroup.albumGroupList.add(baseImageList.get(i));
+                    albumGroupList.add(albumGroup);
                 }
+
+
             }
 
-            GlideApp.with(this)
-                    .load(albumGroupList.get(0).albumGroupList.get(0).url)
-                    .placeholder(R.drawable.default_photographer_profile)
-                    .error(R.drawable.default_photographer_profile)
-                    .into(albumPreviewImg);
 
             albumAdapter.notifyDataSetChanged();
         }
+
+
     }
 
     @Override
@@ -139,4 +146,17 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         }
 
     }
+
+    @Override
+    public void viewAlumPreview(AlbumPreviewResponseData albumPreviewResponseData) {
+
+        GlideApp.with(this)
+                .load(albumPreviewResponseData.preview)
+                .placeholder(R.drawable.default_photographer_profile)
+                .error(R.drawable.default_photographer_profile)
+                .into(albumPreviewImg);
+
+        albumAdapter.notifyDataSetChanged();
+    }
 }
+

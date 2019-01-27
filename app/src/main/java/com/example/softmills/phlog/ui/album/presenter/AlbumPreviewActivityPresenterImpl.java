@@ -26,12 +26,10 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
     }
 
     @SuppressLint("CheckResult")
-
-
     @Override
-    public void getSelectedSearchAlbum(String albumID, String pageNum) {
+    public void getSelectedSearchAlbum(int albumID, String pageNum) {
         albumPreviewActivityView.viewAlbumPreviewProgress(true);
-        BaseNetworkApi.getSearchSelectedAlbum(albumID, pageNum)
+        BaseNetworkApi.getSearchSelectedAlbum(String.valueOf(albumID), pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumPreviewResponse -> {
@@ -44,6 +42,13 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
 
 
     }
+
+    @Override
+    public void getAlbumPreviewImages(int albumId, int page) {
+
+    }
+
+
 
 
 }

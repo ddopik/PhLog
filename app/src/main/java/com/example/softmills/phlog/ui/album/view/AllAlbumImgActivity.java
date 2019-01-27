@@ -10,9 +10,6 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.base.widgets.PagingController;
-import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgActivityPresenter;
-import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgActivityPresenterImpl;
 import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgPresnter;
 import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgPresnterImpl;
 import com.example.softmills.phlog.ui.album.view.adapter.AllAlbumImgAdapter;
@@ -27,54 +24,63 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
 
     public static String ALBUM_ID = "album_id";
+    public static String ALL_ALBUM_IMAGES = "album_list";
     public static String SELECTED_IMG_ID = "selected_img_id";
-    public static String CURRENT_PAGE = "current_page";
-    private int albumId;
-    private int selectedImageId;
-    private int currentPage;
-    private CustomRecyclerView allAlbumImgRv;
     private AllAlbumImgAdapter allAlbumImgAdapter;
     private List<BaseImage> albumImgList = new ArrayList<>();
     private ProgressBar albumImgProgress;
-    private AllAlbumImgActivityPresenter allAlbumImgActivityPresenter;
-    private PagingController pagingController;
+    private AllAlbumImgPresnter allAlbumImgPresnter;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_album_img);
-
-        if (getIntent().getIntExtra(ALBUM_ID, 0) != 0) {
-            initPresenter();
-            initView();
-            initListener();
-
-        }
+        initPresenter();
+        initView();
     }
 
 
     @Override
     public void initView() {
-
-        this.albumId = getIntent().getIntExtra(ALBUM_ID, 0);
-        this.selectedImageId = getIntent().getIntExtra(SELECTED_IMG_ID, 0);
-        this.currentPage = getIntent().getIntExtra(CURRENT_PAGE, 0);
-
+        if (getIntent().getParcelableArrayListExtra(ALL_ALBUM_IMAGES) != null) {
+            this.albumImgList = getIntent().<BaseImage>getParcelableArrayListExtra(ALL_ALBUM_IMAGES);
+            int selectedPosition = getIntent().getIntExtra(SELECTED_IMG_ID,0);
         allAlbumImgAdapter = new AllAlbumImgAdapter(albumImgList);
         albumImgProgress = findViewById(R.id.album_img_list_progress_bar);
-        allAlbumImgRv = findViewById(R.id.album_img_list_rv);
+        CustomRecyclerView allAlbumImgRv = findViewById(R.id.album_img_list_rv);
         allAlbumImgRv.setAdapter(allAlbumImgAdapter);
 
-        for (int i = 1; i < currentPage; i++) {
-            allAlbumImgActivityPresenter.getAlbumImages(albumId, i);
+
+            for (int i=0;i<albumImgList.size();i++){
+                if(albumImgList.get(i).id == selectedPosition) {
+                    allAlbumImgRv.getLayoutManager().scrollToPosition(i);
+                    break;
+                }
+
+            }
+
+            initListener();
         }
+
+
+//        RecyclerView.SmoothScroller smoothScroller = new
+//                LinearSmoothScroller(getBaseContext()) {
+//                    @Override
+//                    protected int getVerticalSnapPreference() {
+//                        return LinearSmoothScroller.SNAP_TO_ANY;
+//                    }
+//                };
+//
+//        smoothScroller.setTargetPosition(6);
+//
+//        allAlbumImgRv.getLayoutManager().startSmoothScroll(smoothScroller);
 
     }
 
     @Override
     public void initPresenter() {
-        allAlbumImgActivityPresenter = new AllAlbumImgActivityPresenterImpl(this, this);
+        allAlbumImgPresnter=new AllAlbumImgPresnterImpl(this,this);
     }
 
     private void initListener() {
@@ -82,20 +88,20 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         allAlbumImgAdapter.onAlbumImgClicked = new AllAlbumImgAdapter.OnAlbumImgClicked() {
             @Override
             public void onAlbumImgClick(BaseImage albumImg) {
-
-                Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
+                intent.putExtra(ImageCommentActivity.IMAGE_DATA,albumImg);
                 startActivity(intent);
             }
 
             @Override
             public void onAlbumImgLikeClick(BaseImage albumImg) {
-                showToast("like");
+              allAlbumImgPresnter.likePhoto(String.valueOf(albumImg.id));
             }
 
             @Override
             public void onAlbumImgCommentClick(BaseImage albumImg) {
-                Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
+                Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
+                intent.putExtra(ImageCommentActivity.IMAGE_DATA,albumImg);
                 startActivity(intent);
             }
 
@@ -105,34 +111,14 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             }
         };
 
-        pagingController = new PagingController(allAlbumImgRv) {
-            @Override
-            public void getPagingControllerCallBack(int page) {
-
-                if (currentPage < page)
-                    allAlbumImgActivityPresenter.getAlbumImages(albumId, page);
-
-            }
-        };
-
-
     }
 
     @Override
     public void viewAlbumImageList(List<BaseImage> albumImgList) {
 
-
+        this.albumImgList.clear();
         this.albumImgList.addAll(albumImgList);
         allAlbumImgAdapter.notifyDataSetChanged();
-
-        for (int i = 0; i < albumImgList.size(); i++) {
-            if (albumImgList.get(i).id.equals(selectedImageId)) {
-                allAlbumImgRv.getLayoutManager().scrollToPosition(i);
-                break;
-            }
-
-        }
-
 
     }
 
@@ -145,6 +131,11 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             albumImgProgress.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public void showToast(String msg) {
+        super.showToast(msg);
     }
 
     @Override
