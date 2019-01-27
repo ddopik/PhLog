@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.album.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Comment;
@@ -22,11 +24,17 @@ import com.example.softmills.phlog.ui.album.view.adapter.CommentsAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by abdalla_maged on 11/6/2018.
  */
 public class ImageCommentActivity extends BaseActivity implements ImageCommentActivityView {
 
+    private static final String TAG = ImageCommentActivity.class.getSimpleName();
     public static String IMAGE_DATA = "image_data";
     private BaseImage baseImage;
     private EditText comment;
@@ -38,6 +46,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     private PagingController pagingController;
     private ImageCommentActivityPresenter imageCommentActivityPresenter;
 
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +107,41 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
 
             }
+
+            @Override
+            public void onImageSave(BaseImage image) {
+                if (!image.isSaved) {
+                    Disposable disposable = imageCommentActivityPresenter.savePhoto(image)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(success -> {
+                                if (success) {
+                                    baseImage.isSaved = true;
+                                    showToast(getString(R.string.image_saved));
+                                } else {
+                                    showToast(getString(R.string.failed_to_save));
+                                }
+                            }, throwable -> {
+                                showToast(getString(R.string.failed_to_save));
+                                ErrorUtils.Companion.setError(getBaseContext(), TAG, throwable);
+                            });
+                    disposables.add(disposable);
+                } else {
+                    Disposable disposable = imageCommentActivityPresenter.unSavePhoto(image)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(success -> {
+                                if (success) {
+                                    showToast(getString(R.string.image_unsaved));
+                                    image.isSaved = false;
+                                }
+                            }, throwable -> {
+                                ErrorUtils.Companion.setError(getBaseContext(), TAG, throwable);
+                                showToast(getString(R.string.failed_to_unsave));
+                            });
+                    disposables.add(disposable);
+                }
+            }
         };
 
         sendBtn.setOnClickListener(v -> {
@@ -114,7 +158,6 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         this.userCommentList.addAll(commentList);
         commentsAdapter.notifyDataSetChanged();
     }
-
 
 
     @Override

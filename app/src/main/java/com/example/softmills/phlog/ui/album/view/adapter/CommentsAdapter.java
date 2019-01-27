@@ -81,6 +81,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 commentViewHolder.imageLikeBtn.setOnClickListener(v->{
                     commentAdapterAction.onImageLike(previewImage);
                 });
+                commentViewHolder.ImgDownload.setOnClickListener(v -> {
+                    commentAdapterAction.onImageSave(previewImage);
+                });
             }
 
         } else {
@@ -148,5 +151,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public interface CommentAdapterAction{
         void onImageLike(BaseImage baseImage);
         void onImageComment(BaseImage baseImage);
+        void onImageSave(BaseImage image);
     }
 }

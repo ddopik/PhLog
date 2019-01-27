@@ -10,7 +10,9 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.welcome.view.WelcomeActivity;
 
 public class SplashActivity extends BaseActivity {
@@ -20,10 +22,17 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         initView();
         new Handler().postDelayed(() ->{
-            Intent intent=new Intent(SplashActivity.this, WelcomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            startActivity(intent);
+            if (PrefUtils.isLoginProvided(this)) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent=new Intent(SplashActivity.this, WelcomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         },3000);
     }
 

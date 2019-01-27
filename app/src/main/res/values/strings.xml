@@ -128,5 +128,9 @@
     <string name="action_edit">Edit</string>
     <string name="followed">Followed</string>
     <string name="un_follow">Un follow</string>
+    <string name="image_saved">Image saved</string>
+    <string name="failed_to_save">Failed to save</string>
+    <string name="failed_to_unsave">Failed to unsave</string>
+    <string name="image_unsaved">Image unsaved</string>
 
 </resources>

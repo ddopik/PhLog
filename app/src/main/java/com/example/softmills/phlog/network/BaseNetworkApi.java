@@ -6,6 +6,7 @@ import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewImagesResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
 import com.example.softmills.phlog.ui.album.model.ImgCommentResponse;
+import com.example.softmills.phlog.ui.album.model.SavePhotoResponse;
 import com.example.softmills.phlog.ui.allphotos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
 import com.example.softmills.phlog.ui.brand.model.FollowBrandResponse;
@@ -38,6 +39,8 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.reactivex.Observable;
 
 
 /**
@@ -104,6 +107,10 @@ public class BaseNetworkApi {
     private static final String GET_EARNING = BASE_URL + "/earning";
     private static final String UPLOAD_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/upload";
     private static final String LIKE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/like";
+
+
+    private static final String SAVE_PHOTO_URL = BASE_URL + "/photographer/photo/save";
+    private static final String UNSAVE_PHOTO_URL = BASE_URL + "/photographer/photo/unsave";
 
 
     //Path Parameters
@@ -486,6 +493,22 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(UploadImgResponse.class);
+    }
+
+    public static Observable<SavePhotoResponse> savePhoto(int id) {
+        return Rx2AndroidNetworking.post(SAVE_PHOTO_URL)
+                .addBodyParameter("image_id", String.valueOf(id))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(SavePhotoResponse.class);
+    }
+
+    public static Observable<SavePhotoResponse> unSavePhoto(int id) {
+        return Rx2AndroidNetworking.post(UNSAVE_PHOTO_URL)
+                .addBodyParameter("photo_id", String.valueOf(id))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(SavePhotoResponse.class);
     }
 
 

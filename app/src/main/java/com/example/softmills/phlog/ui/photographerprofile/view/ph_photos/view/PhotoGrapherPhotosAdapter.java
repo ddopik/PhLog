@@ -48,8 +48,8 @@ public class PhotoGrapherPhotosAdapter extends RecyclerView.Adapter<PhotoGrapher
                 .error(R.drawable.default_error_img)
                 .placeholder(R.drawable.default_place_holder)
                 .into(campaignsViewHolder.photographerPhoto);
-        if (photoAction != null)
             campaignsViewHolder.photographerPhoto.setOnClickListener(view -> {
+                if (photoAction != null)
                 photoAction.onPhotoClicked(photoGrapherPhotosList.get(i));
             });
     }

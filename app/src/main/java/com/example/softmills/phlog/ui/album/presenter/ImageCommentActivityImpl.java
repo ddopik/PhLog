@@ -4,20 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.album.view.ImageCommentActivityView;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.facebook.GraphRequest.TAG;
 
 /**
  * Created by abdalla_maged On Nov,2018
  */
 public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
 
+    private static final String SAVED = "Saved";
     private String TAG = ImageCommentActivityImpl.class.getSimpleName();
     private Context context;
     private ImageCommentActivityView imageCommentActivityView;
@@ -71,9 +71,22 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
                 .subscribe(baseStateResponse -> {
                     imageCommentActivityView.viewAddCommentProgress(false);
                     imageCommentActivityView.viewMessage("Like");
-                },throwable -> {
+                }, throwable -> {
                     imageCommentActivityView.viewAddCommentProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public Observable<Boolean> savePhoto(BaseImage image) {
+        return BaseNetworkApi.savePhoto(image.id)
+                .map(savePhotoResponse -> savePhotoResponse != null && savePhotoResponse.getMsg().equals(SAVED));
+    }
+
+    @Override
+    public Observable<Boolean> unSavePhoto(BaseImage image) {
+        return BaseNetworkApi.unSavePhoto(image.id)
+                .map(savePhotoResponse -> savePhotoResponse != null && savePhotoResponse.getMsg().equals(SAVED));
     }
 }

@@ -29,7 +29,6 @@ import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 import static com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity.USER_ID;

@@ -1,6 +1,8 @@
 package com.example.softmills.phlog.ui.campaigns.inner.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,12 +17,17 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
+import com.example.softmills.phlog.ui.album.view.ImageCommentActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenterImpl;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.PhotoGrapherPhotosAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
  * Created by abdalla_maged on 10/8/2018.
@@ -80,6 +87,12 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
             public void getPagingControllerCallBack(int page) {
                 campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, page );
             }
+        };
+
+        photoGrapherPhotosAdapter.photoAction= photoGrapherSavedPhoto -> {
+            Intent intent=new Intent(getContext(), ImageCommentActivity.class);
+            intent.putExtra(ImageCommentActivity.IMAGE_DATA, photoGrapherSavedPhoto);
+            startActivity(intent);
         };
     }
 
