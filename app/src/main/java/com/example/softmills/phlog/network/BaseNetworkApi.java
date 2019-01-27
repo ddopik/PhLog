@@ -69,6 +69,7 @@ public class BaseNetworkApi {
     //
 //    private static final String BASE_URL = "http://178.128.162.10/public/api/photographer";
     private static final String BASE_URL = "http://178.128.162.10/api";
+    private static final String BASE_URL_COMMON = "http://178.128.162.10/public/api/common";
     private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider";
     private static final String ALL_COUNTRES = BASE_URL + "/common/countries/list"; //done
     private static final String SIGNUP_USER = BASE_URL + "/photographer/auth/signup";
@@ -90,7 +91,7 @@ public class BaseNetworkApi {
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/photographer/campaign/photos";
     private static final String FOLLOW_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/join";
     private static final String USER_PROFILE_PHOTOS = BASE_URL + "/image_photographer";
-    private static final String USER_SEARCH_FILTERS = BASE_URL + "/filters";
+    private static final String USER_SEARCH_FILTERS = BASE_URL_COMMON + "/filters/list";
     private static final String SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
     private static final String PHOTOGRAPHER_SEARCH_URL = BASE_URL + "/photographer/list";
     private static final String PROFILE_FOLLOWING_SEARCH_URL = BASE_URL + "/photographer/following/list";

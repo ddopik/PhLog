@@ -156,11 +156,11 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
 
         expandableListAdapter.onChildViewListener = filterOption -> {
-            showToast(filterOption.name);
+            showToast(filterOption.displayName);
             for (int i = 0; i < searchFilterList.size(); i++) {
                 for (int x = 0; x < searchFilterList.get(i).options.size(); x++) {
                     FilterOption currFilterOption = searchFilterList.get(i).options.get(x);
-                    if (currFilterOption.name.equals(filterOption.name)) {
+                    if (currFilterOption.displayName.equals(filterOption.displayName)) {
                         if (currFilterOption.isSelected) {
                             searchFilterList.get(i).options.get(x).isSelected = false;
                         } else {

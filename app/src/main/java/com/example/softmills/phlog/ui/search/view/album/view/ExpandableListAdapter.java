@@ -54,7 +54,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView txtListChild = convertView.findViewById(R.id.filter_item_val);
         LinearLayout itemContainer = convertView.findViewById(R.id.item_filter_container);
         RadioButton filterRadioButton = convertView.findViewById(R.id.filter_select);
-        txtListChild.setText(filterOption.name);
+        txtListChild.setText(filterOption.displayName);
 
 
         if (filterOption.isSelected) {
@@ -96,7 +96,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String headerTitle = searchFilterList.get(groupPosition).title;
+        String headerTitle = searchFilterList.get(groupPosition).displayName;
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

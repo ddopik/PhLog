@@ -8,14 +8,27 @@ import com.google.gson.annotations.SerializedName;
  */
 public class FilterOption {
 
-    @SerializedName("options")
+    @SerializedName("id")
     @Expose
-    public String id;
-
-
-    @SerializedName("name")
+    public Integer id;
+    @SerializedName("filter_group_id")
     @Expose
-    public String name;
+    public Integer filterGroupId;
+    @SerializedName("system_name")
+    @Expose
+    public String systemName;
+    @SerializedName("created_at")
+    @Expose
+    public String createdAt;
+    @SerializedName("updated_at")
+    @Expose
+    public String updatedAt;
+    @SerializedName("deleted_at")
+    @Expose
+    public Object deletedAt;
+    @SerializedName("display_name")
+    @Expose
+    public String displayName;
 
 
     public boolean isSelected = false;

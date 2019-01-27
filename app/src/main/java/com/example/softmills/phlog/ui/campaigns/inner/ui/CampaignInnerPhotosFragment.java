@@ -90,8 +90,12 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
         };
 
         photoGrapherPhotosAdapter.photoAction= photoGrapherSavedPhoto -> {
-            Intent intent=new Intent(getContext(), ImageCommentActivity.class);
-            intent.putExtra(ImageCommentActivity.IMAGE_DATA, photoGrapherSavedPhoto);
+//            Intent intent=new Intent(getContext(), ImageCommentActivity.class);
+//            intent.putExtra(ImageCommentActivity.IMAGE_DATA, photoGrapherSavedPhoto);
+//            startActivity(intent);
+            Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
+            intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
+            intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherPhotoList);
             startActivity(intent);
         };
     }

@@ -33,7 +33,8 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 10/4/2018.
  */
-public class CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView {
+public class
+CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView {
 
 
     private final String TAG = CampaignInnerActivity.class.getSimpleName();

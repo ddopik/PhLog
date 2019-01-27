@@ -7,7 +7,10 @@ import android.util.Log;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
+import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragmentView;
+
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -61,5 +64,10 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     albumSearchFragmentView.showFilterSearchProgress(false);
                 });
+    }
+
+    @Override
+    public void getAlbumSearch(String s, List<SearchFilter> searchFilterList, int i) {
+
     }
 }

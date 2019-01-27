@@ -28,7 +28,7 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
     public static String CAMPAIGN_ID="campaign_id";
     private CustomRecyclerView savedPhotosRv;
     private ProgressBar savedPhotosProgress;
-    private PhotosListAdapter photographerPhotoAdapter;
+    private PhotographerPhotosGridAdapter photographerPhotoAdapter;
     private List<BaseImage> imageList = new ArrayList<>();
     private PagingController pagingController;
     private AllPhotographerPhotosPresenter allPhotographerPhotosPresenter;
@@ -49,7 +49,7 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
     public void initView() {
         savedPhotosRv = findViewById(R.id.saved_photos_rv);
         savedPhotosProgress = findViewById(R.id.saved_photos_progress_bar);
-        photographerPhotoAdapter = new PhotosListAdapter(this, imageList);
+        photographerPhotoAdapter = new PhotographerPhotosGridAdapter(this, imageList);
         savedPhotosRv = findViewById(R.id.saved_photos_rv);
         savedPhotosRv.setAdapter(photographerPhotoAdapter);
     }

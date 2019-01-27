@@ -174,6 +174,8 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                     if (lastVisibleDecorViewHeight > visibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX) {
                         //Key board is visible
                     } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
+                        if (autoCompleteTextView.getText().toString().isEmpty())
+                            return;
                         Tag newTag = new Tag();
                         newTag.name = autoCompleteTextView.getText().toString();
                         boolean tagAlreadyExsist = false;
