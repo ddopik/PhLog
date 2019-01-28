@@ -133,5 +133,8 @@
     <string name="failed_to_unsave">Failed to unsave</string>
     <string name="image_unsaved">Image unsaved</string>
     <string name="apply">Apply</string>
+    <string name="following_number">%1$d following</string>
+    <string name="error_occured">An error occurred</string>
+    <string name="check_your_mail">Check your mail</string>
 
 </resources>

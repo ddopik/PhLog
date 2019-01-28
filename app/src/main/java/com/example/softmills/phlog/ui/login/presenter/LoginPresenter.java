@@ -1,6 +1,11 @@
 package com.example.softmills.phlog.ui.login.presenter;
 
+import android.content.Context;
+
 import java.util.HashMap;
+
+import io.reactivex.Completable;
+import io.reactivex.Observable;
 
 public interface LoginPresenter {
 
@@ -9,4 +14,6 @@ public interface LoginPresenter {
     void signInWithGoogle();
 
     void signInWithFaceBook();
+
+    Observable<Boolean> forgotPassword(Context context, String email);
 }

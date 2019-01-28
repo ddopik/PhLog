@@ -39,8 +39,8 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 
@@ -83,7 +83,7 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/photographer/photo/list";
     private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/list";
-    private static final String GET_ALBUM_IMAGES_PREVIEW = BASE_URL +"/album/photos";
+    private static final String GET_ALBUM_IMAGES_PREVIEW = BASE_URL +"/photographer/album/photos";
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/photographer/follow";
     private static final String PHOTOGRAPHER_UN_FOLLOW_USER_URL = BASE_URL + "/photographer/unfollow";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/running";
@@ -96,7 +96,7 @@ public class BaseNetworkApi {
     private static final String SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
     private static final String PHOTOGRAPHER_SEARCH_URL = BASE_URL + "/photographer/list";
     private static final String PROFILE_FOLLOWING_SEARCH_URL = BASE_URL + "/photographer/following/list";
-    private static final String GET_SEARCH_ALBUM = BASE_URL + "/photographer/album/details";
+    private static final String GET_ALBUM_DETAILS = BASE_URL + "/photographer/album/details";
     private static final String BRAND_SEARCH_URL = BASE_URL + "/photographer/business/search";
     private static final String PROFILE_BRAND_SEARCH_URL = BASE_URL + "/photographer/business/following/list";
     private static final String INNER_BRAND_URL = BASE_URL + "/photographer/business/details";
@@ -113,6 +113,7 @@ public class BaseNetworkApi {
 
     private static final String SAVE_PHOTO_URL = BASE_URL + "/photographer/photo/save";
     private static final String UNSAVE_PHOTO_URL = BASE_URL + "/photographer/photo/unsave";
+    private static final String FORGOT_PASSWORD_URL = BASE_URL + "/photographer/auth/forgot_password";
 
 
     //Path Parameters
@@ -357,13 +358,13 @@ public class BaseNetworkApi {
                 .getObjectObservable(AlbumSearchResponse.class);
     }
 
-    public static io.reactivex.Observable<AlbumPreviewResponse> getSearchSelectedAlbum(String albumId, String page) {
-        return Rx2AndroidNetworking.post(GET_SEARCH_ALBUM)
-                .addQueryParameter(PAGER_PATH_PARAMETER, page)
+    public static Observable<AlbumPreviewResponse> getAlbumDetails(String albumId) {
+        return Rx2AndroidNetworking.post(GET_ALBUM_DETAILS)
                 .addBodyParameter("album_id", albumId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AlbumPreviewResponse.class);
+//        .getStringSingle();
     }
 
     public static io.reactivex.Observable<AlbumPreviewImagesResponse> getAlbumImagesPreview(String albumId, String page) {
@@ -521,6 +522,14 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AlbumSearchResponse.class);
+    }
+
+    public static Observable<String> forgotPassword(String email) {
+        return Rx2AndroidNetworking.post(FORGOT_PASSWORD_URL)
+                .setPriority(Priority.HIGH)
+                .addBodyParameter("email", email)
+                .build()
+                .getStringObservable();
     }
 
 

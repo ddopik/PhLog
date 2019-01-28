@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -81,6 +82,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initPresenter() {
         ///set NetWork Call Header
+        String s = PrefUtils.getUserToken(getBaseContext());
+        Log.e("auth", s);
         PhLogApp.initFastAndroidNetworking(PrefUtils.getUserToken(getBaseContext()), "0", " en-us'", getBaseContext());
     }
 

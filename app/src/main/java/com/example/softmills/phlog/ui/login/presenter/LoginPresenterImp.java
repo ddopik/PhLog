@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -134,6 +136,16 @@ public class LoginPresenterImp implements LoginPresenter {
                         loginView.navigateToHome();
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+    }
+
+    @Override
+    public Observable<Boolean> forgotPassword(Context context, String email) {
+        return BaseNetworkApi.forgotPassword(email)
+                .map(response -> {
+                    if (response != null)
+                        return true;
+                    return false;
                 });
     }
 }

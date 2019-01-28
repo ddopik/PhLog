@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.album.view.AlbumPreviewActivityView;
 
@@ -29,7 +28,7 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
     @Override
     public void getSelectedSearchAlbum(int albumID, String pageNum) {
         albumPreviewActivityView.viewAlbumPreviewProgress(true);
-        BaseNetworkApi.getSearchSelectedAlbum(String.valueOf(albumID), pageNum)
+        BaseNetworkApi.getAlbumDetails(String.valueOf(albumID))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumPreviewResponse -> {
@@ -43,12 +42,21 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
 
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void getAlbumPreviewImages(int albumId, int page) {
-
+        albumPreviewActivityView.viewAlbumPreviewProgress(true);
+        BaseNetworkApi.getAlbumImagesPreview(String.valueOf(albumId), String.valueOf(page))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    albumPreviewActivityView.viewAlbumPreviewProgress(false);
+                    albumPreviewActivityView.viwAlbumPreviewImages(response.data.imagesList);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    albumPreviewActivityView.viewAlbumPreviewProgress(false);
+                });
     }
-
-
 
 
 }

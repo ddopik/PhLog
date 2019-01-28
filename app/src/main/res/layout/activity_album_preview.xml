@@ -48,21 +48,23 @@
                 android:layout_marginBottom="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/album_name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/arial_rounded_font"
                     android:padding="@dimen/widgets_padding"
-                    android:text="Album Name"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium" />
+                    android:textSize="@dimen/text_medium"
+                    tools:text="Album Name" />
+
                 <TextView
+                    android:id="@+id/following_number_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/arial_rounded_font"
                     android:padding="@dimen/widgets_padding"
                     android:textColor="@color/white"
-                    android:text="246 following"
-                    />
+                    tools:text="246 following" />
             </LinearLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
 

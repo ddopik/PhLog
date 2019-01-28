@@ -20,15 +20,22 @@ import com.example.softmills.phlog.ui.signup.view.SignUpActivity;
 
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     private Button facebookSigning, googleSigningBtn, signUpBtn;
-    private TextView mail, passWord, signUpTxt;
+    private TextView mail, passWord, signUpTxt, forgotPassword;
     private TextInputLayout mailInput, passwordInput;
     private ProgressBar loginProgressBar;
     private LoginPresenter loginPresenter;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
 
     @Override
@@ -53,7 +60,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         mailInput = findViewById(R.id.mail_login_input);
         passwordInput = findViewById(R.id.login_password_input);
         loginProgressBar=findViewById(R.id.login_progress);
-
+        forgotPassword = findViewById(R.id.forgot_password);
     }
 
     @Override
@@ -75,6 +82,23 @@ public class LoginActivity extends BaseActivity implements LoginView {
                 normalLoginData.put("password", passWord.getText().toString());
                 loginPresenter.signInNormal(normalLoginData);
             }
+        });
+        forgotPassword.setOnClickListener(v -> {
+            if (mail.getText().toString().isEmpty()) {
+                mailInput.setError(getResources().getString(R.string.email_missing));
+                return;
+            }
+            Disposable disposable = loginPresenter.forgotPassword(getBaseContext(), mail.getText().toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(success -> {
+                        if (success)
+                            showToast(getString(R.string.check_your_mail));
+                        else showToast(getString(R.string.error_occured));
+                    }, throwable -> {
+                        showToast(getString(R.string.error_occured));
+                    });
+            disposables.add(disposable);
         });
     }
 
