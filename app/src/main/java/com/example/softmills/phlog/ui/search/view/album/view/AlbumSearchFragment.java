@@ -239,6 +239,14 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         expandableListAdapter.notifyDataSetChanged();
 
 
+        // omar continuing filter implementation
+        searchResultCount.setText(R.string.apply);
+        searchResultCount.setOnClickListener(v -> {
+            albumSearchList.clear();
+            albumSearchAdapter.notifyDataSetChanged();
+            albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString(), searchFilterList, 0);
+            albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString(), searchFilterList, 0);
+        });
     }
 
     @Override
@@ -257,6 +265,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
     @Override
     public void onFilterIconClicked() {
+        if (searchFilterList == null || searchFilterList.isEmpty())
         albumSearchPresenter.getSearchFilters();
     }
 

@@ -40,6 +40,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 
@@ -510,6 +511,16 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(SavePhotoResponse.class);
+    }
+
+    public static Observable<AlbumSearchResponse> getSearchAlbum(String key, Map<String,String> filtersMap, String page) {
+        return Rx2AndroidNetworking.post(SEARCH_ALBUM)
+                .addQueryParameter(PAGER_PATH_PARAMETER, page)
+                .addBodyParameter("keyword", key)
+                .addBodyParameter(filtersMap)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(AlbumSearchResponse.class);
     }
 
 

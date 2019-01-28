@@ -132,5 +132,6 @@
     <string name="failed_to_save">Failed to save</string>
     <string name="failed_to_unsave">Failed to unsave</string>
     <string name="image_unsaved">Image unsaved</string>
+    <string name="apply">Apply</string>
 
 </resources>

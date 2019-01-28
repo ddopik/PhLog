@@ -10,7 +10,9 @@ import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragmentView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -66,8 +68,31 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                 });
     }
 
+    @SuppressLint("CheckResult")
     @Override
-    public void getAlbumSearch(String s, List<SearchFilter> searchFilterList, int i) {
+    public void getAlbumSearch(String s, List<SearchFilter> searchFilterList, int page) {
+        int filterCount=0;
+        Map<String,String> filtersMap=new HashMap<String, String>();
+        for (int i=0;i<searchFilterList.size();i++){
+            for (int x=0;x<searchFilterList.get(i).options.size();x++){
+                if (searchFilterList.get(i).options.get(x).isSelected) {
+                    filtersMap.put("filter["+filterCount+"]",searchFilterList.get(i).options.get(x).id.toString());
+                    filterCount ++;
+                }
+            }
 
+        }
+        
+        albumSearchFragmentView.showFilterSearchProgress(true);
+        BaseNetworkApi.getSearchAlbum(s, filtersMap,String.valueOf(page))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(albumSearchResponse -> {
+                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data.data);
+                    albumSearchFragmentView.showFilterSearchProgress(false);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    albumSearchFragmentView.showFilterSearchProgress(false);
+                });
     }
 }
