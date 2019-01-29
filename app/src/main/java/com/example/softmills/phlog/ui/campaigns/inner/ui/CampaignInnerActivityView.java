@@ -9,6 +9,6 @@ public interface CampaignInnerActivityView {
     void viewCampaignLeftDays(String dayLeft);
     void viewCampaignHostedBy(String hostName);
     void viewCampaignHeaderImg(String img);
-    void viewCampaignMissionDescription(String missionDesc,int photosCount);
+    void viewCampaignMissionDescription(String missionDesc, int status, int photosCount);
 
 }

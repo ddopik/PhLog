@@ -128,9 +128,11 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
     }
 
     @Override
-    public void viewCampaignMissionDescription(String missionDesc, int photosCount) {
+    public void viewCampaignMissionDescription(String missionDesc, int status, int photosCount) {
 
-        InnerCampaignFragmentPagerAdapter innerCampaignFragmentPagerAdapter = new InnerCampaignFragmentPagerAdapter(getSupportFragmentManager(), getFragmentPagerFragment(), getFragmentTitles(photosCount));
+        InnerCampaignFragmentPagerAdapter innerCampaignFragmentPagerAdapter = new InnerCampaignFragmentPagerAdapter(getSupportFragmentManager()
+                , getFragmentPagerFragment(status)
+                , getFragmentTitles(status, photosCount));
         if (onMissionCampaignDataRecived != null && missionDesc != null) {
             campaignViewPager.setAdapter(innerCampaignFragmentPagerAdapter);
             campaignTabs.setupWithViewPager(campaignViewPager);
@@ -139,19 +141,21 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
         }
     }
 
-    private List<Fragment> getFragmentPagerFragment() {
+    private List<Fragment> getFragmentPagerFragment(int status) {
         List<Fragment> fragmentList = new ArrayList<Fragment>();
         CampaignInnerMissionFragment campaignInnerMissionFragment = CampaignInnerMissionFragment.getInstance();
         onMissionCampaignDataRecived = campaignInnerMissionFragment; // pass mission description to campaignInnerMissionFragment
         fragmentList.add(campaignInnerMissionFragment);
-        fragmentList.add(CampaignInnerPhotosFragment.getInstance(getIntent().getStringExtra(CAMPAIGN_ID)));
+        if (status != 3 && status != 4)
+            fragmentList.add(CampaignInnerPhotosFragment.getInstance(getIntent().getStringExtra(CAMPAIGN_ID)));
         return fragmentList;
     }
 
-    private List<String> getFragmentTitles(int photosCount) {
+    private List<String> getFragmentTitles(int status, int photosCount) {
         List<String> fragmentList = new ArrayList<String>();
         fragmentList.add(getResources().getString(R.string.tab_mission));
-        fragmentList.add(photosCount + " " + getResources().getString(R.string.tab_photos));
+        if (status != 3 && status != 4)
+            fragmentList.add(photosCount + " " + getResources().getString(R.string.tab_photos));
         return fragmentList;
     }
 
@@ -179,7 +183,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
         });
         builder.setNegativeButton(R.string.photos, (dialog, id) -> {
             Intent intent = new Intent(this, AllPhotographerPhotosActivity.class);
-            intent.putExtra(AllPhotographerPhotosActivity.CAMPAIGN_ID,String.valueOf(campaignId));
+            intent.putExtra(AllPhotographerPhotosActivity.CAMPAIGN_ID, String.valueOf(campaignId));
             startActivity(intent);
         });
         builder.show();

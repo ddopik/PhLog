@@ -117,16 +117,19 @@ public class SearchActivity extends BaseActivity {
 
         switch (tabId) {
             case R.id.tab_brand:
+                filterTab.setVisibility(View.GONE);
                 brandTab.setTextColor(getResources().getColor(R.color.white));
                 brandTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange_fill));
                 break;
 
             case R.id.tab_profile:
+                filterTab.setVisibility(View.GONE);
                 profileTab.setTextColor(getResources().getColor(R.color.white));
                 profileTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange_fill));
                 break;
 
             case R.id.tab_album:
+                filterTab.setVisibility(View.VISIBLE);
                 albumTab.setTextColor(getResources().getColor(R.color.white));
                 albumTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange_fill));
                 break;

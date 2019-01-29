@@ -41,7 +41,7 @@ public class Campaign {
     public String startDate;
     @SerializedName("status")
     @Expose
-    public String status;
+    public int status;
     @SerializedName("id")
     @Expose
     public Integer id;

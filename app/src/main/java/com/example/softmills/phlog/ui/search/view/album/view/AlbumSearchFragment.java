@@ -157,6 +157,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
         expandableListAdapter.onChildViewListener = filterOption -> {
             showToast(filterOption.displayName);
+            searchResultCount.setVisibility(View.VISIBLE);
             for (int i = 0; i < searchFilterList.size(); i++) {
                 for (int x = 0; x < searchFilterList.get(i).options.size(); x++) {
                     FilterOption currFilterOption = searchFilterList.get(i).options.get(x);
@@ -233,11 +234,16 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
     @Override
     public void viewSearchFilters(List<SearchFilter> searchFilterList) {
+        this.searchFilterList.clear();
+        this.searchFilterList.addAll(searchFilterList);
+        setSearchFilterView();
+    }
+
+    private void setSearchFilterView() {
         filterExpListView.setVisibility(View.VISIBLE);
         albumSearchRv.setVisibility(View.GONE);
-        this.searchFilterList.addAll(searchFilterList);
         expandableListAdapter.notifyDataSetChanged();
-
+        searchResultCount.setVisibility(View.GONE);
 
         // omar continuing filter implementation
         searchResultCount.setText(R.string.apply);
@@ -265,8 +271,23 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
     @Override
     public void onFilterIconClicked() {
-        if (searchFilterList == null || searchFilterList.isEmpty())
-        albumSearchPresenter.getSearchFilters();
+        if (filterExpListView.getVisibility() == View.GONE || filterExpListView.getVisibility() == View.INVISIBLE) {
+            if (searchFilterList == null || searchFilterList.isEmpty())
+                albumSearchPresenter.getSearchFilters();
+            else
+                setSearchFilterView();
+        } else {
+            setAlbumSearchView();
+        }
+    }
+
+    private void setAlbumSearchView() {
+        filterExpListView.setVisibility(View.GONE);
+        albumSearchRv.setVisibility(View.VISIBLE);
+        searchResultCount.setVisibility(View.VISIBLE);
+
+        // omar continuing filter implementation
+        searchResultCount.setText(new StringBuilder().append(this.albumSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
     }
 
     @Override
