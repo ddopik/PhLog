@@ -3,11 +3,16 @@ package com.example.softmills.phlog.ui.photographerprofile.editprofile.presenter
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragmentView;
 
+import java.io.File;
+import java.util.HashMap;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -16,11 +21,11 @@ import io.reactivex.schedulers.Schedulers;
 public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProfileFragmentPresenter {
 
     private final String TAG = EditPhotoGrapherProfileFragmentImpl.class.getSimpleName();
-    private EditPhotoGrapherProfileFragmentView editPhotoGrapherProfileFragmentView;
+    private EditPhotoGrapherProfileFragmentView view;
     private Context context;
 
     public EditPhotoGrapherProfileFragmentImpl(EditPhotoGrapherProfileFragmentView editPhotoGrapherProfileFragmentView, Context context) {
-        this.editPhotoGrapherProfileFragmentView = editPhotoGrapherProfileFragmentView;
+        this.view = editPhotoGrapherProfileFragmentView;
     }
 
 
@@ -31,14 +36,46 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profilePhotoGrapherInfoResponse -> {
-                    editPhotoGrapherProfileFragmentView.showPhotoGrapherProfileData(profilePhotoGrapherInfoResponse.data);
+                    view.showPhotoGrapherProfileData(profilePhotoGrapherInfoResponse.data);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 
     @Override
-    public void editProfileData() {
-
+    public void updateProfile(String name, String username, String email, String phone
+            , String password, String profile, String cover) {
+        view.viewEditProfileProgress(true);
+        HashMap<String, File> files = null;
+        if (profile != null) {
+            files = new HashMap<>();
+            files.put("image_profile", new File(profile));
+        }
+        if (cover != null) {
+            if (files == null)
+                files = new HashMap<>();
+            files.put("image_cover", new File(cover));
+        }
+        HashMap<String, String> data = new HashMap<>();
+        data.put("name", name);
+        data.put("username", username);
+        data.put("email", email);
+        data.put("phone", phone);
+        data.put("password", password);
+        Disposable disposable = BaseNetworkApi.updateProfile(files, data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    view.viewEditProfileProgress(false);
+                    if (s != null) {
+                        view.showMessage(R.string.profile_updated_successfully);
+                    } else {
+                        view.showMessage(R.string.profile_update_failed);
+                    }
+                }, throwable -> {
+                    view.viewEditProfileProgress(false);
+                    view.showMessage(R.string.profile_update_failed);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
     }
 }

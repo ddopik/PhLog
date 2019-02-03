@@ -136,5 +136,10 @@
     <string name="following_number">%1$d following</string>
     <string name="error_occured">An error occurred</string>
     <string name="check_your_mail">Check your mail</string>
+    <string name="username">Username</string>
+    <string name="phone_2">Phone</string>
+    <string name="save">Save</string>
+    <string name="profile_updated_successfully">Profile updated successfully</string>
+    <string name="profile_update_failed">Profile update failed</string>
 
 </resources>

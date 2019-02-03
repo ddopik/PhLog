@@ -34,12 +34,12 @@ import com.example.softmills.phlog.ui.social.model.SocialResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserPhotosResponse;
 import com.example.softmills.phlog.ui.welcome.model.WelcomeScreenResponse;
+import com.rx2androidnetworking.Rx2ANRequest;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import io.reactivex.Observable;
 
@@ -114,6 +114,7 @@ public class BaseNetworkApi {
     private static final String SAVE_PHOTO_URL = BASE_URL + "/photographer/photo/save";
     private static final String UNSAVE_PHOTO_URL = BASE_URL + "/photographer/photo/unsave";
     private static final String FORGOT_PASSWORD_URL = BASE_URL + "/photographer/auth/forgot_password";
+    private static final String UPDATE_PROGILE_URL = BASE_URL + "/photographer/profile/update";
 
 
     //Path Parameters
@@ -531,6 +532,14 @@ public class BaseNetworkApi {
                 .addBodyParameter("email", email)
                 .build()
                 .getStringObservable();
+    }
+
+    public static Observable<String> updateProfile(HashMap<String,File> files, HashMap<String,String> data) {
+        Rx2ANRequest.MultiPartBuilder builder = Rx2AndroidNetworking.upload(UPDATE_PROGILE_URL).setPriority(Priority.HIGH);
+        if (files != null)
+            builder.addMultipartFile(files);
+        builder.addMultipartParameter(data);
+        return builder.build().getStringObservable();
     }
 
 

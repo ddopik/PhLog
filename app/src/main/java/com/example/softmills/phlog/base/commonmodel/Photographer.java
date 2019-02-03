@@ -85,7 +85,7 @@ public class Photographer implements Parcelable {
     public String country;
     @SerializedName("rate")
     @Expose
-    public int rate;
+    public float rate;
     @SerializedName("level")
     @Expose
     public String level;
@@ -121,7 +121,7 @@ public class Photographer implements Parcelable {
         followingCount = in.readByte() == 0x00 ? null : in.readInt();
         photosCount = in.readByte() == 0x00 ? null : in.readInt();
         country = in.readString();
-        rate = in.readInt();
+        rate = in.readFloat();
         level = in.readString();
         if (in.readByte() == 0x01) {
             earnings = new ArrayList<Earning>();
@@ -189,7 +189,7 @@ public class Photographer implements Parcelable {
             dest.writeInt(photosCount);
         }
         dest.writeString(country);
-        dest.writeInt(rate);
+        dest.writeFloat(rate);
         dest.writeString(level);
         if (earnings == null) {
             dest.writeByte((byte) (0x00));

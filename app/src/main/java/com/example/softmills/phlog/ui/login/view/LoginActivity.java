@@ -62,7 +62,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
         passwordInput = findViewById(R.id.login_password_input);
         loginProgressBar=findViewById(R.id.login_progress);
         forgotPassword = findViewById(R.id.forgot_password);
-        new Utilities().printHashKey(getApplicationContext());
     }
 
     @Override

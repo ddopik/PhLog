@@ -9,5 +9,6 @@ import com.example.softmills.phlog.ui.photographerprofile.model.ProfilePhotoGrap
 public interface EditPhotoGrapherProfileFragmentPresenter {
 
     void getProfileEditData();
-    void editProfileData();
+
+    void updateProfile(String name, String username, String email, String phone, String password, String profile, String cover);
 }

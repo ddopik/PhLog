@@ -8,4 +8,6 @@ import com.example.softmills.phlog.base.commonmodel.Photographer;
 public interface EditPhotoGrapherProfileFragmentView {
     void showPhotoGrapherProfileData(Photographer photographer);
     void viewEditProfileProgress(Boolean State);
+
+    void showMessage(int message);
 }
