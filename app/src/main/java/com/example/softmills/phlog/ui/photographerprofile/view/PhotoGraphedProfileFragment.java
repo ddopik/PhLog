@@ -213,7 +213,8 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
                 MainActivity.navigationManger.navigate(EDIT_PROFILE);
                 break;
             case R.id.action_logout:
-                showToast("logout");
+                photoGrapherProfileActivityPresenter.logout(getContext());
+                MainActivity.navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
                 break;
             default:
                 break;

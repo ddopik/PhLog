@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGrapherProfileActivityView;
 
@@ -53,5 +54,11 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     photoGrapherProfileActivityView.showProfileProgress(false);
                 });
+    }
+
+    @Override
+    public void logout(Context context) {
+        PrefUtils.setLoginState(context, false);
+        PrefUtils.setUserToken(context, null);
     }
 }

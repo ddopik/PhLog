@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
@@ -24,6 +25,7 @@ import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
+import com.example.softmills.phlog.ui.splash.view.SplashActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
 
 import java.util.HashMap;
@@ -268,6 +270,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     toolbar.setVisibility(View.GONE);
                     toolBarTitle.setText(getResources().getString(R.string.profile));
                     currentTab = EDIT_PROFILE;
+                    break;
+                }
+                case LOGOUT: {
+                    Intent intent = new Intent(MainActivity.this, SplashActivity.class);
+                    startActivity(intent);
+                    finish();
                     break;
                 }
             }
