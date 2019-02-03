@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_navigation"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="?actionBarSize"
     android:layout_gravity="bottom"
     android:background="@color/gray400"
     app:fabCradleVerticalOffset="12dp"
@@ -34,6 +34,7 @@
                 android:drawableTop="@drawable/ic_tab_home_on"
                 android:gravity="center"
                 android:text="@string/home"
+                android:textSize="@dimen/font_small"
                 android:textAlignment="center"
                  android:textColor="@color/gray677078" />
         </LinearLayout>
@@ -52,6 +53,7 @@
                 android:background="@color/transparent"
                 android:drawableTop="@drawable/ic_tab_missions_off"
                 android:text="@string/campaigns"
+                android:textSize="@dimen/font_small"
                 android:textAlignment="center"
                  android:textColor="@color/gray677078" />
         </LinearLayout>
@@ -71,6 +73,7 @@
                 android:drawableTop="@drawable/ic_tab_notificatin_off"
                 android:gravity="center"
                 android:text="@string/Notification"
+                android:textSize="@dimen/font_small"
                 android:textAlignment="center"
                  android:textColor="@color/gray677078" />
         </LinearLayout>
@@ -89,6 +92,7 @@
                 android:background="@color/transparent"
                 android:drawableTop="@drawable/ic_tab_profile_off"
                 android:gravity="center"
+                android:textSize="@dimen/font_small"
                 android:text="@string/me"
                 android:textAlignment="center"
                  android:textColor="@color/gray677078" />
