@@ -96,13 +96,13 @@ public class LoginPresenterImp implements LoginPresenter {
             public void onSuccess(SocialUser socialUser) {
 
                 HashMap<String, String> parameter = new HashMap<String, String>();
-                parameter.put("userId", socialUser.userId);
+//                parameter.put("userId", socialUser.userId);
 
-                parameter.put("accessToken", socialUser.accessToken);
-                 parameter.put("username", socialUser.username);
-                parameter.put("pageLink", socialUser.pageLink);
+//                parameter.put("accessToken", socialUser.accessToken);
+//                 parameter.put("username", socialUser.username);
+//                parameter.put("pageLink", socialUser.pageLink);
 
-                parameter.put("fullName", socialUser.fullName);
+                parameter.put("full_name", socialUser.fullName);
                 parameter.put("facebook_id", socialUser.userId);
                 parameter.put("mobile_os", "Android");
                 parameter.put("mobile_model", Utilities.getDeviceName());
@@ -131,9 +131,11 @@ public class LoginPresenterImp implements LoginPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(socialLoginResponse -> {
+                    if (socialLoginResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         PrefUtils.setLoginState(context, true);
-                        PrefUtils.setUserToken(context, socialLoginResponse.token.get(0));
+                        PrefUtils.setUserToken(context, socialLoginResponse.token);
                         loginView.navigateToHome();
+                    }
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });

@@ -27,24 +27,19 @@ public class EarningListPresenterImpl implements EarningListPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getEarningList(String page) {
+    public void getEarningList(Context context, String page) {
         earningListFragmentView.viewEaringListProgress(true);
-        BaseNetworkApi.geEarning(PrefUtils.getUserToken(context), page)
+        BaseNetworkApi.geEarning(PrefUtils.getUserToken(this.context), page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(earningResponse -> {
                     if (earningResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
 //                        earningListFragmentView.viewEaringListProgress(earningResponse.earningLis);
-                    } else {
-//                        ErrorUtils.setError(context, TAG, earningListFragmentView.msg, earningListFragmentView.state);
                     }
                     earningListFragmentView.viewEaringListProgress(false);
                 }, throwable -> {
                     earningListFragmentView.viewEaringListProgress(false);
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    ErrorUtils.Companion.setError(this.context, TAG, throwable);
                 });
     }
-
-    // ErrorUtils.setError(context, TAG, albumPreviewResponse.msg, albumPreviewResponse.state);
-// ErrorUtils.setError(context, TAG, throwable.toString());
 }

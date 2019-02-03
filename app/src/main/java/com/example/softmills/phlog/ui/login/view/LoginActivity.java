@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
@@ -61,6 +62,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         passwordInput = findViewById(R.id.login_password_input);
         loginProgressBar=findViewById(R.id.login_progress);
         forgotPassword = findViewById(R.id.forgot_password);
+        new Utilities().printHashKey(getApplicationContext());
     }
 
     @Override
@@ -145,6 +147,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+        finish();
     }
 
     @Override

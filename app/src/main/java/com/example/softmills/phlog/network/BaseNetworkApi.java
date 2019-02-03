@@ -77,7 +77,7 @@ public class BaseNetworkApi {
     private static final String UPLOAD_CAMPAIGN_EXSISTING_PHOTO = BASE_URL + "/photographer/campaign/photo/assign";
     private static final String UPLOAD_PROFILE = BASE_URL + "/photographer/profile/upload";
     private static final String NORMAL_LOGIN = BASE_URL + "/photographer/auth/login";
-    private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/signup_facebook";
+    private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/photographer/auth/signup_facebook";
     private static final String USER_PROFILE_URL = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/photographer/photo/saved";
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/photographer/photo/list";
@@ -106,7 +106,7 @@ public class BaseNetworkApi {
     private static final String GET_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment/list";
     private static final String SUBMIT_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment";
     private static final String GET_ALL_NOTIFICATION = BASE_URL + "/notification";
-    private static final String GET_EARNING = BASE_URL + "/earning";
+    private static final String GET_EARNING = BASE_URL + "/photographer/earning/list";
     private static final String UPLOAD_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/upload";
     private static final String LIKE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/like";
 
@@ -163,14 +163,15 @@ public class BaseNetworkApi {
                 .getObjectObservable(LoginResponse.class);
     }
 
-    public static io.reactivex.Observable<SocialLoginResponse> socialLoginFacebook(HashMap<String, String> loginData) {
+    public static Observable<SocialLoginResponse> socialLoginFacebook(HashMap<String, String> loginData) {
         return Rx2AndroidNetworking.post(FACEBOOK_LOGIN_URL)
-                .addBodyParameter("fullName", loginData.get("fullName"))
-                .addBodyParameter("facebook_id", loginData.get("facebook_id"))
-                .addBodyParameter("mobile_os", loginData.get("mobile_os"))
-                .addBodyParameter("mobile_model", loginData.get("mobile_model"))
-                .addBodyParameter("email", loginData.get("email"))
-                .addBodyParameter("image_profile", loginData.get("image_profile"))
+//                .addBodyParameter("fullName", loginData.get("fullName"))
+//                .addBodyParameter("facebook_id", loginData.get("facebook_id"))
+//                .addBodyParameter("mobile_os", loginData.get("mobile_os"))
+//                .addBodyParameter("mobile_model", loginData.get("mobile_model"))
+//                .addBodyParameter("email", loginData.get("email"))
+//                .addBodyParameter("image_profile", loginData.get("image_profile"))
+                .addBodyParameter(loginData)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(SocialLoginResponse.class);
