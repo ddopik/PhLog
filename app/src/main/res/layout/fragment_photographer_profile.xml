@@ -33,7 +33,8 @@
             android:id="@+id/photographer_profile_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-             app:layout_anchorGravity="bottom"
+            app:tabMode="scrollable"
+            app:layout_anchorGravity="bottom"
             app:layout_collapseMode="pin"
             app:tabSelectedTextColor="@color/text_input_color"
             app:tabTextColor="@color/white" />
@@ -47,8 +48,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/fragment_photographer_padding_bottom"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
 
 
     <ProgressBar
