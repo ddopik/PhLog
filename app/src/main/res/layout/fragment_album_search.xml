@@ -14,7 +14,7 @@
         android:childDivider="@android:color/transparent"
         android:divider="@color/black"
         android:dividerHeight="1dp"
-        android:groupIndicator="@drawable/group_indicator"
+        android:background="@color/black"
         android:scrollbars="vertical|horizontal"
         android:visibility="gone"
         tools:visibility="visible"/>
@@ -22,10 +22,12 @@
     <com.example.softmills.phlog.base.widgets.CustomRecyclerView
         android:id="@+id/album_search_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:orientation="vertical"
         android:visibility="visible"
         tools:visibility="visible"/>
+
+    <include layout="@layout/search_prompt"/>
 
     <ProgressBar
         android:id="@+id/album_search_filter_progress"

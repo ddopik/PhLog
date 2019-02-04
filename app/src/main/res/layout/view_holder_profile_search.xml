@@ -60,9 +60,12 @@
 
                 <TextView
                     android:id="@+id/profile_followers_count"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:lines="1"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_small"
+                    android:layout_weight=".3"
                     tools:text="125 followers" />
 
                 <View
@@ -73,9 +76,12 @@
 
                 <TextView
                     android:id="@+id/profile_following_count"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:textSize="@dimen/font_small"
+                    android:lines="1"
+                    android:layout_weight=".3"
                     tools:text="176 k following" />
 
 
@@ -87,8 +93,11 @@
 
                 <TextView
                     android:id="@+id/profile_photos_count"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:layout_weight=".3"
                     android:textSize="@dimen/font_small"
                     tools:text="202 photo" />
 

@@ -32,6 +32,13 @@ public class SearchActivity extends BaseActivity {
         initPresenter();
         initView();
         initListener();
+
+        setTapSelected(R.id.tab_album);
+        filterTab.setVisibility(View.VISIBLE);
+        albumSearchFragment = AlbumSearchFragment.getInstance();
+        onFilterClicked = albumSearchFragment;
+        albumSearchFragment.setAlbumSearchView(onSearchTabSelected);
+        addFragment(R.id.search_container, albumSearchFragment, AlbumSearchFragment.class.getSimpleName(), false);
     }
 
 
@@ -96,7 +103,6 @@ public class SearchActivity extends BaseActivity {
                 onFilterClicked.onFilterIconClicked();
             }
         });
-
     }
 
 

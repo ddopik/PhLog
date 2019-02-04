@@ -65,7 +65,8 @@
             android:name=".ui.uploadimage.view.AddTagActivity"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".ui.search.view.SearchActivity">
+        <activity android:name=".ui.search.view.SearchActivity"
+            android:windowSoftInputMode="adjustPan">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
 

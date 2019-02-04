@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -67,6 +69,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private CompositeDisposable disposable = new CompositeDisposable();
     private PagingController pagingController;
     private OnSearchTabSelected onSearchTabSelected;
+
+    private ConstraintLayout promptView;
+    private ImageView promptImage;
+    private TextView promptText;
 
     public static AlbumSearchFragment getInstance() {
         AlbumSearchFragment albumSearchFragment = new AlbumSearchFragment();
@@ -126,7 +132,13 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
         ///////////
 
+        promptView = mainView.findViewById(R.id.prompt_view);
+        promptImage = mainView.findViewById(R.id.prompt_image);
+        promptImage.setBackgroundResource(R.drawable.ic_album_search);
+        promptText = mainView.findViewById(R.id.prompt_text);
+        promptText.setText(R.string.type_something_album);
 
+        searchResultCount.setVisibility(View.INVISIBLE);
     }
 
     private void initListener() {
@@ -186,6 +198,12 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
+
+                if (textViewTextChangeEvent.getCount() == 0) {
+                    promptView.setVisibility(View.VISIBLE);
+                    promptText.setText(R.string.type_something_album);
+                    return;
+                }
                 // user cleared search get default data
                 albumSearchList.clear();
                 albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
@@ -215,8 +233,16 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
         this.albumSearchList.addAll(albumSearchList);
         albumSearchAdapter.notifyDataSetChanged();
+        searchResultCount.setVisibility(View.VISIBLE);
         searchResultCount.setText(new StringBuilder().append(this.albumSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
+
+        if (this.albumSearchList.size() == 0) {
+            promptView.setVisibility(View.VISIBLE);
+            promptText.setText(R.string.could_not_find_albums);
+        } else {
+            promptView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -243,10 +269,11 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         filterExpListView.setVisibility(View.VISIBLE);
         albumSearchRv.setVisibility(View.GONE);
         expandableListAdapter.notifyDataSetChanged();
-        searchResultCount.setVisibility(View.GONE);
+        promptView.setVisibility(View.GONE);
 
         // omar continuing filter implementation
         searchResultCount.setText(R.string.apply);
+        searchResultCount.setVisibility(View.VISIBLE);
         searchResultCount.setOnClickListener(v -> {
             albumSearchList.clear();
             albumSearchAdapter.notifyDataSetChanged();
@@ -279,6 +306,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         } else {
             setAlbumSearchView();
         }
+        searchResultCount.setVisibility(View.INVISIBLE);
     }
 
     private void setAlbumSearchView() {

@@ -15,6 +15,6 @@ public class ProfileSearchResponse {
 
     @SerializedName("data")
     @Expose
-    public List<Photographer> data = null;
+    public ProfileSearchData data = null;
 
 }

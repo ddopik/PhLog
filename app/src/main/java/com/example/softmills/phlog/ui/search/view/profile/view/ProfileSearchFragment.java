@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -53,6 +55,10 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     private ProfileSearchAdapter profileSearchAdapter;
     private List<Photographer> profileSearchList = new ArrayList<>();
 
+    private ConstraintLayout promptView;
+    private ImageView promptImage;
+    private TextView promptText;
+
     private ProfileSearchPresenter profileSearchPresenter;
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -86,7 +92,6 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
             }
 
         }
-
     }
 
 
@@ -100,6 +105,13 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
         profileSearchAdapter = new ProfileSearchAdapter(getContext(), profileSearchList);
         profileSearchRv.setAdapter(profileSearchAdapter);
 
+        promptView = mainView.findViewById(R.id.prompt_view);
+        promptImage = mainView.findViewById(R.id.prompt_image);
+        promptImage.setBackgroundResource(R.drawable.ic_profile_search);
+        promptText = mainView.findViewById(R.id.prompt_text);
+        promptText.setText(R.string.type_something_profile);
+
+        searchResultCount.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -122,7 +134,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
             @Override
             public void getPagingControllerCallBack(int page) {
                 if (profileSearch.getText().length() > 0) {
-                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), page - 1);
+                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), page);
 
                 }
 
@@ -141,6 +153,11 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
+                if (textViewTextChangeEvent.getCount() == 0) {
+                    promptView.setVisibility(View.VISIBLE);
+                    promptText.setText(R.string.type_something_profile);
+                    return;
+                }
                 profileSearchList.clear();
                 profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
                 Log.e(TAG, "search string: " + profileSearch.getText().toString());
@@ -163,8 +180,16 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     public void viewProfileSearchItems(List<Photographer> profileSearchList) {
         this.profileSearchList.addAll(profileSearchList);
         profileSearchAdapter.notifyDataSetChanged();
+        searchResultCount.setVisibility(View.VISIBLE);
         searchResultCount.setText(new StringBuilder().append(this.profileSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
+
+        if (this.profileSearchList.size() == 0) {
+            promptView.setVisibility(View.VISIBLE);
+            promptText.setText(R.string.could_not_find_profiles);
+        } else {
+            promptView.setVisibility(View.GONE);
+        }
     }
 
     @Override

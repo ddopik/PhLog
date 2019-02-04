@@ -84,8 +84,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initPresenter() {
         ///set NetWork Call Header
-        String s = PrefUtils.getUserToken(getBaseContext());
-        Log.e("auth", s);
         PhLogApp.initFastAndroidNetworking(PrefUtils.getUserToken(getBaseContext()), "0", " en-us'", getBaseContext());
     }
 

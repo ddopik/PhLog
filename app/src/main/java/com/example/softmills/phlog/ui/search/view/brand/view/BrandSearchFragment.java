@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -55,6 +57,10 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private CompositeDisposable disposable = new CompositeDisposable();
     private OnSearchTabSelected onSearchTabSelected;
 
+    private ConstraintLayout promptView;
+    private ImageView promptImage;
+    private TextView promptText;
+
     public static BrandSearchFragment getInstance() {
         BrandSearchFragment brandSearchFragment = new BrandSearchFragment();
         return brandSearchFragment;
@@ -98,6 +104,16 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         searchBrandProgress = mainView.findViewById(R.id.search_brand_progress_bar);
         brandSearchAdapter = new BrandSearchAdapter(getContext(), brandSearchList);
         searchBrandRv.setAdapter(brandSearchAdapter);
+
+        promptView = mainView.findViewById(R.id.prompt_view);
+        promptView.setBackgroundColor(getResources().getColor(R.color.black));
+        promptImage = mainView.findViewById(R.id.prompt_image);
+        promptImage.setBackgroundResource(R.drawable.ic_brand_search);
+        promptText = mainView.findViewById(R.id.prompt_text);
+        promptText.setText(R.string.type_something_brand);
+
+
+        searchResultCount.setVisibility(View.INVISIBLE);
     }
 
     private void initListener() {
@@ -134,6 +150,11 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         return new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
+                if (textViewTextChangeEvent.getCount() == 0) {
+                    promptView.setVisibility(View.VISIBLE);
+                    promptText.setText(R.string.type_something_profile);
+                    return;
+                }
                 // user cleared search get default data
 
                 brandSearchList.clear();
@@ -159,8 +180,17 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     public void viewBrandSearchItems(List<Brand> brandSearchList) {
         this.brandSearchList.addAll(brandSearchList);
         brandSearchAdapter.notifyDataSetChanged();
+        searchResultCount.setVisibility(View.VISIBLE);
         searchResultCount.setText(new StringBuilder().append(this.brandSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
+
+
+        if (this.brandSearchList.size() == 0) {
+            promptView.setVisibility(View.VISIBLE);
+            promptText.setText(R.string.could_not_find_brand);
+        } else {
+            promptView.setVisibility(View.GONE);
+        }
     }
 
     @Override
