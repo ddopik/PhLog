@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
@@ -108,8 +109,6 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     public void viewUserData(Photographer photographer) {
 
         currentPhotographer=photographer;
-        userProfileImg = findViewById(R.id.user_profile_img);
-
 
         if (photographer.userName != null)
             userProfileUserName.setText(photographer.userName);
@@ -133,6 +132,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
         GlideApp.with(userProfileImg)
                 .load(photographer.imageProfile)
+                .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.default_place_holder)
                 .error(R.drawable.default_error_img)
                 .into(userProfileImg);

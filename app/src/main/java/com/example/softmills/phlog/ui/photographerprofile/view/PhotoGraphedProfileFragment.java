@@ -62,7 +62,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     private List<String> photoGrapherFragmentListTitles = new ArrayList<String>();
     private ImageView photographerProfileBackgroundImg;
     private ImageView photographerProfileImg;
-    private TextView photographerName, photographeruserName, photoCount, followersCount, followingCount;
+    private TextView photographerName, photographeruserName, photoCount, followersCount, followingCount, level;
     private RatingBar profileRating;
     private PhotoGrapherProfileActivityPresenter photoGrapherProfileActivityPresenter;
     private AppBarLayout mAppBarLayout;
@@ -113,6 +113,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         userProfileViewpager.setAdapter(photographerProfileViewPagerAdapter);
         userProfileTabs.setupWithViewPager(userProfileViewpager);
 
+        level = mainView.findViewById(R.id.photographer_level);
     }
 
     @Override
@@ -175,8 +176,8 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
                     .placeholder(R.drawable.default_place_holder)
                     .error(R.drawable.default_error_img)
                     .into(photographerProfileImg);
-
-
+        if (photographer.level != null)
+            level.setText(photographer.level);
 //        GlideApp.with(this).
 //                load("www.google.com")
 //                .apply(new RequestOptions().placeholder(R.drawable.default_photographer_profile).error(R.drawable.default_photographer_profile))

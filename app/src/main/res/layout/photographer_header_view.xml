@@ -48,7 +48,6 @@
             android:layout_width="@dimen/header_img_size"
             android:layout_height="@dimen/header_img_size"
             android:layout_gravity="center_horizontal"
-
             android:src="@drawable/phlog_logo" />
 
 
@@ -80,8 +79,17 @@
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="@dimen/user_profile_rating_bar_width"
             android:layout_height="wrap_content"
+            android:numStars="5"
             android:layout_gravity="center" />
 
+        <TextView
+            android:id="@+id/photographer_level"
+            android:background="@drawable/level_background"
+            android:padding="@dimen/widgets_padding_s"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <RelativeLayout
