@@ -1,55 +1,152 @@
 package com.example.softmills.phlog.ui.earning.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
-/**
- * Created by abdalla_maged On Nov,2018
- */
-public class Earning implements Parcelable {
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
+import com.example.softmills.phlog.base.commonmodel.Business;
+import com.google.gson.annotations.SerializedName;
 
+public class Earning {
 
-    public String earningId;
-    public String earningImg;
-    public String earningPrice;
-    public String earningBuyer;
-    public String earningSize;
+	@SerializedName("photographer_level")
+	private int photographerLevel;
 
-    public Earning(){
+	@SerializedName("photo_id")
+	private int photoId;
 
-    }
-    public Earning(Parcel in) {
-        earningId = in.readString();
-        earningImg = in.readString();
-        earningPrice = in.readString();
-        earningBuyer = in.readString();
-        earningSize = in.readString();
-    }
+	@SerializedName("business")
+	private Business business;
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	@SerializedName("created_at")
+	private String createdAt;
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(earningId);
-        dest.writeString(earningImg);
-        dest.writeString(earningPrice);
-        dest.writeString(earningBuyer);
-        dest.writeString(earningSize);
-    }
+	@SerializedName("photo")
+	private BaseImage photo;
 
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Earning> CREATOR = new Parcelable.Creator<Earning>() {
-        @Override
-        public Earning createFromParcel(Parcel in) {
-            return new Earning(in);
-        }
+	@SerializedName("deleted_at")
+	private Object deletedAt;
 
-        @Override
-        public Earning[] newArray(int size) {
-            return new Earning[size];
-        }
-    };
+	@SerializedName("payment_gateway_trans_id")
+	private String paymentGatewayTransId;
+
+	@SerializedName("payment_gateway_trans_response")
+	private String paymentGatewayTransResponse;
+
+	@SerializedName("updated_at")
+	private Object updatedAt;
+
+	@SerializedName("price")
+	private String price;
+
+	@SerializedName("exclusive")
+	private int exclusive;
+
+	@SerializedName("id")
+	private int id;
+
+	@SerializedName("business_id")
+	private int businessId;
+
+	public void setPhotographerLevel(int photographerLevel){
+		this.photographerLevel = photographerLevel;
+	}
+
+	public int getPhotographerLevel(){
+		return photographerLevel;
+	}
+
+	public void setPhotoId(int photoId){
+		this.photoId = photoId;
+	}
+
+	public int getPhotoId(){
+		return photoId;
+	}
+
+	public void setBusiness(Business business){
+		this.business = business;
+	}
+
+	public Business getBusiness(){
+		return business;
+	}
+
+	public void setCreatedAt(String createdAt){
+		this.createdAt = createdAt;
+	}
+
+	public String getCreatedAt(){
+		return createdAt;
+	}
+
+	public void setDeletedAt(Object deletedAt){
+		this.deletedAt = deletedAt;
+	}
+
+	public Object getDeletedAt(){
+		return deletedAt;
+	}
+
+	public void setPaymentGatewayTransId(String paymentGatewayTransId){
+		this.paymentGatewayTransId = paymentGatewayTransId;
+	}
+
+	public String getPaymentGatewayTransId(){
+		return paymentGatewayTransId;
+	}
+
+	public void setPaymentGatewayTransResponse(String paymentGatewayTransResponse){
+		this.paymentGatewayTransResponse = paymentGatewayTransResponse;
+	}
+
+	public String getPaymentGatewayTransResponse(){
+		return paymentGatewayTransResponse;
+	}
+
+	public void setUpdatedAt(Object updatedAt){
+		this.updatedAt = updatedAt;
+	}
+
+	public Object getUpdatedAt(){
+		return updatedAt;
+	}
+
+	public void setPrice(String price){
+		this.price = price;
+	}
+
+	public String getPrice(){
+		return price;
+	}
+
+	public void setExclusive(int exclusive){
+		this.exclusive = exclusive;
+	}
+
+	public int getExclusive(){
+		return exclusive;
+	}
+
+	public void setId(int id){
+		this.id = id;
+	}
+
+	public int getId(){
+		return id;
+	}
+
+	public void setBusinessId(int businessId){
+		this.businessId = businessId;
+	}
+
+	public int getBusinessId(){
+		return businessId;
+	}
+
+	public BaseImage getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(BaseImage photo) {
+		this.photo = photo;
+	}
 }

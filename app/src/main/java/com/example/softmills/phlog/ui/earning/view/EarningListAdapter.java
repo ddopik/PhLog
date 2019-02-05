@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.earning.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
@@ -37,7 +39,7 @@ public class EarningListAdapter extends RecyclerView.Adapter<EarningListAdapter.
         context = viewGroup.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-        return new EarningListViewHolder(layoutInflater.inflate(R.layout.view_holder_earning, viewGroup, false));
+        return new EarningListViewHolder(layoutInflater.inflate(R.layout.view_holder_earning_2, viewGroup, false));
     }
 
     @SuppressLint("SetTextI18n")
@@ -45,12 +47,14 @@ public class EarningListAdapter extends RecyclerView.Adapter<EarningListAdapter.
     public void onBindViewHolder(@NonNull EarningListViewHolder earningListViewHolder, int i) {
 
         Earning earning = earningList.get(i);
-        GlideApp.with(context).load(earning.earningImg)
-                .apply(RequestOptions.bitmapTransform(new RoundedCorners(14)))
+        Glide.with(context).load(earning.getPhoto().url)
+                .apply(new RequestOptions().transforms(new RoundedCorners(14)))
                 .into(earningListViewHolder.earningImg);
-        earningListViewHolder.earningPrice.setText("$" + earning.earningPrice);
-        earningListViewHolder.earningBuyer.setText(earning.earningBuyer);
-        earningListViewHolder.earningSize.setText(earning.earningSize);
+        earningListViewHolder.earningPrice.setText("$" + earning.getPrice());
+        earningListViewHolder.earningBuyer.setText(earning.getBusiness().fullName);
+        earningListViewHolder.earningSize.setText(earning.getExclusive() == 1
+                ? context.getString(R.string.exclusive_yes)
+                : context.getString(R.string.exclusive_no));
         if (onEarningClick != null) {
             earningListViewHolder.earningContainer.setOnClickListener(view -> {
                 onEarningClick.OnEarningClickListener(earning);
@@ -67,7 +71,7 @@ public class EarningListAdapter extends RecyclerView.Adapter<EarningListAdapter.
 
     class EarningListViewHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout earningContainer;
+        ConstraintLayout earningContainer;
         TextView earningPrice, earningBuyer, earningSize;
         ImageView earningImg;
 

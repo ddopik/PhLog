@@ -41,7 +41,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.fragment_earning, container, false);
+        mainView = inflater.inflate(R.layout.fragment_earning_2, container, false);
         return mainView;
     }
 
@@ -51,7 +51,8 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
         initPresenter();
         initViews();
         initListener();
-        earningListPresenter.getEarningList(getContext(), "0");
+        if (earningList.isEmpty())
+        earningListPresenter.getEarningList(getContext(), "1");
     }
 
 
@@ -72,7 +73,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
 
     private void initListener() {
         earningListAdapter.onEarningClick = earning -> {
-            MainActivity.navigationManger.setExtraData(earning.earningId);
+            MainActivity.navigationManger.setExtraData(String.valueOf(earning.getId()));
             MainActivity.navigationManger.navigate(EARNING_INNER);
         };
         pagingController = new PagingController(earningListRv) {
@@ -86,7 +87,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
     @Override
     public void viewEarningList(List<Earning> earningList) {
         this.earningList.addAll(earningList);
-        earningListSize.setText(this.earningList.size());
+        earningListAdapter.notifyDataSetChanged();
 
     }
 
@@ -104,4 +105,12 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
         showToast(msg);
     }
 
+    @Override
+    public void setSalesNumber(int total) {
+        if (total != 0) {
+            earningListSize.setText(getString(R.string.total_sales_number, total));
+        } else {
+            earningListSize.setText(getString(R.string.no_sales_yet));
+        }
+    }
 }

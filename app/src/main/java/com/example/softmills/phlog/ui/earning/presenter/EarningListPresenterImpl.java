@@ -32,9 +32,10 @@ public class EarningListPresenterImpl implements EarningListPresenter {
         BaseNetworkApi.geEarning(PrefUtils.getUserToken(this.context), page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(earningResponse -> {
-                    if (earningResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-//                        earningListFragmentView.viewEaringListProgress(earningResponse.earningLis);
+                .subscribe(response -> {
+                    if (response != null && response.getData() != null && response.getData().getData() != null) {
+                        earningListFragmentView.viewEarningList(response.getData().getData());
+                        earningListFragmentView.setSalesNumber(response.getData().getTotal());
                     }
                     earningListFragmentView.viewEaringListProgress(false);
                 }, throwable -> {

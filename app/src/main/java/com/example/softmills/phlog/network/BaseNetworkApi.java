@@ -14,7 +14,8 @@ import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotoRe
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
-import com.example.softmills.phlog.ui.earning.model.EarningResponse;
+import com.example.softmills.phlog.ui.earning.model.EarningDetailsResponse;
+import com.example.softmills.phlog.ui.earning.model.EarningListResponse;
 import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.model.SocialLoginResponse;
 import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
@@ -115,6 +116,7 @@ public class BaseNetworkApi {
     private static final String UNSAVE_PHOTO_URL = BASE_URL + "/photographer/photo/unsave";
     private static final String FORGOT_PASSWORD_URL = BASE_URL + "/photographer/auth/forgot_password";
     private static final String UPDATE_PROGILE_URL = BASE_URL + "/photographer/profile/update";
+    private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/profile/update";
 
 
     //Path Parameters
@@ -440,14 +442,14 @@ public class BaseNetworkApi {
                 .getObjectObservable(NotificationResponse.class);
     }
 
-    public static io.reactivex.Observable<EarningResponse> geEarning(String token, String page) {
+    public static Observable<EarningListResponse> geEarning(String token, String page) {
         return Rx2AndroidNetworking.post(GET_EARNING)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .getResponseOnlyFromNetwork()
                 .addQueryParameter(PAGER_PATH_PARAMETER, page)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(EarningResponse.class);
+                .getObjectObservable(EarningListResponse.class);
     }
 
 
@@ -540,6 +542,14 @@ public class BaseNetworkApi {
             builder.addMultipartFile(files);
         builder.addMultipartParameter(data);
         return builder.build().getStringObservable();
+    }
+
+    public static Observable<EarningDetailsResponse> getEarningDetails(String earningId) {
+        return Rx2AndroidNetworking.post(EARNING_DETAILS_URL)
+                .addBodyParameter("transaction_id", earningId)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(EarningDetailsResponse.class);
     }
 
 

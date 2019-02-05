@@ -108,7 +108,7 @@
     <string name="brand_followed">Brand followed</string>
     <string name="total_sizes">Total Sizes :</string>
     <string name="sale_info">Sale Info</string>
-    <string name="user_id_sale">user id of sale to get more info</string>
+    <string name="user_id_sale">Use id of sale to get more info</string>
     <string name="by">By</string>
     <string name="buyer">Buyer</string>
     <string name="price">price</string>
@@ -147,5 +147,14 @@
     <string name="could_not_find_profiles">Sorry. We didn\'t find profiles. Try typing another word.</string>
     <string name="type_something_album">Type something in the search bar to search albums.</string>
     <string name="could_not_find_albums">Sorry. We didn\'t find albums. Try typing another word.</string>
+    <string name="exclusive_yes">Exclusive: yes</string>
+    <string name="exclusive_no">Exclusive: no</string>
+    <string name="total_sales_number">Total Sales: %1$d</string>
+    <string name="no_sales_yet">You havn\'t sold any photos yet.</string>
+    <string name="earning_price">Price: </string>
+    <string name="earning_buyer">Buyer: </string>
+    <string name="id_val">ID : %1$d</string>
+    <string name="created_at_val">Created at : %1$s</string>
+    <string name="exclusive">Exclusive</string>
 
 </resources>

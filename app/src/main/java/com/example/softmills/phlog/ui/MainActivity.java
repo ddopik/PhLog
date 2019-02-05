@@ -246,9 +246,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 case EARNING_INNER: {
                     if (extraData != null) {
-                        EarningInnerFragment earningInnerFragment = EarningInnerFragment.getInstance();
-                        earningInnerFragment.setInnerID(extraData);
-                        addFragment(R.id.view_container, new EarningInnerFragment(), EarningInnerFragment.class.getSimpleName(), true);
+                        EarningInnerFragment earningInnerFragment = EarningInnerFragment.getInstance(extraData);
+                        addFragment(R.id.view_container, earningInnerFragment, EarningInnerFragment.class.getSimpleName(), true);
                         myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                         myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                         myProfileBtn.setCompoundDrawablePadding(8);
