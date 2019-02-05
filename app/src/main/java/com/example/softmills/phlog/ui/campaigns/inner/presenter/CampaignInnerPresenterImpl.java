@@ -39,7 +39,7 @@ public class CampaignInnerPresenterImpl implements CampaignInnerPresenter {
                             campaignInnerActivityView.viewCampaignTitle(campaignInnerResponse.campaign.titleEn);
                             campaignInnerActivityView.viewCampaignLeftDays(String.valueOf(campaignInnerResponse.campaign.daysLeft));
                             campaignInnerActivityView.viewCampaignHeaderImg(campaignInnerResponse.campaign.imageCover);
-                            campaignInnerActivityView.viewCampaignHostedBy(campaignInnerResponse.campaign.business.fullName);
+                            campaignInnerActivityView.viewCampaignHostedBy(campaignInnerResponse.campaign.business.firstName+" "+campaignInnerResponse.campaign.business.lastName);
                             campaignInnerActivityView.viewCampaignMissionDescription(campaignInnerResponse.campaign.descrptionEn
                                     , campaignInnerResponse.campaign.status
                                     , campaignInnerResponse.campaign.numberImages);

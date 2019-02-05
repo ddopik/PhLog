@@ -81,13 +81,13 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.album.view.AllAlbumImgActivity" />
-        <activity android:name=".ui.album.view.ImageCommentActivity" />
         <activity android:name=".ui.brand.view.BrandInnerActivity">
 
         </activity>
         <activity android:name=".ui.uploadimage.view.UploadImageActivity" />
         <activity android:name=".ui.allphotos.view.AllPhotographerPhotosActivity" />
         <activity android:name=".ui.brand.view.BrandCampaignsActivity" />
+        <activity android:name=".ui.commentimage.view.ImageCommentActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

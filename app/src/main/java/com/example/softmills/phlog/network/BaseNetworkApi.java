@@ -5,8 +5,7 @@ import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewImagesResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
-import com.example.softmills.phlog.ui.album.model.ImgCommentResponse;
-import com.example.softmills.phlog.ui.album.model.SavePhotoResponse;
+ import com.example.softmills.phlog.ui.album.model.SavePhotoResponse;
 import com.example.softmills.phlog.ui.allphotos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
 import com.example.softmills.phlog.ui.brand.model.FollowBrandResponse;
@@ -14,8 +13,18 @@ import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotoRe
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
-import com.example.softmills.phlog.ui.earning.model.EarningDetailsResponse;
+ import com.example.softmills.phlog.ui.earning.model.EarningDetailsResponse;
 import com.example.softmills.phlog.ui.earning.model.EarningListResponse;
+ import com.example.softmills.phlog.ui.commentimage.model.AddImageToCartResponse;
+import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsData;
+import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsResponse;
+import com.example.softmills.phlog.ui.commentimage.model.ImageRateResponse;
+import com.example.softmills.phlog.ui.commentimage.model.ImgCommentResponse;
+import com.example.softmills.phlog.ui.commentimage.model.LikeImageResponse;
+import com.example.softmills.phlog.ui.commentimage.model.SocialAutoCompleteResponse;
+import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentResponse;
+
+
 import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.model.SocialLoginResponse;
 import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
@@ -110,13 +119,18 @@ public class BaseNetworkApi {
     private static final String GET_EARNING = BASE_URL + "/photographer/earning/list";
     private static final String UPLOAD_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/upload";
     private static final String LIKE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/like";
+    private static final String LIKE_IMAGE = BASE_URL + "/photo/like";
+    private static final String UN_LIKE_IMAGE = BASE_URL + "/photo/unlike";
+    private static final String RATE_IMAGE = BASE_URL + "/photo/rate";
+    private static final String ADD_IMG_TO_CART_URL = BASE_URL + "/cart/add";
 
 
     private static final String SAVE_PHOTO_URL = BASE_URL + "/photographer/photo/save";
     private static final String UNSAVE_PHOTO_URL = BASE_URL + "/photographer/photo/unsave";
     private static final String FORGOT_PASSWORD_URL = BASE_URL + "/photographer/auth/forgot_password";
     private static final String UPDATE_PROGILE_URL = BASE_URL + "/photographer/profile/update";
-    private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/profile/update";
+     private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/profile/update";
+     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
 
 
     //Path Parameters
@@ -380,23 +394,23 @@ public class BaseNetworkApi {
                 .getObjectObservable(AlbumPreviewImagesResponse.class);
     }
 
-    public static io.reactivex.Observable<ImgCommentResponse> getImageComments(String image_id, String page) {
+    public static io.reactivex.Observable<ImageCommentsResponse> getImageComments(String image_id, String page) {
         return Rx2AndroidNetworking.post(GET_IMAGE_COMMENT)
                 .addQueryParameter("image_id", image_id)
                 .addQueryParameter(PAGER_PATH_PARAMETER, page)
                 .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(ImgCommentResponse.class);
+                .getObjectObservable(ImageCommentsResponse.class);
     }
 
-    public static io.reactivex.Observable<ImgCommentResponse> submitImageComment(String image_id, String imageComment) {
+    public static io.reactivex.Observable<SubmitImageCommentResponse> submitImageComment(String image_id, String imageComment) {
         return Rx2AndroidNetworking.post(SUBMIT_IMAGE_COMMENT)
-                .addQueryParameter("image_id", image_id)
+                .addQueryParameter("photo_id", image_id)
                 .addQueryParameter("comment", imageComment)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(ImgCommentResponse.class);
+                .getObjectObservable(SubmitImageCommentResponse.class);
     }
 
 
@@ -544,7 +558,7 @@ public class BaseNetworkApi {
         return builder.build().getStringObservable();
     }
 
-    public static Observable<EarningDetailsResponse> getEarningDetails(String earningId) {
+     public static Observable<EarningDetailsResponse> getEarningDetails(String earningId) {
         return Rx2AndroidNetworking.post(EARNING_DETAILS_URL)
                 .addBodyParameter("transaction_id", earningId)
                 .setPriority(Priority.HIGH)
@@ -552,6 +566,41 @@ public class BaseNetworkApi {
                 .getObjectObservable(EarningDetailsResponse.class);
     }
 
+     public static Observable<SocialAutoCompleteResponse> getSocialAutoComplete(String keyword) {
+        return Rx2AndroidNetworking.post(SOCIAL_AUTO_COMPLETE)
+                .addBodyParameter("keyword",keyword)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(SocialAutoCompleteResponse.class);
+    }
+
+
+
+    public static io.reactivex.Observable<LikeImageResponse> likeImage(String imageId) {
+        return Rx2AndroidNetworking.post(LIKE_IMAGE)
+                .addBodyParameter("photo_id", imageId)
+                .getResponseOnlyFromNetwork()
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(LikeImageResponse.class);
+    }
+
+    public static io.reactivex.Observable<LikeImageResponse> unlikeImage(String imageId) {
+        return Rx2AndroidNetworking.post(UN_LIKE_IMAGE)
+                .addBodyParameter("photo_id", imageId)
+                .getResponseOnlyFromNetwork()
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(LikeImageResponse.class);
+    }
+
+    public static io.reactivex.Observable<AddImageToCartResponse> addImageToCart(String imageID) {
+        return Rx2AndroidNetworking.post(ADD_IMG_TO_CART_URL)
+                .setPriority(Priority.HIGH)
+                .addBodyParameter("photo_id",imageID)
+                .build()
+                .getObjectObservable(AddImageToCartResponse.class);
+    }
 
 //    public static io.reactivex.Observable<GeoCodeAutoCompleteResponse> getGeoGodeAutoCompleteResponse(String key){
 //        return Rx2AndroidNetworking.get()

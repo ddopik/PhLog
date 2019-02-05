@@ -13,6 +13,7 @@ import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgPresnter;
 import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgPresnterImpl;
 import com.example.softmills.phlog.ui.album.view.adapter.AllAlbumImgAdapter;
+import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +91,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             public void onAlbumImgClick(BaseImage albumImg) {
                 Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA,albumImg);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
 
@@ -102,6 +104,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             public void onAlbumImgCommentClick(BaseImage albumImg) {
                 Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA,albumImg);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
 
