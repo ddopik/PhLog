@@ -19,7 +19,7 @@ import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
-import com.example.softmills.phlog.ui.social.model.Entite;
+import com.example.softmills.phlog.ui.social.model.Source;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 import com.example.softmills.phlog.ui.social.presenter.SocailFragmentPresenterImpl;
 import com.example.softmills.phlog.ui.social.presenter.SocialFragmentPresenter;
@@ -88,54 +88,57 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
 
         socialAdapter.onSocialItemListener = new SocialAdapter.OnSocialItemListener() {
             @Override
-            public void onSocialProfileClick(Entite entite) {
-                Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-                intent.putExtra(USER_ID, String.valueOf(entite.id));
-                startActivity(intent);
+            public void onSocialProfileClick(Source source) {
+
+
+//                Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+//                intent.putExtra(USER_ID, String.valueOf(source.id));
+//                startActivity(intent);
 
             }
 
             @Override
-            public void OnFollowSocialProfileClick(Entite entite) {
-                socialFragmentPresenter.followUser(String.valueOf(entite.id));
+            public void OnFollowSocialProfileClick(Source source) {
+
+//                socialFragmentPresenter.followUser(String.valueOf(source.id));
             }
 
             @Override
-            public void onSocialCampaignClicked(Entite entite) {
-                Intent intent = new Intent(getActivity(), CampaignInnerActivity.class);
-                intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID,String.valueOf(entite.id));
-                startActivity(intent);
+            public void onSocialCampaignClicked(Source source) {
+//                Intent intent = new Intent(getActivity(), CampaignInnerActivity.class);
+//                intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID,String.valueOf(source.id));
+//                startActivity(intent);
             }
 
             @Override
-            public void onSocialFollowCampaignClicked(Entite entite) {
-                socialFragmentPresenter.joinSocialCampaign(String.valueOf(entite.id));
+            public void onSocialFollowCampaignClicked(Source source) {
+//                socialFragmentPresenter.joinSocialCampaign(String.valueOf(source.id));
             }
 
             @Override
-            public void onSocialSlideImageClicked(Entite entite) {
-                Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
-                List<BaseImage> albumImgList = new ArrayList<>();
-                for (int i = 0; i < entite.imgs.size(); i++) {
-                    BaseImage albumImg = new BaseImage();
-                    albumImg.url = entite.imgs.get(i);
-                    albumImgList.add(albumImg);
-                }
-                intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
-                intent.putExtra(SELECTED_IMG_ID, entite.id);
-                startActivity(intent);
+            public void onSocialSlideImageClicked(Source source) {
+//                Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
+//                List<BaseImage> albumImgList = new ArrayList<>();
+//                for (int i = 0; i < source.imgs.size(); i++) {
+//                    BaseImage albumImg = new BaseImage();
+//                    albumImg.url = source.imgs.get(i);
+//                    albumImgList.add(albumImg);
+//                }
+//                intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
+//                intent.putExtra(SELECTED_IMG_ID, source.id);
+//                startActivity(intent);
             }
 
             @Override
-            public void onSocialBrandClicked(Entite entite) {
-                Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
-                intent.putExtra(BrandInnerActivity.BRAND_ID, String.valueOf(entite.id));
-                startActivity(intent);
+            public void onSocialBrandClicked(Source source) {
+//                Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
+//                intent.putExtra(BrandInnerActivity.BRAND_ID, String.valueOf(source.id));
+//                startActivity(intent);
             }
 
             @Override
-            public void onSocialBrandFollowClicked(Entite entite) {
-                socialFragmentPresenter.followSocialBrand(String.valueOf(entite.id));
+            public void onSocialBrandFollowClicked(Source source) {
+//                socialFragmentPresenter.followSocialBrand(String.valueOf(source.id));
             }
         };
 

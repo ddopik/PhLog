@@ -10,7 +10,8 @@ import android.widget.ImageView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.ui.social.model.Entite;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
+import com.example.softmills.phlog.ui.social.model.Source;
 
 import java.util.List;
 
@@ -20,10 +21,10 @@ import java.util.List;
 public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapter.SocialImageViewHolder> {
 
     private Context context;
-    private List<String> imageList; //todo sould be list of object
+    private List<BaseImage> imageList;
     public OnSocialSliderImgClick onSocialSliderImgClick;
-    public SocialImagesAdapter(Entite entite) {
-        this.imageList = entite.imgs;
+    public SocialImagesAdapter(Source source) {
+        this.imageList = source.photos;
     }
 
     @NonNull
@@ -38,13 +39,13 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
     @Override
     public void onBindViewHolder(@NonNull SocialImageViewHolder socialImageViewHolder, int i) {
         GlideApp.with(context)
-                .load(imageList.get(i))////todo img ob should be passed here
+                .load(imageList.get(i).url)
                 .placeholder(R.drawable.default_photographer_profile)
                 .error(R.drawable.default_photographer_profile)
                 .into(socialImageViewHolder.sliderImage);
         if (onSocialSliderImgClick != null) {
             socialImageViewHolder.sliderImage.setOnClickListener((View.OnClickListener) v -> {
-                onSocialSliderImgClick.onSocialSliderImgCliked(imageList.get(i)); ////todo img ob should be passed here
+                onSocialSliderImgClick.onSocialSliderImgCliked(imageList.get(i));
 
             });
         }
@@ -65,6 +66,6 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
     }
 
     interface OnSocialSliderImgClick {
-        void onSocialSliderImgCliked(String img);////todo img ob should be passed here
+        void onSocialSliderImgCliked(BaseImage img);
     }
 }
