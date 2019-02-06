@@ -110,7 +110,7 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
             presenter.updateProfile(nameET.getText().toString()
                     , usernameET.getText().toString()
                     , emailET.getText().toString()
-                    , phoneET.getText().toString()
+//                    , phoneET.getText().toString()
                     , passwordET.getText().toString()
                     , profile, cover);
         });
@@ -240,6 +240,8 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+            detailsChanged = true;
+            saveButton.setVisibility(View.VISIBLE);
             switch (whichImage) {
                 case COVER:
                     cover = ImagePicker.getFirstImageOrNull(data).getPath();

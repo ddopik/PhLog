@@ -52,6 +52,9 @@ public class Photographer implements Parcelable {
     @SerializedName("image_profile")
     @Expose
     public String imageProfile;
+    @SerializedName("image_cover")
+    @Expose
+    public String imageCover;
     @SerializedName("mobile_os")
     @Expose
     public String mobileOs;
@@ -113,6 +116,7 @@ public class Photographer implements Parcelable {
         fullName = in.readString();
         updatedAt = in.readString();
         imageProfile = in.readString();
+        imageCover = in.readString();
         mobileOs = in.readString();
         hash = in.readString();
         email = in.readString();
@@ -161,6 +165,7 @@ public class Photographer implements Parcelable {
         dest.writeString(fullName);
         dest.writeString(updatedAt);
         dest.writeString(imageProfile);
+        dest.writeString(imageCover);
         dest.writeString(mobileOs);
         dest.writeString(hash);
         dest.writeString(email);

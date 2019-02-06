@@ -10,5 +10,5 @@ public interface EditPhotoGrapherProfileFragmentPresenter {
 
     void getProfileEditData();
 
-    void updateProfile(String name, String username, String email, String phone, String password, String profile, String cover);
+    void updateProfile(String name, String username, String email, String password, String profile, String cover);
 }

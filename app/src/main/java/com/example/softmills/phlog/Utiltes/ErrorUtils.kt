@@ -49,7 +49,7 @@ class ErrorUtils {
                         }
                     }
                 }
-            } catch (e: ClassCastException) {
+            } catch (e: Throwable) {
                 Log.e(TAG, contextTAG + "--------------->" + throwable.message)
             }
 

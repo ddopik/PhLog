@@ -39,7 +39,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         initView();
         initListener();
         initPresenter();
-        welcomePresenter.getWelcomeSlidesImages();
+//        welcomePresenter.getWelcomeSlidesImages();
     }
 
     @Override
@@ -51,7 +51,6 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
         InitSlider initSliderDefaultItem = new InitSlider();
         initSliderDefaultItem.image = "";
-        initSliderDefaultItem.text = "basic Image";
         urlList.add(initSliderDefaultItem);
         WelcomeSlideAdapter = new WelcomeSlideAdapter(getBaseContext(), urlList);
         slidesViewPager = findViewById(R.id.slides_view_pager);

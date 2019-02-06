@@ -44,17 +44,16 @@ public class WelcomeSlideAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup view, int position) {
         View imageLayout = inflater.inflate(R.layout.slidingimages_layout, view, false);
-
-
+        InitSlider item = urlList.get(position);
 
         ImageView slideImage = imageLayout.findViewById(R.id.slide_img);
         TextView imageText = imageLayout.findViewById(R.id.image_description);
 
 
-
-        imageText.setText(urlList.get(position).text);
+        if (item.text != null)
+        imageText.setText(item.text);
         GlideApp.with(context)
-                .load(urlList.get(position).image)
+                .load(item.image)
                 .centerCrop()
 //                .override(600, 200) //setImageDimension
                 .placeholder(R.drawable.splash_screen_background)

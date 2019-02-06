@@ -15,7 +15,7 @@
     <string name="map_fragment_no">No Gps</string>
     <string name="map_fragment_unspecified_user_location">UnSpecified userLocation</string>
     <string name="sign_in">Sign in</string>
-    <string name="sign_up">SignUp</string>
+    <string name="sign_up">Sign up</string>
     <string name="create_an_account">Create an account</string>
     <string name="full_name">Name</string>
     <string name="password">Password</string>
@@ -156,5 +156,6 @@
     <string name="id_val">ID : %1$d</string>
     <string name="created_at_val">Created at : %1$s</string>
     <string name="exclusive">Exclusive</string>
+    <string name="login">Login</string>
 
 </resources>
