@@ -23,10 +23,11 @@ class ErrorUtils {
         }
 
         //Universal Error State From Server
-        fun setError(context: Context, contextTAG: String, throwable: Throwable) {
-            try {
+        fun setError(context: Context, contextTAG: String, throwable: Any?) {
 
-                takeIf { throwable is ANError }.apply {
+
+
+                throwable?.takeIf { it is ANError  }.apply {
                     val errorData = (throwable as ANError).errorBody
                     val statusCode = throwable.errorCode
                     val gson = Gson()
@@ -49,9 +50,6 @@ class ErrorUtils {
                         }
                     }
                 }
-            } catch (e: ClassCastException) {
-                Log.e(TAG, contextTAG + "--------------->" + throwable.message)
-            }
 
 
         }

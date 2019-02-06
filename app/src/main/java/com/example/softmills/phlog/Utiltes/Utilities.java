@@ -295,10 +295,10 @@ public class Utilities {
     public static List<String> getMentionsList(String comment)
 
     {
+
+
         String regex = "@+([a-zA-Z0-9_]+)";
         List<String> authorListId=new ArrayList<>();
-
-
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(comment);
 

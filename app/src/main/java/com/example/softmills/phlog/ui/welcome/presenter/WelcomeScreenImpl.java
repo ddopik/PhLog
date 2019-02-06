@@ -19,6 +19,7 @@ public class WelcomeScreenImpl implements WelcomePresenter {
 
     public WelcomeScreenImpl(WelcomeView welcomeView, Context context) {
         this.welcomeView = welcomeView;
+        this.context=context;
 
     }
 

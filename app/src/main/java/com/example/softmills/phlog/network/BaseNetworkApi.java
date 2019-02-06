@@ -396,7 +396,7 @@ public class BaseNetworkApi {
 
     public static io.reactivex.Observable<ImageCommentsResponse> getImageComments(String image_id, String page) {
         return Rx2AndroidNetworking.post(GET_IMAGE_COMMENT)
-                .addQueryParameter("image_id", image_id)
+                .addQueryParameter("photo_id", image_id)
                 .addQueryParameter(PAGER_PATH_PARAMETER, page)
                 .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)
