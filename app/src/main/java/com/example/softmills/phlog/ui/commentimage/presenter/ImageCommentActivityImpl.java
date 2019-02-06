@@ -1,4 +1,4 @@
-package com.example.softmills.phlog.ui.album.presenter;
+package com.example.softmills.phlog.ui.commentimage.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,9 +6,8 @@ import android.content.Context;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.album.view.ImageCommentActivityView;
+import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivityView;
 
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -17,7 +16,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
 
-    private static final String SAVED = "Saved";
     private String TAG = ImageCommentActivityImpl.class.getSimpleName();
     private Context context;
     private ImageCommentActivityView imageCommentActivityView;
@@ -30,63 +28,75 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void getImageComments(String imageId, String page) {
-        imageCommentActivityView.viewAddCommentProgress(true);
+        imageCommentActivityView.viewImageProgress(true);
         BaseNetworkApi.getImageComments(imageId, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumImgCommentResponse -> {
-                    imageCommentActivityView.viewPhotoComment(albumImgCommentResponse.data.comments);
-                    imageCommentActivityView.viewAddCommentProgress(false);
+                    imageCommentActivityView.viewPhotoComment(albumImgCommentResponse.data);
+                    imageCommentActivityView.viewImageProgress(false);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
-                    imageCommentActivityView.viewAddCommentProgress(false);
+                    imageCommentActivityView.viewImageProgress(false);
                 });
     }
+
 
     @SuppressLint("CheckResult")
     @Override
     public void submitComment(String imageId, String comment) {
-        imageCommentActivityView.viewAddCommentProgress(true);
+        imageCommentActivityView.viewImageProgress(true);
         BaseNetworkApi.submitImageComment(imageId, comment)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(albumImgCommentResponse -> {
+                .subscribe(submitImageCommentResponse -> {
                     imageCommentActivityView.viewMessage("Comment Submitted");
-//                    imageCommentActivityView.viewPhotoComment(albumImgCommentResponse.data.comments);
-                    imageCommentActivityView.viewAddCommentProgress(false);
+                    imageCommentActivityView.onImageCommented(submitImageCommentResponse.data);
+                    imageCommentActivityView.viewImageProgress(false);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
-                    imageCommentActivityView.viewAddCommentProgress(false);
+                    imageCommentActivityView.viewImageProgress(false);
                 });
 
     }
 
     @SuppressLint("CheckResult")
     @Override
-    public void likePhoto(String imageId) {
-        imageCommentActivityView.viewAddCommentProgress(true);
-        BaseNetworkApi.likePhoto(imageId)
+    public void likePhoto(BaseImage baseImage) {
+        imageCommentActivityView.viewImageProgress(true);
+
+
+
+            BaseNetworkApi.likeImage(String.valueOf(baseImage.id))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(likeImageResponse -> {
+                        imageCommentActivityView.onImageLiked(likeImageResponse.data);
+                        imageCommentActivityView.viewImageProgress(false);
+                    }, throwable -> {
+                        imageCommentActivityView.viewImageProgress(false);
+                        ErrorUtils.Companion.setError(context, TAG, throwable);
+                    });
+
+
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void unLikePhoto(BaseImage baseImage) {
+        BaseNetworkApi.unlikeImage(String.valueOf(baseImage.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(baseStateResponse -> {
-                    imageCommentActivityView.viewAddCommentProgress(false);
-                    imageCommentActivityView.viewMessage("Like");
+                .subscribe(likeImageResponse -> {
+                    imageCommentActivityView.onImageLiked(baseImage);
+                    imageCommentActivityView.onImageLiked(likeImageResponse.data);
                 }, throwable -> {
-                    imageCommentActivityView.viewAddCommentProgress(false);
+                    imageCommentActivityView.viewImageProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 
-    @SuppressLint("CheckResult")
-    @Override
-    public Observable<Boolean> savePhoto(BaseImage image) {
-        return BaseNetworkApi.savePhoto(image.id)
-                .map(savePhotoResponse -> savePhotoResponse != null && savePhotoResponse.getMsg().equals(SAVED));
-    }
 
-    @Override
-    public Observable<Boolean> unSavePhoto(BaseImage image) {
-        return BaseNetworkApi.unSavePhoto(image.id)
-                .map(savePhotoResponse -> savePhotoResponse != null && savePhotoResponse.getMsg().equals(SAVED));
-    }
+
+
 }

@@ -17,10 +17,10 @@ public class CustomTextView extends android.support.v7.widget.AppCompatTextView 
     public CustomTextView(Context context)
     { super(context); setFont(context); }
 
-    public CustomTextView(Context context, AttributeSet set)
+    public CustomTextView(Context context,AttributeSet set)
     { super(context,set); setFont(context); }
 
-    public CustomTextView(Context context, AttributeSet set, int defaultStyle)
+    public CustomTextView(Context context,AttributeSet set,int defaultStyle)
     { super(context,set,defaultStyle); setFont(context); }
 
     private void setFont(Context context) {

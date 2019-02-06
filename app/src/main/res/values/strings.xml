@@ -156,6 +156,10 @@
     <string name="id_val">ID : %1$d</string>
     <string name="created_at_val">Created at : %1$s</string>
     <string name="exclusive">Exclusive</string>
+     <string name="add_to_cart">Add to cart</string>
+    <string name="view_in_cart">View in cart</string>
+
+>>>>>>> Stashed changes
     <string name="login">Login</string>
 
 </resources>

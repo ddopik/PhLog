@@ -65,6 +65,10 @@ public interface Constants {
     String BRAND_DISPLAY_TYPE_4 = "504";
     String BRAND_DISPLAY_TYPE_5 = "505";
 ///////////////////////////////
+enum UserType{
+
+    USER_TYPE_BUSINESS,USER_TYPE_PHOTOGRAPHER;
+}
 
 
 

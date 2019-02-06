@@ -129,6 +129,12 @@
     <dimen name="item_flex_height_s">175dp</dimen>
     <dimen name="ic_size">24dp</dimen>
     <dimen name="dp1">1dp</dimen>
+    <dimen name="ic_size_s">12dp</dimen>
+    <dimen name="ic_size_m">16dp</dimen>
+    <dimen name="dp120">120dp</dimen>
+    <dimen name="add_light_box_btn_w">120dp</dimen>
+    <dimen name="add_light_box_btn_h">35dp</dimen>
+
 
 
     <!--//////////////////////BrandInner/////////////////////////////////-->
@@ -147,6 +153,9 @@
     <!--///EarningInnerFragment////-->
     <dimen name="earning_widget_height">22dp</dimen>
     <dimen name="earning_widget_start">22dp</dimen>
+
+
+
 
 
 

@@ -14,7 +14,11 @@ import java.util.List;
 /**
  * Created by abdalla_maged On Nov,2018
  */
-public class Photographer implements Parcelable {
+public class Photographer  extends MentionedUser implements Parcelable {
+
+    public Photographer(){
+
+    }
 
     @SerializedName("is_phone_verified")
     @Expose
@@ -86,7 +90,7 @@ public class Photographer implements Parcelable {
 
     @SerializedName("country")
     @Expose
-    public  transient Country country;
+    public transient Country country;
     @SerializedName("rate")
     @Expose
     public float rate;
@@ -211,7 +215,7 @@ public class Photographer implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Photographer> CREATOR = new Parcelable.Creator<Photographer>() {
+    public static final Creator<Photographer> CREATOR = new Creator<Photographer>() {
         @Override
         public Photographer createFromParcel(Parcel in) {
             return new Photographer(in);

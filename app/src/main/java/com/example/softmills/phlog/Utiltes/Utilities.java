@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by ddopik @_@....
@@ -289,5 +291,22 @@ public class Utilities {
         } catch (Exception e) {
             Log.e(TAG, "printHashKey()", e);
         }
+    }
+    public static List<String> getMentionsList(String comment)
+
+    {
+        String regex = "@+([a-zA-Z0-9_]+)";
+        List<String> authorListId=new ArrayList<>();
+
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(comment);
+
+        while (matcher.find()) {
+            authorListId.add( matcher.group(1));
+        }
+
+        return authorListId;
+
     }
 }
