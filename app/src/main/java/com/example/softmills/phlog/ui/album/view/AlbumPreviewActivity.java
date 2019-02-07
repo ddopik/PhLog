@@ -40,7 +40,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     private ImageView albumPreviewImg;
     private ProgressBar albumPreviewProgress;
     private CustomRecyclerView albumRv;
-    private TextView albumNameTV, followingNumnerTV;
+    private TextView albumNameTV, numberOfPhotosTV;
     private PagingController pagingController;
     private AlbumPreviewActivityPresenter albumPreviewActivityPresenter;
 
@@ -65,7 +65,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         albumRv = findViewById(R.id.album_rv);
         albumPreviewProgress = findViewById(R.id.user_profile_progress_bar);
         albumNameTV = findViewById(R.id.album_name_text_view);
-        followingNumnerTV = findViewById(R.id.following_number_text_view);
+        numberOfPhotosTV = findViewById(R.id.following_number_text_view);
         // Set adapter object.
         albumAdapter = new AlbumAdapter(getBaseContext(), albumGroupList);
         albumRv.setAdapter(albumAdapter);
@@ -157,7 +157,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
                 .error(R.drawable.default_photographer_profile)
                 .into(albumPreviewImg);
         albumNameTV.setText(albumPreviewResponseData.name);
-        followingNumnerTV.setText(getString(R.string.following_number, -1));
+        numberOfPhotosTV.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
     }
 }
 

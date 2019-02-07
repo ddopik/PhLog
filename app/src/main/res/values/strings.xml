@@ -159,7 +159,7 @@
      <string name="add_to_cart">Add to cart</string>
     <string name="view_in_cart">View in cart</string>
 
->>>>>>> Stashed changes
     <string name="login">Login</string>
+    <string name="photos_number">%1$d Photos</string>
 
 </resources>
