@@ -61,7 +61,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followUserResponse -> {
-                    userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
+                    userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data.userName);
                     userProfileActivityView.viewUserFollowingState(true);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
@@ -75,7 +75,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followUserResponse -> {
-                    userProfileActivityView.showMessage(context.getResources().getString(R.string.following_state) + " " + followUserResponse.data);
+                    userProfileActivityView.showMessage(context.getResources().getString(R.string.unfollowing_state) + " " + followUserResponse.data.userName);
                     userProfileActivityView.viewUserFollowingState(false);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);

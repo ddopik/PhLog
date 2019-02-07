@@ -43,7 +43,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
     }
 
     @Override
-    public void updateProfile(String name, String username, String email, String phone
+    public void updateProfile(String name, String username, String email
             , String password, String profile, String cover) {
         view.viewEditProfileProgress(true);
         HashMap<String, File> files = null;
@@ -60,7 +60,6 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
         data.put("name", name);
         data.put("username", username);
         data.put("email", email);
-        data.put("phone", phone);
         data.put("password", password);
         Disposable disposable = BaseNetworkApi.updateProfile(files, data)
                 .subscribeOn(Schedulers.io())

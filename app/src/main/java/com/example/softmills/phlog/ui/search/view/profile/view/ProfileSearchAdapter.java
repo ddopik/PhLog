@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.search.view.profile.view;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +44,7 @@ public class ProfileSearchAdapter extends RecyclerView.Adapter<ProfileSearchAdap
     public ProfileSearchViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new ProfileSearchViewHolder(layoutInflater.inflate(R.layout.view_holder_profile_search, viewGroup, false));
+        return new ProfileSearchViewHolder(layoutInflater.inflate(R.layout.view_holder_profile_search_2, viewGroup, false));
 
     }
 
@@ -62,7 +63,7 @@ public class ProfileSearchAdapter extends RecyclerView.Adapter<ProfileSearchAdap
             if (profileList.get(i).fullName != null)
                 profileSearchViewHolder.profileFullName.setText(profileList.get(i).fullName);
             if (profileList.get(i).userName != null)
-                profileSearchViewHolder.profileUserName.setText(profileList.get(i).userName);
+                profileSearchViewHolder.profileUserName.setText(String.format("@%1$s", profileList.get(i).userName));
             if (profileList.get(i).followersCount != null)
                 profileSearchViewHolder.profileFollowersCount.setText(new StringBuilder().append(profileList.get(i).followersCount).append(" ").append(context.getResources().getString(R.string.followers)).toString());
             if (profileList.get(i).followingCount != null)
@@ -91,7 +92,7 @@ public class ProfileSearchAdapter extends RecyclerView.Adapter<ProfileSearchAdap
     //
     class ProfileSearchViewHolder extends RecyclerView.ViewHolder {
 
-        private LinearLayout profileContainer;
+        private ConstraintLayout profileContainer;
         private ImageView profileImg;
         private TextView profileFullName, profileUserName, profileFollowersCount, profileCountFollowingCount, photosCount;
 

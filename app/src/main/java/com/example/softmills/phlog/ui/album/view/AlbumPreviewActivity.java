@@ -20,6 +20,7 @@ import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponseData;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenter;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenterImpl;
 import com.example.softmills.phlog.ui.album.view.adapter.AlbumAdapter;
+import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +93,11 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         };
 
         albumAdapter.onAlbumImageClicked = albumImg -> {
+//            Intent intent = new Intent(this, Image.class);
+//            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
+//            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
+//            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+//            startActivity(intent);
 
             Intent intent = new Intent(this, AllAlbumImgActivity.class);
             intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
@@ -160,7 +166,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
                 .error(R.drawable.default_photographer_profile)
                 .into(albumPreviewImg);
         albumNameTV.setText(albumPreviewResponseData.name);
-         
+
     }
 }
 

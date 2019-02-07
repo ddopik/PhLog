@@ -15,7 +15,7 @@
     <string name="map_fragment_no">No Gps</string>
     <string name="map_fragment_unspecified_user_location">UnSpecified userLocation</string>
     <string name="sign_in">Sign in</string>
-    <string name="sign_up">SignUp</string>
+    <string name="sign_up">Sign up</string>
     <string name="create_an_account">Create an account</string>
     <string name="full_name">Name</string>
     <string name="password">Password</string>
@@ -147,7 +147,7 @@
     <string name="could_not_find_profiles">Sorry. We didn\'t find profiles. Try typing another word.</string>
     <string name="type_something_album">Type something in the search bar to search albums.</string>
     <string name="could_not_find_albums">Sorry. We didn\'t find albums. Try typing another word.</string>
-     <string name="exclusive_yes">Exclusive: yes</string>
+    <string name="exclusive_yes">Exclusive: yes</string>
     <string name="exclusive_no">Exclusive: no</string>
     <string name="total_sales_number">Total Sales: %1$d</string>
     <string name="no_sales_yet">You havn\'t sold any photos yet.</string>
@@ -159,6 +159,8 @@
      <string name="add_to_cart">Add to cart</string>
     <string name="view_in_cart">View in cart</string>
 
->>>>>>> Stashed changes
+    <string name="login">Login</string>
+    <string name="photos_number">%1$d Photos</string>
+    <string name="unfollowing_state">You un-followed</string>
 
 </resources>

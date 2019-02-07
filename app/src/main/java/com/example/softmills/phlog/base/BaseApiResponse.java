@@ -11,6 +11,9 @@ import java.util.List;
  */
 public class BaseApiResponse {
 
+    @SerializedName("msg")
+    public String msg;
+
     @SerializedName("errors")
     @Expose
     public List<BaseErrorResponse> errors = null;

@@ -345,6 +345,7 @@ public class BaseNetworkApi {
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("photographer_id", userID)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
+                .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(UserPhotosResponse.class);

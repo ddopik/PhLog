@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -16,26 +15,21 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|snap"
-            app:titleEnabled="false">
-                <include layout="@layout/user_profile_header_view_2"
-                    app:layout_collapseMode="parallax"/>
-        </android.support.design.widget.CollapsingToolbarLayout>
+            app:titleEnabled="false"
+            app:layout_collapseMode="parallax">
 
+            <include
+                layout="@layout/user_profile_header_view_2" />
+        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <com.example.softmills.phlog.base.widgets.CustomRecyclerView
+        android:id="@+id/user_profile_photos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <com.example.softmills.phlog.base.widgets.CustomRecyclerView
-            android:id="@+id/user_profile_photos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:orientation="grid"
-            app:span_size="2" />
-    </FrameLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:orientation="grid"
+        app:span_size="3" />
 
     <ProgressBar
         android:id="@+id/user_profile_photos_progress_bar"

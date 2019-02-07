@@ -22,9 +22,10 @@
 
         <!--//this is requred by in api 21-->
         <!--<item name="android:navigationBarColor">@color/theme_color</item>-->
-       <!--////Custom dropDownMenu -->
+        <!--////Custom dropDownMenu -->
         <item name="android:actionOverflowButtonStyle">@style/custom_menu_btn</item>
     </style>
+
     <style name="custom_menu_btn">
         <item name="android:src">@drawable/ic_menu</item>
     </style>
@@ -37,6 +38,10 @@
         <item name="colorControlNormal">#f57c00</item>
         <item name="colorControlActivated">#c51162</item>
     </style>
+
+    <style name="RatingBar_1" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/text_input_color</item></style>
 
     <style name="TextLabel" parent="Widget.Design.TextInputLayout">
         <!-- Hint color and label color in FALSE state -->
@@ -64,6 +69,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="MyRadioButton" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/colorGray</item>
         <item name="colorControlActivated">@color/text_input_color</item>

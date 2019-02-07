@@ -1,14 +1,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/slides_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorGray"/>
+        android:background="@color/colorGray" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,30 +30,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp16"
             android:layout_below="@+id/circle_indicator_pager"
-            >
+            android:layout_marginTop="@dimen/dp16">
 
             <Button
                 android:id="@+id/sign_in_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_margin="@dimen/dp8"
+                android:layout_weight="1"
                 android:background="@color/gray677078"
-                android:text="@string/sign_in"
                 android:fontFamily="@font/arial_rounded_font"
+                android:text="@string/login"
+                android:textAllCaps="false"
                 android:textColor="@color/colorWhite" />
 
             <Button
                 android:id="@+id/sign_up_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_margin="@dimen/dp8"
+                android:layout_weight="1"
                 android:background="@color/text_input_color"
-                android:text="@string/sign_up"
                 android:fontFamily="@font/arial_rounded_font"
+                android:text="@string/sign_up"
+                android:textAllCaps="false"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>

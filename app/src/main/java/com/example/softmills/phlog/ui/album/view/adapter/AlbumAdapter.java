@@ -36,7 +36,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumFlexIte
     @NonNull
     @Override
     public AlbumFlexItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_holder_flex_album, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.view_holder_flex_album_2, viewGroup, false);
         AlbumFlexItem albumFlexItem = new AlbumFlexItem(view);
         return albumFlexItem;
     }
