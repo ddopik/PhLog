@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.social.model.SocialData;
-import com.example.softmills.phlog.ui.social.model.Source;
 
 import java.util.List;
 
@@ -60,31 +59,33 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
     @Override
     public void onBindViewHolder(@NonNull SocialViewHolder socialViewHolder, int i) {
-         switch (socialDataList.get(i).sources.get(i).storyId) {
+
+        if (socialDataList.size() >0)
+         switch (socialDataList.get(i).storyId) {
 
             case ENTITY_PROFILE: {
                 socialAdapterProfileViewController = new SocialAdapterProfileViewController(context);
-                bindProfileEntity(socialDataList.get(i).sources.get(i), socialViewHolder);
+                bindProfileEntity(socialDataList.get(i), socialViewHolder);
                 break;
             }
             case ENTITY_CAMPAIGN: {
                 socialAdapterCampaignViewController = new SocialAdapterCampaignViewController(context);
-                bindCampaignEntity(socialDataList.get(i).sources.get(i), socialViewHolder);
+                bindCampaignEntity(socialDataList.get(i), socialViewHolder);
                 break;
             }
             case ENTITY_ALBUM: {
                 socialAdapterAlbumViewController = new SocialAdapterAlbumViewController(context);
-                bindAlbumEntity(socialDataList.get(i).sources.get(i), socialViewHolder);
+                bindAlbumEntity(socialDataList.get(i), socialViewHolder);
                 break;
             }
             case ENTITY_IMAGE: {
                 socialAdapterPhotosViewController = new SocialAdapterPhotosViewController(context);
-                bindImageSlider(socialDataList.get(i).sources.get(i), socialViewHolder);
+                bindImageSlider(socialDataList.get(i), socialViewHolder);
                 break;
             }
             case ENTITY_BRAND: {
                 socialAdapterBrandController = new SocialAdapterBrandController(context);
-                bindBrandEntity(socialDataList.get(i).sources.get(i), socialViewHolder);
+                bindBrandEntity(socialDataList.get(i), socialViewHolder);
                 break;
             }
 
@@ -179,69 +180,72 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     }
 
     public interface OnSocialItemListener {
-        void onSocialProfileClick(Source source);
 
-        void OnFollowSocialProfileClick(Source source);
 
-        void onSocialCampaignClicked(Source source);
+        void onSocialCampaignClicked(SocialData socialData);
 
-        void onSocialFollowCampaignClicked(Source source);
+        void onSocialFollowCampaignClicked(SocialData socialData);
 
-        void onSocialSlideImageClicked(Source source);
+        void onSocialSlideImageClicked(SocialData socialData);
 
-        void onSocialBrandClicked(Source source);
+        void onSocialBrandClicked(SocialData socialData);
 
-        void onSocialBrandFollowClicked(Source source);
+        void onSocialBrandFollowClicked(SocialData socialData);
     }
 
-    private void bindProfileEntity(Source source, SocialViewHolder socialViewHolder) {
+    private void bindProfileEntity(SocialData socialData, SocialViewHolder socialViewHolder) {
 
-        switch (source.displayType) {
+        switch (socialData.displayType) {
 
             case PROFILE_DISPLAY_TYPE_3:
-                socialAdapterProfileViewController.setProfileType3(source, socialViewHolder, onSocialItemListener);
+                SocialAdapterProfileViewController.OnSocialAdapterProfileViewListener onSocialAdapterProfileViewListener= state -> {
+                    socialData.profiles.get(0).isFollow=state;
+                    socialData.profiles.set(0,socialData.profiles.get(0));
+                    notifyDataSetChanged();
+                };
+                socialAdapterProfileViewController.setProfileType3(socialData.profiles.get(0), socialViewHolder,onSocialAdapterProfileViewListener );
                 break;
         }
 
 
     }
 
-    private void bindImageSlider(Source source, SocialViewHolder socialViewHolder) {
-        switch (source.displayType) {
+    private void bindImageSlider(SocialData socialData, SocialViewHolder socialViewHolder) {
+        switch (socialData.displayType) {
 
             case IMGS_DISPLAY_TYPE_5: {
-                socialAdapterPhotosViewController.setPhotosViewType5(socialViewHolder, source, onSocialItemListener);
+                socialAdapterPhotosViewController.setPhotosViewType5(socialViewHolder, socialData, onSocialItemListener);
                 break;
             }
         }
     }
 
-    private void bindCampaignEntity(Source source, SocialViewHolder socialViewHolder) {
-        switch (source.displayType) {
+    private void bindCampaignEntity(SocialData socialData, SocialViewHolder socialViewHolder) {
+        switch (socialData.displayType) {
 
             case CAMPAIGN_DISPLAY_TYPE_1:
-                socialAdapterCampaignViewController.setCampaignType_1(socialViewHolder, source, onSocialItemListener);
+                socialAdapterCampaignViewController.setCampaignType_1(socialViewHolder, socialData, onSocialItemListener);
                 break;
 
         }
 
     }
 
-    private void bindBrandEntity(Source source, SocialViewHolder socialViewHolder) {
-        switch (source.displayType) {
+    private void bindBrandEntity(SocialData socialData, SocialViewHolder socialViewHolder) {
+        switch (socialData.displayType) {
 
             case BRAND_DISPLAY_TYPE_1: {
-                socialAdapterBrandController.setBrandViewType_1(socialViewHolder, source, onSocialItemListener);
+                socialAdapterBrandController.setBrandViewType_1(socialViewHolder, socialData, onSocialItemListener);
                 break;
             }
         }
     }
 
-    private void bindAlbumEntity(Source source, SocialViewHolder socialViewHolder) {
-        switch (source.displayType) {
+    private void bindAlbumEntity(SocialData socialData, SocialViewHolder socialViewHolder) {
+        switch (socialData.displayType) {
 
             case ALBUM_DISPLAY_TYPE_4: {
-                socialAdapterAlbumViewController.setAlbumViewType4(socialViewHolder, source, onSocialItemListener);
+//                socialAdapterAlbumViewController.setAlbumViewType4(socialViewHolder, socialData, onSocialItemListener);
                 break;
             }
         }

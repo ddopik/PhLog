@@ -2,7 +2,6 @@ package com.example.softmills.phlog.ui.social.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,25 +12,15 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
-import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
-import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
-import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
-import com.example.softmills.phlog.ui.social.model.Source;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 import com.example.softmills.phlog.ui.social.presenter.SocailFragmentPresenterImpl;
 import com.example.softmills.phlog.ui.social.presenter.SocialFragmentPresenter;
 import com.example.softmills.phlog.ui.social.view.adapter.SocialAdapter;
-import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
-import static com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity.USER_ID;
 
 public class SocialFragment extends BaseFragment implements SocialFragmentView {
 
@@ -87,36 +76,22 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
         });
 
         socialAdapter.onSocialItemListener = new SocialAdapter.OnSocialItemListener() {
-            @Override
-            public void onSocialProfileClick(Source source) {
 
-
-//                Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-//                intent.putExtra(USER_ID, String.valueOf(source.id));
-//                startActivity(intent);
-
-            }
 
             @Override
-            public void OnFollowSocialProfileClick(Source source) {
-
-//                socialFragmentPresenter.followUser(String.valueOf(source.id));
-            }
-
-            @Override
-            public void onSocialCampaignClicked(Source source) {
+            public void onSocialCampaignClicked(SocialData socialData) {
 //                Intent intent = new Intent(getActivity(), CampaignInnerActivity.class);
 //                intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID,String.valueOf(source.id));
 //                startActivity(intent);
             }
 
             @Override
-            public void onSocialFollowCampaignClicked(Source source) {
+            public void onSocialFollowCampaignClicked(SocialData socialData) {
 //                socialFragmentPresenter.joinSocialCampaign(String.valueOf(source.id));
             }
 
             @Override
-            public void onSocialSlideImageClicked(Source source) {
+            public void onSocialSlideImageClicked(SocialData socialData) {
 //                Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
 //                List<BaseImage> albumImgList = new ArrayList<>();
 //                for (int i = 0; i < source.imgs.size(); i++) {
@@ -130,14 +105,14 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
             }
 
             @Override
-            public void onSocialBrandClicked(Source source) {
+            public void onSocialBrandClicked(SocialData socialData) {
 //                Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
 //                intent.putExtra(BrandInnerActivity.BRAND_ID, String.valueOf(source.id));
 //                startActivity(intent);
             }
 
             @Override
-            public void onSocialBrandFollowClicked(Source source) {
+            public void onSocialBrandFollowClicked(SocialData socialData) {
 //                socialFragmentPresenter.followSocialBrand(String.valueOf(source.id));
             }
         };

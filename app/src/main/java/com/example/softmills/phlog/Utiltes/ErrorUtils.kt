@@ -7,6 +7,7 @@ import com.androidnetworking.error.ANError
 import com.example.softmills.phlog.base.commonmodel.ErrorMessageResponse
 import com.example.softmills.phlog.network.BaseNetworkApi.*
 import com.google.gson.Gson
+import java.lang.Exception
 
 /**
  * Created by abdalla_maged on 11/6/2018.
@@ -23,18 +24,18 @@ class ErrorUtils {
         }
 
         //Universal Error State From Server
-        fun setError(context: Context, contextTAG: String, throwable: Any?) {
-
-
-
-                throwable?.takeIf { it is ANError  }.apply {
-                    val errorData = (throwable as ANError).errorBody
+        fun setError(context: Context, contextTAG: String, throwable: Throwable?) {
+            try {
+            throwable.takeIf { it is ANError }.apply {
+                (throwable as ANError).errorBody?.let {
+//                (throwable as ANError).errorBody?.let {
+                    val errorData = throwable.errorBody
                     val statusCode = throwable.errorCode
                     val gson = Gson()
                     when (statusCode) {
                         STATUS_BAD_REQUEST -> {
-                            var errorMessageResponse:ErrorMessageResponse = gson.fromJson(errorData, ErrorMessageResponse::class.java)
-                            viewError(context, contextTAG,errorMessageResponse)
+                            var errorMessageResponse: ErrorMessageResponse = gson.fromJson(errorData, ErrorMessageResponse::class.java)
+                            viewError(context, contextTAG, errorMessageResponse)
                         }
                         STATUS_404 -> {
                             Log.e(TAG, contextTAG + "------>" + STATUS_404 + "---" + throwable.response)
@@ -51,7 +52,10 @@ class ErrorUtils {
                     }
                 }
 
-
+                }
+            }catch (e:Exception){
+                Log.e(TAG, contextTAG + "--------------->" +throwable?.message )
+            }
         }
 
         ///PreDefined Error Code From Server

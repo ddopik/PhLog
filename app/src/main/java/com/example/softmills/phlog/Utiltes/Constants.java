@@ -27,8 +27,8 @@ public interface Constants {
          CAMPAIGN_IMG,NORMAL_IMG
     }
     ///////////////////////Entity-type For socialFragment
-    int ENTITY_PROFILE=1;
-    int ENTITY_CAMPAIGN=2;
+    int ENTITY_PROFILE=14;
+    int ENTITY_CAMPAIGN=11;
     int ENTITY_ALBUM=3;
     int ENTITY_IMAGE=4;
     int ENTITY_BRAND=5;
@@ -40,7 +40,7 @@ public interface Constants {
     String PROFILE_DISPLAY_TYPE_5 = "105";
     String PROFILE_DISPLAY_TYPE_6 = "106";
 
-    String CAMPAIGN_DISPLAY_TYPE_1 = "401"; //todo back it to 201
+    String CAMPAIGN_DISPLAY_TYPE_1 = "201";
     String CAMPAIGN_DISPLAY_TYPE_2 = "202";
     String CAMPAIGN_DISPLAY_TYPE_3 = "203";
     String CAMPAIGN_DISPLAY_TYPE_4 = "204";
@@ -50,7 +50,7 @@ public interface Constants {
     String ALBUM_DISPLAY_TYPE_1 = "301";
     String ALBUM_DISPLAY_TYPE_2 = "302";
     String ALBUM_DISPLAY_TYPE_3 = "303";
-    String ALBUM_DISPLAY_TYPE_4 = "304";
+    String ALBUM_DISPLAY_TYPE_4 = "405";
     String ALBUM_DISPLAY_TYPE_5 = "305";
 
     String IMGS_DISPLAY_TYPE_1 = "401";

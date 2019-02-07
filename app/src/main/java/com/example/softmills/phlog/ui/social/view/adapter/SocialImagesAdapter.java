@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
-import com.example.softmills.phlog.ui.social.model.Source;
+import com.example.softmills.phlog.ui.social.model.SocialData;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
     private Context context;
     private List<BaseImage> imageList;
     public OnSocialSliderImgClick onSocialSliderImgClick;
-    public SocialImagesAdapter(Source source) {
-        this.imageList = source.photos;
+    public SocialImagesAdapter(SocialData socialData) {
+        this.imageList = socialData.photos;
     }
 
     @NonNull
