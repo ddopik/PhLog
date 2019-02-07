@@ -161,5 +161,6 @@
 
     <string name="login">Login</string>
     <string name="photos_number">%1$d Photos</string>
+    <string name="unfollowing_state">You un-followed</string>
 
 </resources>

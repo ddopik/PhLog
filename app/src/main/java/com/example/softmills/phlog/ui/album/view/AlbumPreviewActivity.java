@@ -20,6 +20,7 @@ import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponseData;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenter;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenterImpl;
 import com.example.softmills.phlog.ui.album.view.adapter.AlbumAdapter;
+import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,13 +91,16 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         };
 
         albumAdapter.onAlbumImageClicked = albumImg -> {
+//            Intent intent = new Intent(this, Image.class);
+//            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
+//            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
+//            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+//            startActivity(intent);
 
-            Intent intent = new Intent(this, AllAlbumImgActivity.class);
-            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
-            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
-            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+            Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
+            intent.putExtra(ImageCommentActivity.IMAGE_DATA,albumImg);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
-
         };
     }
 

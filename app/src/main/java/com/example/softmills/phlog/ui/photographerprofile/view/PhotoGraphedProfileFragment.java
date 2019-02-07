@@ -65,7 +65,6 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     private TextView photographerName, photographeruserName, photoCount, followersCount, followingCount, level;
     private RatingBar profileRating;
     private PhotoGrapherProfileActivityPresenter photoGrapherProfileActivityPresenter;
-    private AppBarLayout mAppBarLayout;
     private ProgressBar photographerProfileProgressBar;
     private Toolbar profileFragmentToolBar;
     private Photographer photographer;
@@ -105,7 +104,6 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         followersCount = mainView.findViewById(R.id.followers_val);
         followingCount = mainView.findViewById(R.id.following_val);
         photographerProfileImg = mainView.findViewById(R.id.photographer_profile_img);
-        mAppBarLayout = mainView.findViewById(R.id.appBar);
         photographerProfileProgressBar = mainView.findViewById(R.id.photographer_profile_progress_bar);
         TabLayout userProfileTabs = mainView.findViewById(R.id.photographer_profile_tabs);
         ViewPager userProfileViewpager = mainView.findViewById(R.id.photographer_profile_viewpager);

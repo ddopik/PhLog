@@ -5,6 +5,7 @@ package com.example.softmills.phlog.ui.userprofile.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
@@ -37,11 +39,11 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private Photographer currentPhotographer;
     private TextView userProfileLevel, userProfileUserName, userProfileFullName, userProfilePhotosCount, userProfileFolloweresCount, userProfileFollowingCount;
     private RatingBar userProfileRating;
-    private ImageView userProfileImg;
+    private ImageView userProfileImg, coverImage;
     private CustomRecyclerView userProfilePhotosRv;
     private UserProfilePhotosAdapter userProfilePhotosAdapter;
     private UserProfilePresenter userProfilePresenter;
-    private List<BaseImage> userPhotoList = new ArrayList<BaseImage>();
+    private List<BaseImage> userPhotoList = new ArrayList<>();
     private ProgressBar userProfilePhotosProgressBar;
     private Button followUserBtn;
     private PagingController pagingController;
@@ -82,9 +84,10 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             followUserBtn = findViewById(R.id.follow_user_btn);
             userProfilePhotosRv = findViewById(R.id.user_profile_photos);
             userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
+            userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
             userProfilePresenter.getUserProfileData(userID);
             userProfilePresenter.getUserPhotos(userID, 0);
-
+            coverImage = findViewById(R.id.user_cover_img);
         }
     }
 
@@ -113,10 +116,12 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         currentPhotographer=photographer;
 
         if (photographer.userName != null)
-            userProfileUserName.setText(photographer.userName);
+            userProfileUserName.setText(String.format("@%1$s", photographer.userName));
         if (photographer.fullName != null)
             userProfileFullName.setText(photographer.fullName);
-        if (photographer.level != null)
+        if (photographer.level == null || photographer.level.isEmpty())
+            userProfileLevel.setVisibility(View.INVISIBLE);
+        else
             userProfileLevel.setText(photographer.level);
 
         if (photographer.photosCount != null)
@@ -139,6 +144,11 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
                 .error(R.drawable.default_error_img)
                 .into(userProfileImg);
 
+        Glide.with(this)
+                .load(photographer.imageCover)
+                .apply(RequestOptions.placeholderOf(R.drawable.default_user_profile))
+                .into(coverImage);
+
         userProfileRating.setRating(photographer.rate);
 
         initListener();
@@ -153,8 +163,9 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     @Override
     public void viewUserPhotos(List<BaseImage> userPhotoList) {
         this.userPhotoList.addAll(userPhotoList);
-        this.userPhotoList.addAll(userPhotoList);
         userProfilePhotosAdapter.notifyDataSetChanged();
+        int h = userProfilePhotosRv.getHeight();
+        Log.e("height", "" + h);
     }
 
     @Override

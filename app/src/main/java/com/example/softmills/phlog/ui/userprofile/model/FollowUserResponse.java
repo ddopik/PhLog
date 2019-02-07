@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.userprofile.model;
 
 import com.example.softmills.phlog.base.BaseApiResponse;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,5 +11,5 @@ import com.google.gson.annotations.SerializedName;
 public class FollowUserResponse extends BaseApiResponse {
     @SerializedName("data")
     @Expose
-    public String data;
+    public Photographer data;
 }
