@@ -12,11 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.ui.social.model.Entite;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 
 import java.util.List;
@@ -40,6 +37,11 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     private Context context;
     private List<SocialData> socialDataList;
     public OnSocialItemListener onSocialItemListener;
+    private SocialAdapterProfileViewController socialAdapterProfileViewController;
+    private SocialAdapterCampaignViewController socialAdapterCampaignViewController;
+    private SocialAdapterAlbumViewController socialAdapterAlbumViewController;
+    private SocialAdapterPhotosViewController socialAdapterPhotosViewController;
+    private SocialAdapterBrandController socialAdapterBrandController;
 
 
     public SocialAdapter(List<SocialData> socialDataList) {
@@ -58,26 +60,32 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     @Override
     public void onBindViewHolder(@NonNull SocialViewHolder socialViewHolder, int i) {
 
-        switch (socialDataList.get(i).entityId) {
+        if (socialDataList.size() >0)
+         switch (socialDataList.get(i).storyId) {
 
             case ENTITY_PROFILE: {
-                bindProfileEntity(socialDataList.get(i).entites.get(0), socialViewHolder);
+                socialAdapterProfileViewController = new SocialAdapterProfileViewController(context);
+                bindProfileEntity(socialDataList.get(i), socialViewHolder);
                 break;
             }
             case ENTITY_CAMPAIGN: {
-                bindCampaignEntity(socialDataList.get(i).entites.get(0), socialViewHolder);
+                socialAdapterCampaignViewController = new SocialAdapterCampaignViewController(context);
+                bindCampaignEntity(socialDataList.get(i), socialViewHolder);
                 break;
             }
             case ENTITY_ALBUM: {
-                bindAlbumEntity(socialDataList.get(i).entites.get(0),socialDataList.get(i).albumName, socialViewHolder);
+                socialAdapterAlbumViewController = new SocialAdapterAlbumViewController(context);
+                bindAlbumEntity(socialDataList.get(i), socialViewHolder);
                 break;
             }
             case ENTITY_IMAGE: {
-                bindImageSlider(socialDataList.get(i).entites.get(0),socialDataList.get(i).title, socialViewHolder);
+                socialAdapterPhotosViewController = new SocialAdapterPhotosViewController(context);
+                bindImageSlider(socialDataList.get(i), socialViewHolder);
                 break;
             }
             case ENTITY_BRAND: {
-                bindBrandEntity(socialDataList.get(i).entites.get(0), socialViewHolder);
+                socialAdapterBrandController = new SocialAdapterBrandController(context);
+                bindBrandEntity(socialDataList.get(i), socialViewHolder);
                 break;
             }
 
@@ -172,223 +180,72 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     }
 
     public interface OnSocialItemListener {
-        void onSocialProfileClick(Entite entite);
 
-        void OnFollowSocialProfileClick(Entite entite);
 
-        void onSocialCampaignClicked(Entite entite);
+        void onSocialCampaignClicked(SocialData socialData);
 
-        void onSocialFollowCampaignClicked(Entite entite);
+        void onSocialFollowCampaignClicked(SocialData socialData);
 
-        void onSocialSlideImageClicked(Entite entite);
+        void onSocialSlideImageClicked(SocialData socialData);
 
-        void onSocialBrandClicked(Entite entite);
+        void onSocialBrandClicked(SocialData socialData);
 
-        void onSocialBrandFollowClicked(Entite entite);
+        void onSocialBrandFollowClicked(SocialData socialData);
     }
 
-    private void bindProfileEntity(Entite entite, SocialViewHolder socialViewHolder) {
+    private void bindProfileEntity(SocialData socialData, SocialViewHolder socialViewHolder) {
 
-        switch (entite.displayType) {
+        switch (socialData.displayType) {
 
             case PROFILE_DISPLAY_TYPE_3:
-                socialViewHolder.socialProfileType3.setVisibility(View.VISIBLE);
-                GlideApp.with(context)
-                        .load(entite.thumbnail)
-                        .placeholder(R.drawable.default_user_pic)
-                        .error(R.drawable.default_user_pic)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(socialViewHolder.socialProfileIcon);
-                GlideApp.with(context)
-                        .load(entite.imgs.get(0))
-                        .centerCrop()
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .error(R.drawable.default_photographer_profile)
-                        .apply(new RequestOptions().centerCrop())
-                        .into(socialViewHolder.socialProfileImg_1);
-                GlideApp.with(context)
-                        .load(entite.imgs.get(1))
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .centerCrop()
-                        .error(R.drawable.default_photographer_profile)
-                        .apply(new RequestOptions().centerCrop())
-                        .into(socialViewHolder.socialProfileImg_2);
-                GlideApp.with(context)
-                        .load(entite.imgs.get(2))
-                        .centerCrop()
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .error(R.drawable.default_photographer_profile)
-                        .apply(new RequestOptions().centerCrop())
-                        .into(socialViewHolder.socialProfileImg_3);
-                GlideApp.with(context)
-                        .load(entite.imgs.get(3))
-                        .centerCrop()
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .error(R.drawable.default_photographer_profile)
-                        .apply(new RequestOptions().centerCrop())
-                        .into(socialViewHolder.socialProfileImg_4);
-
-                socialViewHolder.socialProfileFullName.setText(entite.fullName);
-                socialViewHolder.socialProfileUserName.setText(entite.userName);
-
-                if (onSocialItemListener != null) {
-
-                    socialViewHolder.socialProfileContainer.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            onSocialItemListener.onSocialProfileClick(entite);
-                        }
-                    });
-                    socialViewHolder.followSocialProfile.setOnClickListener(v -> {
-                        onSocialItemListener.OnFollowSocialProfileClick(entite);
-
-                    });
-                }
+                SocialAdapterProfileViewController.OnSocialAdapterProfileViewListener onSocialAdapterProfileViewListener= state -> {
+                    socialData.profiles.get(0).isFollow=state;
+                    socialData.profiles.set(0,socialData.profiles.get(0));
+                    notifyDataSetChanged();
+                };
+                socialAdapterProfileViewController.setProfileType3(socialData.profiles.get(0), socialViewHolder,onSocialAdapterProfileViewListener );
+                break;
         }
+
+
     }
 
-    private void bindImageSlider(Entite entite, String title,SocialViewHolder socialViewHolder) {
-        switch (entite.displayType) {
+    private void bindImageSlider(SocialData socialData, SocialViewHolder socialViewHolder) {
+        switch (socialData.displayType) {
 
             case IMGS_DISPLAY_TYPE_5: {
-                GlideApp.with(context)
-                        .load(entite.imgs.get(0))
-                        .apply(RequestOptions.circleCropTransform())
-                        .placeholder(R.drawable.default_place_holder)
-                        .error(R.drawable.default_error_img)
-                        .into(socialViewHolder.socialItemSliderIcon);
-
-                socialViewHolder.socialImageName.setText(title);
-
-                socialViewHolder.socialImageSliderType5.setVisibility(View.VISIBLE);
-                SocialImagesAdapter socialImagesAdapter = new SocialImagesAdapter(entite);///todo img should be obj
-
-                socialViewHolder.socialImgSlideRv.setAdapter(socialImagesAdapter);
-
-                if (onSocialItemListener != null) {
-                    socialImagesAdapter.onSocialSliderImgClick = img -> {
-                        onSocialItemListener.onSocialSlideImageClicked(entite);///todo img should be obj
-
-                    };
-                }
-            }
-
-        }
-    }
-
-    private void bindCampaignEntity(Entite entite, SocialViewHolder socialViewHolder) {
-        switch (entite.displayType) {
-
-            case CAMPAIGN_DISPLAY_TYPE_1:
-                socialViewHolder.socialCampaignType1.setVisibility(View.VISIBLE);
-
-                GlideApp.with(context)
-                        .load(entite.thumbnail)
-                        .placeholder(R.drawable.default_user_pic)
-                        .error(R.drawable.default_user_pic)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(socialViewHolder.socialCampaignIcon);
-
-                GlideApp.with(context)
-                        .load(entite.imgs.get(0))
-                        .centerCrop()
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .error(R.drawable.default_photographer_profile)
-                        .into(socialViewHolder.socialCampaignImg);
-
-                socialViewHolder.socialCampaignTitle.setText(entite.nameEn);
-                socialViewHolder.socialCampaignDayLeft.setText("day left here");
-                socialViewHolder.socialCampaignName.setText(entite.nameEn);
-
-                if (onSocialItemListener != null) {
-                    socialViewHolder.socialJoinCampaignBtn.setOnClickListener(v -> {
-                        onSocialItemListener.onSocialFollowCampaignClicked(entite);
-                    });
-                    socialViewHolder.socailCampaignConatainer.setOnClickListener(v -> onSocialItemListener.onSocialCampaignClicked(entite));
-
-                }
-
-        }
-
-    }
-
-    private void bindBrandEntity(Entite entite, SocialViewHolder socialViewHolder) {
-        switch (entite.displayType) {
-
-            case BRAND_DISPLAY_TYPE_1: {
-                socialViewHolder.socialBrandType1.setVisibility(View.VISIBLE);
-
-                GlideApp.with(context)
-                        .load(entite.thumbnail)
-                        .placeholder(R.drawable.default_user_pic)
-                        .error(R.drawable.default_user_pic)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(socialViewHolder.socialBrandIconImg);
-
-                GlideApp.with(context)
-                        .load(entite.brandCoverimg)
-                        .centerCrop()
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .error(R.drawable.default_photographer_profile)
-                        .into(socialViewHolder.socialBrandImg);
-
-                socialViewHolder.socialBrandName.setText(entite.nameEn);
-                socialViewHolder.socialBrandFollowing.setText(entite.numberOfFollowers);
-
-                if (onSocialItemListener != null) {
-                    socialViewHolder.socialBrandImg.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            onSocialItemListener.onSocialBrandClicked(entite);
-                        }
-                    });
-                }
-                if (onSocialItemListener != null) {
-                    socialViewHolder.followBrandBtn.setOnClickListener(v -> {
-                        onSocialItemListener.onSocialBrandFollowClicked(entite);
-                    });
-                }
+                socialAdapterPhotosViewController.setPhotosViewType5(socialViewHolder, socialData, onSocialItemListener);
                 break;
             }
         }
     }
 
-    private void bindAlbumEntity(Entite entite,String AlbumName, SocialViewHolder socialViewHolder) {
-        switch (entite.displayType) {
+    private void bindCampaignEntity(SocialData socialData, SocialViewHolder socialViewHolder) {
+        switch (socialData.displayType) {
+
+            case CAMPAIGN_DISPLAY_TYPE_1:
+                socialAdapterCampaignViewController.setCampaignType_1(socialViewHolder, socialData, onSocialItemListener);
+                break;
+
+        }
+
+    }
+
+    private void bindBrandEntity(SocialData socialData, SocialViewHolder socialViewHolder) {
+        switch (socialData.displayType) {
+
+            case BRAND_DISPLAY_TYPE_1: {
+                socialAdapterBrandController.setBrandViewType_1(socialViewHolder, socialData, onSocialItemListener);
+                break;
+            }
+        }
+    }
+
+    private void bindAlbumEntity(SocialData socialData, SocialViewHolder socialViewHolder) {
+        switch (socialData.displayType) {
 
             case ALBUM_DISPLAY_TYPE_4: {
-                socialViewHolder.socialAlbumType4.setVisibility(View.VISIBLE);
-
-                GlideApp.with(context)
-                        .load(entite.imgs.get(0))
-                        .placeholder(R.drawable.default_user_pic)
-                        .error(R.drawable.default_user_pic)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(socialViewHolder.socialAlbumIconImg);
-
-                GlideApp.with(context)
-                        .load(entite.imgs.get(0))
-                        .centerCrop()
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .error(R.drawable.default_photographer_profile)
-                        .into(socialViewHolder.socialAlbum1);
-
-                GlideApp.with(context)
-                        .load(entite.imgs.get(1))
-                        .centerCrop()
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .error(R.drawable.default_photographer_profile)
-                        .into(socialViewHolder.socialAlbum2);
-
-                GlideApp.with(context)
-                        .load(entite.imgs.get(2))
-                        .centerCrop()
-                        .placeholder(R.drawable.default_photographer_profile)
-                        .error(R.drawable.default_photographer_profile)
-                        .into(socialViewHolder.socialAlbum3);
-
-                socialViewHolder.socialAlbumName.setText(AlbumName);
-                socialViewHolder.socialAlbumPhotosNumber.setText(new StringBuilder().append(entite.imgs.size()).append(" ").append("photo").toString());
+//                socialAdapterAlbumViewController.setAlbumViewType4(socialViewHolder, socialData, onSocialItemListener);
                 break;
             }
         }

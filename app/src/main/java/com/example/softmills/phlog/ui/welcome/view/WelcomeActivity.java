@@ -63,7 +63,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
     @Override
     public void initPresenter() {
-        welcomePresenter = new WelcomeScreenImpl(this,getBaseContext());
+        welcomePresenter = new WelcomeScreenImpl(this,this);
     }
 
     private void initListener() {
@@ -79,12 +79,15 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
     @Override
     public void showWelcomeImageSlider(List<InitSlider> images) {
-        urlList.clear();
-        InitSlider initSliderDefaultItem=new InitSlider();
-        urlList.add(initSliderDefaultItem);
-        urlList.addAll(images);
-        WelcomeSlideAdapter.notifyDataSetChanged();
-        indicator.setViewPager(slidesViewPager);
+        if (images.size() >0){
+            urlList.clear();
+            InitSlider initSliderDefaultItem=new InitSlider();
+            urlList.add(initSliderDefaultItem);
+            urlList.addAll(images);
+            WelcomeSlideAdapter.notifyDataSetChanged();
+            indicator.setViewPager(slidesViewPager);
+        }
+
     }
 
 

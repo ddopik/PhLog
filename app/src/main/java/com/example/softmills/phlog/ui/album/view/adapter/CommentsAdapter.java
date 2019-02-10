@@ -189,7 +189,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 commentViewHolder.commentAuthorName.setText(commentList.get(i).photographer.fullName);
 
             }
-            handleCommentBody(commentViewHolder.commentVal, commentList.get(i).comment);
+
+            if (commentList.get(i).comment !=null){
+                handleCommentBody(commentViewHolder.commentVal, commentList.get(i).comment);
+            }
+
             ////////////////////////////////ADD_COMMENT///////////////////////////////////////////////
         } else if (getItemViewType(i) == ADD_COMMENT) {
 
@@ -288,7 +292,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     }
 
     private void handleCommentBody(TextView commentView, String commentFinalValue) {
-
 
         List<String> authorsId = Utilities.getMentionsList(commentFinalValue);
         List<String> mentionsPhotoGrapherIdIdList = new ArrayList<>();

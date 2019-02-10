@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
@@ -145,8 +144,18 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     public void viewPhotoComment(ImageCommentsData imageCommentsData) {
 
 
-// (1) is A default value to view AddComment layout in case there is now Comments
-        this.commentList.addAll(1, imageCommentsData.comments.commentList);
+        if (imageCommentsData.comments.commentList.size() == 0) {
+            imageCommentsData.comments.commentList.clear();
+            // (1) is A default value to view AddComment layout in case there is now Comments
+            this.commentList.addAll(1, imageCommentsData.comments.commentList);
+        }else {
+            if(commentList.get(1).comment ==null){
+                commentList.remove(1);
+            }
+            this.commentList.addAll( imageCommentsData.comments.commentList);
+
+        }
+
 
         if (imageCommentsData.mentions.business != null)
             this.mentions.business.addAll(imageCommentsData.mentions.business);

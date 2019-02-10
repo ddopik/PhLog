@@ -54,7 +54,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/preview_app_bar" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/album_name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                     app:layout_constraintStart_toStartOf="@+id/following_number_text_view"
                     tools:text="Album Name" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/following_number_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
