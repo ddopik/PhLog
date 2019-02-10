@@ -35,17 +35,10 @@ public class CampaignInnerPresenterImpl implements CampaignInnerPresenter {
                 .getCampaignDetails(PrefUtils.getUserToken(context), campaignID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(campaignInnerResponse -> {
-                            campaignInnerActivityView.viewCampaignTitle(campaignInnerResponse.campaign.titleEn);
-                            campaignInnerActivityView.viewCampaignLeftDays(String.valueOf(campaignInnerResponse.campaign.daysLeft));
-                            campaignInnerActivityView.viewCampaignHeaderImg(campaignInnerResponse.campaign.imageCover);
-                            campaignInnerActivityView.viewCampaignHostedBy(campaignInnerResponse.campaign.business.firstName+" "+campaignInnerResponse.campaign.business.lastName);
-                            campaignInnerActivityView.viewCampaignMissionDescription(campaignInnerResponse.campaign.descrptionEn
-                                    , campaignInnerResponse.campaign.status
-                                    , campaignInnerResponse.campaign.numberImages);
-
-                        },
-                        throwable -> {
+                .subscribe(response -> {
+                            if (response != null && response.campaign != null)
+                                campaignInnerActivityView.setCampaign(response.campaign);
+                        }, throwable -> {
                             ErrorUtils.Companion.setError(context, TAG, throwable.toString());
                         });
     }

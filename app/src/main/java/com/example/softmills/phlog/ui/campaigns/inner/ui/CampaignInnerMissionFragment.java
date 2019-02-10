@@ -10,19 +10,24 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.Campaign;
 
 /**
  * Created by abdalla_maged on 10/8/2018.
  */
-public class CampaignInnerMissionFragment extends BaseFragment implements CampaignInnerActivity.OnMissionCampaignDataRecived {
+public class CampaignInnerMissionFragment extends BaseFragment
+//        implements CampaignInnerActivity.OnMissionCampaignDataRecived
+{
 
 
+    private Campaign campaign;
     private TextView missionDescription;
     private View mainView;
 
-    public static CampaignInnerMissionFragment getInstance() {
-
-        return new CampaignInnerMissionFragment();
+    public static CampaignInnerMissionFragment getInstance(Campaign campaign) {
+        CampaignInnerMissionFragment fragment = new CampaignInnerMissionFragment();
+        fragment.campaign = campaign;
+        return fragment;
     }
 
     @Nullable
@@ -53,13 +58,13 @@ public class CampaignInnerMissionFragment extends BaseFragment implements Campai
     @Override
     protected void initViews() {
         missionDescription = mainView.findViewById(R.id.mission_desc);
-
-
+        if (campaign != null && campaign.descrptionEn != null)
+            missionDescription.setText(campaign.descrptionEn);
     }
 
-    @Override
-    public void onCampaignDescription(String desc) {
-
-            missionDescription.setText(desc);
-    }
+//    @Override
+//    public void onCampaignDescription(String desc) {
+//
+//            missionDescription.setText(desc);
+//    }
 }

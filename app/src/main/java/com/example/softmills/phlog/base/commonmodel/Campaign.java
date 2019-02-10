@@ -60,5 +60,7 @@ public class Campaign {
     @SerializedName("is_joined")
     @Expose
     public Boolean isJoined;
+    @SerializedName("photos_count")
+    public int photosCount;
 
 }

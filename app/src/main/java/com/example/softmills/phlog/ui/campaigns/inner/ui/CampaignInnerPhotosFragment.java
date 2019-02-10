@@ -32,18 +32,20 @@ import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELE
 public class CampaignInnerPhotosFragment extends BaseFragment implements CampaignInnerPhotosFragmentView {
 
     private String campaignID;
+    private boolean shouldLoadImage;
     private View mainView;
     private CustomRecyclerView campaignInnerRv;
     private ProgressBar campaignInnerProgressBar;
-    private List<BaseImage> photoGrapherPhotoList = new ArrayList<BaseImage>();
+    private List<BaseImage> photoGrapherPhotoList = new ArrayList<>();
     private PhotoGrapherPhotosAdapter photoGrapherPhotosAdapter;
     private PagingController pagingController;
     private CampaignInnerPhotosFragmentPresenter campaignInnerPhotosFragmentPresenter;
 
-    public static CampaignInnerPhotosFragment getInstance(String campaignID) {
-        CampaignInnerPhotosFragment campaignInnerPhotosFragment = new CampaignInnerPhotosFragment();
-        campaignInnerPhotosFragment.campaignID = campaignID;
-        return campaignInnerPhotosFragment;
+    public static CampaignInnerPhotosFragment getInstance(String campaignID, boolean shouldLoadImages) {
+        CampaignInnerPhotosFragment fragment = new CampaignInnerPhotosFragment();
+        fragment.campaignID = campaignID;
+        fragment.shouldLoadImage = shouldLoadImages;
+        return fragment;
 
     }
 
@@ -70,7 +72,8 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
 
         photoGrapherPhotosAdapter = new PhotoGrapherPhotosAdapter(getContext(), photoGrapherPhotoList);
         campaignInnerRv.setAdapter(photoGrapherPhotosAdapter);
-        campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, 0);
+        if (shouldLoadImage)
+            campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, 0);
     }
 
     @Override
@@ -82,11 +85,11 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
         pagingController = new PagingController(campaignInnerRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, page );
+                campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, page);
             }
         };
 
-        photoGrapherPhotosAdapter.photoAction= photoGrapherSavedPhoto -> {
+        photoGrapherPhotosAdapter.photoAction = photoGrapherSavedPhoto -> {
 //            Intent intent=new Intent(getContext(), ImageCommentActivity.class);
 //            intent.putExtra(ImageCommentActivity.IMAGE_DATA, photoGrapherSavedPhoto);
 //            startActivity(intent);
@@ -96,7 +99,6 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
             startActivity(intent);
         };
     }
-
 
 
     @Override

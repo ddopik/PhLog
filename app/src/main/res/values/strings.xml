@@ -162,5 +162,7 @@
     <string name="login">Login</string>
     <string name="photos_number">%1$d Photos</string>
     <string name="unfollowing_state">You un-followed</string>
+    <string name="days_left_value">%1$s Days Left</string>
+    <string name="hosted_by_value">Hosted by %1$s</string>
 
 </resources>
