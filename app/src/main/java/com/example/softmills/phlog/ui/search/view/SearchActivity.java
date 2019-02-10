@@ -3,8 +3,10 @@ package com.example.softmills.phlog.ui.search.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
@@ -53,6 +55,10 @@ public class SearchActivity extends BaseActivity {
         filterTab = findViewById(R.id.filter_ic);
         searchResult = findViewById(R.id.search_result);
 
+        TextView title = findViewById(R.id.toolbar_title);
+        title.setText(R.string.search);
+        ImageButton back = findViewById(R.id.back_btn);
+        back.setVisibility(View.INVISIBLE);
     }
 
     @Override

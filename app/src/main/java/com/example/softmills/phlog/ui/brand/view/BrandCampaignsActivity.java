@@ -84,8 +84,8 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
             }
 
             @Override
-            public void onFollowCampaign(String campaignID) {
-                campaignPresenter.joinCampaign(campaignID);
+            public void onFollowCampaign(Campaign campaign) {
+                campaignPresenter.joinCampaign(campaign.id.toString());
             }
         };
 

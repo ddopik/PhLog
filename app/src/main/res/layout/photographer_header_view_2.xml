@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/default_user_profile"
+            tools:background="@drawable/default_user_profile"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio=""
@@ -28,31 +28,44 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.19" />
 
+        <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/upload_background"
+            android:alpha=".4"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19" />
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/profile_tool_bar"
             android:layout_width="0dp"
             android:layout_height="?actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/earning_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:layout_margin="@dimen/ef_margin_small"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_earning"
-                app:layout_constraintBottom_toTopOf="@+id/guideline3"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent=".1"
-                app:layout_constraintHorizontal_bias="0.05"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.05" />
-        </android.support.v7.widget.Toolbar>
+        <ImageView
+            android:id="@+id/earning_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="start"
+            android:layout_margin="@dimen/ef_margin_small"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_earning"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".09"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05" />
 
         <TextView
             android:id="@+id/photographer_level"
@@ -164,7 +177,7 @@
             app:layout_constraintBottom_toTopOf="@+id/total_photos_tag"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".055"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline3"
@@ -199,7 +212,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/photos_val"
             app:layout_constraintEnd_toStartOf="@+id/following_val"
             app:layout_constraintHeight_percent=".055"
-            app:layout_constraintHorizontal_bias="0.91"
+            app:layout_constraintHorizontal_bias="0.99"
             app:layout_constraintStart_toEndOf="@+id/photos_val"
             app:layout_constraintTop_toTopOf="@+id/photos_val"
             app:layout_constraintWidth_percent=".2" />
@@ -208,10 +221,10 @@
             android:id="@+id/followers_tag"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:gravity="center"
-            android:text="@string/followers"
             android:background="@drawable/rounded_frame_btn_white_btn"
+            android:gravity="center"
             android:padding="@dimen/dp6"
+            android:text="@string/followers"
             android:textColor="@color/gray800"
             app:autoSizeMinTextSize="1sp"
             app:autoSizeTextType="uniform"
@@ -232,7 +245,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/followers_val"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".055"
-            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintHorizontal_bias="0.98"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/followers_val"
             app:layout_constraintWidth_percent=".2" />

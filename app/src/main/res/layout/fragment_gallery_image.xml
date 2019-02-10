@@ -9,15 +9,17 @@
     <FrameLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/black">
 
-        <include layout="@layout/phlog_app_bar" />
+        <!--<include layout="@layout/phlog_app_bar" android:visibility="invisible" />-->
 
         <ImageButton
             android:id="@+id/open_camera_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp8"
+            android:layout_marginBottom="@dimen/dp8"
             android:layout_marginEnd="@dimen/dp12"
             android:layout_gravity="end|center"
             android:background="@color/transparent"

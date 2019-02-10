@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <FrameLayout
+        android:id="@+id/activity_photo_info_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/activity_info_photo_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:background="@color/transparent"
+            app:srcCompat="@drawable/ic_arrow_left"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/activity_info_photo_next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@color/transparent"
+            android:text="@string/next"
+            android:textColor="@color/text_input_color" />
+
+    </FrameLayout>
+
+
+    <ImageView
+        android:id="@+id/photo_info"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        app:layout_constraintDimensionRatio="1:.8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_photo_info_top_bar"
+        app:layout_constraintWidth_percent=".9" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/photo_caption"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHeight_percent=".03"
+        app:layout_constraintStart_toStartOf="@+id/photo_info"
+        app:layout_constraintTop_toTopOf="@+id/photo_caption"
+        app:srcCompat="@drawable/ic_quote_1" />
+
+    <EditText
+        android:id="@+id/photo_caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/add_caption"
+        android:paddingStart="@dimen/dp10"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray800"
+        android:textSize="@dimen/font_normal"
+        app:backgroundTint="@color/gray800"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/photo_info"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintWidth_percent=".83" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/auto_complete_places"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHeight_percent=".03"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/auto_complete_places"
+        app:srcCompat="@drawable/ic_location" />
+
+    <AutoCompleteTextView
+        android:id="@+id/auto_complete_places"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/add_location"
+        android:paddingStart="@dimen/dp10"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray800"
+        android:textSize="@dimen/font_normal"
+        app:backgroundTint="@color/gray800"
+        app:layout_constraintBottom_toTopOf="@+id/draft_state"
+        app:layout_constraintEnd_toEndOf="@+id/photo_caption"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/photo_caption"
+        app:layout_constraintWidth_percent=".83" />
+
+    <ImageButton
+        android:id="@+id/locate_me_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentEnd="true"
+        android:background="@color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/auto_complete_places"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@+id/auto_complete_places"
+        app:layout_constraintHeight_percent=".03"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="@+id/auto_complete_places"
+        app:layout_constraintTop_toTopOf="@+id/auto_complete_places"
+        app:layout_constraintVertical_bias=".3"
+        app:srcCompat="@drawable/ic_my_location" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/transparent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHeight_percent=".03"
+        app:layout_constraintBottom_toBottomOf="@+id/draft_state"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/draft_state"
+        app:srcCompat="@drawable/clock" />
+
+    <Switch
+        android:id="@+id/draft_state"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:paddingStart="@dimen/dp12"
+        android:text="@string/save_to_draft"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal"
+        android:theme="@style/switch_btn_style"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/auto_complete_places"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/photo_caption"
+        app:layout_constraintVertical_bias="0.39"
+        app:layout_constraintWidth_percent=".83" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray800"
+        app:layout_constraintEnd_toEndOf="@+id/draft_state"
+        app:layout_constraintStart_toStartOf="@+id/draft_state"
+        app:layout_constraintTop_toBottomOf="@+id/draft_state" />
+
+
+</android.support.constraint.ConstraintLayout>

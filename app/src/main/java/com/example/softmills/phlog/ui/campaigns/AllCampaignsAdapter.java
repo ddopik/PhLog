@@ -66,7 +66,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
         }
         campaignViewHolder.joinCampaignBtn.setOnClickListener(v -> {
             if (campaignLister != null) {
-                campaignLister.onFollowCampaign(homeCampaign.id.toString());
+                campaignLister.onFollowCampaign(homeCampaign);
             }
         });
 
@@ -79,7 +79,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
                         campaignViewHolder.campaignImage.setBackground(resource);
                     }
                 });
-        campaignViewHolder.campaignBusinessName.setText(homeCampaign.titleEn);
+        campaignViewHolder.campaignBusinessName.setText(homeCampaign.business.fullName);
         campaignViewHolder.campaignTitle.setText(homeCampaign.titleEn);
         campaignViewHolder.campaignDayLeft.setText(String.valueOf(homeCampaign.daysLeft));
         campaignViewHolder.campaignDayLeft.append(" " + context.getResources().getString(R.string.days_left));
@@ -88,8 +88,6 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
                 .placeholder(R.drawable.default_place_holder)
                 .apply(RequestOptions.circleCropTransform())
                 .into(campaignViewHolder.campaignBusinessIcon);
-
-        ///////////////////
     }
 
     @Override
@@ -122,7 +120,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
 
         void onCampaignClicked(String campaignID);
 
-        void onFollowCampaign(String campaignID);
+        void onFollowCampaign(Campaign campaign);
 
     }
 }

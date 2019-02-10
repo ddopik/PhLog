@@ -2,6 +2,7 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.follow
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,12 +40,12 @@ public class PhotoGrapherFollowingAdapter extends RecyclerView.Adapter<PhotoGrap
     public PhotoGrapherFollowingInViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new PhotoGrapherFollowingInViewHolder(layoutInflater.inflate(R.layout.view_holder_following, viewGroup, false));
+        return new PhotoGrapherFollowingInViewHolder(layoutInflater.inflate(R.layout.view_holder_profile_search_2, viewGroup, false));
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PhotoGrapherFollowingInViewHolder photoGrapherFollowingInViewHolder, int i) {
+    public void onBindViewHolder(@NonNull PhotoGrapherFollowingInViewHolder viewHolder, int i) {
 
 
         try {
@@ -53,13 +54,13 @@ public class PhotoGrapherFollowingAdapter extends RecyclerView.Adapter<PhotoGrap
                     .placeholder(R.drawable.default_place_holder)
                     .error(R.drawable.default_error_img)
                     .apply(RequestOptions.circleCropTransform())
-                    .into(photoGrapherFollowingInViewHolder.followersImg);
-            photoGrapherFollowingInViewHolder.followersFullName.setText(photoGrapherFollowingInList.get(i).fullName);
-            photoGrapherFollowingInViewHolder.followersUserName.setText(photoGrapherFollowingInList.get(i).userName);
-            photoGrapherFollowingInViewHolder.followersCount.setText(new StringBuilder().append(photoGrapherFollowingInList.get(i).followingCount).append(" ").append(context.getResources().getString(R.string.followers)).toString());
-            photoGrapherFollowingInViewHolder.followingCount.setText(new StringBuilder().append(photoGrapherFollowingInList.get(i).followingCount).append(" ").append(context.getResources().getString(R.string.following)).toString());
-            photoGrapherFollowingInViewHolder.photosCount.setText(new StringBuilder().append(photoGrapherFollowingInList.get(i).photosCount).append(" ").append(context.getResources().getString(R.string.photos)).toString());
-            photoGrapherFollowingInViewHolder.followingContainer.setOnClickListener(new View.OnClickListener() {
+                    .into(viewHolder.profileImg);
+            viewHolder.profileFullName.setText(photoGrapherFollowingInList.get(i).fullName);
+            viewHolder.profileUserName.setText(photoGrapherFollowingInList.get(i).userName);
+            viewHolder.profileFollowersCount.setText(new StringBuilder().append(photoGrapherFollowingInList.get(i).followersCount).append(" ").append(context.getResources().getString(R.string.followers)).toString());
+            viewHolder.profileCountFollowingCount.setText(new StringBuilder().append(photoGrapherFollowingInList.get(i).followingCount).append(" ").append(context.getResources().getString(R.string.following)).toString());
+            viewHolder.photosCount.setText(new StringBuilder().append(photoGrapherFollowingInList.get(i).photosCount).append(" ").append(context.getResources().getString(R.string.photos)).toString());
+            viewHolder.profileContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (followingAdapterListener != null) {
@@ -83,19 +84,19 @@ public class PhotoGrapherFollowingAdapter extends RecyclerView.Adapter<PhotoGrap
     //
     public class PhotoGrapherFollowingInViewHolder extends RecyclerView.ViewHolder {
 
-        private LinearLayout followingContainer;
-        private ImageView followersImg;
-        private TextView followersFullName, followersUserName, followersCount, followingCount, photosCount;
+        private ConstraintLayout profileContainer;
+        private ImageView profileImg;
+        private TextView profileFullName, profileUserName, profileFollowersCount, profileCountFollowingCount, photosCount;
 
         public PhotoGrapherFollowingInViewHolder(View view) {
             super(view);
-            followingContainer = view.findViewById(R.id.following_container);
-            followersImg = view.findViewById(R.id.followers_img);
-            followersFullName = view.findViewById(R.id.followers_full_name);
-            followersUserName = view.findViewById(R.id.followers_user_name);
-            followingCount = view.findViewById(R.id.following_count);
-            followersCount = view.findViewById(R.id.followers_count);
-            photosCount = view.findViewById(R.id.photos_count);
+            profileContainer = view.findViewById(R.id.profile_container);
+            profileImg = view.findViewById(R.id.profile_img);
+            profileFullName = view.findViewById(R.id.profile_full_name);
+            profileUserName = view.findViewById(R.id.profile_user_name);
+            profileCountFollowingCount = view.findViewById(R.id.profile_following_count);
+            profileFollowersCount = view.findViewById(R.id.profile_followers_count);
+            photosCount = view.findViewById(R.id.profile_photos_count);
         }
     }
 

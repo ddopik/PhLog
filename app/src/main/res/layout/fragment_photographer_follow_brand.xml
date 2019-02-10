@@ -10,12 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_search_tab_h"
         android:inputType="textAutoComplete"
-        android:background="@drawable/search_edit_text"
         android:layout_marginTop="@dimen/dp8"
         android:layout_marginStart="@dimen/dp8"
         android:layout_marginEnd="@dimen/dp8"
-        android:paddingLeft="@dimen/dp12"
-        android:paddingStart="@dimen/dp12"
+        android:background="@drawable/rounded_search_view_gray"
+        android:drawableStart="@drawable/ic_search_gray"
+        android:padding="@dimen/widgets_padding"
         android:hint="@string/search"/>
 
     <com.example.softmills.phlog.base.widgets.CustomRecyclerView

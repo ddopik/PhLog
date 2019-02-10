@@ -63,7 +63,7 @@
                 android:layout_height="25dp"
                 android:layout_gravity="center"
                 android:background="@color/transparent"
-                app:srcCompat="@drawable/ic_caption" />
+                app:srcCompat="@drawable/ic_quote_1" />
 
             <EditText
                 android:id="@+id/photo_caption"
@@ -89,7 +89,6 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
-                android:paddingStart="-6dp"
                 android:background="@color/transparent"
                 app:srcCompat="@drawable/ic_location" />
 

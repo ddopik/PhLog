@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
@@ -22,11 +23,17 @@ import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenterImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by abdalla_maged on 10/1/2018.
  */
 public class CampaignsFragment extends BaseFragment implements CampaignFragmentView {
 
+    private static final String TAG = CampaignsFragment.class.getSimpleName();
 
     private View mainView;
     private ProgressBar progressBar;
@@ -35,6 +42,8 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     private List<Campaign> homeCampaignList = new ArrayList<>();
     private CampaignPresenter campaignPresenter;
     private PagingController pagingController;
+
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     @Nullable
     @Override
@@ -85,8 +94,18 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
             }
 
             @Override
-            public void onFollowCampaign(String campaignID) {
-                   campaignPresenter.joinCampaign(campaignID);
+            public void onFollowCampaign(Campaign campaign) {
+                   Disposable disposable = campaignPresenter.joinCampaign(campaign.id.toString())
+                           .subscribeOn(Schedulers.io())
+                           .observeOn(AndroidSchedulers.mainThread())
+                           .subscribe(success -> {
+                               if (success) {
+                                   campaign.isJoined = true;
+                                   allCampaignsAdapter.notifyItemChanged(homeCampaignList.indexOf(campaign));}
+                           }, throwable -> {
+                               ErrorUtils.Companion.setError(getContext(), TAG, throwable);
+                           });
+                   disposables.add(disposable);
             }
         };
 

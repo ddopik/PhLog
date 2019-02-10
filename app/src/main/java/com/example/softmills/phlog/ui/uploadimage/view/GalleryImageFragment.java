@@ -58,23 +58,17 @@ public class GalleryImageFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        galleryImageAdapter = new GalleryImageAdapter(getContext(), getAllShownImagesPath());
+        initViews();
+        initListeners();
         requestGalleryPermutations();
-
     }
 
     @AfterPermissionGranted(REQUEST_CODE_GALLERY)
     private void requestGalleryPermutations() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
-        if (EasyPermissions.hasPermissions(getContext(), perms)) {
-
-            galleryImageAdapter = new GalleryImageAdapter(getContext(), getAllShownImagesPath());
-            initViews();
-            initListeners();
-
-        }
-        // Already have permission
-        else {
+        if (!EasyPermissions.hasPermissions(getContext(), perms)) {
             // Do not have permissions, request them now
             EasyPermissions.requestPermissions(this, getString(R.string.camera_and_location_rationale),
                     REQUEST_CODE_GALLERY, perms);
@@ -87,7 +81,7 @@ public class GalleryImageFragment extends BaseFragment {
         galleryRv = mainView.findViewById(R.id.gallery_img_rv);
         galleryRv.setAdapter(galleryImageAdapter);
         openCameraBtn = mainView.findViewById(R.id.open_camera_btn);
-        backBtn = mainView.findViewById(R.id.back_btn);
+//        backBtn = mainView.findViewById(R.id.back_btn);
 
     }
 
@@ -126,9 +120,9 @@ public class GalleryImageFragment extends BaseFragment {
 
             RequestCameraPermutations();
         });
-        backBtn.setOnClickListener((view) -> {
-            getActivity().recreate();
-        });
+//        backBtn.setOnClickListener((view) -> {
+//            getActivity().recreate();
+//        });
 
     }
 

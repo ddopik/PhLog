@@ -59,7 +59,8 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private String imagePath;
     private ImageView filtredImg;
     private AutoCompleteTextView placesAutoCompete;
-    private Button backBtn, nextBtn;
+    private Button nextBtn;
+    private ImageButton backBtn;
     private ImageButton locateMeBtn;
     private EditText caption;
     private Switch draftBtn;
@@ -75,7 +76,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
         if (bundle.getSerializable(IMAGE_TYPE) != null) {
-            setContentView(R.layout.activity_photo_info_activity);
+            setContentView(R.layout.activity_photo_info_activity_2);
 
             imageType = (UploadImageType) bundle.getSerializable(IMAGE_TYPE);
             imagePath = imageType.getImageUrl();

@@ -46,10 +46,10 @@
     <string name="select_country_not_exist">your country not exist</string>
     <string name="email_missing">Email is missing</string>
     <string name="camera_and_location_rationale">Need camera and storage permation</string>
-    <string name="saved">saved</string>
-    <string name="following">following</string>
-    <string name="campaigns">campaigns</string>
-    <string name="photos">photos</string>
+    <string name="saved">Saved</string>
+    <string name="following">Following</string>
+    <string name="campaigns">Campaigns</string>
+    <string name="photos">Photos</string>
     <string name="loading">Loading....</string>
     <string name="edit">Edit</string>
     <string name="total_photos">Total Photos</string>

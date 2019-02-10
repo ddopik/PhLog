@@ -180,6 +180,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             int notificationBtnImg = R.drawable.ic_tab_notificatin_on;
             int myProfileBtnImg = R.drawable.ic_tab_profile_on;
 
+            backBtn.setVisibility(View.VISIBLE);
+
             switch (navigationHelper) {
                 case HOME: {
                     addFragment(R.id.view_container, new SocialFragment(), SocialFragment.class.getSimpleName(), false);
@@ -198,6 +200,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     campaignBtn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.VISIBLE);
                     toolBarTitle.setText(getResources().getString(R.string.campaigns));
+                    backBtn.setVisibility(View.INVISIBLE);
                     currentTab = CAMPAIGN;
                     break;
                 }
@@ -220,7 +223,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     addFragment(R.id.view_container, galleryImageFragment, GalleryImageFragment.class.getSimpleName(), false);
                     picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
                     toolbar.setVisibility(View.VISIBLE);
-                    toolBarTitle.setText(getResources().getString(R.string.upload_photo));
+                    toolBarTitle.setText("");
+                    backBtn.setVisibility(View.INVISIBLE);
                     currentTab = UPLOAD_PHOTO;
                     break;
                 }

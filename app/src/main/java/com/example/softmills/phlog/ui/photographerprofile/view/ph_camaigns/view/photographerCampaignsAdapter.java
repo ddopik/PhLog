@@ -42,7 +42,7 @@ public class photographerCampaignsAdapter extends RecyclerView.Adapter<photograp
     public CampaignViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new CampaignViewHolder(layoutInflater.inflate(R.layout.view_holder_home_campaigns, viewGroup, false));
+        return new CampaignViewHolder(layoutInflater.inflate(R.layout.view_holder_profile_campaigns, viewGroup, false));
 
 
     }
@@ -70,6 +70,9 @@ public class photographerCampaignsAdapter extends RecyclerView.Adapter<photograp
         campaignViewHolder.campaignDayLeft.setText(String.valueOf(homeCampaign.daysLeft));
         campaignViewHolder.campaignDayLeft.append(" " + context.getResources().getString(R.string.days_left));
         GlideApp.with(context).load(homeCampaign.business.thumbnail).apply(RequestOptions.circleCropTransform()).into(campaignViewHolder.campaignBusinessIcon);
+        if (homeCampaign.isJoined)
+            campaignViewHolder.joinCampaignBtn.setVisibility(View.INVISIBLE);
+        else campaignViewHolder.joinCampaignBtn.setVisibility(View.VISIBLE);
         //////////////////////////////////////////
     }
 

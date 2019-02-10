@@ -154,10 +154,10 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
         this.photographer = photoGrapherProfileData;
         photographerName.setText(photoGrapherProfileData.fullName);
-        photographeruserName.setText(photoGrapherProfileData.userName);
+        photographeruserName.setText(String.format("@%1$s", photographer.userName));
 
 
-        profileRating.setRating((float) photoGrapherProfileData.rate);
+        profileRating.setRating(photoGrapherProfileData.rate);
         if (photoGrapherProfileData.photosCount != null)
             photoCount.setText(String.valueOf(photoGrapherProfileData.photosCount));
         if (photoGrapherProfileData.followersCount != null)
@@ -176,15 +176,10 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
                     .into(photographerProfileImg);
         if (photographer.level != null)
             level.setText(photographer.level);
-//        GlideApp.with(this).
-//                load("www.google.com")
-//                .apply(new RequestOptions().placeholder(R.drawable.default_photographer_profile).error(R.drawable.default_photographer_profile))
-//                .into(new SimpleTarget<Drawable>() {
-//                    @Override
-//                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
-//                        photographerProfileBackgroundImg.setBackground(resource);
-//                    }
-//                });
+        GlideApp.with(this).
+                load(photographer.imageCover)
+                .apply(new RequestOptions().placeholder(R.drawable.default_photographer_profile).error(R.drawable.default_photographer_profile))
+                .into(photographerProfileBackgroundImg);
 
 
     }
