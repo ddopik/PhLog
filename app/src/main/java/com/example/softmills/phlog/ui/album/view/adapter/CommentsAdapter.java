@@ -115,6 +115,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                     .load(previewImage.photographer.imageProfile)
                     .error(R.drawable.default_error_img)
                     .placeholder(R.drawable.default_place_holder)
+                    .apply(RequestOptions.circleCropTransform())
                     .override(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
                     .into(commentViewHolder.commentAuthorIcon);
 

@@ -1,9 +1,16 @@
 package com.example.softmills.phlog.ui.social.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.ui.social.model.SocialData;
@@ -16,61 +23,64 @@ public class SocialAdapterAlbumViewController {
     }
 
 
+    @SuppressLint("CheckResult")
     public void setAlbumViewType4(SocialAdapter.SocialViewHolder socialViewHolder, SocialData socialAlbumData, SocialAdapter.OnSocialItemListener onSocialItemListener) {
         socialViewHolder.socialAlbumType4.setVisibility(View.VISIBLE);
 
-        if (socialAlbumData.photos.size() >0) {
+        if (socialAlbumData.photos.size() >= 3) {
+
             GlideApp.with(context)
                     .load(socialAlbumData.photos.get(0))
                     .placeholder(R.drawable.default_user_pic)
                     .error(R.drawable.default_user_pic)
                     .apply(RequestOptions.circleCropTransform())
                     .into(socialViewHolder.socialAlbumIconImg);
-        }else {
-            socialViewHolder.socialAlbumIconImg.setVisibility(View.INVISIBLE);
-        }
 
 
-        if (socialAlbumData.photos.size() >0) {
             GlideApp.with(context)
                     .load(socialAlbumData.photos.get(0))
-                    .centerCrop()
                     .placeholder(R.drawable.default_photographer_profile)
                     .error(R.drawable.default_photographer_profile)
                     .into(socialViewHolder.socialAlbum1);
-        }else {
-            socialViewHolder.socialAlbum1.setVisibility(View.INVISIBLE);
-        }
 
-        if (socialAlbumData.photos.size() >=1) {
+
             GlideApp.with(context)
                     .load(socialAlbumData.photos.get(1))
-                    .centerCrop()
                     .placeholder(R.drawable.default_photographer_profile)
                     .error(R.drawable.default_photographer_profile)
                     .into(socialViewHolder.socialAlbum2);
-        }else {
-            socialViewHolder.socialAlbum2.setVisibility(View.INVISIBLE);
-        }
 
 
-        if (socialAlbumData.photos.size() >=2) {
             GlideApp.with(context)
                     .load(socialAlbumData.photos.get(2))
-                    .centerCrop()
                     .placeholder(R.drawable.default_photographer_profile)
                     .error(R.drawable.default_photographer_profile)
                     .into(socialViewHolder.socialAlbum3);
-        }{
-            socialViewHolder.socialAlbum3.setVisibility(View.INVISIBLE);
+        } else {
+
+
+//            handle if PhotoGrapher has photos less than 3 or has no photos
+            GlideApp.with(context)
+                    .load(socialAlbumData.albums.get(0).url)
+                    .error(R.drawable.default_photographer_profile)
+                    .apply(new RequestOptions().centerCrop())
+                    .into(socialViewHolder.socialDefaultAlbumImg);
+
+
+
+
         }
 
+
         socialViewHolder.socialAlbumName.setText(socialAlbumData.title);
-        socialViewHolder.socialAlbumPhotosNumber.setText(new StringBuilder().append(socialAlbumData.albums.size()).append(" ").append("photo").toString());
-        if (onSocialItemListener != null) {
-            socialViewHolder.followBrandBtn.setOnClickListener(v -> {
-                onSocialItemListener.onSocialBrandFollowClicked(socialAlbumData);
-            });
+        if (socialAlbumData.albums != null) {
+            socialViewHolder.socialAlbumPhotosNumber.setText(new StringBuilder().append(socialAlbumData.albums.size()).append(" ").append("photo").toString());
+        } else {
+            socialViewHolder.socialAlbumPhotosNumber.setText(new StringBuilder().append("0").append(" ").append("photo").toString());
         }
+
     }
+
+
 }
+

@@ -27,6 +27,11 @@ public class SocialData  implements Parcelable{
     @SerializedName("story_id")
     @Expose
     public Integer storyId;
+
+    @SerializedName("entity_id")
+    @Expose
+    public int entityId;
+
     @SerializedName("display_type")
     @Expose
     public String displayType;
@@ -47,6 +52,10 @@ public class SocialData  implements Parcelable{
     @Expose
     public List<BaseImage> photos;
 
+    public SocialData() {
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -57,6 +66,7 @@ public class SocialData  implements Parcelable{
         dest.writeString(this.source);
         dest.writeString(this.title);
         dest.writeValue(this.storyId);
+        dest.writeInt(this.entityId);
         dest.writeString(this.displayType);
         dest.writeTypedList(this.profiles);
         dest.writeTypedList(this.albums);
@@ -65,13 +75,11 @@ public class SocialData  implements Parcelable{
         dest.writeTypedList(this.photos);
     }
 
-    public SocialData() {
-    }
-
     protected SocialData(Parcel in) {
         this.source = in.readString();
         this.title = in.readString();
         this.storyId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.entityId = in.readInt();
         this.displayType = in.readString();
         this.profiles = in.createTypedArrayList(Photographer.CREATOR);
         this.albums = in.createTypedArrayList(BaseImage.CREATOR);
@@ -81,7 +89,7 @@ public class SocialData  implements Parcelable{
         this.photos = in.createTypedArrayList(BaseImage.CREATOR);
     }
 
-    public static final Parcelable.Creator<SocialData> CREATOR = new Parcelable.Creator<SocialData>() {
+    public static final Creator<SocialData> CREATOR = new Creator<SocialData>() {
         @Override
         public SocialData createFromParcel(Parcel source) {
             return new SocialData(source);
@@ -92,6 +100,4 @@ public class SocialData  implements Parcelable{
             return new SocialData[size];
         }
     };
-
-
 }

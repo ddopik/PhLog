@@ -72,9 +72,9 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         if(albumImgList.get(i).photographer !=null)
         albumImgViewHolder.albumAuthor.setText(albumImgList.get(i).photographer.fullName);
         if(albumImgList.get(i).likesCount !=null)
-        albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append("number of likes here").append(" Likes").toString());
+        albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append(albumImgList.get(i).likesCount).append(" Likes").toString());
         if(albumImgList.get(i).commentsCount !=null)
-        albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append("comment_count_here").append("Comments").toString());
+        albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append(albumImgList.get(i).commentsCount).append(" Comments").toString());
 
         if (onAlbumImgClicked != null) {
             albumImgViewHolder.albumImg.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgClick(albumImgList.get(i)));

@@ -12,14 +12,13 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.base.commonmodel.Brand;
+import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 
 import java.util.ArrayList;
@@ -37,11 +36,11 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
     private String TAG = BrandSearchAdapter.class.getSimpleName();
     public Context context;
-    private List<Brand> brandList;
-    private List<Brand> brandFiltered;
+    private List<Business> brandList;
+    private List<Business> brandFiltered;
     public BrandAdapterListener brandAdapterListener;
 
-    public BrandSearchAdapter(Context context, List<Brand> brandList) {
+    public BrandSearchAdapter(Context context, List<Business> brandList) {
         this.context = context;
         this.brandList = brandList;
         this.brandFiltered = brandList;
@@ -156,8 +155,8 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
                 if (charString.isEmpty()) {
                     brandFiltered = brandList;
                 } else {
-                    List<Brand> filteredList = new ArrayList<>();
-                    for (Brand row : brandList) {
+                    List<Business> filteredList = new ArrayList<>();
+                    for (Business row : brandList) {
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
@@ -175,7 +174,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                brandFiltered = (ArrayList<Brand>) filterResults.values;
+                brandFiltered = (ArrayList<Business>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
@@ -183,6 +182,6 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
 
     public interface BrandAdapterListener {
-        void onBrandSelected(Brand brandSearch);
+        void onBrandSelected(Business brandSearch);
     }
 }

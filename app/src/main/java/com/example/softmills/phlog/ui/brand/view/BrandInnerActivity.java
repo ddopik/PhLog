@@ -18,10 +18,9 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.base.commonmodel.Brand;
+import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerDataPresenterImpl;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerPresenter;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.PhotoGrapherFollowFragment;
 
 import io.reactivex.annotations.NonNull;
 
@@ -31,7 +30,7 @@ import io.reactivex.annotations.NonNull;
 public class BrandInnerActivity extends BaseActivity implements BrandInnerActivityView {
 
     public static String BRAND_ID = "brand_id";
-    private Brand currentBrand;
+    private Business currentBrand;
     private FrameLayout brandHeaderImg;
     private ImageView brandIconImg;
     private Button followBrandBtn;
@@ -76,7 +75,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     }
 
     @Override
-    public void viewInnerBrandData(Brand brand) {
+    public void viewInnerBrandData(Business brand) {
         try {
             this.currentBrand = brand;
             GlideApp.with(this)
@@ -101,12 +100,14 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
                 brandName.setText(brand.fullName);
                 aboutBrand.setText(new StringBuilder().append(getResources().getString(R.string.about_brand)).append(" : ").append(brand.fullName).toString());
             }
-            if (brand.followersCount != null) {
-                brandNumFollowers.setText(new StringBuilder().append(brand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
-            }
+
+
+            brandNumFollowers.setText(new StringBuilder().append(brand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
+
 //        if (brand.industry != null) {
             brandType.setText("Brand Industry");
 //        }
+            
             if (brand.isBrandText != null) {
                 brandData.setText(brand.description);
             }

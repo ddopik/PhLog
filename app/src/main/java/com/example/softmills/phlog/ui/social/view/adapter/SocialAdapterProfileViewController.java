@@ -30,63 +30,96 @@ public class SocialAdapterProfileViewController {
 
 
     @SuppressLint("CheckResult")
-    public void setProfileType3(Photographer photographer, SocialAdapter.SocialViewHolder socialViewHolder, OnSocialAdapterProfileViewListener onSocialAdapterProfileViewListener) {
+    public void setProfileType3(Photographer photographer, SocialAdapter.SocialViewHolder socialViewHolder, SocialAdapter.OnSocialItemListener onSocialItemListener) {
 
         socialViewHolder.socialProfileType3.setVisibility(View.VISIBLE);
+        socialViewHolder.socialProfileType3FullName.setText(photographer.fullName);
+        socialViewHolder.socialProfileType3UserName.setText(photographer.userName);
         GlideApp.with(context)
                 .load(photographer.imageProfile)
                 .placeholder(R.drawable.default_user_pic)
                 .error(R.drawable.default_user_pic)
                 .apply(RequestOptions.circleCropTransform())
-                .into(socialViewHolder.socialProfileIcon);
+                .into(socialViewHolder.socialProfileType3Icon);
+
+
+        socialViewHolder.socialProfileType3ImgContainer.setVisibility(View.VISIBLE);
+//      this is acts as default and get overladen later by photographer photos if photos count >3
+        if (photographer.imageCover != null) {
+            GlideApp.with(context)
+                    .load(photographer.imageCover)
+                    .error(R.drawable.default_photographer_profile)
+                    .apply(new RequestOptions().centerCrop())
+                    .into(socialViewHolder.socialProfileType3ImgContainer);
+        } else {
+            socialViewHolder.socialProfileType3ImgContainer.setImageDrawable(context.getResources().getDrawable(R.drawable.default_place_holder));
+        }
+
+
+        socialViewHolder.socialProfileType3ImgContainer.setOnClickListener(v -> {
+            Intent intent = new Intent(context, UserProfileActivity.class);
+            intent.putExtra(USER_ID, String.valueOf(photographer.id));
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            context.startActivity(intent);
+        });
+
+
+        if (photographer.isFollow) {
+            socialViewHolder.followSocialProfileType3Btn.setText(context.getResources().getString(R.string.following));
+        } else {
+            socialViewHolder.followSocialProfileType3Btn.setText(context.getResources().getString(R.string.follow));
+        }
+
+        socialViewHolder.followSocialProfileType3Btn.setOnClickListener(v -> {
+            if (photographer.isFollow) {
+                unFollowUser(String.valueOf(photographer.id), onSocialItemListener);
+            } else {
+                followUser(String.valueOf(photographer.id), onSocialItemListener);
+            }
+        });
+
+
 
         BaseNetworkApi.getUserProfilePhotos(PrefUtils.getUserToken(context), String.valueOf(photographer.id), 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {
 
-                            if (userPhotosResponse.data.data.size() > 0) {
+                            if (userPhotosResponse.data.data != null && userPhotosResponse.data.data.size() >= 3) {
+
+                                socialViewHolder.socialProfileType3ImgContainer.setVisibility(View.INVISIBLE);
                                 GlideApp.with(context)
                                         .load(userPhotosResponse.data.data.get(0).url)
                                         .centerCrop()
                                         .placeholder(R.drawable.default_photographer_profile)
                                         .error(R.drawable.default_photographer_profile)
-                                        .into(socialViewHolder.socialProfileImg_1);
-                            } else {
-                                socialViewHolder.socialProfileImg_1.setVisibility(View.INVISIBLE);
-                            }
+                                        .into(socialViewHolder.socialProfileType3Img_1);
 
-                            if (userPhotosResponse.data.data.size() > 1) {
                                 GlideApp.with(context)
                                         .load(userPhotosResponse.data.data.get(1).url)
                                         .placeholder(R.drawable.default_photographer_profile)
                                         .centerCrop()
                                         .error(R.drawable.default_photographer_profile)
-                                        .into(socialViewHolder.socialProfileImg_2);
+                                        .into(socialViewHolder.socialProfileType3Img_2);
 
-                            } else {
-                                socialViewHolder.socialProfileImg_1.setVisibility(View.INVISIBLE);
-                            }
 
-                            if (userPhotosResponse.data.data.size() > 2) {
                                 GlideApp.with(context)
                                         .load(userPhotosResponse.data.data.get(2).url)
                                         .centerCrop()
                                         .placeholder(R.drawable.default_photographer_profile)
                                         .error(R.drawable.default_photographer_profile)
-                                        .into(socialViewHolder.socialProfileImg_3);
-                            } else {
-                                socialViewHolder.socialProfileImg_1.setVisibility(View.INVISIBLE);
-                            }
+                                        .into(socialViewHolder.socialProfileType3Img_3);
 
-                            if (userPhotosResponse.data.data.size() > 3) {
+
                                 GlideApp.with(context)
                                         .load(userPhotosResponse.data.data.get(3).url)
                                         .error(R.drawable.default_photographer_profile)
                                         .apply(new RequestOptions().centerCrop())
-                                        .into(socialViewHolder.socialProfileImg_4);
-                            } else {
-                                socialViewHolder.socialProfileImg_1.setVisibility(View.INVISIBLE);
+                                        .into(socialViewHolder.socialProfileType3Img_4);
+
+
+
+
                             }
 
 
@@ -95,66 +128,34 @@ public class SocialAdapterProfileViewController {
                             ErrorUtils.Companion.setError(context, TAG, throwable);
                         });
 
-
-        socialViewHolder.socialProfileFullName.setText(photographer.fullName);
-        socialViewHolder.socialProfileUserName.setText(photographer.userName);
-
-
-
-
-        socialViewHolder.socialProfileContainer.setOnClickListener(v -> {
-            Intent intent = new Intent(context, UserProfileActivity.class);
-            intent.putExtra(USER_ID, String.valueOf(photographer.id));
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            context.startActivity(intent);
-            });
-
-
-
-        if (photographer.isFollow){
-            socialViewHolder.followSocialProfile.setText(context.getResources().getString(R.string.following));
-        }else {
-            socialViewHolder.followSocialProfile.setText(context.getResources().getString(R.string.follow));
-        }
-
-        socialViewHolder.followSocialProfile.setOnClickListener(v -> {
-            if (photographer.isFollow) {
-                unFollowUser(String.valueOf(photographer.id), onSocialAdapterProfileViewListener);
-            } else {
-                followUser(String.valueOf(photographer.id), onSocialAdapterProfileViewListener);
-            }
-            });
-
     }
+
 
     @SuppressLint("CheckResult")
 
-    public void followUser(String userId, OnSocialAdapterProfileViewListener onSocialAdapterProfileViewListener) {
-        String x=PrefUtils.getUserToken(context) ;
+    private void followUser(String userId, SocialAdapter.OnSocialItemListener onSocialItemListener) {
         BaseNetworkApi.followUser(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followUserResponse -> {
-                    onSocialAdapterProfileViewListener.onSocialProfileFollowClick(true);
+                    onSocialItemListener.onSocialPhotoGrapherFollowed(Integer.parseInt(userId), true);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 
     @SuppressLint("CheckResult")
-    public void unFollowUser(String userID, OnSocialAdapterProfileViewListener onSocialAdapterProfileViewListener) {
+    private void unFollowUser(String userID, SocialAdapter.OnSocialItemListener onSocialItemListener) {
         BaseNetworkApi.unFollowUser(userID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followUserResponse -> {
-                    onSocialAdapterProfileViewListener.onSocialProfileFollowClick(false);
+                    onSocialItemListener.onSocialPhotoGrapherFollowed(Integer.parseInt(userID), false);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
     }
 
-    public interface OnSocialAdapterProfileViewListener {
-        void onSocialProfileFollowClick(boolean state);
-    }
+
 }

@@ -112,7 +112,8 @@ public class BaseNetworkApi {
     private static final String INNER_BRAND_URL = BASE_URL + "/photographer/business/details";
     private static final String BRAND_FOLLOW_URL = BASE_URL + "/photographer/business/follow";
     private static final String BRAND_UN_FOLLOW_URL = BASE_URL + "/photographer/business/unfollow";
-    private static final String SOCIAL_DATA_URL = BASE_URL + "/photographer/social?reset=1";
+    private static final String SOCIAL_DATA_URL = BASE_URL + "/photographer/social";
+    private static final String SOCIAL_DATA_URL_RESET = BASE_URL + "/photographer/social?reset=1";
     private static final String GET_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment/list";
     private static final String SUBMIT_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment";
     private static final String GET_ALL_NOTIFICATION = BASE_URL + "/notification";
@@ -441,8 +442,15 @@ public class BaseNetworkApi {
                 .getObjectObservable(FollowBrandResponse.class);
     }
 
-    public static io.reactivex.Observable<SocialResponse> getSocialData(String token) {
-        return Rx2AndroidNetworking.post(SOCIAL_DATA_URL)
+    public static io.reactivex.Observable<SocialResponse> getSocialData(boolean firstTime) {
+
+        String url;
+        if (firstTime){
+            url=SOCIAL_DATA_URL_RESET;
+        }else {
+            url=SOCIAL_DATA_URL;
+        }
+        return Rx2AndroidNetworking.post(url)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(SocialResponse.class);
