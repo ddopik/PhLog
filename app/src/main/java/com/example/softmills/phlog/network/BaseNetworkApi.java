@@ -49,6 +49,7 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -116,7 +117,7 @@ public class BaseNetworkApi {
     private static final String SOCIAL_DATA_URL_RESET = BASE_URL + "/photographer/social?reset=1";
     private static final String GET_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment/list";
     private static final String SUBMIT_IMAGE_COMMENT = BASE_URL + "/photographer/photo/comment";
-    private static final String GET_ALL_NOTIFICATION = BASE_URL + "/notification";
+    private static final String GET_ALL_NOTIFICATION = BASE_URL + "/photographer/notification/list";
     private static final String GET_EARNING = BASE_URL + "/photographer/earning/list";
     private static final String UPLOAD_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/upload";
     private static final String LIKE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/like";
@@ -456,13 +457,13 @@ public class BaseNetworkApi {
                 .getObjectObservable(SocialResponse.class);
     }
 
-    public static io.reactivex.Observable<NotificationResponse> getNotification(String token, String page) {
+    public static Observable<List<NotificationResponse>> getNotification(String token, String page) {
         return Rx2AndroidNetworking.post(GET_ALL_NOTIFICATION)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addQueryParameter(PAGER_PATH_PARAMETER, page)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(NotificationResponse.class);
+                .getObjectListObservable(NotificationResponse.class);
     }
 
     public static Observable<EarningListResponse> geEarning(String token, String page) {

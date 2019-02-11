@@ -113,7 +113,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
         /////
         CustomRecyclerView socialImgSlideRv;
-        ImageView socialItemSliderIcon;
+
         TextView socialImageName;
         /////
         LinearLayout socialCampaignContainer;
@@ -125,7 +125,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         TextView socialBrandName, socialBrandFollowing;
         Button followBrandBtn;
         /////
-        ImageView socialAlbumIconImg,socialAlbum1,socialAlbum2,socialAlbum3;
+        ImageView socialAlbum1,socialAlbum2,socialAlbum3;
         TextView socialAlbumName,socialAlbumPhotosNumber;
 
 
@@ -143,8 +143,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
             /////ImageSlider type_1
             socialImgSlideRv = view.findViewById(R.id.social_img_slider_rv);
-            socialItemSliderIcon = view.findViewById(R.id.social_icon_img);
-            socialImageName = view.findViewById(R.id.social_image_name);
+             socialImageName = view.findViewById(R.id.social_image_name);
             /////CampaignItemView
             socialCampaignContainer = view.findViewById(R.id.social_campaign_container);
             socialCampaignIcon = view.findViewById(R.id.social_campaign_icon);
@@ -160,8 +159,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialBrandFollowing = view.findViewById(R.id.social_brand_following);
             followBrandBtn = view.findViewById(R.id.follow_brand);
             /////BrandAlbumView
-            socialAlbumIconImg=view.findViewById(R.id.social_album_icon_img);
-            socialAlbumName=view.findViewById(R.id.social_album_name);
+             socialAlbumName=view.findViewById(R.id.social_album_name);
             socialAlbumPhotosNumber=view.findViewById(R.id.social_album_photos_number);
             socialAlbum1=view.findViewById(R.id.social_album_img_1);
             socialAlbum2=view.findViewById(R.id.social_album_img_2);

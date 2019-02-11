@@ -37,6 +37,7 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SocialImageViewHolder socialImageViewHolder, int i) {
+        if (imageList.get(i).url !=null && !imageList.get(i).url.equals("")){
         GlideApp.with(context)
                 .load(imageList.get(i).url)
                 .placeholder(R.drawable.default_photographer_profile)
@@ -47,6 +48,7 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
                 onSocialSliderImgClick.onSocialSliderImfClicked(imageList.get(i));
 
             });
+        }
         }
     }
 

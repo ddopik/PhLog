@@ -6,9 +6,16 @@ import android.content.Context;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
+import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
+import com.example.softmills.phlog.ui.notification.model.NotificationSortedObj;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragmentView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by abdalla_maged On Nov,2018
@@ -31,11 +38,16 @@ public class NotificationPresenterImp implements NotificationPresenter {
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(notificationResponse -> {
-                    if (notificationResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        notificationFragmentView.viewNotificationList(notificationResponse.data);
-                    } else {
-                        ErrorUtils.Companion.setError(context, TAG, notificationResponse.msg);
-                    }
+
+
+                    getOldNotification(notificationResponse).subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(mNotificationResponse -> {
+                                notificationFragmentView.viewNotification(mNotificationResponse);
+                             }, throwable -> {
+
+                            });
+
                     notificationFragmentView.viewNotificationProgress(false);
 
                 }, throwable -> {
@@ -43,6 +55,27 @@ public class NotificationPresenterImp implements NotificationPresenter {
                     notificationFragmentView.viewNotificationProgress(false);
                 });
     }
-    // ErrorUtils.setError(context, TAG, albumPreviewResponse.msg, albumPreviewResponse.state);
-// ErrorUtils.setError(context, TAG, throwable.toString());
+
+    public Observable<NotificationSortedObj> getOldNotification(List<NotificationResponse> notificationResponseList) {
+        return Observable.create(listObservableEmitter -> {
+            NotificationSortedObj notificationSortedObj = new NotificationSortedObj();
+
+            notificationSortedObj.oldNotificationList = new ArrayList<>();
+            notificationSortedObj.newNotificationList = new ArrayList<>();
+
+            for (NotificationResponse notificationResponse : notificationResponseList) {
+                if (notificationResponse.isRead) {
+                    notificationSortedObj.oldNotificationList.add(notificationResponse);
+                } else {
+                    notificationSortedObj.newNotificationList.add(notificationResponse);
+                }
+            }
+
+            listObservableEmitter.onNext(notificationSortedObj);
+            listObservableEmitter.onComplete();
+        });
+    }
+
+
+
 }

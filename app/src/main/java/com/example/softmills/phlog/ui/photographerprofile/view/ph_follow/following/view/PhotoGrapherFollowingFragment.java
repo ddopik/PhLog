@@ -101,6 +101,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         photoGrapherFollowingAdapter.followingAdapterListener= photoGrapherFollowingObj -> {
             Intent intent=new Intent(getActivity(), UserProfileActivity.class);
             intent.putExtra(UserProfileActivity.USER_ID,String.valueOf(photoGrapherFollowingObj.id));
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             getContext().startActivity(intent);
         };
 

@@ -26,12 +26,6 @@ public class SocialAdapterAlbumViewController {
             //hide default view if exist
             socialViewHolder.socialDefaultAlbumImg.setVisibility(View.INVISIBLE);
             socialViewHolder.socialAlbumImgGroupContainer.setVisibility(View.VISIBLE);
-            GlideApp.with(context)
-                    .load(socialAlbumData.photos.get(0))
-                    .placeholder(R.drawable.default_user_pic)
-                    .error(R.drawable.default_user_pic)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(socialViewHolder.socialAlbumIconImg);
 
 
             GlideApp.with(context)

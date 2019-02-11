@@ -29,17 +29,12 @@ public class SocialAdapterPhotosViewController {
 
 
     public void setPhotosViewType5(SocialAdapter.SocialViewHolder socialViewHolder, SocialData socialData, SocialAdapter.OnSocialItemListener onSocialItemListener) {
-        GlideApp.with(context)
-                .load(socialData.photos.get(0))
-                .apply(RequestOptions.circleCropTransform())
-                .placeholder(R.drawable.default_place_holder)
-                .error(R.drawable.default_error_img)
-                .into(socialViewHolder.socialItemSliderIcon);
+
 
         socialViewHolder.socialImageName.setText(socialData.title);
 
         socialViewHolder.socialImageSliderType5.setVisibility(View.VISIBLE);
-        SocialImagesAdapter socialImagesAdapter = new SocialImagesAdapter(socialData.photos);///todo img should be obj
+        SocialImagesAdapter socialImagesAdapter = new SocialImagesAdapter(socialData.photos);
 
         socialViewHolder.socialImgSlideRv.setAdapter(socialImagesAdapter);
 

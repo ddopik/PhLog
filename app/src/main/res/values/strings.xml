@@ -164,5 +164,7 @@
     <string name="unfollowing_state">You un-followed</string>
     <string name="days_left_value">%1$s Days Left</string>
     <string name="hosted_by_value">Hosted by %1$s</string>
+    <string name="recent">Recent</string>
+    <string name="old">old</string>
 
 </resources>

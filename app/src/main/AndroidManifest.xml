@@ -86,7 +86,7 @@
         </activity>
         <activity android:name=".ui.uploadimage.view.UploadImageActivity" />
         <activity android:name=".ui.allphotos.view.AllPhotographerPhotosActivity" />
-        <activity android:name=".ui.brand.view.BrandCampaignsActivity" />
+        <activity android:name=".ui.brand.view.BrandActivity" />
         <activity android:name=".ui.commentimage.view.ImageCommentActivity" />
 
         <meta-data

@@ -141,8 +141,9 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         });
 
         brandCampaign.setOnClickListener(v->{
-            Intent intent=new Intent(this,BrandCampaignsActivity.class);
-            intent.putExtra(BrandCampaignsActivity.BRAND_ID,currentBrand.id);
+            Intent intent=new Intent(this, BrandActivity.class);
+            intent.putExtra(BrandActivity.BRAND_ID,currentBrand.id);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });
     }

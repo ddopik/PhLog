@@ -11,6 +11,7 @@ public interface Constants {
     int REQUEST_CODE_LOCATION = 1225;
 //    String  DEFAULT_PROFILE_IMAGE =1225;
 
+    int SOCIAL_FRAGMENT_PAGING_THRESHOLD =15;
 
     int QUERY_SEARCH_TIME_OUT = 600;
 

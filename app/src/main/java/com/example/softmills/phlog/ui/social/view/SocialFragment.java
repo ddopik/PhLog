@@ -26,6 +26,8 @@ import com.example.softmills.phlog.ui.social.view.adapter.SocialAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.softmills.phlog.Utiltes.Constants.SOCIAL_FRAGMENT_PAGING_THRESHOLD;
+
 public class SocialFragment extends BaseFragment implements SocialFragmentView,SocialAdapter.OnSocialItemListener {
 
     private View mainView;
@@ -83,7 +85,8 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView,S
             startActivity(intent);
         });
 
-        pagingController=new PagingController(socailRv) {
+        pagingController=new PagingController(socailRv, SOCIAL_FRAGMENT_PAGING_THRESHOLD) {
+
             @Override
             public void getPagingControllerCallBack(int page) {
                 socialFragmentPresenter.getSocialData(false);
