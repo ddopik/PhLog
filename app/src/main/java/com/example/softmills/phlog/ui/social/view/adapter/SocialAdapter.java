@@ -109,7 +109,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         ImageView socialProfileType3Icon, socialProfileType3Img_1, socialProfileType3Img_2, socialProfileType3Img_3, socialProfileType3Img_4,socialProfileType3ImgContainer,socialDefaultAlbumImg;
         TextView socialProfileType3FullName,socialProfileType3UserName;
         Button followSocialProfileType3Btn;
-//        CardView socialProfileType3Container;
+        LinearLayout socialAlbumImgGroupContainer;
 
         /////
         CustomRecyclerView socialImgSlideRv;
@@ -166,6 +166,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialAlbum1=view.findViewById(R.id.social_album_img_1);
             socialAlbum2=view.findViewById(R.id.social_album_img_2);
             socialAlbum3=view.findViewById(R.id.social_album_img_3);
+            socialAlbumImgGroupContainer=view.findViewById(R.id.social_album_img_group_container); //fill default Img
             socialDefaultAlbumImg=view.findViewById(R.id.album_img_container); //fill default Img
 
 

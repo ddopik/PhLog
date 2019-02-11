@@ -2,15 +2,9 @@ package com.example.softmills.phlog.ui.social.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.ui.social.model.SocialData;
@@ -27,8 +21,11 @@ public class SocialAdapterAlbumViewController {
     public void setAlbumViewType4(SocialAdapter.SocialViewHolder socialViewHolder, SocialData socialAlbumData, SocialAdapter.OnSocialItemListener onSocialItemListener) {
         socialViewHolder.socialAlbumType4.setVisibility(View.VISIBLE);
 
-        if (socialAlbumData.photos.size() >= 3) {
 
+        if (socialAlbumData.photos.size() >= 3) {
+            //hide default view if exist
+            socialViewHolder.socialDefaultAlbumImg.setVisibility(View.INVISIBLE);
+            socialViewHolder.socialAlbumImgGroupContainer.setVisibility(View.VISIBLE);
             GlideApp.with(context)
                     .load(socialAlbumData.photos.get(0))
                     .placeholder(R.drawable.default_user_pic)
@@ -57,18 +54,14 @@ public class SocialAdapterAlbumViewController {
                     .error(R.drawable.default_photographer_profile)
                     .into(socialViewHolder.socialAlbum3);
         } else {
-
-
-//            handle if PhotoGrapher has photos less than 3 or has no photos
+            // handle if Album has photos less than 3 or has no photos
+            socialViewHolder.socialAlbumImgGroupContainer.setVisibility(View.VISIBLE);
+            socialViewHolder.socialDefaultAlbumImg.setVisibility(View.VISIBLE);
             GlideApp.with(context)
                     .load(socialAlbumData.albums.get(0).url)
                     .error(R.drawable.default_photographer_profile)
                     .apply(new RequestOptions().centerCrop())
                     .into(socialViewHolder.socialDefaultAlbumImg);
-
-
-
-
         }
 
 

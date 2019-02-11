@@ -31,8 +31,8 @@ public class SocialAdapterProfileViewController {
 
     @SuppressLint("CheckResult")
     public void setProfileType3(Photographer photographer, SocialAdapter.SocialViewHolder socialViewHolder, SocialAdapter.OnSocialItemListener onSocialItemListener) {
-
         socialViewHolder.socialProfileType3.setVisibility(View.VISIBLE);
+
         socialViewHolder.socialProfileType3FullName.setText(photographer.fullName);
         socialViewHolder.socialProfileType3UserName.setText(photographer.userName);
         GlideApp.with(context)

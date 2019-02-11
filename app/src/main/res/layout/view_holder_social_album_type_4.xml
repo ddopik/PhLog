@@ -59,17 +59,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <!--Acts as A default photo as if there is was only one photo -->
-            <ImageView
-                android:id="@+id/album_img_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/default_place_holder"
-                android:scaleType="centerCrop"/>
+
 
             <LinearLayout
+                android:id="@+id/social_album_img_group_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="invisible"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -117,7 +115,12 @@
 
             </LinearLayout>
 
-
+            <ImageView
+                android:id="@+id/album_img_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="invisible"/>
         </FrameLayout>
 
     </LinearLayout>
