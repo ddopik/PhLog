@@ -135,8 +135,9 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
         promptView = mainView.findViewById(R.id.prompt_view);
         promptImage = mainView.findViewById(R.id.prompt_image);
-        promptImage.setBackgroundResource(R.drawable.ic_album_search);
         promptText = mainView.findViewById(R.id.prompt_text);
+
+        promptImage.setBackgroundResource(R.drawable.ic_album_search);
         promptText.setText(R.string.type_something_album);
 
         searchResultCount.setVisibility(View.INVISIBLE);
@@ -301,34 +302,27 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     public void onFilterIconClicked(CustomTextView filterIcon) {
 
         if (filterExpListView.getVisibility() == View.GONE ) {
-//            if (searchFilterList != null && searchFilterList.size() >0) {
                 albumSearchPresenter.getSearchFilters();
                 filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_filter), null);
                 setSearchFilterView();
-//            }
+
         } else {
             filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             filterExpListView.setVisibility(View.VISIBLE);
             albumSearchRv.setVisibility(View.GONE);
-
             setAlbumSearchView();
+
+            if (albumSearchList.size() ==0){
+                promptView.setVisibility(View.VISIBLE);
+                promptImage.setBackgroundResource(R.drawable.ic_album_search);
+                promptText.setText(R.string.type_something_album);
+            }
+
         }
 
         searchResultCount.setVisibility(View.INVISIBLE);
     }
 
-//    @Override
-//    public void onFilterIconClicked(CustomTextView filterIcon) {
-//        if (filterExpListView.getVisibility() == View.GONE || filterExpListView.getVisibility() == View.INVISIBLE) {
-//            if (searchFilterList == null || searchFilterList.isEmpty())
-//                albumSearchPresenter.getSearchFilters();
-//            else
-//                setSearchFilterView();
-//        } else {
-//            setAlbumSearchView();
-//        }
-//        searchResultCount.setVisibility(View.INVISIBLE);
-//    }
 
 
     private void setAlbumSearchView() {
