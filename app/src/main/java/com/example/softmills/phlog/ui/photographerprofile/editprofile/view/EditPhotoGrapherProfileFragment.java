@@ -115,7 +115,7 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
                     , profile, cover);
         });
         backButton.setOnClickListener(v -> {
-            MainActivity.navigationManger.navigate(Constants.NavigationHelper.PROFILE);
+            ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.PROFILE);
         });
         TextWatcher textWatcher = new TextWatcher() {
             @Override

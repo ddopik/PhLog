@@ -186,7 +186,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
     private void initListener() {
         earningBtn.setOnClickListener(view -> {
-            MainActivity.navigationManger.navigate(Constants.NavigationHelper.EARNING_LIST);
+            ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.EARNING_LIST);
         });
 
         photographerProfileImg.setOnClickListener(v -> {
@@ -204,11 +204,11 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit_profile:
-                MainActivity.navigationManger.navigate(EDIT_PROFILE);
+                ((MainActivity) getActivity()).navigationManger.navigate(EDIT_PROFILE);
                 break;
             case R.id.action_logout:
                 photoGrapherProfileActivityPresenter.logout(getContext());
-                MainActivity.navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
+                ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
                 break;
             default:
                 break;

@@ -23,6 +23,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.view.AlbumPreviewActivity;
 import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
@@ -69,7 +70,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private CompositeDisposable disposable = new CompositeDisposable();
     private PagingController pagingController;
     private OnSearchTabSelected onSearchTabSelected;
-
     private ConstraintLayout promptView;
     private ImageView promptImage;
     private TextView promptText;
@@ -96,11 +96,13 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             initViews();
             initListener();
 
+
+
         }
 
         if (albumSearch.getText().toString().length() > 0) {
             albumSearchList.clear();
-            albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
+            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), 0);
         } //there is A search query exist
 
     }
@@ -114,7 +116,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void initViews() {
-
         albumSearch = onSearchTabSelected.getSearchView();
         searchResultCount = onSearchTabSelected.getSearchResultCount();
         progressBar = mainView.findViewById(R.id.album_search_filter_progress);
@@ -160,7 +161,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             @Override
             public void getPagingControllerCallBack(int page) {
                 if (albumSearch.getText().length() > 0) {
-                    albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), page);
+                    albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), page);
                 }
 
             }
@@ -207,7 +208,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
                 }
                 // user cleared search get default data
                 albumSearchList.clear();
-                albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString().trim(), 0);
+                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), 0);
                 Log.e(TAG,"search string: "+albumSearch.getText().toString());
 
         }
@@ -275,11 +276,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         // omar continuing filter implementation
         searchResultCount.setText(R.string.apply);
         searchResultCount.setVisibility(View.VISIBLE);
-        searchResultCount.setOnClickListener(v -> {
+        searchResultCount.setOnClickListener(v -> { //searchResultCount switched to Apply in case Filter was visible
             albumSearchList.clear();
             albumSearchAdapter.notifyDataSetChanged();
-            albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString(), searchFilterList, 0);
-            albumSearchPresenter.getAlbumSearch(albumSearch.getText().toString(), searchFilterList, 0);
+            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), searchFilterList, 0);
         });
     }
 
@@ -298,23 +298,42 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     }
 
     @Override
-    public void onFilterIconClicked() {
-        if (filterExpListView.getVisibility() == View.GONE || filterExpListView.getVisibility() == View.INVISIBLE) {
-            if (searchFilterList == null || searchFilterList.isEmpty())
+    public void onFilterIconClicked(CustomTextView filterIcon) {
+
+        if (filterExpListView.getVisibility() == View.GONE ) {
+//            if (searchFilterList != null && searchFilterList.size() >0) {
                 albumSearchPresenter.getSearchFilters();
-            else
+                filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_filter), null);
                 setSearchFilterView();
+//            }
         } else {
+            filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            filterExpListView.setVisibility(View.VISIBLE);
+            albumSearchRv.setVisibility(View.GONE);
+
             setAlbumSearchView();
         }
+
         searchResultCount.setVisibility(View.INVISIBLE);
     }
+
+//    @Override
+//    public void onFilterIconClicked(CustomTextView filterIcon) {
+//        if (filterExpListView.getVisibility() == View.GONE || filterExpListView.getVisibility() == View.INVISIBLE) {
+//            if (searchFilterList == null || searchFilterList.isEmpty())
+//                albumSearchPresenter.getSearchFilters();
+//            else
+//                setSearchFilterView();
+//        } else {
+//            setAlbumSearchView();
+//        }
+//        searchResultCount.setVisibility(View.INVISIBLE);
+//    }
+
 
     private void setAlbumSearchView() {
         filterExpListView.setVisibility(View.GONE);
         albumSearchRv.setVisibility(View.VISIBLE);
-        searchResultCount.setVisibility(View.VISIBLE);
-
         // omar continuing filter implementation
         searchResultCount.setText(new StringBuilder().append(this.albumSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
     }

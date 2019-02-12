@@ -2,16 +2,12 @@ package com.example.softmills.phlog.ui.login.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
-import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.view.LoginView;
 import com.jaychang.sa.AuthCallback;
 import com.jaychang.sa.SocialUser;
@@ -20,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -49,6 +44,7 @@ public class LoginPresenterImp implements LoginPresenter {
                     loginView.showMessage(loginResponse.loginData.fullName);
                     PrefUtils.setLoginState(context, true);
                     PrefUtils.setUserToken(context, loginResponse.loginData.token);
+                    PrefUtils.setUserID(context, loginResponse.loginData.id);
                     loginView.navigateToHome();
                     loginView.viewLoginProgress(false);
 
@@ -134,6 +130,7 @@ public class LoginPresenterImp implements LoginPresenter {
                     if (socialLoginResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         PrefUtils.setLoginState(context, true);
                         PrefUtils.setUserToken(context, socialLoginResponse.token);
+//                        PrefUtils.setUserID(context, socialLoginResponse.id);
                         loginView.navigateToHome();
                     }
                 }, throwable -> {

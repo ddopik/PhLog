@@ -11,7 +11,7 @@ import java.util.List;
 public interface AlbumSearchPresenter {
 
     void getSearchFilters();
-    void getAlbumSearch(String key,int page);
+    void getAlbumSearchQuery(String key, int page);
 
-    void getAlbumSearch(String s, List<SearchFilter> searchFilterList, int page);
+    void getAlbumSearchQuery(String s, List<SearchFilter> searchFilterList, int page);
 }

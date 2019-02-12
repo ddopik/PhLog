@@ -50,6 +50,7 @@
                 android:fontFamily="@font/arial_rounded_font"
                 android:gravity="center"
                 android:text="@string/album"
+                android:textAllCaps="true"
                 android:textAlignment="center"
                 android:textColor="@color/text_input_color"
                 android:textStyle="bold" />
@@ -64,6 +65,7 @@
                 android:fontFamily="@font/arial_rounded_font"
                 android:gravity="center"
                 android:text="@string/profile"
+                android:textAllCaps="true"
                 android:textAlignment="center"
                 android:textColor="@color/text_input_color"
                 android:textStyle="bold" />
@@ -78,6 +80,7 @@
                 android:fontFamily="@font/arial_rounded_font"
                 android:gravity="center"
                 android:text="@string/brand"
+                android:textAllCaps="true"
                 android:textAlignment="center"
                 android:textColor="@color/text_input_color"
                 android:textStyle="bold" />
@@ -108,7 +111,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/dp14"
-                android:drawableEnd="@drawable/ic_filter"
                 android:text="@string/filters"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium_s"

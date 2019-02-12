@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragment;
 import com.example.softmills.phlog.ui.search.view.brand.view.BrandSearchFragment;
 import com.example.softmills.phlog.ui.search.view.profile.view.ProfileSearchFragment;
@@ -21,7 +22,7 @@ import com.example.softmills.phlog.ui.search.view.profile.view.ProfileSearchFrag
 public class SearchActivity extends BaseActivity {
 
     private EditText searchView;
-    private TextView brandTab, profileTab, albumTab, filterTab, searchResult;
+    private CustomTextView brandTab, profileTab, albumTab, filterTab, searchResult;
     private FrameLayout searchContainer;
     private AlbumSearchFragment albumSearchFragment;
     private OnFilterClicked onFilterClicked;
@@ -106,7 +107,7 @@ public class SearchActivity extends BaseActivity {
 
         filterTab.setOnClickListener(v -> {
             if (onFilterClicked != null) {
-                onFilterClicked.onFilterIconClicked();
+                onFilterClicked.onFilterIconClicked(filterTab);
             }
         });
     }
@@ -151,6 +152,8 @@ public class SearchActivity extends BaseActivity {
     }
 
     public interface OnFilterClicked {
-        void onFilterIconClicked();
+        void onFilterIconClicked(CustomTextView filterTab);
+//        android:drawableEnd="@drawable/ic_filter"
+
     }
 }

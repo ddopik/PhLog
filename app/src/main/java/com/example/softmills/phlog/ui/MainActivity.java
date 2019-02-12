@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FloatingActionButton picImgHomeBtn;
     private Toolbar toolbar;
     private ImageButton backBtn;
-    public static NavigationManger navigationManger;
+    public  NavigationManger navigationManger;
 
 
     @Override

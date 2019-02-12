@@ -71,7 +71,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView,S
         socialProgress = mainView.findViewById(R.id.social_progress);
 
 
-        this.socialAdapter = new SocialAdapter(socialDataList,this);
+        this.socialAdapter = new SocialAdapter(socialDataList,getActivity(),this);
 
         socailRv.setAdapter(socialAdapter);
 

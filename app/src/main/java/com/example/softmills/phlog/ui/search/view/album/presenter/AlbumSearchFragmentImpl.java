@@ -54,7 +54,7 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getAlbumSearch(String key, int page) {
+    public void getAlbumSearchQuery(String key, int page) {
         albumSearchFragmentView.showFilterSearchProgress(true);
         BaseNetworkApi.getSearchAlbum(key, String.valueOf(page))
                 .subscribeOn(Schedulers.io())
@@ -70,7 +70,7 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getAlbumSearch(String s, List<SearchFilter> searchFilterList, int page) {
+    public void getAlbumSearchQuery(String s, List<SearchFilter> searchFilterList, int page) {
         int filterCount=0;
         Map<String,String> filtersMap=new HashMap<String, String>();
         for (int i=0;i<searchFilterList.size();i++){
