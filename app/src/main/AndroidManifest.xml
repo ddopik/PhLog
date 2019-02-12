@@ -27,7 +27,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.signup.view.SignUpActivity">
+        <activity android:name=".ui.signup.view.SignUpActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".ui.welcome.view.WelcomeActivity" >
