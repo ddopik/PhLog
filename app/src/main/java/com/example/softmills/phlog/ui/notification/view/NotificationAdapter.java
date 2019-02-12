@@ -38,7 +38,7 @@ import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_PROFILE;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
     private Context context;
-    public static final int itemType_SEPARATOR = 66;
+    public static final int itemType_NOTIFICATION_HEAD = 66;
     private List<NotificationResponse> notificationItemList;
 
     public NotificationAdapter(List<NotificationResponse> notificationItemList) {
@@ -64,6 +64,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         switch (notificationItemList.get(i).entityId) {
             case ENTITY_PROFILE: {
+                setSeparatorState(notificationViewHolder, notificationItemList.get(i), false);
                 bindItemPhotoGrapher(notificationViewHolder, notificationItemList.get(i).photographer);
                 break;
             }
@@ -84,12 +85,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 break;
             }
 
-            case itemType_SEPARATOR: {
+            case itemType_NOTIFICATION_HEAD: {
                 setSeparatorState(notificationViewHolder, notificationItemList.get(i), true);
                 break;
             }
         }
 
+        if ( notificationItemList.get(i).isRead !=null &&   !notificationItemList.get(i).isRead){
+            notificationViewHolder.notificationContainer.setBackgroundColor(context.getResources().getColor(R.color.gray400));
+        }else {
+            notificationViewHolder.notificationContainer.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+        }
 
     }
 
@@ -122,6 +128,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             context.startActivity(intent);
         });
+
 
     }
 

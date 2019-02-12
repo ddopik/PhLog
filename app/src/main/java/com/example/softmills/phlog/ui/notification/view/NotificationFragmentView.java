@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface NotificationFragmentView {
 
-    void viewNotification(NotificationSortedObj notificationSortedObj);
+    void viewNotification(List<NotificationResponse> notificationResponseList);
      void viewNotificationProgress(boolean state);
 }

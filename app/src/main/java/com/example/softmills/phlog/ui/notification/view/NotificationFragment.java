@@ -13,13 +13,13 @@ import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
-import com.example.softmills.phlog.ui.notification.model.NotificationSortedObj;
 import com.example.softmills.phlog.ui.notification.presenter.NotificationPresenter;
 import com.example.softmills.phlog.ui.notification.presenter.NotificationPresenterImp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+import static com.example.softmills.phlog.ui.notification.view.NotificationAdapter.itemType_NOTIFICATION_HEAD;
 
 /**
  * Created by abdalla_maged On Nov,2018
@@ -31,9 +31,7 @@ public class NotificationFragment extends BaseFragment implements NotificationFr
     private NotificationPresenter notificationPresenter;
     private NotificationAdapter notificationAdapter;
     private PagingController pagingController;
-    private List<NotificationResponse> allNotificationResponseList = new ArrayList<>();
-    private List<NotificationResponse> recentNotificationResponseList = new ArrayList<>();
-    private List<NotificationResponse> oldNotificationResponseList = new ArrayList<>();
+
     private List<NotificationResponse> notificationResponseList = new ArrayList<>();
     @Nullable
     @Override
@@ -70,6 +68,10 @@ public class NotificationFragment extends BaseFragment implements NotificationFr
 
         notificationRv = mainView.findViewById(R.id.notification_rv);
         notificationProgress = mainView.findViewById(R.id.notification_progress);
+        NotificationResponse notificationResponse=new NotificationResponse();
+        notificationResponse.message=getContext().getResources().getString(R.string.earlier);
+        notificationResponse.entityId= itemType_NOTIFICATION_HEAD;
+        notificationResponseList.add(notificationResponse);
         notificationAdapter = new NotificationAdapter(notificationResponseList);
         notificationRv.setAdapter(notificationAdapter);
 
@@ -85,30 +87,9 @@ public class NotificationFragment extends BaseFragment implements NotificationFr
     }
 
     @Override
-    public void viewNotification(NotificationSortedObj notificationSortedObj) {
+    public void viewNotification(List<NotificationResponse> notificationResponseList) {
 
-        this.notificationResponseList.clear();
-        NotificationResponse notificationResponse = new NotificationResponse();
-        notificationResponse.entityId = NotificationAdapter.itemType_SEPARATOR;
-
-        this.recentNotificationResponseList.addAll(notificationSortedObj.newNotificationList);
-        this.oldNotificationResponseList.addAll(notificationSortedObj.oldNotificationList);
-
-        if (oldNotificationResponseList.size() > 0) {
-
-            notificationResponse.message = Objects.requireNonNull(getActivity()).getString(R.string.old);
-            oldNotificationResponseList.set(0, notificationResponse);
-        }
-
-        notificationResponseList.addAll(recentNotificationResponseList);
-        notificationResponseList.addAll(oldNotificationResponseList);
-
-
-        if (recentNotificationResponseList.size() > 0) {
-            notificationResponse.message = Objects.requireNonNull(getActivity()).getString(R.string.recent);
-            notificationResponseList.set(0, notificationResponse);
-        }
-
+        this.notificationResponseList.addAll(notificationResponseList);
         notificationAdapter.notifyDataSetChanged();
 
 

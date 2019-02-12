@@ -166,5 +166,6 @@
     <string name="hosted_by_value">Hosted by %1$s</string>
     <string name="recent">Recent</string>
     <string name="old">old</string>
+    <string name="earlier">Earlier</string>
 
 </resources>

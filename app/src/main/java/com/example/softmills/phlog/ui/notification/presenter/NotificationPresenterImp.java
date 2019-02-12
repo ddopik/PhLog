@@ -40,14 +40,7 @@ public class NotificationPresenterImp implements NotificationPresenter {
                 .subscribe(notificationResponse -> {
 
 
-                    getOldNotification(notificationResponse).subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(mNotificationResponse -> {
-                                notificationFragmentView.viewNotification(mNotificationResponse);
-                             }, throwable -> {
-
-                            });
-
+                    notificationFragmentView.viewNotification(notificationResponse);
                     notificationFragmentView.viewNotificationProgress(false);
 
                 }, throwable -> {
@@ -56,25 +49,25 @@ public class NotificationPresenterImp implements NotificationPresenter {
                 });
     }
 
-    public Observable<NotificationSortedObj> getOldNotification(List<NotificationResponse> notificationResponseList) {
-        return Observable.create(listObservableEmitter -> {
-            NotificationSortedObj notificationSortedObj = new NotificationSortedObj();
-
-            notificationSortedObj.oldNotificationList = new ArrayList<>();
-            notificationSortedObj.newNotificationList = new ArrayList<>();
-
-            for (NotificationResponse notificationResponse : notificationResponseList) {
-                if (notificationResponse.isRead) {
-                    notificationSortedObj.oldNotificationList.add(notificationResponse);
-                } else {
-                    notificationSortedObj.newNotificationList.add(notificationResponse);
-                }
-            }
-
-            listObservableEmitter.onNext(notificationSortedObj);
-            listObservableEmitter.onComplete();
-        });
-    }
+//    public Observable<NotificationSortedObj> getOldNotification(List<NotificationResponse> notificationResponseList) {
+//        return Observable.create(listObservableEmitter -> {
+//            NotificationSortedObj notificationSortedObj = new NotificationSortedObj();
+//
+//            notificationSortedObj.oldNotificationList = new ArrayList<>();
+//            notificationSortedObj.newNotificationList = new ArrayList<>();
+//
+//            for (NotificationResponse notificationResponse : notificationResponseList) {
+//                if (notificationResponse.isRead) {
+//                    notificationSortedObj.oldNotificationList.add(notificationResponse);
+//                } else {
+//                    notificationSortedObj.newNotificationList.add(notificationResponse);
+//                }
+//            }
+//
+//            listObservableEmitter.onNext(notificationSortedObj);
+//            listObservableEmitter.onComplete();
+//        });
+//    }
 
 
 
