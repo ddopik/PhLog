@@ -9,14 +9,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.base.commonmodel.Brand;
+import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 
 import java.util.List;
@@ -32,11 +31,11 @@ public class PhotoGrapherFollowingBrandAdapter extends RecyclerView.Adapter<Phot
 
     private String TAG = PhotoGrapherFollowingBrandAdapter.class.getSimpleName();
     public Context context;
-    private List<Brand> brandList;
+    private List<Business> brandList;
     //    private List<BrandSearch> brandFiltered;
     public BrandAdapterListener brandAdapterListener;
 
-    public PhotoGrapherFollowingBrandAdapter(List<Brand> brandList) {
+    public PhotoGrapherFollowingBrandAdapter(List<Business> brandList) {
 
         this.brandList = brandList;
 //        this.brandFiltered = brandList;
@@ -172,7 +171,7 @@ public class PhotoGrapherFollowingBrandAdapter extends RecyclerView.Adapter<Phot
 
 
     public interface BrandAdapterListener {
-        void onBrandSelected(Brand brand);
+        void onBrandSelected(Business brand);
 
     }
 }

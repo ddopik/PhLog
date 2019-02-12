@@ -19,12 +19,10 @@ import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.security.AccessController.getContext;
-
 /**
  * Created by abdalla_maged On Dec,2018
  */
-public class BrandCampaignsActivity extends BaseActivity implements BrandCampaignsView {
+public class BrandActivity extends BaseActivity implements BrandCampaignsView {
 
 
     public static String BRAND_ID="brand_id";
@@ -78,7 +76,7 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
         allCampaignsAdapter.campaignLister = new AllCampaignsAdapter.CampaignLister() {
             @Override
             public void onCampaignClicked(String campaignID) {
-                Intent intent = new Intent(BrandCampaignsActivity.this, CampaignInnerActivity.class);
+                Intent intent = new Intent(BrandActivity.this, CampaignInnerActivity.class);
                 intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(campaignID));
                 startActivity(intent);
             }

@@ -2,6 +2,7 @@ package com.example.softmills.phlog.ui.social.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
     private Context context;
     private List<SocialData> socialDataList;
-    public OnSocialItemListener onSocialItemListener;
+    private OnSocialItemListener onSocialItemListener;
     private SocialAdapterProfileViewController socialAdapterProfileViewController;
     private SocialAdapterCampaignViewController socialAdapterCampaignViewController;
     private SocialAdapterAlbumViewController socialAdapterAlbumViewController;
@@ -44,8 +45,9 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     private SocialAdapterBrandController socialAdapterBrandController;
 
 
-    public SocialAdapter(List<SocialData> socialDataList) {
+    public SocialAdapter(List<SocialData> socialDataList,OnSocialItemListener onSocialItemListener) {
         this.socialDataList = socialDataList;
+        this.onSocialItemListener=onSocialItemListener;
     }
 
     @NonNull
@@ -61,7 +63,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     public void onBindViewHolder(@NonNull SocialViewHolder socialViewHolder, int i) {
 
         if (socialDataList.size() >0)
-         switch (socialDataList.get(i).storyId) {
+         switch (socialDataList.get(i).entityId) {
 
             case ENTITY_PROFILE: {
                 socialAdapterProfileViewController = new SocialAdapterProfileViewController(context);
@@ -102,18 +104,19 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
     class SocialViewHolder extends RecyclerView.ViewHolder {
 
-        FrameLayout socialProfileType3, socialImageSliderType5, socialCampaignType1, socialBrandType1,socialAlbumType4;
+        View socialProfileType3,socialImageSliderType5, socialCampaignType1, socialBrandType1,socialAlbumType4;
 
-        ImageView socialProfileIcon, socialProfileImg_1, socialProfileImg_2, socialProfileImg_3, socialProfileImg_4;
-        TextView socialProfileFullName, socialProfileUserName;
-        Button followSocialProfile;
-        LinearLayout socialProfileContainer;
+        ImageView socialProfileType3Icon, socialProfileType3Img_1, socialProfileType3Img_2, socialProfileType3Img_3, socialProfileType3Img_4,socialProfileType3ImgContainer,socialDefaultAlbumImg;
+        TextView socialProfileType3FullName,socialProfileType3UserName;
+        Button followSocialProfileType3Btn;
+        LinearLayout socialAlbumImgGroupContainer;
+
         /////
         CustomRecyclerView socialImgSlideRv;
-        ImageView socialItemSliderIcon;
+
         TextView socialImageName;
         /////
-        LinearLayout socailCampaignConatainer;
+        LinearLayout socialCampaignContainer;
         ImageView socialCampaignIcon, socialCampaignImg;
         TextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft;
         Button socialJoinCampaignBtn;
@@ -122,35 +125,27 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         TextView socialBrandName, socialBrandFollowing;
         Button followBrandBtn;
         /////
-        ImageView socialAlbumIconImg,socialAlbum1,socialAlbum2,socialAlbum3;
+        ImageView socialAlbum1,socialAlbum2,socialAlbum3;
         TextView socialAlbumName,socialAlbumPhotosNumber;
+
 
 
         SocialViewHolder(View view) {
             super(view);
-
-
             socialProfileType3 = view.findViewById(R.id.social_profile_type_3);
             socialImageSliderType5 = view.findViewById(R.id.images_slider_type_5);
             socialCampaignType1 = view.findViewById(R.id.social_campaign_type_1);
             socialBrandType1 = view.findViewById(R.id.social_brand_type_1);
             socialAlbumType4 = view.findViewById(R.id.social_album_type_4);
-            /////profileItemView type_1
-            socialProfileIcon = view.findViewById(R.id.social_profile_icon_img);
-            socialProfileFullName = view.findViewById(R.id.social_profile_full_name);
-            socialProfileUserName = view.findViewById(R.id.social_profile_user_name);
-            followSocialProfile = view.findViewById(R.id.follow_social_profile);
-            socialProfileImg_1 = view.findViewById(R.id.social_profile_img_1);
-            socialProfileImg_2 = view.findViewById(R.id.social_profile_img_2);
-            socialProfileImg_3 = view.findViewById(R.id.social_profile_img_3);
-            socialProfileImg_4 = view.findViewById(R.id.social_profile_img_4);
-            socialProfileContainer = view.findViewById(R.id.social_profile_container);
+
+
+            setProfileReferences(view);
+
             /////ImageSlider type_1
             socialImgSlideRv = view.findViewById(R.id.social_img_slider_rv);
-            socialItemSliderIcon = view.findViewById(R.id.social_icon_img);
-            socialImageName = view.findViewById(R.id.social_image_name);
+             socialImageName = view.findViewById(R.id.social_image_name);
             /////CampaignItemView
-            socailCampaignConatainer = view.findViewById(R.id.social_campaign_container);
+            socialCampaignContainer = view.findViewById(R.id.social_campaign_container);
             socialCampaignIcon = view.findViewById(R.id.social_campaign_icon);
             socialCampaignName = view.findViewById(R.id.social_campaign_name);
             socialCampaignImg = view.findViewById(R.id.social_campaign_img);
@@ -164,16 +159,33 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialBrandFollowing = view.findViewById(R.id.social_brand_following);
             followBrandBtn = view.findViewById(R.id.follow_brand);
             /////BrandAlbumView
-            socialAlbumIconImg=view.findViewById(R.id.social_album_icon_img);
-            socialAlbumName=view.findViewById(R.id.social_album_name);
+             socialAlbumName=view.findViewById(R.id.social_album_name);
             socialAlbumPhotosNumber=view.findViewById(R.id.social_album_photos_number);
             socialAlbum1=view.findViewById(R.id.social_album_img_1);
             socialAlbum2=view.findViewById(R.id.social_album_img_2);
             socialAlbum3=view.findViewById(R.id.social_album_img_3);
+            socialAlbumImgGroupContainer=view.findViewById(R.id.social_album_img_group_container); //fill default Img
+            socialDefaultAlbumImg=view.findViewById(R.id.album_img_container); //fill default Img
 
 
 
 
+
+
+        }
+        private void setProfileReferences(View view){
+
+
+            /////profileItemView type_1
+            socialProfileType3Icon = view.findViewById(R.id.social_profile_type_3_icon_img);
+            socialProfileType3FullName = view.findViewById(R.id.social_profile_full_name);
+            socialProfileType3UserName = view.findViewById(R.id.social_profile_user_name);
+            followSocialProfileType3Btn = view.findViewById(R.id.follow_social_profile);
+            socialProfileType3Img_1 = view.findViewById(R.id.social_profile_img_1);
+            socialProfileType3Img_2 = view.findViewById(R.id.social_profile_img_2);
+            socialProfileType3Img_3 = view.findViewById(R.id.social_profile_img_3);
+            socialProfileType3Img_4 = view.findViewById(R.id.social_profile_img_4);
+             socialProfileType3ImgContainer =view.findViewById(R.id.social_profile_type_3_img_container);
 
 
         }
@@ -182,28 +194,25 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     public interface OnSocialItemListener {
 
 
-        void onSocialCampaignClicked(SocialData socialData);
 
-        void onSocialFollowCampaignClicked(SocialData socialData);
 
-        void onSocialSlideImageClicked(SocialData socialData);
+        void onSocialCampaignJoined(int campaignId, boolean state);
 
-        void onSocialBrandClicked(SocialData socialData);
 
-        void onSocialBrandFollowClicked(SocialData socialData);
-    }
+
+        void onSocialPhotoGrapherFollowed(int photographerId,boolean state);
+
+        void onSocialBrandFollowed(int brandId,boolean state);
+
+
+     }
 
     private void bindProfileEntity(SocialData socialData, SocialViewHolder socialViewHolder) {
 
         switch (socialData.displayType) {
 
             case PROFILE_DISPLAY_TYPE_3:
-                SocialAdapterProfileViewController.OnSocialAdapterProfileViewListener onSocialAdapterProfileViewListener= state -> {
-                    socialData.profiles.get(0).isFollow=state;
-                    socialData.profiles.set(0,socialData.profiles.get(0));
-                    notifyDataSetChanged();
-                };
-                socialAdapterProfileViewController.setProfileType3(socialData.profiles.get(0), socialViewHolder,onSocialAdapterProfileViewListener );
+                socialAdapterProfileViewController.setProfileType3(socialData.profiles.get(0), socialViewHolder,onSocialItemListener );
                 break;
         }
 
@@ -245,10 +254,12 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         switch (socialData.displayType) {
 
             case ALBUM_DISPLAY_TYPE_4: {
-//                socialAdapterAlbumViewController.setAlbumViewType4(socialViewHolder, socialData, onSocialItemListener);
+                socialAdapterAlbumViewController.setAlbumViewType4(socialViewHolder, socialData, onSocialItemListener);
                 break;
             }
         }
     }
+
+
 
 }

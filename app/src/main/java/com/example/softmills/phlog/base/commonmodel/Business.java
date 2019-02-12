@@ -72,8 +72,7 @@ public class Business extends MentionedUser implements Parcelable {
     @SerializedName("brand_address")
     public String brandAddress;
 
-    @SerializedName("image_cover")
-    public String brandImageCover;
+
 
     @SerializedName("level")
     public int level;
@@ -96,6 +95,18 @@ public class Business extends MentionedUser implements Parcelable {
     @SerializedName("name_en")
     public String nameEn;
 
+    @SerializedName("image_cover")
+    @Expose
+    public String imageCover;
+
+
+    @SerializedName("is_follow")
+    @Expose
+    public Boolean isFollow;
+
+
+    public Business() {
+    }
 
     @Override
     public int describeContents() {
@@ -105,7 +116,8 @@ public class Business extends MentionedUser implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
-         dest.writeString(this.thumbnail);
+        dest.writeString(this.thumbnail);
+        dest.writeString(this.fullName);
         dest.writeString(this.website);
         dest.writeByte(this.isPhoneVerified ? (byte) 1 : (byte) 0);
         dest.writeString(this.userName);
@@ -117,26 +129,25 @@ public class Business extends MentionedUser implements Parcelable {
         dest.writeString(this.isBrandText);
         dest.writeString(this.updatedAt);
         dest.writeInt(this.rate);
-         dest.writeString(this.firstName);
+        dest.writeString(this.firstName);
         dest.writeString(this.email);
         dest.writeString(this.brandPhone);
         dest.writeString(this.brandAddress);
-        dest.writeString(this.brandImageCover);
-        dest.writeInt(this.level);
+         dest.writeInt(this.level);
         dest.writeString(this.lastName);
         dest.writeInt(this.brandStatus);
         dest.writeInt(this.followingsCount);
         dest.writeString(this.phone);
         dest.writeInt(this.followersCount);
         dest.writeString(this.nameEn);
-    }
-
-    public Business() {
+        dest.writeString(this.imageCover);
+        dest.writeValue(this.isFollow);
     }
 
     protected Business(Parcel in) {
         this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-         this.thumbnail = in.readString();
+        this.thumbnail = in.readString();
+        this.fullName = in.readString();
         this.website = in.readString();
         this.isPhoneVerified = in.readByte() != 0;
         this.userName = in.readString();
@@ -148,21 +159,22 @@ public class Business extends MentionedUser implements Parcelable {
         this.isBrandText = in.readString();
         this.updatedAt = in.readString();
         this.rate = in.readInt();
-         this.firstName = in.readString();
+        this.firstName = in.readString();
         this.email = in.readString();
         this.brandPhone = in.readString();
         this.brandAddress = in.readString();
-        this.brandImageCover = in.readString();
-        this.level = in.readInt();
+         this.level = in.readInt();
         this.lastName = in.readString();
         this.brandStatus = in.readInt();
         this.followingsCount = in.readInt();
         this.phone = in.readString();
         this.followersCount = in.readInt();
         this.nameEn = in.readString();
+        this.imageCover = in.readString();
+        this.isFollow = (Boolean) in.readValue(Boolean.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Business> CREATOR = new Parcelable.Creator<Business>() {
+    public static final Creator<Business> CREATOR = new Creator<Business>() {
         @Override
         public Business createFromParcel(Parcel source) {
             return new Business(source);
@@ -173,5 +185,4 @@ public class Business extends MentionedUser implements Parcelable {
             return new Business[size];
         }
     };
-
 }

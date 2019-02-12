@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
-import com.example.softmills.phlog.ui.social.model.SocialData;
 
 import java.util.List;
 
@@ -23,8 +22,8 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
     private Context context;
     private List<BaseImage> imageList;
     public OnSocialSliderImgClick onSocialSliderImgClick;
-    public SocialImagesAdapter(SocialData socialData) {
-        this.imageList = socialData.photos;
+    public SocialImagesAdapter(List<BaseImage> imageList) {
+        this.imageList = imageList;
     }
 
     @NonNull
@@ -38,6 +37,7 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SocialImageViewHolder socialImageViewHolder, int i) {
+        if (imageList.get(i).url !=null && !imageList.get(i).url.equals("")){
         GlideApp.with(context)
                 .load(imageList.get(i).url)
                 .placeholder(R.drawable.default_photographer_profile)
@@ -45,9 +45,10 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
                 .into(socialImageViewHolder.sliderImage);
         if (onSocialSliderImgClick != null) {
             socialImageViewHolder.sliderImage.setOnClickListener((View.OnClickListener) v -> {
-                onSocialSliderImgClick.onSocialSliderImgCliked(imageList.get(i));
+                onSocialSliderImgClick.onSocialSliderImfClicked(imageList.get(i));
 
             });
+        }
         }
     }
 
@@ -66,6 +67,6 @@ public class SocialImagesAdapter extends RecyclerView.Adapter<SocialImagesAdapte
     }
 
     interface OnSocialSliderImgClick {
-        void onSocialSliderImgCliked(BaseImage img);
+        void onSocialSliderImfClicked(BaseImage img);
     }
 }

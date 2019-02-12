@@ -12,7 +12,11 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.Business;
+import com.example.softmills.phlog.base.commonmodel.Campaign;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 import com.example.softmills.phlog.ui.social.presenter.SocailFragmentPresenterImpl;
@@ -22,7 +26,9 @@ import com.example.softmills.phlog.ui.social.view.adapter.SocialAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SocialFragment extends BaseFragment implements SocialFragmentView {
+import static com.example.softmills.phlog.Utiltes.Constants.SOCIAL_FRAGMENT_PAGING_THRESHOLD;
+
+public class SocialFragment extends BaseFragment implements SocialFragmentView,SocialAdapter.OnSocialItemListener {
 
     private View mainView;
     private EditText homeSearch;
@@ -31,6 +37,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
     private SocialFragmentPresenter socialFragmentPresenter;
     private SocialAdapter socialAdapter;
     private List<SocialData> socialDataList = new ArrayList<>();
+    private PagingController pagingController;
 
     @Nullable
     @Override
@@ -47,7 +54,8 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
         initPresenter();
         initViews();
         initListener();
-        socialFragmentPresenter.getSocialData();
+        socialFragmentPresenter.getSocialData(true);
+
     }
 
 
@@ -63,7 +71,8 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
         socialProgress = mainView.findViewById(R.id.social_progress);
 
 
-        this.socialAdapter = new SocialAdapter(socialDataList);
+        this.socialAdapter = new SocialAdapter(socialDataList,this);
+
         socailRv.setAdapter(socialAdapter);
 
 
@@ -72,52 +81,17 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
     private void initListener(){
         homeSearch.setOnClickListener((v)->{
             Intent intent=new Intent(getActivity(), SearchActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });
 
-        socialAdapter.onSocialItemListener = new SocialAdapter.OnSocialItemListener() {
-
-
-            @Override
-            public void onSocialCampaignClicked(SocialData socialData) {
-//                Intent intent = new Intent(getActivity(), CampaignInnerActivity.class);
-//                intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID,String.valueOf(source.id));
-//                startActivity(intent);
-            }
+        pagingController=new PagingController(socailRv, SOCIAL_FRAGMENT_PAGING_THRESHOLD) {
 
             @Override
-            public void onSocialFollowCampaignClicked(SocialData socialData) {
-//                socialFragmentPresenter.joinSocialCampaign(String.valueOf(source.id));
-            }
-
-            @Override
-            public void onSocialSlideImageClicked(SocialData socialData) {
-//                Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
-//                List<BaseImage> albumImgList = new ArrayList<>();
-//                for (int i = 0; i < source.imgs.size(); i++) {
-//                    BaseImage albumImg = new BaseImage();
-//                    albumImg.url = source.imgs.get(i);
-//                    albumImgList.add(albumImg);
-//                }
-//                intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
-//                intent.putExtra(SELECTED_IMG_ID, source.id);
-//                startActivity(intent);
-            }
-
-            @Override
-            public void onSocialBrandClicked(SocialData socialData) {
-//                Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
-//                intent.putExtra(BrandInnerActivity.BRAND_ID, String.valueOf(source.id));
-//                startActivity(intent);
-            }
-
-            @Override
-            public void onSocialBrandFollowClicked(SocialData socialData) {
-//                socialFragmentPresenter.followSocialBrand(String.valueOf(source.id));
+            public void getPagingControllerCallBack(int page) {
+                socialFragmentPresenter.getSocialData(false);
             }
         };
-
-
     }
 
     @Override
@@ -135,6 +109,54 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView {
             socialProgress.setVisibility(View.GONE);
         }
     }
+
+
+
+
+    @Override
+    public void onSocialCampaignJoined(int campaignId, boolean state) {
+        for (SocialData socialData : socialDataList) {
+            if (socialData.campaigns != null && socialData.campaigns.size() > 0)
+                for (Campaign campaign : socialData.campaigns) {
+                    if (campaignId == campaign.id) {
+                        campaign.isJoined = state;
+                    }
+                }
+        }
+        socialAdapter.notifyDataSetChanged();
+    }
+
+
+
+
+    @Override
+    public void onSocialPhotoGrapherFollowed(int userId, boolean state) {
+        for (SocialData socialData : socialDataList) {
+            if (socialData.profiles != null && socialData.profiles.size() > 0)
+                for (Photographer photographer : socialData.profiles) {
+                    if (photographer.id.equals(userId)) {
+                        photographer.isFollow = state;
+                    }
+                }
+        }
+        socialAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onSocialBrandFollowed(int brandId, boolean state) {
+        for (SocialData socialData : socialDataList) {
+            if (socialData.brands != null && socialData.brands.size() > 0)
+                for (Business business : socialData.brands) {
+                    if (business.id.equals(brandId)) {
+                        business.isFollow = state;
+                    }
+                }
+        }
+        socialAdapter.notifyDataSetChanged();
+    }
+
+
 
     @Override
     public void showMessage(String msg) {

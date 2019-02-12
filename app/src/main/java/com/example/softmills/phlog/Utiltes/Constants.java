@@ -11,6 +11,7 @@ public interface Constants {
     int REQUEST_CODE_LOCATION = 1225;
 //    String  DEFAULT_PROFILE_IMAGE =1225;
 
+    int SOCIAL_FRAGMENT_PAGING_THRESHOLD =15;
 
     int QUERY_SEARCH_TIME_OUT = 600;
 
@@ -26,10 +27,10 @@ public interface Constants {
     }
 
     ///////////////////////Entity-type For socialFragment
-    int ENTITY_PROFILE=14;
-    int ENTITY_CAMPAIGN=11;
-    int ENTITY_ALBUM=3;
-    int ENTITY_IMAGE=4;
+    int ENTITY_PROFILE=1;
+    int ENTITY_CAMPAIGN=2;
+    int ENTITY_ALBUM=4;
+    int ENTITY_IMAGE=3;
     int ENTITY_BRAND=5;
     ///////////////Entity Display-types
     String PROFILE_DISPLAY_TYPE_1 = "101";

@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
-import com.example.softmills.phlog.base.commonmodel.Brand;
+import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
@@ -51,7 +51,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private CustomRecyclerView searchBrandRv;
     private ProgressBar searchBrandProgress;
     private BrandSearchAdapter brandSearchAdapter;
-    private List<Brand> brandSearchList = new ArrayList<>();
+    private List<Business> brandSearchList = new ArrayList<>();
     private BrandSearchFragmentPresenter brandSearchFragmentPresenter;
     private PagingController pagingController;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -177,7 +177,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     }
 
     @Override
-    public void viewBrandSearchItems(List<Brand> brandSearchList) {
+    public void viewBrandSearchItems(List<Business> brandSearchList) {
         this.brandSearchList.addAll(brandSearchList);
         brandSearchAdapter.notifyDataSetChanged();
         searchResultCount.setVisibility(View.VISIBLE);

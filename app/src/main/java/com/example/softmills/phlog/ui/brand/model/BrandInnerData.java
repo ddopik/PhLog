@@ -1,13 +1,11 @@
 package com.example.softmills.phlog.ui.brand.model;
 
-import com.example.softmills.phlog.base.commonmodel.Brand;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.example.softmills.phlog.base.commonmodel.Business;
 
 /**
  * Created by abdalla_maged on 11/12/2018.
  */
 public class BrandInnerData {
 
-    public Brand brand;
+    public Business brand;
 }

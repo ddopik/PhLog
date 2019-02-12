@@ -90,6 +90,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
             public void onCampaignClicked(String campaignID) {
                 Intent intent = new Intent(getContext(), CampaignInnerActivity.class);
                 intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(campaignID));
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
 

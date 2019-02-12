@@ -53,6 +53,7 @@
     <!--//Notification_ViewHolders-->
     <dimen name="notification_card_height">75dp</dimen>
     <dimen name="notification_card_height_m">95dp</dimen>
+    <dimen name="notification_item_icon_size_m">50dp</dimen>
 
 
     <!--///SignUpActivity-->
@@ -164,8 +165,8 @@
     <dimen name="social_img_slider_h">280dp</dimen>
     <dimen name="social_profile_img_w">300dp</dimen>
     <dimen name="social_album_icon_w">200dp</dimen>
-    <dimen name="social_album_icon_h">75dp</dimen>
-    <dimen name="social_album_icon_h_xl">154dp</dimen>
+    <dimen name="social_album_icon_h">90dp</dimen>
+    <dimen name="social_album_icon_h_xl">185dp</dimen>
     <dimen name="bottom_bar_item_padding">2dp</dimen>
     <dimen name="comment_header_photo_h">300dp</dimen>
     <dimen name="search_bar_radius">10dp</dimen>

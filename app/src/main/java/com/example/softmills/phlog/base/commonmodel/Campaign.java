@@ -58,9 +58,10 @@ public class Campaign {
     @Expose
     public String noWinners;
     @SerializedName("is_joined")
+    public boolean isJoined;
     @Expose
-    public Boolean isJoined;
     @SerializedName("photos_count")
     public int photosCount;
+
 
 }

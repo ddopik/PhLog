@@ -1,7 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.brand.model;
 
-import com.example.softmills.phlog.base.commonmodel.Brand;
-import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
+import com.example.softmills.phlog.base.commonmodel.Business;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,7 +15,7 @@ public class BrandSearchData {
     public Integer currentPage;
     @SerializedName("data")
     @Expose
-    public List<Brand> data = null;
+    public List<Business> data = null;
     @SerializedName("first_page_url")
     @Expose
     public String firstPageUrl;

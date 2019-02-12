@@ -13,13 +13,12 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
-import com.example.softmills.phlog.base.commonmodel.Brand;
+import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.presenter.PhotoGrapherBrandPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.presenter.PhotoGrapherBrandPresenterImpl;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.PhotoGrapherFollowFragment;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 
@@ -44,7 +43,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
     private ProgressBar photographerBrandSearchProgressBar;
     private EditText searchPhotographerBrand;
     private PhotoGrapherFollowingBrandAdapter photoGrapherFollowingBrandAdapter;
-    private List<Brand> photographerFollowingBrands = new ArrayList<>();
+    private List<Business> photographerFollowingBrands = new ArrayList<>();
     private PagingController pagingController;
     private CompositeDisposable disposable = new CompositeDisposable();
     private PhotoGrapherBrandPresenter photoGrapherBrandPresenter;
@@ -149,7 +148,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
 
 
     @Override
-    public void viewPhotoGrapherFollowingBrand(List<Brand> brandSearchList) {
+    public void viewPhotoGrapherFollowingBrand(List<Business> brandSearchList) {
         this.photographerFollowingBrands.addAll(brandSearchList);
         photoGrapherFollowingBrandAdapter.notifyDataSetChanged();
 
