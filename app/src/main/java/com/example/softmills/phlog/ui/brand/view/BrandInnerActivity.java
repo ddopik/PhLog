@@ -46,7 +46,6 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         if (getIntent().getStringExtra(BRAND_ID) != null) {
             initPresenter();
             initView();
-            intiListeners();
             brandInnerPresenter.getBrandInnerData(getIntent().getStringExtra(BRAND_ID));
         }
     }
@@ -119,6 +118,8 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
             } else {
                 followBrandBtn.setText(getResources().getString(R.string.follow));
             }
+
+            intiListeners();
 //        if (brand.email != null) {
 //            brandWebsite.setText(brand.email);
 //

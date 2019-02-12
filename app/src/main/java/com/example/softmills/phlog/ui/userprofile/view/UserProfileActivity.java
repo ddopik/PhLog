@@ -108,6 +108,10 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
                 }
 
         });
+
+        userProfilePhotosAdapter.photoAction= photoGrapherSavedPhoto -> {
+
+        };
     }
 
     @Override

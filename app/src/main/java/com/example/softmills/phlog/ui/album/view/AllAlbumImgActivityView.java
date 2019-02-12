@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.album.view;
 
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 
 import java.util.List;
 
@@ -13,4 +14,7 @@ public interface AllAlbumImgActivityView  {
 
     void viewAlbumImageList(List<BaseImage> albumImgList);
     void viewAlbumImageListProgress(boolean state);
+
+    void onImageSavedToProfile(BaseImage baseImage,boolean state);
+    void onImagePhotoGrapherFollowed(BaseImage baseImage ,boolean state);
 }

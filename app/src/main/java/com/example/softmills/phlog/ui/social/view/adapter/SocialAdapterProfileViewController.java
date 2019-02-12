@@ -92,7 +92,7 @@ public class SocialAdapterProfileViewController {
 
 
 
-        BaseNetworkApi.getUserProfilePhotos(PrefUtils.getUserToken(context), String.valueOf(photographer.id), 0)
+        BaseNetworkApi.getUserProfilePhotos( String.valueOf(photographer.id), 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {

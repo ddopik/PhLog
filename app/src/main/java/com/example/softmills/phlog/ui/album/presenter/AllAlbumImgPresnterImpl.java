@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivityView;
 
@@ -43,8 +44,40 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
     }
 
 
+    @SuppressLint("CheckResult")
     @Override
-    public void downLoadPhoto(int photoID) {
+    public void saveToProfileImage(BaseImage baseImage) {
+        allAlbumImgActivityView.viewAlbumImageListProgress(true);
+        BaseNetworkApi.savePhoto(baseImage.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(savePhotoResponse -> {
+                    allAlbumImgActivityView.onImageSavedToProfile(baseImage, true);
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                }, throwable -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+
+                });
+
+
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void followImagePhotoGrapher(BaseImage baseImage) {
+        allAlbumImgActivityView.viewAlbumImageListProgress(true);
+
+        BaseNetworkApi.followUser(String.valueOf(baseImage.photographer.id))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followUserResponse -> {
+                    allAlbumImgActivityView.onImagePhotoGrapherFollowed(baseImage, true);
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                });
 
     }
 }

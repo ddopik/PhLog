@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_time_white"
                     android:drawablePadding="@dimen/campaign_drawable_padding"
-                    android:gravity="bottom"
+                    android:gravity="center"
                     android:textColor="@color/white"
                     tools:text="5 day left" />
 

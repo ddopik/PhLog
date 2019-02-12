@@ -41,7 +41,7 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
     @Override
     public void getUserPhotos(String userID, int page) {
         userProfileActivityView.viewUserPhotosProgress(true);
-        BaseNetworkApi.getUserProfilePhotos(PrefUtils.getUserToken(context), userID, page)
+        BaseNetworkApi.getUserProfilePhotos( userID, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {

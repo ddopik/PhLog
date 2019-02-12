@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants.PhotosListType;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
@@ -27,6 +28,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     public static String ALBUM_ID = "album_id";
     public static String ALL_ALBUM_IMAGES = "album_list";
     public static String SELECTED_IMG_ID = "selected_img_id";
+    public static String LIST_TYPE = "list_type";
     private AllAlbumImgAdapter allAlbumImgAdapter;
     private List<BaseImage> albumImgList = new ArrayList<>();
     private ProgressBar albumImgProgress;
@@ -47,7 +49,8 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         if (getIntent().getParcelableArrayListExtra(ALL_ALBUM_IMAGES) != null) {
             this.albumImgList = getIntent().<BaseImage>getParcelableArrayListExtra(ALL_ALBUM_IMAGES);
             int selectedPosition = getIntent().getIntExtra(SELECTED_IMG_ID,0);
-        allAlbumImgAdapter = new AllAlbumImgAdapter(albumImgList);
+            PhotosListType photosListType = (PhotosListType) getIntent().getSerializableExtra(LIST_TYPE);
+            allAlbumImgAdapter = new AllAlbumImgAdapter(albumImgList, photosListType);
         albumImgProgress = findViewById(R.id.album_img_list_progress_bar);
         CustomRecyclerView allAlbumImgRv = findViewById(R.id.album_img_list_rv);
         allAlbumImgRv.setAdapter(allAlbumImgAdapter);
@@ -84,6 +87,11 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         allAlbumImgPresnter=new AllAlbumImgPresnterImpl(this,this);
     }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
     private void initListener() {
 
         allAlbumImgAdapter.onAlbumImgClicked = new AllAlbumImgAdapter.OnAlbumImgClicked() {
@@ -109,10 +117,16 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             }
 
             @Override
-            public void onAlbumImgDownloadClick(BaseImage albumImg) {
+            public void onAlbumImgSaveClick(BaseImage albumImg) {
+                allAlbumImgPresnter.saveToProfileImage(albumImg);
+            }
 
+            @Override
+            public void onAlbumImgFollowClick(BaseImage albumImg) {
+                allAlbumImgPresnter.followImagePhotoGrapher(albumImg);
             }
         };
+
 
     }
 
@@ -123,6 +137,30 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         this.albumImgList.addAll(albumImgList);
         allAlbumImgAdapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onImageSavedToProfile(BaseImage baseImage, boolean state) {
+        for (BaseImage mBaseImage: albumImgList){
+            if (mBaseImage.id ==baseImage.id){
+                mBaseImage.isSaved=state;
+                break;
+            }
+        }
+
+        allAlbumImgAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onImagePhotoGrapherFollowed(BaseImage baseImage, boolean state) {
+        for (BaseImage mBaseImage: albumImgList){
+            if (mBaseImage.id ==baseImage.id){
+                mBaseImage.photographer.isFollow=state;
+                break;
+            }
+        }
+        allAlbumImgAdapter.notifyDataSetChanged();
     }
 
     @Override
