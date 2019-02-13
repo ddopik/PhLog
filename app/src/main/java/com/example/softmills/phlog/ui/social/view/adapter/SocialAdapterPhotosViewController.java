@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_TYPE;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 public class SocialAdapterPhotosViewController {
@@ -44,6 +46,7 @@ public class SocialAdapterPhotosViewController {
 
                 intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) socialData.photos);
                 intent.putExtra(SELECTED_IMG_ID,socialData.photos.get(0).id);
+                intent.putExtra(LIST_TYPE, Constants.PhotosListType.SOCIAL_LIST);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 context.startActivity(intent);
 

@@ -45,15 +45,16 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     private SocialAdapterBrandController socialAdapterBrandController;
 
 
-    public SocialAdapter(List<SocialData> socialDataList,OnSocialItemListener onSocialItemListener) {
+    public SocialAdapter(List<SocialData> socialDataList,Context context,OnSocialItemListener onSocialItemListener) {
         this.socialDataList = socialDataList;
         this.onSocialItemListener=onSocialItemListener;
+        this.context=context;
     }
 
     @NonNull
     @Override
     public SocialViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        this.context = viewGroup.getContext();
+
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         return new SocialViewHolder(layoutInflater.inflate(R.layout.view_holder_main_social_item, viewGroup, false));
     }

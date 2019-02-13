@@ -7,11 +7,13 @@ import android.view.View;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.network.BaseNetworkApi;
+import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -57,10 +59,20 @@ public class SocialAdapterProfileViewController {
 
 
         socialViewHolder.socialProfileType3ImgContainer.setOnClickListener(v -> {
-            Intent intent = new Intent(context, UserProfileActivity.class);
-            intent.putExtra(USER_ID, String.valueOf(photographer.id));
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            context.startActivity(intent);
+            int x=Integer.parseInt(PrefUtils.getUserId(context));
+
+            if (photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
+
+                ((MainActivity) context).navigationManger.navigate(Constants.NavigationHelper.PROFILE);
+
+            } else {
+
+
+                Intent intent = new Intent(context, UserProfileActivity.class);
+                intent.putExtra(USER_ID, String.valueOf(photographer.id));
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                context.startActivity(intent);
+            }
         });
 
 
@@ -80,7 +92,7 @@ public class SocialAdapterProfileViewController {
 
 
 
-        BaseNetworkApi.getUserProfilePhotos(PrefUtils.getUserToken(context), String.valueOf(photographer.id), 0)
+        BaseNetworkApi.getUserProfilePhotos( String.valueOf(photographer.id), 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {

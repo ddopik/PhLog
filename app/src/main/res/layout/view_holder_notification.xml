@@ -3,13 +3,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/notification_card_height"
+    android:layout_height="wrap_content"
     android:background="@color/white">
+
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/notification_container"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/notification_card_height"
         android:orientation="horizontal">
 
         <ImageView
@@ -67,6 +69,7 @@
         layout="@layout/notification_separator"
         android:layout_gravity="center"
         android:visibility="gone"
+
 
     />
 

@@ -71,6 +71,10 @@ public interface Constants {
         USER_TYPE_BUSINESS, USER_TYPE_PHOTOGRAPHER;
     }
 
+    enum PhotosListType{
+        SOCIAL_LIST,PHOTO_GRAPHER_LIST
+    }
+
     interface CampaignStatus {
         int CAMPAIGN_STATUS_CANCELLED = -1;
         int CAMPAIGN_STATUS_DRAFT = 0;

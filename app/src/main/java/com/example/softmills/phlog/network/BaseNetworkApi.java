@@ -102,7 +102,7 @@ public class BaseNetworkApi {
     private static final String CAMPAIGN_DETAILS_URL = BASE_URL + "/photographer/campaign/details";
     private static final String CAMPAIGN_PHOTOS_URL = BASE_URL + "/photographer/campaign/photos";
     private static final String FOLLOW_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/join";
-    private static final String USER_PROFILE_PHOTOS = BASE_URL + "/photographer/details";
+    private static final String USER_PROFILE_PHOTOS = BASE_URL + "/photographer/photo/list";
     private static final String USER_SEARCH_FILTERS = BASE_URL_COMMON + "/filters/list";
     private static final String SEARCH_ALBUM = BASE_URL + "/photographer/album/search";
     private static final String PHOTOGRAPHER_SEARCH_URL = BASE_URL + "/photographer/list";
@@ -342,9 +342,8 @@ public class BaseNetworkApi {
 
 
 
-    public static io.reactivex.Observable<UserPhotosResponse> getUserProfilePhotos(String token, String userID, int page) {
+    public static io.reactivex.Observable<UserPhotosResponse> getUserProfilePhotos( String userID, int page) {
         return Rx2AndroidNetworking.post(USER_PROFILE_PHOTOS)
-                .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("photographer_id", userID)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
                 .getResponseOnlyFromNetwork()
@@ -355,7 +354,7 @@ public class BaseNetworkApi {
     }
         public static io.reactivex.Observable<BaseStateResponse> likePhoto(String imageId) {
         return Rx2AndroidNetworking.post(LIKE_PHOTOGRAPHER_PHOTO)
-                .addBodyParameter("image_id", imageId)
+                .addBodyParameter("photo_id", imageId)
                 .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)
                 .build()
@@ -526,15 +525,15 @@ public class BaseNetworkApi {
                 .getObjectObservable(UploadImgResponse.class);
     }
 
-    public static Observable<SavePhotoResponse> savePhoto(int id) {
+    public static io.reactivex.Observable<SavePhotoResponse> savePhoto(int id) {
         return Rx2AndroidNetworking.post(SAVE_PHOTO_URL)
-                .addBodyParameter("image_id", String.valueOf(id))
+                .addBodyParameter("photo_id", String.valueOf(id))
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(SavePhotoResponse.class);
     }
 
-    public static Observable<SavePhotoResponse> unSavePhoto(int id) {
+    public static io.reactivex.Observable<SavePhotoResponse> unSavePhoto(int id) {
         return Rx2AndroidNetworking.post(UNSAVE_PHOTO_URL)
                 .addBodyParameter("photo_id", String.valueOf(id))
                 .setPriority(Priority.HIGH)
@@ -542,7 +541,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(SavePhotoResponse.class);
     }
 
-    public static Observable<AlbumSearchResponse> getSearchAlbum(String key, Map<String,String> filtersMap, String page) {
+    public static io.reactivex.Observable<AlbumSearchResponse> getSearchAlbum(String key, Map<String,String> filtersMap, String page) {
         return Rx2AndroidNetworking.post(SEARCH_ALBUM)
                 .addQueryParameter(PAGER_PATH_PARAMETER, page)
                 .addBodyParameter("keyword", key)
@@ -552,7 +551,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(AlbumSearchResponse.class);
     }
 
-    public static Observable<String> forgotPassword(String email) {
+    public static io.reactivex.Observable<String> forgotPassword(String email) {
         return Rx2AndroidNetworking.post(FORGOT_PASSWORD_URL)
                 .setPriority(Priority.HIGH)
                 .addBodyParameter("email", email)
@@ -560,7 +559,7 @@ public class BaseNetworkApi {
                 .getStringObservable();
     }
 
-    public static Observable<String> updateProfile(HashMap<String,File> files, HashMap<String,String> data) {
+    public static io.reactivex.Observable<String> updateProfile(HashMap<String,File> files, HashMap<String,String> data) {
         Rx2ANRequest.MultiPartBuilder builder = Rx2AndroidNetworking.upload(UPDATE_PROGILE_URL).setPriority(Priority.HIGH);
         if (files != null)
             builder.addMultipartFile(files);
@@ -568,7 +567,7 @@ public class BaseNetworkApi {
         return builder.build().getStringObservable();
     }
 
-     public static Observable<EarningDetailsResponse> getEarningDetails(String earningId) {
+     public static io.reactivex.Observable<EarningDetailsResponse> getEarningDetails(String earningId) {
         return Rx2AndroidNetworking.post(EARNING_DETAILS_URL)
                 .addBodyParameter("transaction_id", earningId)
                 .setPriority(Priority.HIGH)

@@ -16,6 +16,7 @@
         android:dividerHeight="1dp"
         android:background="@color/black"
         android:scrollbars="vertical|horizontal"
+        android:groupIndicator="@drawable/custom_expandable_arrow"
         android:visibility="gone"
         tools:visibility="visible"/>
 

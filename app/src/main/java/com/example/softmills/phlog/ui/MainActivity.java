@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FloatingActionButton picImgHomeBtn;
     private Toolbar toolbar;
     private ImageButton backBtn;
-    public static NavigationManger navigationManger;
+    public  NavigationManger navigationManger;
 
 
     @Override
@@ -61,10 +61,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         toolbar = findViewById(R.id.phlog_toolbar);
         super.setSupportActionBar(toolbar);
         navigationManger = new NavigationManger();
-        initPresenter();
-        initView();
-        initListener();
-        navigationManger.navigate(HOME);
+
     }
 
     @Override
@@ -135,6 +132,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
+
+        // force Activity to Refresh cause so many Context are reflect to it's current state an it would be un efficient update it's current variable for each Update
+        initPresenter();
+        initView();
+        initListener();
+        navigationManger.navigate(HOME);
+//        showToast(getSupportFragmentManager().getPrimaryNavigationFragment().getTag());
 //        navigationManger.navigate(HOME);
     }
 

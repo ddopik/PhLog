@@ -111,7 +111,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
 
         campaignTitle.setText(campaign.titleEn);
 
-        campaignDayLeft.setText(getString(R.string.days_left_value));
+        campaignDayLeft.setText(new StringBuilder().append(campaign.daysLeft).append(" ").append(getString(R.string.days_left_value)).toString());
 
         campaignHostedBy.setText(getString(R.string.hosted_by_value, campaign.business.nameEn));
 
