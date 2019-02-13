@@ -108,7 +108,7 @@
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/ic_right_arrow_circle" />
 
-            <TextView
+            <com.example.softmills.phlog.base.widgets.CustomTextView
                 android:id="@+id/album_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                 app:layout_constraintVertical_bias="0.19999999"
                 tools:text="Album name" />
 
-            <TextView
+            <com.example.softmills.phlog.base.widgets.CustomTextView
                 android:id="@+id/album_photo_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
