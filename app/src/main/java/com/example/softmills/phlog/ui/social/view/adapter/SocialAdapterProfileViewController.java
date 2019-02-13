@@ -26,8 +26,8 @@ public class SocialAdapterProfileViewController {
     private String TAG = SocialAdapterProfileViewController.class.getSimpleName();
     private Context context;
 
-    public SocialAdapterProfileViewController(Context context){
-        this.context=context;
+    public SocialAdapterProfileViewController(Context context) {
+        this.context = context;
     }
 
 
@@ -45,61 +45,20 @@ public class SocialAdapterProfileViewController {
                 .into(socialViewHolder.socialProfileType3Icon);
 
 
-        socialViewHolder.socialProfileType3ImgContainer.setVisibility(View.VISIBLE);
-//      this is acts as default and get overladen later by photographer photos if photos count >3
-        if (photographer.imageCover != null) {
-            GlideApp.with(context)
-                    .load(photographer.imageCover)
-                    .error(R.drawable.default_photographer_profile)
-                    .apply(new RequestOptions().centerCrop())
-                    .into(socialViewHolder.socialProfileType3ImgContainer);
-        } else {
-            socialViewHolder.socialProfileType3ImgContainer.setImageDrawable(context.getResources().getDrawable(R.drawable.default_place_holder));
-        }
+        socialViewHolder.socialProfileAlbumType3PhotosContainer.setVisibility(View.INVISIBLE);
+        socialViewHolder.socialProfileType3ImgDefaultContainer.setVisibility(View.VISIBLE);
 
-
-        socialViewHolder.socialProfileType3ImgContainer.setOnClickListener(v -> {
-            int x=Integer.parseInt(PrefUtils.getUserId(context));
-
-            if (photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
-
-                ((MainActivity) context).navigationManger.navigate(Constants.NavigationHelper.PROFILE);
-
-            } else {
-
-
-                Intent intent = new Intent(context, UserProfileActivity.class);
-                intent.putExtra(USER_ID, String.valueOf(photographer.id));
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                context.startActivity(intent);
-            }
-        });
-
-
-        if (photographer.isFollow) {
-            socialViewHolder.followSocialProfileType3Btn.setText(context.getResources().getString(R.string.following));
-        } else {
-            socialViewHolder.followSocialProfileType3Btn.setText(context.getResources().getString(R.string.follow));
-        }
-
-        socialViewHolder.followSocialProfileType3Btn.setOnClickListener(v -> {
-            if (photographer.isFollow) {
-                unFollowUser(String.valueOf(photographer.id), onSocialItemListener);
-            } else {
-                followUser(String.valueOf(photographer.id), onSocialItemListener);
-            }
-        });
-
-
-
-        BaseNetworkApi.getUserProfilePhotos( String.valueOf(photographer.id), 0)
+        BaseNetworkApi.getUserProfilePhotos(String.valueOf(photographer.id), 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {
+                            socialViewHolder.socialProfileAlbumType3PhotosContainer.setVisibility(View.VISIBLE);
+                            socialViewHolder.socialProfileType3ImgDefaultContainer.setVisibility(View.INVISIBLE);
 
                             if (userPhotosResponse.data.data != null && userPhotosResponse.data.data.size() >= 3) {
 
-                                socialViewHolder.socialProfileType3ImgContainer.setVisibility(View.INVISIBLE);
+
+
                                 GlideApp.with(context)
                                         .load(userPhotosResponse.data.data.get(0).url)
                                         .centerCrop()
@@ -130,15 +89,62 @@ public class SocialAdapterProfileViewController {
                                         .into(socialViewHolder.socialProfileType3Img_4);
 
 
+                            } else {
 
+                            //      this is acts as default
+                                if (photographer.imageCover != null) {
+
+                                    GlideApp.with(context)
+                                            .load(photographer.imageCover)
+                                            .error(R.drawable.default_photographer_profile)
+                                            .into(socialViewHolder.socialProfileType3ImgDefaultContainer);
+                                }
 
                             }
 
 
                         }
                         , throwable -> {
+
+//                            socialViewHolder.socialProfileAlbumType3PhotosContainer.setVisibility(View.INVISIBLE);
+//                            socialViewHolder.socialProfileType3ImgDefaultContainer.setVisibility(View.VISIBLE);
                             ErrorUtils.Companion.setError(context, TAG, throwable);
                         });
+
+
+        if (photographer.isFollow) {
+            socialViewHolder.followSocialProfileType3Btn.setText(context.getResources().getString(R.string.following));
+        } else {
+            socialViewHolder.followSocialProfileType3Btn.setText(context.getResources().getString(R.string.follow));
+        }
+
+        socialViewHolder.followSocialProfileType3Btn.setOnClickListener(v -> {
+            if (photographer.isFollow) {
+                unFollowUser(String.valueOf(photographer.id), onSocialItemListener);
+            } else {
+                followUser(String.valueOf(photographer.id), onSocialItemListener);
+            }
+        });
+
+
+
+        View.OnClickListener onProfileClickListener= v -> {
+            if (photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
+
+                ((MainActivity) context).navigationManger.navigate(Constants.NavigationHelper.PROFILE);
+
+            } else {
+
+
+                Intent intent = new Intent(context, UserProfileActivity.class);
+                intent.putExtra(USER_ID, String.valueOf(photographer.id));
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                context.startActivity(intent);
+            }
+        };
+
+        socialViewHolder.socialProfileAlbumType3PhotosContainer.setOnClickListener(onProfileClickListener);
+        socialViewHolder.socialProfileType3ImgDefaultContainer.setOnClickListener(onProfileClickListener);
 
     }
 

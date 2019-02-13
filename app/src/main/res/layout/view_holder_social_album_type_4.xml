@@ -56,8 +56,11 @@
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/social_album_type_4_photos_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            tools:visibility="visible">
             <!--Acts as A default photo as if there is was only one photo -->
 
 

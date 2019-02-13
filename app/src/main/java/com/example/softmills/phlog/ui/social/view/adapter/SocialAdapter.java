@@ -2,7 +2,6 @@ package com.example.softmills.phlog.ui.social.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,10 +106,12 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
         View socialProfileType3,socialImageSliderType5, socialCampaignType1, socialBrandType1,socialAlbumType4;
 
-        ImageView socialProfileType3Icon, socialProfileType3Img_1, socialProfileType3Img_2, socialProfileType3Img_3, socialProfileType3Img_4,socialProfileType3ImgContainer,socialDefaultAlbumImg;
+        ImageView socialProfileType3Icon, socialProfileType3Img_1, socialProfileType3Img_2, socialProfileType3Img_3, socialProfileType3Img_4, socialProfileType3ImgDefaultContainer,socialDefaultAlbumImg;
         TextView socialProfileType3FullName,socialProfileType3UserName;
         Button followSocialProfileType3Btn;
-        LinearLayout socialAlbumImgGroupContainer;
+
+        LinearLayout socialAlbumImgGroupContainer,socialProfileAlbumType3PhotosContainer;
+
 
         /////
         CustomRecyclerView socialImgSlideRv;
@@ -186,7 +187,8 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialProfileType3Img_2 = view.findViewById(R.id.social_profile_img_2);
             socialProfileType3Img_3 = view.findViewById(R.id.social_profile_img_3);
             socialProfileType3Img_4 = view.findViewById(R.id.social_profile_img_4);
-             socialProfileType3ImgContainer =view.findViewById(R.id.social_profile_type_3_img_container);
+             socialProfileType3ImgDefaultContainer =view.findViewById(R.id.social_profile_type_3_img_container);
+            socialProfileAlbumType3PhotosContainer =view.findViewById(R.id.social_profile_album_type_3_photos_container);
 
 
         }

@@ -36,7 +36,6 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(baseStateResponse -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
-                    allAlbumImgActivityView.showMessage("Like");
                 }, throwable -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
@@ -59,8 +58,6 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
 
                 });
-
-
     }
 
     @SuppressLint("CheckResult")
