@@ -36,6 +36,7 @@ import com.example.softmills.phlog.base.commonmodel.MentionedUser;
 import com.example.softmills.phlog.base.commonmodel.Mentions;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.commonmodel.Tag;
+import com.example.softmills.phlog.base.eventbus.SendCommentEvent;
 import com.example.softmills.phlog.base.widgets.CustomAutoCompleteTextView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.ui.album.presenter.CommentAdapterPresenter;
@@ -45,6 +46,10 @@ import com.example.softmills.phlog.ui.commentimage.view.MentionsAutoCompleteAdap
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,9 +149,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 commentViewHolder.imgCommentNum.setText(new StringBuilder().append(previewImage.commentsCount).append(" ").append(context.getResources().getString(R.string.comment)).toString());
             if (commentAdapterAction != null) {
                 commentViewHolder.imageCommentBtn.setOnClickListener(v -> {
-                    commentViewHolder.sendCommentImgVal.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+//                    todo  add event bus here
+                    SendCommentEvent sendCommentEvent=new SendCommentEvent();
+                    sendCommentEvent.state=true;
+                    EventBus.getDefault().post(sendCommentEvent);
+
 
                 });
 
@@ -256,6 +263,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             }
             mentionsAutoCompleteAdapter.onUserClicked = socialUser -> {
             };
+
+
+
 
 
         }

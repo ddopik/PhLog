@@ -14,6 +14,7 @@ import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.commonmodel.Comment;
 import com.example.softmills.phlog.base.commonmodel.Mentions;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
+import com.example.softmills.phlog.base.eventbus.SendCommentEvent;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.base.widgets.PagingController;
@@ -22,6 +23,10 @@ import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsData;
 import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentData;
 import com.example.softmills.phlog.ui.commentimage.presenter.ImageCommentActivityImpl;
 import com.example.softmills.phlog.ui.commentimage.presenter.ImageCommentActivityPresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +41,6 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     private CustomTextView toolBarTitle;
     private ImageButton backBtn;
     private BaseImage previewImage;
-    private List<Photographer> photographerList = new ArrayList<Photographer>();
-    private List<Business> businessList = new ArrayList<Business>();
-
     private FrameLayout addCommentProgress;
     private CustomRecyclerView commentsRv;
     private List<Comment> commentList = new ArrayList<>();
@@ -46,6 +48,12 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     private CommentsAdapter commentsAdapter;
     private PagingController pagingController;
     private ImageCommentActivityPresenter imageCommentActivityPresenter;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
 
     @Override
@@ -59,6 +67,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
             initView();
             initListener();
         }
+
 
 
 
@@ -139,6 +148,14 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
         });
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(SendCommentEvent sendCommentEvent) {
+//
+//commentsAdapter.setItemsCanFocus
+//        listView.setItemsCanFocus(true);
+    }
+
 
     @Override
     public void viewPhotoComment(ImageCommentsData imageCommentsData) {
@@ -265,5 +282,9 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         finish();
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 }
