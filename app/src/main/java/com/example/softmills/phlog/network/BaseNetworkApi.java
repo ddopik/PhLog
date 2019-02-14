@@ -40,12 +40,13 @@ import com.example.softmills.phlog.ui.signup.model.UploadImgResponse;
 import com.example.softmills.phlog.ui.social.model.SocialResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserPhotosResponse;
-import com.example.softmills.phlog.ui.welcome.model.WelcomeScreenResponse;
+import com.example.softmills.phlog.ui.welcome.model.InitSlider;
 import com.rx2androidnetworking.Rx2ANRequest;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -139,11 +140,11 @@ public class BaseNetworkApi {
     private static final String TOKEN_BODY_PARAMETER = "token";
 
 
-    public static io.reactivex.Observable<WelcomeScreenResponse> getWelcomeSlidesImages() {
+    public static Observable<List<InitSlider>> getWelcomeSlidesImages() {
         return Rx2AndroidNetworking.get(WELCOME_SLIDES_IMAGES)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(WelcomeScreenResponse.class);
+                .getObjectListObservable(InitSlider.class);
     }
 
     public static io.reactivex.Observable<AllCountersRepose> getAllCounters() {
