@@ -18,10 +18,11 @@ import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
-import com.example.softmills.phlog.ui.brand.view.BrandActivity;
+import com.example.softmills.phlog.ui.brand.view.BrandCampaignsActivity;
+import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
-import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
+import com.example.softmills.phlog.ui.notification.model.NotificationList;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 
 import java.util.List;
@@ -37,24 +38,25 @@ import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_PROFILE;
  */
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
-    private Context context;
     public static final int itemType_NOTIFICATION_HEAD = 66;
-    private List<NotificationResponse> notificationItemList;
+    private Context context;
+    private List<NotificationList> notificationItemList;
 
-    public NotificationAdapter(List<NotificationResponse> notificationItemList) {
-        this.notificationItemList=notificationItemList;
+    public NotificationAdapter(List<NotificationList> notificationItemList) {
+        this.notificationItemList = notificationItemList;
     }
+
     @NonNull
     @Override
     public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        this.context=viewGroup.getContext();
-        LayoutInflater layoutInflater=LayoutInflater.from(context);
-        return new NotificationViewHolder(layoutInflater.inflate(R.layout.view_holder_notification,viewGroup,false));
+        this.context = viewGroup.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        return new NotificationViewHolder(layoutInflater.inflate(R.layout.view_holder_notification, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder notificationViewHolder, int i) {
-        NotificationResponse notificationItem = notificationItemList.get(i);
+        NotificationList notificationItem = notificationItemList.get(i);
         if (notificationViewHolder.notificationTitle != null)
             notificationViewHolder.notificationTitle.setText(notificationItemList.get(i).message);
 
@@ -91,20 +93,20 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
         }
 
-        if ( notificationItemList.get(i).isRead !=null &&   !notificationItemList.get(i).isRead){
+        if (notificationItemList.get(i).isRead != null && !notificationItemList.get(i).isRead) {
             notificationViewHolder.notificationContainer.setBackgroundColor(context.getResources().getColor(R.color.transparent));
 
-        }else {
+        } else {
             notificationViewHolder.notificationContainer.setBackgroundColor(context.getResources().getColor(R.color.text_input_color_light));
         }
 
     }
 
-    private void setSeparatorState(@NonNull NotificationViewHolder notificationViewHolder, NotificationResponse notificationResponse, boolean state) {
+    private void setSeparatorState(@NonNull NotificationViewHolder notificationViewHolder, NotificationList notificationList, boolean state) {
         if (state) {
             notificationViewHolder.notificationContainer.setVisibility(View.GONE);
             notificationViewHolder.notificationSeparatorView.setVisibility(View.VISIBLE);
-            notificationViewHolder.separatorTitle.setText(notificationResponse.message);
+            notificationViewHolder.separatorTitle.setText(notificationList.message);
 
         } else {
             notificationViewHolder.notificationContainer.setVisibility(View.VISIBLE);
@@ -138,6 +140,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_blue));
         GlideApp.with(context).load(campaign.business.thumbnail)
                 .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
@@ -150,14 +154,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private void bindItemBrand(NotificationViewHolder notificationViewHolder, Business business) {
 
-        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_orange));
+        notificationViewHolder.notificationImg
+                .setBackground(context.getResources().getDrawable(R.drawable.circle_orange));
         GlideApp.with(context).load(business.thumbnail)
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
                 .apply(RequestOptions.circleCropTransform())
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
-            Intent intent = new Intent(context, BrandActivity.class);
-            intent.putExtra(BrandActivity.BRAND_ID, business.id);
+            Intent intent=new Intent(context, BrandInnerActivity.class);
+            intent.putExtra(BrandCampaignsActivity.BRAND_ID,business.id);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             context.startActivity(intent);
         });
@@ -168,6 +175,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_green));
         GlideApp.with(context).load(image.url)
                 .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
@@ -185,20 +194,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return notificationItemList.size();
     }
 
-      class NotificationViewHolder extends RecyclerView.ViewHolder {
+    class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-          View notificationSeparatorView;
-          LinearLayout notificationContainer;
+        View notificationSeparatorView;
+        LinearLayout notificationContainer;
         ImageView notificationImg;
-          CustomTextView notificationTitle, notificationDate, separatorTitle;
-          NotificationViewHolder(View view) {
+        CustomTextView notificationTitle, notificationDate, separatorTitle;
+
+        NotificationViewHolder(View view) {
             super(view);
-            notificationImg=view.findViewById(R.id.notification_img);
-            notificationTitle=view.findViewById(R.id.notification_title);
-            notificationDate=view.findViewById(R.id.notification_time);
-              notificationContainer = view.findViewById(R.id.notification_container);
-              separatorTitle = view.findViewById(R.id.notification_separator_title);
-              notificationSeparatorView=view.findViewById(R.id.notification_separator_view);
-         }
+            notificationImg = view.findViewById(R.id.notification_img);
+            notificationTitle = view.findViewById(R.id.notification_title);
+            notificationDate = view.findViewById(R.id.notification_time);
+            notificationContainer = view.findViewById(R.id.notification_container);
+            separatorTitle = view.findViewById(R.id.notification_separator_title);
+            notificationSeparatorView = view.findViewById(R.id.notification_separator_view);
+        }
     }
 }

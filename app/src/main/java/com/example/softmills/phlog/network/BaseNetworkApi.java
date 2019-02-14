@@ -16,10 +16,7 @@ import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
  import com.example.softmills.phlog.ui.earning.model.EarningDetailsResponse;
 import com.example.softmills.phlog.ui.earning.model.EarningListResponse;
  import com.example.softmills.phlog.ui.commentimage.model.AddImageToCartResponse;
-import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsData;
 import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsResponse;
-import com.example.softmills.phlog.ui.commentimage.model.ImageRateResponse;
-import com.example.softmills.phlog.ui.commentimage.model.ImgCommentResponse;
 import com.example.softmills.phlog.ui.commentimage.model.LikeImageResponse;
 import com.example.softmills.phlog.ui.commentimage.model.SocialAutoCompleteResponse;
 import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentResponse;
@@ -49,7 +46,6 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -456,13 +452,13 @@ public class BaseNetworkApi {
                 .getObjectObservable(SocialResponse.class);
     }
 
-    public static Observable<List<NotificationResponse>> getNotification(String token, String page) {
+    public static Observable<NotificationResponse> getNotification(String token, String page) {
         return Rx2AndroidNetworking.post(GET_ALL_NOTIFICATION)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addQueryParameter(PAGER_PATH_PARAMETER, page)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectListObservable(NotificationResponse.class);
+                .getObjectObservable(NotificationResponse.class);
     }
 
     public static Observable<EarningListResponse> geEarning(String token, String page) {

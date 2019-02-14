@@ -16,7 +16,8 @@
             android:id="@+id/notification_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:orientation="vertical" />
+            app:orientation="vertical"
+            android:layout_marginBottom="@dimen/dp45"/>
 
     </LinearLayout>
 

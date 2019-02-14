@@ -30,9 +30,9 @@ public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getBrandInnerData(String brandId) {
+    public void getBrandInnerData(int brandId) {
         brandInnerActivityView.viewInnerBrandProgressBar(true);
-        BaseNetworkApi.getBrandInnerData(PrefUtils.getUserToken(context), brandId)
+        BaseNetworkApi.getBrandInnerData(PrefUtils.getUserToken(context),String.valueOf( brandId))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(brandInnerResponse -> {
