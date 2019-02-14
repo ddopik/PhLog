@@ -1,17 +1,17 @@
 package com.example.softmills.phlog.ui.earning.model;
 
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
+import com.example.softmills.phlog.base.commonmodel.Business;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class EarningListResponse{
+import java.util.List;
+
+public class EarningListResponse {
+
 
 	@SerializedName("data")
-	private Data data;
+	@Expose
+	public EarningListData data;
 
-	public void setData(Data data){
-		this.data = data;
-	}
-
-	public Data getData(){
-		return data;
-	}
 }

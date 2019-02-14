@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.ui.earning.model.Earning;
 import com.example.softmills.phlog.ui.earning.presenter.EarningInnerPresenter;
 import com.example.softmills.phlog.ui.earning.presenter.EarningInnerPresenterImpl;
@@ -24,8 +27,8 @@ public class EarningInnerFragment extends BaseFragment implements EarningInnerVi
     public String earningId;
     private View mainView;
 
-    private TextView id, createdAt, by, exclusive, buyerName, buyerWebsite, buyerPhone, price;
-    private ImageView image;
+    private CustomTextView id, createdAt, by, exclusive, buyerName, buyerWebsite, buyerPhone, price;
+    private ImageView buyerImage, earningItemImg;
 
     private EarningInnerPresenter presenter;
 
@@ -40,7 +43,7 @@ public class EarningInnerFragment extends BaseFragment implements EarningInnerVi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.fragment_earning_inner_2, container, false);
+        mainView = inflater.inflate(R.layout.fragment_earning_inner, container, false);
         return mainView;
 
     }
@@ -48,9 +51,9 @@ public class EarningInnerFragment extends BaseFragment implements EarningInnerVi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews();
         initPresenter();
-        presenter.getEarning(getContext(), earningId);
+        initViews();
+        presenter.getEarningInner(getContext(), earningId);
     }
 
     @Override
@@ -69,22 +72,40 @@ public class EarningInnerFragment extends BaseFragment implements EarningInnerVi
         buyerWebsite = mainView.findViewById(R.id.buyer_mail);
         buyerPhone = mainView.findViewById(R.id.buyer_phone);
         price = mainView.findViewById(R.id.earning_price);
-        image = mainView.findViewById(R.id.earning_image);
+        buyerImage = mainView.findViewById(R.id.earning_buyer_image);
+        earningItemImg = mainView.findViewById(R.id.earning_item_img);
     }
 
     @Override
-    public void setEarning(Earning data) {
-        id.setText(getString(R.string.id_val, data.getId()));
-        Glide.with(this)
-                .load(data.getPhoto().url)
-                .into(image);
-        createdAt.setText(getString(R.string.created_at_val, data.getPhoto().createdAt));
+    public void viewEarningDetails(Earning earning) {
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
+
+        id.setText(getString(R.string.id_val, earning.id));
+
+
+        GlideApp.with(this)
+                .load(earning.photo.url)
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
+                .apply(requestOptions)
+                .into(earningItemImg);
+
+
+        GlideApp.with(this)
+                .load(earning.business.thumbnail)
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
+
+
+                .into(buyerImage);
+        createdAt.setText(getString(R.string.created_at_val, earning.createdAt));
 //        by.setText(data.ph); // TODO: we should be saving our profile locally
-        buyerName.setText(data.getBusiness().fullName);
-        buyerWebsite.setText(data.getBusiness().email);
-        buyerPhone.setText(data.getBusiness().phone);
-        price.setText(String.format("%1$s $", data.getPrice()));
-        if (data.getExclusive() == 1)
+        buyerName.setText(earning.business.fullName);
+        buyerWebsite.setText(earning.business.email);
+        buyerPhone.setText(earning.business.phone);
+        price.setText(String.format("%1$s $", earning.price));
+        if (earning.exclusive == 1)
             exclusive.setVisibility(View.VISIBLE);
         else exclusive.setVisibility(View.INVISIBLE);
     }

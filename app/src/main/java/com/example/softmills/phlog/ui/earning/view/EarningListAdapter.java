@@ -9,14 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.ui.earning.model.Earning;
 
 import java.util.List;
@@ -47,12 +45,12 @@ public class EarningListAdapter extends RecyclerView.Adapter<EarningListAdapter.
     public void onBindViewHolder(@NonNull EarningListViewHolder earningListViewHolder, int i) {
 
         Earning earning = earningList.get(i);
-        Glide.with(context).load(earning.getPhoto().url)
+        Glide.with(context).load(earning.photo.url)
                 .apply(new RequestOptions().transforms(new RoundedCorners(14)))
                 .into(earningListViewHolder.earningImg);
-        earningListViewHolder.earningPrice.setText("$" + earning.getPrice());
-        earningListViewHolder.earningBuyer.setText(earning.getBusiness().fullName);
-        earningListViewHolder.earningSize.setText(earning.getExclusive() == 1
+        earningListViewHolder.earningPrice.setText("$" + earning.price);
+        earningListViewHolder.earningBuyer.setText(earning.business.fullName);
+        earningListViewHolder.earningSize.setText(earning.exclusive == 1
                 ? context.getString(R.string.exclusive_yes)
                 : context.getString(R.string.exclusive_no));
         if (onEarningClick != null) {

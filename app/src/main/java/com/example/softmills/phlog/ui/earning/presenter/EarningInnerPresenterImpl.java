@@ -23,12 +23,12 @@ public class EarningInnerPresenterImpl implements EarningInnerPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getEarning(Context context, String earningId) {
+    public void getEarningInner(Context context, String earningId) {
         BaseNetworkApi.getEarningDetails(earningId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
-                    view.setEarning(response.getData());
+                    view.viewEarningDetails(response.data);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });

@@ -73,7 +73,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
 
     private void initListener() {
         earningListAdapter.onEarningClick = earning -> {
-            ((MainActivity) getActivity()).navigationManger.setExtraData(String.valueOf(earning.getId()));
+            ((MainActivity) getActivity()).navigationManger.setExtraData(String.valueOf(earning.id));
             ((MainActivity) getActivity()).navigationManger.navigate(EARNING_INNER);
         };
         pagingController = new PagingController(earningListRv) {

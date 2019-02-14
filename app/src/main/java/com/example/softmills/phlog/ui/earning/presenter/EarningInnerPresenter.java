@@ -7,5 +7,5 @@ import com.example.softmills.phlog.ui.earning.view.EarningInnerView;
 public interface EarningInnerPresenter {
     void setView(EarningInnerView view);
 
-    void getEarning(Context context, String earningId);
+    void getEarningInner(Context context, String earningId);
 }
