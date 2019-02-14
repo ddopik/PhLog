@@ -6,13 +6,13 @@ apply plugin: 'kotlin-android-extensions'
 ext {
 
     // App dependencies
-    constrain_layuout_version='1.1.3'
+    constrain_layuout_version = '1.1.3'
     supportLibraryVersion = '28.0.0-rc02'
     location_Services = '15.0.1'
-    glide_version='4.8.0'
-    facebook_stetho_version='1.5.0'
-    stetho_realm_version='2.1.0'
-    fast_android_network_version='1.0.1'
+    glide_version = '4.8.0'
+    facebook_stetho_version = '1.5.0'
+    stetho_realm_version = '2.1.0'
+    fast_android_network_version = '1.0.1'
     kotlin_version = '1.3.11'
 }
 android {
@@ -55,6 +55,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:support-v4:28.0.0'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -85,7 +86,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:$location_Services"
     implementation "com.google.android.gms:play-services-places:$location_Services"
     ///google-Auth
-    implementation"com.google.android.gms:play-services-auth:16.0.0"
+    implementation "com.google.android.gms:play-services-auth:16.0.0"
     //circleindicatorpager
     implementation 'com.bikomobile:circleindicatorpager:1.0.0'
     //ImagePicker
@@ -93,21 +94,20 @@ dependencies {
     // for experimental rx picker
     implementation 'com.github.esafirm.android-image-picker:rximagepicker:1.13.1'
 
-
     //Easy permissions
     implementation 'pub.devrel:easypermissions:1.3.0'
 
     ////--->SimpleAuth
 
-        implementation 'com.jaychang:simpleauth:2.1.3'
+    implementation 'com.jaychang:simpleauth:2.1.3'
 
-        // if you want to use facebook auth
+    // if you want to use facebook auth
 
-        implementation 'com.jaychang:simpleauth-facebook:2.1.3'
+    implementation 'com.jaychang:simpleauth-facebook:2.1.3'
 
-        // if you want to use google auth
+    // if you want to use google auth
 
-        implementation 'com.jaychang:simpleauth-google:2.1.3'
+    implementation 'com.jaychang:simpleauth-google:2.1.3'
 
     //    // if you want to use instagram auth
 
@@ -134,4 +134,3 @@ repositories {
     mavenCentral()
 }
 apply plugin: 'realm-android'
-

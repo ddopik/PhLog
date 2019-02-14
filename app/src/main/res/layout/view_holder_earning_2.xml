@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.example.softmills.phlog.base.widgets.RoundedImageView
                 android:id="@+id/earning_img"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

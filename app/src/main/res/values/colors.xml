@@ -55,4 +55,5 @@
         <color name="color_option_menu">#FF3990</color>
         <color name="filter_label_normal">#EEEEEE</color>
         <color name="filter_label_selected">#FFFFFF</color>
+    <color name="black_transparent">#80000000</color>
 </resources>

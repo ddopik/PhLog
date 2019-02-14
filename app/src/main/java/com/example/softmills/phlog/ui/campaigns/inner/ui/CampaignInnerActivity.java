@@ -31,6 +31,7 @@ import com.example.softmills.phlog.base.widgets.SwitchableViewPager;
 import com.example.softmills.phlog.ui.allphotos.view.AllPhotographerPhotosActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenterImpl;
+import com.example.softmills.phlog.ui.dialog.dialog1.view.Dialog1Fragment;
 import com.example.softmills.phlog.ui.uploadimage.view.UploadImageActivity;
 
 import java.util.ArrayList;
@@ -91,9 +92,33 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
 
     private void initListener() {
         uploadCampaignBtn.setOnClickListener(v -> {
+//            showPhotoDialog(this, "title", "Message");
 
-            showPhotoDialog(this, "title", "Message");
-
+            new Dialog1Fragment.Builder(this)
+                    .title(R.string.upload_photo_for_campaign)
+                    .message(R.string.select_option)
+                    .option0(R.string.select_from_photos)
+                    .option1(R.string.upload_new_photo)
+                    .cancelable(true)
+                    .optionConsumer(integer -> {
+                        switch (integer.intValue()) {
+                            case 0:
+                                Intent i2 = new Intent(this, AllPhotographerPhotosActivity.class);
+                                i2.putExtra(AllPhotographerPhotosActivity.CAMPAIGN_ID, String.valueOf(campaignId));
+                                startActivity(i2);
+                                break;
+                            case 1:
+                                UploadImageType uploadImageType = new UploadImageType();
+                                uploadImageType.setUploadImageType(Constants.UploadImageTypes.CAMPAIGN_IMG);
+                                uploadImageType.setImageId(campaignId);
+                                Bundle extras = new Bundle();
+                                extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageType);
+                                Intent i1 = new Intent(this, UploadImageActivity.class);
+                                i1.putExtras(extras);
+                                startActivity(i1);
+                                break;
+                        }
+                    }).show();
         });
     }
 

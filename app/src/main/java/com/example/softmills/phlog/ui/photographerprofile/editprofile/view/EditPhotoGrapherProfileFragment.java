@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
@@ -218,6 +219,9 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
                 .error(R.drawable.default_error_img)
                 .placeholder(R.drawable.default_place_holder)
                 .into(profileImage);
+        Glide.with(this)
+                .load(photographer.imageCover)
+                .into(coverImage);
     }
 
     @Override

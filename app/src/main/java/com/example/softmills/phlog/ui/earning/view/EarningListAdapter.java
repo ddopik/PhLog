@@ -48,7 +48,6 @@ public class EarningListAdapter extends RecyclerView.Adapter<EarningListAdapter.
 
         Earning earning = earningList.get(i);
         Glide.with(context).load(earning.getPhoto().url)
-                .apply(new RequestOptions().transforms(new RoundedCorners(14)))
                 .into(earningListViewHolder.earningImg);
         earningListViewHolder.earningPrice.setText("$" + earning.getPrice());
         earningListViewHolder.earningBuyer.setText(earning.getBusiness().fullName);

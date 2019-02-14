@@ -149,14 +149,14 @@
     <string name="could_not_find_albums">Sorry. We didn\'t find albums. Try typing another word.</string>
     <string name="exclusive_yes">Exclusive: yes</string>
     <string name="exclusive_no">Exclusive: no</string>
-    <string name="total_sales_number">Total Sales: %1$d</string>
+    <string name="total_sales_number">You\'ve sold %1$d photo(s)</string>
     <string name="no_sales_yet">You havn\'t sold any photos yet.</string>
     <string name="earning_price">Price: </string>
     <string name="earning_buyer">Buyer: </string>
     <string name="id_val">ID : %1$d</string>
     <string name="created_at_val">Created at : %1$s</string>
     <string name="exclusive">Exclusive</string>
-     <string name="add_to_cart">Add to cart</string>
+    <string name="add_to_cart">Add to cart</string>
     <string name="view_in_cart">View in cart</string>
 
     <string name="login">Login</string>
@@ -167,5 +167,14 @@
     <string name="recent">Recent</string>
     <string name="old">old</string>
     <string name="earlier">Earlier</string>
+    <string name="change_profile_picture">Change profile picture</string>
+    <string name="change_cover_picture">Change cover picture</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="upload_photo_for_campaign">Upload photo for campaign</string>
+    <string name="select_option">Select an option</string>
+    <string name="select_from_photos">Select from photos</string>
+    <string name="upload_new_photo">Upload new photo</string>
 
 </resources>
