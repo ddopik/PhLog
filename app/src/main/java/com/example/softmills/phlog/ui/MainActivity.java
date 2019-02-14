@@ -322,6 +322,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 navigationManger.navigate(PROFILE);
                 break;
             }
+            case UPLOAD_PHOTO: {
+                navigationManger.navigate(HOME);
+                break;
+            }
             default: {
                 super.onBackPressed();
             }
