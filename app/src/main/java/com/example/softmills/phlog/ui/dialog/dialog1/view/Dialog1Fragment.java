@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ public class Dialog1Fragment extends BaseDialogFragment {
     private TextView title, message, option0, option1;
 
     private int titleRes, messageRes, option0Res, option1Res;
-    private Consumer<Integer> optionConstumer;
+    private Function1<Dialog1Fragment, Integer, Object> optionConstumer;
 
     @Override
     protected void setViews(View view) {
@@ -48,10 +49,10 @@ public class Dialog1Fragment extends BaseDialogFragment {
             if (optionConstumer != null) {
                 switch (v.getId()) {
                     case R.id.option_0:
-                        optionConstumer.accept(0);
+                        optionConstumer.accept(this, 0);
                         break;
                     case R.id.option_1:
-                        optionConstumer.accept(1);
+                        optionConstumer.accept(this, 1);
                         break;
                 }
             }
@@ -71,7 +72,7 @@ public class Dialog1Fragment extends BaseDialogFragment {
     public static class Builder {
         private int titleRes, messageRes, option0Res, option1Res;
         private boolean cancelable;
-        private Consumer<Integer> optionConstumer;
+        private Function1<Dialog1Fragment, Integer, Object> optionConstumer;
         private FragmentManager fragmentManager;
 
         public Builder(Fragment fragment) {
@@ -102,7 +103,7 @@ public class Dialog1Fragment extends BaseDialogFragment {
             return this;
         }
 
-        public Builder optionConsumer(Consumer<Integer> optionConstumer) {
+        public Builder optionConsumer(Function1<Dialog1Fragment, Integer, Object> optionConstumer) {
             this.optionConstumer = optionConstumer;
             return this;
         }
@@ -131,7 +132,11 @@ public class Dialog1Fragment extends BaseDialogFragment {
             fragment.option1Res = option1Res;
             fragment.cancelable = cancelable;
             fragment.optionConstumer = optionConstumer;
-            fragment.show(fragmentManager, Dialog1Fragment.class.getSimpleName());
+            fragment.show(getFramentTransaction(), Dialog1Fragment.class.getSimpleName());
+        }
+
+        private FragmentTransaction getFramentTransaction() {
+            return fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_up, R.anim.slide_down, R.anim.slide_up, R.anim.slide_down);
         }
     }
 }

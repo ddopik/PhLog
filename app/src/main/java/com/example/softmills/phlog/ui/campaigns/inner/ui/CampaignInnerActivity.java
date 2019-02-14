@@ -100,12 +100,13 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                     .option0(R.string.select_from_photos)
                     .option1(R.string.upload_new_photo)
                     .cancelable(true)
-                    .optionConsumer(integer -> {
+                    .optionConsumer((dialog1Fragment, integer) -> {
                         switch (integer.intValue()) {
                             case 0:
                                 Intent i2 = new Intent(this, AllPhotographerPhotosActivity.class);
                                 i2.putExtra(AllPhotographerPhotosActivity.CAMPAIGN_ID, String.valueOf(campaignId));
                                 startActivity(i2);
+                                dialog1Fragment.dismiss();
                                 break;
                             case 1:
                                 UploadImageType uploadImageType = new UploadImageType();
@@ -116,8 +117,10 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                                 Intent i1 = new Intent(this, UploadImageActivity.class);
                                 i1.putExtras(extras);
                                 startActivity(i1);
+                                dialog1Fragment.dismiss();
                                 break;
                         }
+                        return null;
                     }).show();
         });
     }
