@@ -87,7 +87,7 @@ public class GalleryImageFragment extends BaseFragment {
         galleryRv = mainView.findViewById(R.id.gallery_img_rv);
         galleryRv.setAdapter(galleryImageAdapter);
         openCameraBtn = mainView.findViewById(R.id.open_camera_btn);
-        backBtn = mainView.findViewById(R.id.back_btn);
+//        backBtn = mainView.findViewById(R.id.back_btn);
 
     }
 

@@ -39,7 +39,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         initView();
         initListener();
         initPresenter();
-//        welcomePresenter.getWelcomeSlidesImages();
+        welcomePresenter.getWelcomeSlidesImages();
     }
 
     @Override
