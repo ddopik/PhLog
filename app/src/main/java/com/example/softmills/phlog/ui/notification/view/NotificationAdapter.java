@@ -21,7 +21,7 @@ import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.ui.brand.view.BrandActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
-import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
+import com.example.softmills.phlog.ui.notification.model.NotificationList;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 
 import java.util.List;
@@ -39,9 +39,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private Context context;
     public static final int itemType_NOTIFICATION_HEAD = 66;
-    private List<NotificationResponse> notificationItemList;
+    private List<NotificationList> notificationItemList;
 
-    public NotificationAdapter(List<NotificationResponse> notificationItemList) {
+    public NotificationAdapter(List<NotificationList> notificationItemList) {
         this.notificationItemList=notificationItemList;
     }
     @NonNull
@@ -54,7 +54,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder notificationViewHolder, int i) {
-        NotificationResponse notificationItem = notificationItemList.get(i);
+        NotificationList notificationItem = notificationItemList.get(i);
         if (notificationViewHolder.notificationTitle != null)
             notificationViewHolder.notificationTitle.setText(notificationItemList.get(i).message);
 
@@ -100,11 +100,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     }
 
-    private void setSeparatorState(@NonNull NotificationViewHolder notificationViewHolder, NotificationResponse notificationResponse, boolean state) {
+    private void setSeparatorState(@NonNull NotificationViewHolder notificationViewHolder, NotificationList notificationList, boolean state) {
         if (state) {
             notificationViewHolder.notificationContainer.setVisibility(View.GONE);
             notificationViewHolder.notificationSeparatorView.setVisibility(View.VISIBLE);
-            notificationViewHolder.separatorTitle.setText(notificationResponse.message);
+            notificationViewHolder.separatorTitle.setText(notificationList.message);
 
         } else {
             notificationViewHolder.notificationContainer.setVisibility(View.VISIBLE);

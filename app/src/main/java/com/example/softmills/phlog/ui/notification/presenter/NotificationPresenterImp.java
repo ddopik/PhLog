@@ -6,16 +6,9 @@ import android.content.Context;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
-import com.example.softmills.phlog.ui.notification.model.NotificationSortedObj;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragmentView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by abdalla_maged On Nov,2018
@@ -40,7 +33,7 @@ public class NotificationPresenterImp implements NotificationPresenter {
                 .subscribe(notificationResponse -> {
 
 
-                    notificationFragmentView.viewNotification(notificationResponse);
+                    notificationFragmentView.viewNotification(notificationResponse.notificationData.notificationList);
                     notificationFragmentView.viewNotificationProgress(false);
 
                 }, throwable -> {
@@ -49,14 +42,14 @@ public class NotificationPresenterImp implements NotificationPresenter {
                 });
     }
 
-//    public Observable<NotificationSortedObj> getOldNotification(List<NotificationResponse> notificationResponseList) {
+//    public Observable<NotificationSortedObj> getOldNotification(List<NotificationList> notificationResponseList) {
 //        return Observable.create(listObservableEmitter -> {
 //            NotificationSortedObj notificationSortedObj = new NotificationSortedObj();
 //
 //            notificationSortedObj.oldNotificationList = new ArrayList<>();
 //            notificationSortedObj.newNotificationList = new ArrayList<>();
 //
-//            for (NotificationResponse notificationResponse : notificationResponseList) {
+//            for (NotificationList notificationResponse : notificationResponseList) {
 //                if (notificationResponse.isRead) {
 //                    notificationSortedObj.oldNotificationList.add(notificationResponse);
 //                } else {

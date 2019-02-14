@@ -1,7 +1,6 @@
 package com.example.softmills.phlog.ui.notification.view;
 
-import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
-import com.example.softmills.phlog.ui.notification.model.NotificationSortedObj;
+import com.example.softmills.phlog.ui.notification.model.NotificationList;
 
 import java.util.List;
 
@@ -10,6 +9,6 @@ import java.util.List;
  */
 public interface NotificationFragmentView {
 
-    void viewNotification(List<NotificationResponse> notificationResponseList);
+    void viewNotification(List<NotificationList> notificationListList);
      void viewNotificationProgress(boolean state);
 }
