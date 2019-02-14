@@ -62,6 +62,23 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
 
     @SuppressLint("CheckResult")
     @Override
+    public void unSaveToProfileImage(BaseImage baseImage) {
+        allAlbumImgActivityView.viewAlbumImageListProgress(true);
+        BaseNetworkApi.unSavePhoto(baseImage.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(savePhotoResponse -> {
+                    allAlbumImgActivityView.onImageSavedToProfile(baseImage, false);
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                }, throwable -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
     public void followImagePhotoGrapher(BaseImage baseImage) {
         allAlbumImgActivityView.viewAlbumImageListProgress(true);
 

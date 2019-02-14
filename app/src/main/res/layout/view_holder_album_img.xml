@@ -124,7 +124,7 @@
             </LinearLayout>
 
                 <ImageButton
-                    android:id="@+id/album_img_download"
+                    android:id="@+id/album_img_save_btn"
                     android:layout_width="@dimen/ic_size"
                     android:layout_height="@dimen/ic_size"
                     android:layout_gravity="end"

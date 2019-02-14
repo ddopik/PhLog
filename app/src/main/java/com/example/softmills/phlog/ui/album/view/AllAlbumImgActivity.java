@@ -118,7 +118,13 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
             @Override
             public void onAlbumImgSaveClick(BaseImage albumImg) {
-                allAlbumImgPresnter.saveToProfileImage(albumImg);
+
+                if (albumImg.isSaved){
+                    allAlbumImgPresnter.saveToProfileImage(albumImg);
+                }else {
+                    allAlbumImgPresnter.unSaveToProfileImage(albumImg);
+
+                }
             }
 
             @Override

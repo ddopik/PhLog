@@ -84,14 +84,26 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         //case this list is for current user and already saved to his profile
         if (albumImgList.get(i).photographer.id != Integer.parseInt(PrefUtils.getUserId(context))) {
-            albumImgViewHolder.albumImgSave.setVisibility(View.VISIBLE);
+            albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+
+            if (albumImgList.get(i).isSaved){
+//                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.GONE);
+                albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.un_save));
+
+            }else {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+
+            }
+
+
+
             if (onAlbumImgClicked != null)
-                albumImgViewHolder.albumImgSave.setOnClickListener(v -> {
+                albumImgViewHolder.albumImgSaveBtn.setOnClickListener(v -> {
                     onAlbumImgClicked.onAlbumImgSaveClick(albumImgList.get(i));
                 });
 
         } else {
-            albumImgViewHolder.albumImgSave.setVisibility(View.GONE);
+            albumImgViewHolder.albumImgSaveBtn.setVisibility(View.GONE);
         }
 
         //case this list is specified for multiple users not for only one
@@ -124,7 +136,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         ImageView albumIcon, albumImg;
         TextView albumName, albumAuthor, imageCommentTagVal, albumImgLikeVal, albumImgCommentVal;
-        ImageButton albumImgLike, albumImgComment, albumImgSave;
+        ImageButton albumImgLike, albumImgComment, albumImgSaveBtn;
         Button followPhotoGrapherBtn;
 
         AlbumImgViewHolder(View view) {
@@ -138,7 +150,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgCommentVal = view.findViewById(R.id.album_img_comment_count);
             albumImgLike = view.findViewById(R.id.album_img_like_btn);
             albumImgComment = view.findViewById(R.id.album_img_comment);
-            albumImgSave = view.findViewById(R.id.album_img_download);
+            albumImgSaveBtn = view.findViewById(R.id.album_img_save_btn);
             followPhotoGrapherBtn = view.findViewById(R.id.follow_photographer);
         }
     }

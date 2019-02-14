@@ -10,5 +10,6 @@ public interface AllAlbumImgPresnter {
     void likePhoto(String photoId);
 
     void saveToProfileImage(BaseImage baseImage);
+    void unSaveToProfileImage(BaseImage baseImage);
     void followImagePhotoGrapher(BaseImage baseImage);
 }
