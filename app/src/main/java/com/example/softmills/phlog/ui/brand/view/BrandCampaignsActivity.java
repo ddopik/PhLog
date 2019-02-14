@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by abdalla_maged On Dec,2018
  */
-public class BrandActivity extends BaseActivity implements BrandCampaignsView {
+public class BrandCampaignsActivity extends BaseActivity implements BrandCampaignsView {
 
 
     public static String BRAND_ID="brand_id";
@@ -76,8 +76,9 @@ public class BrandActivity extends BaseActivity implements BrandCampaignsView {
         allCampaignsAdapter.campaignLister = new AllCampaignsAdapter.CampaignLister() {
             @Override
             public void onCampaignClicked(String campaignID) {
-                Intent intent = new Intent(BrandActivity.this, CampaignInnerActivity.class);
+                Intent intent = new Intent(BrandCampaignsActivity.this, CampaignInnerActivity.class);
                 intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(campaignID));
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
 

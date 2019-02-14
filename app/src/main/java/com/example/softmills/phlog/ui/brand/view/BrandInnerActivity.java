@@ -43,10 +43,10 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inner_brand);
-        if (getIntent().getStringExtra(BRAND_ID) != null) {
+        if (getIntent().getIntExtra(BRAND_ID,0) != 0) {
             initPresenter();
             initView();
-            brandInnerPresenter.getBrandInnerData(getIntent().getStringExtra(BRAND_ID));
+            brandInnerPresenter.getBrandInnerData(getIntent().getIntExtra(BRAND_ID,0));
         }
     }
 
@@ -142,8 +142,8 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         });
 
         brandCampaign.setOnClickListener(v->{
-            Intent intent=new Intent(this, BrandActivity.class);
-            intent.putExtra(BrandActivity.BRAND_ID,currentBrand.id);
+            Intent intent=new Intent(this, BrandCampaignsActivity.class);
+            intent.putExtra(BrandCampaignsActivity.BRAND_ID,currentBrand.id);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });

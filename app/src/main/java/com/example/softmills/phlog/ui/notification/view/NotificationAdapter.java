@@ -18,7 +18,8 @@ import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
-import com.example.softmills.phlog.ui.brand.view.BrandActivity;
+import com.example.softmills.phlog.ui.brand.view.BrandCampaignsActivity;
+import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 import com.example.softmills.phlog.ui.notification.model.NotificationList;
@@ -162,8 +163,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
-            Intent intent = new Intent(context, BrandActivity.class);
-            intent.putExtra(BrandActivity.BRAND_ID, business.id);
+            Intent intent=new Intent(context, BrandInnerActivity.class);
+            intent.putExtra(BrandCampaignsActivity.BRAND_ID,business.id);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             context.startActivity(intent);
         });
