@@ -37,19 +37,20 @@ import static com.example.softmills.phlog.Utiltes.Constants.ENTITY_PROFILE;
  */
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
-    private Context context;
     public static final int itemType_NOTIFICATION_HEAD = 66;
+    private Context context;
     private List<NotificationList> notificationItemList;
 
     public NotificationAdapter(List<NotificationList> notificationItemList) {
-        this.notificationItemList=notificationItemList;
+        this.notificationItemList = notificationItemList;
     }
+
     @NonNull
     @Override
     public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        this.context=viewGroup.getContext();
-        LayoutInflater layoutInflater=LayoutInflater.from(context);
-        return new NotificationViewHolder(layoutInflater.inflate(R.layout.view_holder_notification,viewGroup,false));
+        this.context = viewGroup.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        return new NotificationViewHolder(layoutInflater.inflate(R.layout.view_holder_notification, viewGroup, false));
     }
 
     @Override
@@ -91,10 +92,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
         }
 
-        if ( notificationItemList.get(i).isRead !=null &&   !notificationItemList.get(i).isRead){
+        if (notificationItemList.get(i).isRead != null && !notificationItemList.get(i).isRead) {
             notificationViewHolder.notificationContainer.setBackgroundColor(context.getResources().getColor(R.color.transparent));
 
-        }else {
+        } else {
             notificationViewHolder.notificationContainer.setBackgroundColor(context.getResources().getColor(R.color.text_input_color_light));
         }
 
@@ -138,6 +139,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_blue));
         GlideApp.with(context).load(campaign.business.thumbnail)
                 .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
@@ -150,8 +153,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private void bindItemBrand(NotificationViewHolder notificationViewHolder, Business business) {
 
-        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_orange));
+        notificationViewHolder.notificationImg
+                .setBackground(context.getResources().getDrawable(R.drawable.circle_orange));
         GlideApp.with(context).load(business.thumbnail)
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
                 .apply(RequestOptions.circleCropTransform())
                 .into(notificationViewHolder.notificationImg);
 
@@ -168,6 +174,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_green));
         GlideApp.with(context).load(image.url)
                 .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
@@ -185,20 +193,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return notificationItemList.size();
     }
 
-      class NotificationViewHolder extends RecyclerView.ViewHolder {
+    class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-          View notificationSeparatorView;
-          LinearLayout notificationContainer;
+        View notificationSeparatorView;
+        LinearLayout notificationContainer;
         ImageView notificationImg;
-          CustomTextView notificationTitle, notificationDate, separatorTitle;
-          NotificationViewHolder(View view) {
+        CustomTextView notificationTitle, notificationDate, separatorTitle;
+
+        NotificationViewHolder(View view) {
             super(view);
-            notificationImg=view.findViewById(R.id.notification_img);
-            notificationTitle=view.findViewById(R.id.notification_title);
-            notificationDate=view.findViewById(R.id.notification_time);
-              notificationContainer = view.findViewById(R.id.notification_container);
-              separatorTitle = view.findViewById(R.id.notification_separator_title);
-              notificationSeparatorView=view.findViewById(R.id.notification_separator_view);
-         }
+            notificationImg = view.findViewById(R.id.notification_img);
+            notificationTitle = view.findViewById(R.id.notification_title);
+            notificationDate = view.findViewById(R.id.notification_time);
+            notificationContainer = view.findViewById(R.id.notification_container);
+            separatorTitle = view.findViewById(R.id.notification_separator_title);
+            notificationSeparatorView = view.findViewById(R.id.notification_separator_view);
+        }
     }
 }

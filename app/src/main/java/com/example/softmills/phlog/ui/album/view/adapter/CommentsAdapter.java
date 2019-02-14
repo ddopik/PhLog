@@ -108,6 +108,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         if (getItemViewType(i) == HEAD) {
 
+
             commentViewHolder.authorName.setText(previewImage.photographer.fullName);
             commentViewHolder.authorUserName.setText(previewImage.photographer.userName);
 
