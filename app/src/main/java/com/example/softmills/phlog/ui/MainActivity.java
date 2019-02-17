@@ -148,10 +148,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         private void clearSelected() {
 
-            int homeBrnImg_off = R.drawable.ic_tab_home_off;
-            int campaignBtnImg_off = R.drawable.ic_tab_missions_off;
-            int notificationBtnImg_off = R.drawable.ic_tab_notificatin_off;
-            int myProfileBtnImg_off = R.drawable.ic_tab_profile_off;
+            int homeBrnImg_off = R.drawable.ic_social_off;
+            int campaignBtnImg_off = R.drawable.ic_campaigns_off;
+            int notificationBtnImg_off = R.drawable.ic_notification_off;
+            int myProfileBtnImg_off = R.drawable.ic_profile_off;
 
             homeBrn.setTextColor(getResources().getColor(R.color.gray677078));
             homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg_off, 0, 0);
@@ -177,10 +177,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         public void navigate(Constants.NavigationHelper navigationHelper) {
             clearSelected();
-            int homeBrnImg = R.drawable.ic_tab_home_on;
-            int campaignBtnImg = R.drawable.ic_tab_missions_on;
-            int notificationBtnImg = R.drawable.ic_tab_notificatin_on;
-            int myProfileBtnImg = R.drawable.ic_tab_profile_on;
+            int homeBrnImg = R.drawable.ic_social_on;
+            int campaignBtnImg = R.drawable.ic_campaigns_on;
+            int notificationBtnImg = R.drawable.ic_notification_on;
+            int myProfileBtnImg = R.drawable.ic_profile_on;
 
             backBtn.setVisibility(View.VISIBLE);
 

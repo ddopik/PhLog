@@ -19,7 +19,7 @@ public class WelcomeScreenImpl implements WelcomePresenter {
 
     public WelcomeScreenImpl(WelcomeView welcomeView, Context context) {
         this.welcomeView = welcomeView;
-        this.context=context;
+        this.context = context;
 
     }
 
@@ -31,7 +31,7 @@ public class WelcomeScreenImpl implements WelcomePresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(welcomeScreenResponse -> {
-                        welcomeView.showWelcomeImageSlider(welcomeScreenResponse);
+                    welcomeView.showWelcomeImageSlider(welcomeScreenResponse);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
