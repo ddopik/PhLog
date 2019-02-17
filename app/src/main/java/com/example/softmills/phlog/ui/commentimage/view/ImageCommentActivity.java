@@ -1,9 +1,13 @@
 package com.example.softmills.phlog.ui.commentimage.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
@@ -14,7 +18,7 @@ import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.commonmodel.Comment;
 import com.example.softmills.phlog.base.commonmodel.Mentions;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
-import com.example.softmills.phlog.base.eventbus.SendCommentEvent;
+import com.example.softmills.phlog.base.widgets.CustomAutoCompleteTextView;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.base.widgets.PagingController;
@@ -24,12 +28,10 @@ import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentData;
 import com.example.softmills.phlog.ui.commentimage.presenter.ImageCommentActivityImpl;
 import com.example.softmills.phlog.ui.commentimage.presenter.ImageCommentActivityPresenter;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 /**
  * Created by abdalla_maged on 11/6/2018.
@@ -49,12 +51,6 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     private PagingController pagingController;
     private ImageCommentActivityPresenter imageCommentActivityPresenter;
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,11 +63,6 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
             initView();
             initListener();
         }
-
-
-
-
-
 
 
     }
@@ -134,9 +125,42 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
                 }
             }
 
+            @Override
+            public void onImageCommentClicked() {
+
+                if (commentList.size() == 2) {
+                    commentsRv.scrollToPosition(commentList.size() - 1);
+                    CustomAutoCompleteTextView customAutoCompleteTextView = (CustomAutoCompleteTextView) commentsRv.getChildAt(commentList.size() - 1).findViewById(R.id.img_send_comment_val);
+                    customAutoCompleteTextView.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(customAutoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
+//
+                } else {
+                    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                            switch (newState) {
+                                case SCROLL_STATE_IDLE:
+                                    //we reached the target position
+                                    int xx = commentsRv.getChildCount();
+                                    showToast("-->" + xx);
+                                    CustomAutoCompleteTextView customAutoCompleteTextView = (CustomAutoCompleteTextView) commentsRv.getChildAt(xx - 1).findViewById(R.id.img_send_comment_val);
+                                    customAutoCompleteTextView.requestFocus();
+//
+                                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.showSoftInput(customAutoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
+                                    recyclerView.removeOnScrollListener(this);
+                                    break;
+                            }
+                        }
+                    };
+
+                    commentsRv.addOnScrollListener(onScrollListener);
+                    commentsRv.getLayoutManager().smoothScrollToPosition(commentsRv, null, commentList.size() - 1);
 
 
-
+                }
+            }
         };
 
 
@@ -149,13 +173,15 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(SendCommentEvent sendCommentEvent) {
-//
-//commentsAdapter.setItemsCanFocus
-//        listView.setItemsCanFocus(true);
-    }
+    private boolean isLastItemDisplaying(RecyclerView recyclerView) {
+        if (recyclerView.getAdapter().getItemCount() != 0) {
+            int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+            if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1)
 
+                return true;
+        }
+        return false;
+    }
 
     @Override
     public void viewPhotoComment(ImageCommentsData imageCommentsData) {
@@ -165,11 +191,11 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
             imageCommentsData.comments.commentList.clear();
             // (1) is A default value to view AddComment layout in case there is now Comments
             this.commentList.addAll(1, imageCommentsData.comments.commentList);
-        }else {
-            if(commentList.get(1).comment ==null){
+        } else {
+            if (commentList.get(1).comment == null) {
                 commentList.remove(1);
             }
-            this.commentList.addAll( imageCommentsData.comments.commentList);
+            this.commentList.addAll(imageCommentsData.comments.commentList);
 
         }
 
@@ -282,9 +308,5 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         finish();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
+
 }
