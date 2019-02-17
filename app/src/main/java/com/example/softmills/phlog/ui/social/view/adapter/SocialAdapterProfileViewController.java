@@ -52,11 +52,11 @@ public class SocialAdapterProfileViewController {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {
-                            socialViewHolder.socialProfileAlbumType3PhotosContainer.setVisibility(View.VISIBLE);
-                            socialViewHolder.socialProfileType3ImgDefaultContainer.setVisibility(View.INVISIBLE);
 
                             if (userPhotosResponse.data.data != null && userPhotosResponse.data.data.size() >= 3) {
 
+                                socialViewHolder.socialProfileAlbumType3PhotosContainer.setVisibility(View.VISIBLE);
+                                socialViewHolder.socialProfileType3ImgDefaultContainer.setVisibility(View.INVISIBLE);
 
 
                                 GlideApp.with(context)
