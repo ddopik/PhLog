@@ -32,7 +32,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/arial_rounded_font"
+                android:fontFamily="@font/segoe_b"
                 android:gravity="center|start"
                 android:paddingStart="@dimen/earning_widget_start"
                 android:paddingTop="@dimen/earning_widget_height"
@@ -54,21 +54,19 @@
                     android:layout_gravity="center"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.example.softmills.phlog.base.widgets.CustomTextView
                         android:id="@+id/earning_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/arial_rounded_font"
                         android:paddingStart="@dimen/earning_widget_start"
                         tools:text="ID  : 40%"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_large"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <com.example.softmills.phlog.base.widgets.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/arial_rounded_font"
                         android:paddingStart="@dimen/earning_widget_start"
                         android:textSize="@dimen/font_small"
                         android:text="@string/user_id_sale" />
@@ -94,11 +92,10 @@
                 android:paddingTop="@dimen/earning_widget_height"
                 android:paddingBottom="@dimen/earning_widget_height">
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/earning_created_at"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:paddingStart="@dimen/earning_widget_start"
                     android:text="Crested at : 5/11/2016"
                     android:textColor="@color/black"
@@ -110,15 +107,14 @@
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/earning_widget_start">
 
-                    <TextView
+                    <com.example.softmills.phlog.base.widgets.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:fontFamily="@font/arial_rounded_font"
                         android:text="@string/by"
                         android:textSize="@dimen/font_normal" />
 
-                    <TextView
+                    <com.example.softmills.phlog.base.widgets.CustomTextView
                         android:id="@+id/created_by"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -130,7 +126,7 @@
 
                 </LinearLayout>
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/earning_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -151,44 +147,40 @@
                 android:paddingTop="@dimen/dp4"
                 android:paddingBottom="@dimen/dp4">
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:paddingStart="@dimen/earning_widget_start"
                     android:text="@string/buyer"
                     android:textSize="@dimen/font_large" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/buyer_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp2"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:paddingStart="@dimen/earning_widget_start"
                     android:text="ddopik"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_large" />
 
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/buyer_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp2"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:paddingStart="@dimen/earning_widget_start"
                     android:text="user_softMaills.com"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_normal"
                     android:textStyle="bold" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/buyer_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp2"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:paddingStart="@dimen/earning_widget_start"
                     android:text="011223369856"
                     android:textColor="@color/black"
@@ -207,7 +199,7 @@
             android:background="@drawable/sqare_corener"
             android:padding="@dimen/widgets_padding">
 
-            <TextView
+            <com.example.softmills.phlog.base.widgets.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -215,7 +207,7 @@
                 android:text="@string/price"
                 android:textColor="@color/white" />
 
-            <TextView
+            <com.example.softmills.phlog.base.widgets.CustomTextView
                 android:id="@+id/earning_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

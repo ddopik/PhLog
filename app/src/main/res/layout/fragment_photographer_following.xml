@@ -9,6 +9,7 @@
         android:id="@+id/search_following"
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_search_tab_h"
+        android:fontFamily="@font/verdana"
         android:inputType="textAutoComplete"
         android:layout_marginTop="@dimen/dp8"
         android:layout_marginStart="@dimen/dp8"

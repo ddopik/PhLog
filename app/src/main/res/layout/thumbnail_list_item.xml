@@ -4,14 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
+    <com.example.softmills.phlog.base.widgets.CustomTextView
         android:id="@+id/filter_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/arial_rounded_font" />
+        android:layout_marginTop="5dp" />
 
     <ImageView
         android:id="@+id/thumbnail"

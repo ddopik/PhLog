@@ -50,14 +50,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/widgets_padding"
-                android:fontFamily="@font/arial_rounded_font"
+                android:fontFamily="@font/segoe_b"
                 android:padding="@dimen/widgets_padding"
                 android:text="@string/about_us"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_medium_s"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.example.softmills.phlog.base.widgets.CustomTextView
                 android:id="@+id/brand_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,38 +76,33 @@
                 android:fitsSystemWindows="true"
                 android:orientation="vertical">
                 <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/brand_website"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@color/gray200"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:gravity="center|start"
                     android:padding="@dimen/widgets_padding"
-                    android:text="www.brand.come"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    tools:text="www.brand.come"
+                    android:textColor="@color/black" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/brand_mail"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@color/gray200"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:gravity="center|start"
                     android:padding="@dimen/widgets_padding"
                     android:text="@string/mail"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:textColor="@color/black" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/brand_campaign"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:layout_gravity="bottom|end"
                     android:layout_margin="@dimen/widgets_padding"
                     android:drawableEnd="@drawable/ic_navigate_brand_forward_24dp"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:gravity="end"
                     android:text="@string/brand_campaign"
                     android:textColor="@color/text_input_color"

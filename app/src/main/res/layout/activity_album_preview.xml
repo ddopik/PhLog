@@ -54,11 +54,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/preview_app_bar" />
 
-                <com.example.softmills.phlog.base.widgets.CustomTextView
+                <TextView
                     android:id="@+id/album_name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial_rounded_font"
+                    android:fontFamily="@font/segoe_b"
                     android:padding="@dimen/widgets_padding"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_medium"
@@ -70,7 +70,6 @@
                     android:id="@+id/following_number_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:padding="@dimen/widgets_padding"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"

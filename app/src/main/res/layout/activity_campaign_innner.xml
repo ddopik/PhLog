@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/tab_background"
+            app:tabTextAppearance="@style/ProfileTabTextAppearance"
             app:layout_anchorGravity="bottom"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_collapseMode="pin"
@@ -71,6 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:fontFamily="@font/segoe_sb"
         android:background="@color/text_input_color"
         android:text="@string/submit_ur_photo"
         android:textColor="@color/white" />

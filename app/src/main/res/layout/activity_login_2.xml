@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/dp16"
-        android:fontFamily="@font/arial_rounded_font"
+        android:fontFamily="@font/segoe_b"
         android:gravity="start|center"
         android:lines="1"
         android:text="@string/app_name"
@@ -56,7 +56,8 @@
         android:text="@string/login_google"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="@dimen/font_normal"
+        android:fontFamily="@font/segoe_sb"
         app:layout_constraintBottom_toTopOf="@+id/facebook_signing_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -76,10 +77,11 @@
         android:paddingStart="@dimen/dp80"
         android:drawablePadding="@dimen/dp16"
         android:paddingEnd="@dimen/dp10"
+        android:fontFamily="@font/segoe_sb"
         android:text="@string/com_facebook_loginview_log_in_button_long"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="@dimen/font_normal"
         app:layout_constraintBottom_toTopOf="@+id/textView10"
         app:layout_constraintEnd_toEndOf="@+id/google_signing_btn"
         app:layout_constraintHorizontal_bias="0.5"
@@ -93,6 +95,7 @@
         android:background="@drawable/circle_white"
         android:gravity="center"
         android:text="@string/or"
+        android:fontFamily="@font/segoe_sb"
         android:textColor="@color/gray900"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,6 +123,7 @@
             android:inputType="textEmailAddress"
             android:textAlignment="textStart"
             android:textColor="@color/white"
+            android:fontFamily="@font/verdana"
             android:textColorHint="@color/white"
             android:textSize="@dimen/sign_up_text_size_small"
             app:backgroundTint="@color/white" />
@@ -144,6 +148,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:inputType="textPassword"
+            android:fontFamily="@font/verdana"
             android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
@@ -162,11 +167,12 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/sign_up_text_size_meduim"
+        android:fontFamily="@font/segoe_sb"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
         app:layout_constraintStart_toStartOf="@+id/login_password_input"
         app:layout_constraintTop_toBottomOf="@+id/login_password_input" />
 
-    <TextView
+    <com.example.softmills.phlog.base.widgets.CustomTextView
         android:id="@+id/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -181,7 +187,7 @@
         app:layout_constraintStart_toEndOf="@+id/sign_up_btn"
         app:layout_constraintTop_toTopOf="@+id/sign_up_btn" />
 
-    <TextView
+    <com.example.softmills.phlog.base.widgets.CustomTextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -196,7 +202,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".9" />
 
-    <TextView
+    <com.example.softmills.phlog.base.widgets.CustomTextView
         android:id="@+id/sign_up_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

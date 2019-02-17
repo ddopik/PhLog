@@ -40,7 +40,7 @@
                 android:layout_margin="@dimen/dp8"
                 android:layout_weight="1"
                 android:background="@color/gray677078"
-                android:fontFamily="@font/arial_rounded_font"
+                android:fontFamily="@font/segoe_sb"
                 android:text="@string/login"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite" />
@@ -52,7 +52,7 @@
                 android:layout_margin="@dimen/dp8"
                 android:layout_weight="1"
                 android:background="@color/text_input_color"
-                android:fontFamily="@font/arial_rounded_font"
+                android:fontFamily="@font/segoe_sb"
                 android:text="@string/sign_up"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite" />

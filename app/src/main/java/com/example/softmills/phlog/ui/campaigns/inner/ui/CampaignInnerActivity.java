@@ -141,7 +141,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
 
         campaignDayLeft.setText(new StringBuilder().append(campaign.daysLeft).append(" ").append(getString(R.string.days_left_value)).toString());
 
-        campaignHostedBy.setText(getString(R.string.hosted_by_value, campaign.business.nameEn));
+        campaignHostedBy.setText(getString(R.string.hosted_by_value, campaign.business.fullName));
 
         // initializing the pager fragment
 

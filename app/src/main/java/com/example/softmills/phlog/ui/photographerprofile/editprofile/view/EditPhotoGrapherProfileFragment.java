@@ -131,7 +131,7 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().equals(photographer.fullName)
-                        || s.toString().equals(photographer.userName)
+//                        || s.toString().equals(photographer.userName)
                         || s.toString().equals(photographer.email)
                         || s.toString().equals(photographer.password)
                         || s.toString().isEmpty())
@@ -141,7 +141,7 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
             }
         };
         nameET.addTextChangedListener(textWatcher);
-        usernameET.addTextChangedListener(textWatcher);
+//        usernameET.addTextChangedListener(textWatcher);
         phoneET.addTextChangedListener(textWatcher);
         emailET.addTextChangedListener(textWatcher);
         passwordET.addTextChangedListener(textWatcher);

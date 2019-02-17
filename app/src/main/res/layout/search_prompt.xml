@@ -27,6 +27,7 @@
         android:layout_height="0dp"
         android:textColor="@color/gray677078"
         app:autoSizeMinTextSize="1sp"
+        android:fontFamily="@font/segoe_sb"
         android:gravity="center"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"

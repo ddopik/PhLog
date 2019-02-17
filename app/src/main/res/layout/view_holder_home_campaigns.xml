@@ -27,7 +27,7 @@
                 android:layout_marginEnd="@dimen/dp8"
                 android:src="@drawable/phlog_logo" />
 
-            <TextView
+            <com.example.softmills.phlog.base.widgets.CustomTextView
                 android:id="@+id/campaign_name"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/icon_view_holder_size_m"
@@ -60,16 +60,15 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp14">
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/campaign_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_title_head"
                     tools:text="campaign" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/campaign_days_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
