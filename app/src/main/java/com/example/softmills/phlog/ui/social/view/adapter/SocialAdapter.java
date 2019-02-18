@@ -97,6 +97,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
     }
 
+
     @Override
     public int getItemCount() {
         return socialDataList.size();

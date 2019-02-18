@@ -2,12 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/view_holder_item_list_height_med">
 
     <FrameLayout
         android:id="@+id/socail_profile_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/view_holder_item_list_height_med"
         android:layout_margin="@dimen/widgets_padding">
 
         <include
@@ -22,7 +22,7 @@
     <FrameLayout
         android:id="@+id/images_slider_type_5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/view_holder_item_list_height_med"
         android:layout_margin="@dimen/widgets_padding"
         android:visibility="gone">
         <include
@@ -32,7 +32,7 @@
     <FrameLayout
         android:id="@+id/social_campaign_type_1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/view_holder_item_list_height_med"
         android:layout_margin="@dimen/widgets_padding"
         android:visibility="gone">
 
@@ -42,7 +42,7 @@
     <FrameLayout
         android:id="@+id/social_brand_type_1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/view_holder_item_list_height_med"
         android:layout_margin="@dimen/widgets_padding"
         android:visibility="gone">
 
@@ -53,7 +53,7 @@
     <FrameLayout
         android:id="@+id/social_album_type_4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/view_holder_item_list_height_med"
         android:layout_margin="@dimen/widgets_padding"
         android:visibility="gone"
         tools:visibility="visible">
