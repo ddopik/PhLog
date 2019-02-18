@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:background="@color/transparent"
+            android:fontFamily="@font/segoe_sb"
             android:text="@string/back"
             android:textColor="@color/white" />
 
@@ -27,13 +28,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:background="@color/transparent"
+            android:fontFamily="@font/segoe_sb"
             android:text="@string/next"
 
             android:textColor="@color/white" />
 
 
     </FrameLayout>
-
 
 
     <ImageView
@@ -70,8 +71,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="15dp"
-                android:paddingStart="@dimen/dp10"
+                android:fontFamily="@font/verdana"
                 android:hint="@string/add_caption"
+                android:paddingStart="@dimen/dp10"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 app:backgroundTint="@color/white" />
@@ -101,6 +103,7 @@
                     android:id="@+id/auto_complete_places"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/verdana"
                     android:hint="@string/add_location"
                     android:paddingStart="@dimen/dp10"
                     android:textColor="@color/white"
@@ -133,20 +136,20 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25sp"
-                android:paddingTop="@dimen/dp4"
                 android:background="@color/transparent"
+                android:paddingTop="@dimen/dp4"
                 app:srcCompat="@drawable/clock" />
 
             <Switch
                 android:id="@+id/draft_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:checked="false"
+                android:fontFamily="@font/verdana"
                 android:paddingStart="@dimen/dp12"
                 android:text="@string/save_to_draft"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium_s"
-                android:checked="false"
                 android:theme="@style/switch_btn_style" />
         </LinearLayout>
 

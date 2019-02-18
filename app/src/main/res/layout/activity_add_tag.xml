@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,12 +29,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial_rounded_font"
+                    android:fontFamily="@font/segoe_b"
                     android:text="@string/tag"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_large" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp12"
@@ -45,6 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/dp45"
+                    android:fontFamily="@font/verdana"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_search_view"
                     android:hint="@string/add_new_tag"
@@ -74,16 +76,13 @@
             android:layout_weight="4"
             android:orientation="vertical">
 
-            <TextView
+            <com.example.softmills.phlog.base.widgets.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/arial_rounded_font"
                 android:paddingStart="@dimen/dp16"
                 android:paddingEnd="@dimen/dp16"
                 android:text="@string/selected_tags"
-
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textColor="@color/white" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -124,7 +123,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center|top"
                 android:background="@drawable/rounded_orange_btn"
-                android:fontFamily="@font/arial_rounded_font"
+                android:fontFamily="@font/segoe_sb"
                 android:text="@string/upload_photo"
                 android:textColor="@color/white"
                 android:textStyle="bold" />

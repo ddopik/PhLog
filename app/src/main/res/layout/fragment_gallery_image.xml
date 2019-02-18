@@ -47,6 +47,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_b"
             android:text="@string/choose_from_your_photos"
             android:textAlignment="center"
             android:textColor="@color/black"

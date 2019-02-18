@@ -14,16 +14,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:baselineAligned="false"
-        android:padding="@dimen/bottom_bar_item_padding"
         android:orientation="horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:layout_alignParentTop="true"
+            android:background="@color/gray400"/>
 
         <LinearLayout
             android:id="@+id/navigation_home_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/widgets_padding_s"
             android:gravity="center">
 
             <Button
@@ -33,14 +39,18 @@
                 android:background="@color/transparent"
                 android:drawableTop="@drawable/ic_tab_home_on"
                 android:gravity="center"
+                android:fontFamily="@font/segoe_sb"
                 android:text="@string/home"
-                android:textSize="@dimen/font_small"
+                android:textAllCaps="false"
+                android:padding="@dimen/widgets_padding_s"
+                android:textSize="@dimen/font_very_small"
                 android:textAlignment="center"
                  android:textColor="@color/gray677078" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/navigation_missions_container"
+            android:layout_marginTop="@dimen/widgets_padding_s"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/navigation_home_container"
@@ -51,9 +61,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
+                android:padding="@dimen/widgets_padding_s"
                 android:drawableTop="@drawable/ic_tab_missions_off"
                 android:text="@string/campaigns"
-                android:textSize="@dimen/font_small"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_very_small"
                 android:textAlignment="center"
                  android:textColor="@color/gray677078" />
         </LinearLayout>
@@ -62,6 +74,7 @@
             android:id="@+id/navigation_notification_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widgets_padding_s"
             android:layout_toStartOf="@+id/navigation_profile_container"
             android:gravity="center">
 
@@ -72,8 +85,10 @@
                 android:background="@color/transparent"
                 android:drawableTop="@drawable/ic_tab_notificatin_off"
                 android:gravity="center"
+                android:padding="@dimen/widgets_padding_s"
                 android:text="@string/Notification"
-                android:textSize="@dimen/font_small"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_very_small"
                 android:textAlignment="center"
                  android:textColor="@color/gray677078" />
         </LinearLayout>
@@ -82,6 +97,7 @@
             android:id="@+id/navigation_profile_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widgets_padding_s"
             android:layout_alignParentEnd="true"
             android:gravity="center">
 
@@ -92,7 +108,9 @@
                 android:background="@color/transparent"
                 android:drawableTop="@drawable/ic_tab_profile_off"
                 android:gravity="center"
-                android:textSize="@dimen/font_small"
+                android:padding="@dimen/widgets_padding_s"
+                android:textSize="@dimen/font_very_small"
+                android:textAllCaps="false"
                 android:text="@string/me"
                 android:textAlignment="center"
                  android:textColor="@color/gray677078" />

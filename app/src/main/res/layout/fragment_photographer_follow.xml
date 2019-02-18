@@ -17,6 +17,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/photographer_follow_tabs"
             android:layout_width="match_parent"
+            app:tabTextAppearance="@style/ProfileTabTextAppearance"
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:layout_anchorGravity="bottom"

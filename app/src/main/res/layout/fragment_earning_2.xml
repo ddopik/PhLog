@@ -35,15 +35,12 @@
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:fontFamily="@font/arial_rounded_font"
-                app:layout_constraintHeight_percent=".15"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="1sp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/segoe_b"
                 android:lines="1"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_small"
+                android:textSize="@dimen/text_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -54,19 +51,16 @@
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
-    <TextView
+    <com.example.softmills.phlog.base.widgets.CustomTextView
         android:id="@+id/total_size_val"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/arial_rounded_font"
         android:lines="1"
         android:textColor="@color/black"
-        android:textSize="@dimen/font_large"
-        app:autoSizeMinTextSize="1sp"
-        app:autoSizeTextType="uniform"
+        android:textSize="@dimen/text_medium_s"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".03"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView"
         app:layout_constraintVertical_bias="0.02"

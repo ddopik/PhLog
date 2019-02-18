@@ -1,5 +1,6 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/phlog_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,9 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAllCaps="true"
-            android:fontFamily="@font/arial_rounded_font"
-            android:text="@string/app_name"
+            android:textAllCaps="false"
+            tools:text="@string/app_name"
             android:textColor="@color/white" />
 
     </FrameLayout>

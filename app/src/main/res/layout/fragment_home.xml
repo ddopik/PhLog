@@ -33,14 +33,15 @@
 
 
                 <TextView
+                    android:fontFamily="@font/segoe_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial_rounded_font"
                     android:text="@string/stories"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_head_xl" />
 
                 <EditText
+                    android:fontFamily="@font/verdana"
                     android:id="@+id/home_search"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/activity_search_tab_h_large"

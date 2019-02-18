@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
-    <TextView
+    <com.example.softmills.phlog.base.widgets.CustomTextView
         android:id="@+id/mission_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
