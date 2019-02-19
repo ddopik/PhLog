@@ -128,8 +128,13 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
     private void initListener() {
         nextBtn.setOnClickListener(v -> {
-            Bundle extras = new Bundle();
+            caption.getText().toString();
+            if (caption.getText().toString().isEmpty())  {
+                showToast(getString(R.string.caption_is_required));
+                return;
+            }
 
+            Bundle extras = new Bundle();
             if (placesAutoCompete.getText() != null)
                 imageType.setImageLocation(String.valueOf(placesAutoCompete.getText()));
             if (caption.getText() != null)

@@ -4,13 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.commonmodel.Tag;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.MainActivity;
+import com.example.softmills.phlog.ui.uploadimage.model.UploadPhotoModel;
 import com.example.softmills.phlog.ui.uploadimage.view.AddTagActivityView;
 
 import java.io.File;
@@ -85,4 +84,18 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
 
     }
 
+    @Override
+    public UploadPhotoModel getUploadModel(String imagePreviewPath, String imageCaption, String imageLocation, String draftState, UploadImageType imageType, List<Tag> tagList) {
+        HashMap<String, String> tagsSelected = new HashMap<String, String>();
+        for (int i = 0; i < tagList.size(); i++) {
+            tagsSelected.put("tags[" + i + "]", tagList.get(i).name);
+        }
+        UploadPhotoModel model = new UploadPhotoModel();
+        model.imageCaption = imageCaption;
+        model.imagePath = imagePreviewPath;
+        model.location = imageLocation;
+        model.uploadImageType = imageType;
+        model.tags = tagsSelected;
+        return model;
+    }
 }

@@ -1,8 +1,17 @@
 package com.example.softmills.phlog.ui.uploadimage.view;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AutoCompleteTextView;
@@ -13,10 +22,12 @@ import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.uploader.UploaderService;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Tag;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.uploadimage.model.UploadPhotoModel;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenter;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenterImpl;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.AutoCompleteTagMenuAdapter;
@@ -33,6 +44,7 @@ import java.util.List;
  */
 public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
+    private static final String TAG = AddTagActivity.class.getSimpleName();
     public static String IMAGE_TYPE = "image_type";
 
     private AutoCompleteTextView autoCompleteTextView;
@@ -50,8 +62,41 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private String draftState;
     private String imageLocation;
 
-
     private AddTagActivityPresenter addTagActivityPresenter;
+
+
+    private boolean started;
+    private boolean bound;
+    private boolean pendingSendingMessage;
+    private Message pendingMessage;
+    private Messenger messenger;
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            bound = true;
+            messenger = new Messenger(service);
+            if (pendingSendingMessage) {
+                sendMessageToService(pendingMessage);
+                pendingSendingMessage = false;
+                pendingMessage = null;
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+        }
+    };
+
+    private void sendMessageToService(Message message) {
+        try {
+            if (messenger != null)
+                messenger.send(message);
+        } catch (RemoteException e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
 
 
     @Override
@@ -149,7 +194,30 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         backBtn.setOnClickListener((view) -> onBackPressed());
 
         uploadBrn.setOnClickListener(v -> {
-            addTagActivityPresenter.uploadPhoto(imagePreviewPath, imageCaption, imageLocation, draftState, imageType, tagList);
+//            addTagActivityPresenter.uploadPhoto(imagePreviewPath, imageCaption, imageLocation, draftState, imageType, tagList);
+            if (tagList.isEmpty()) {
+                showToast(getString(R.string.tag_is_required));
+                return;
+            }
+            UploadPhotoModel model = addTagActivityPresenter.getUploadModel(imagePreviewPath, imageCaption, imageLocation, draftState, imageType, tagList);
+            Intent intent = new Intent(this, UploaderService.class);
+            if (!bound) {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                    startForegroundService(intent);
+//                } else {
+//                    startService(intent);
+//                }
+                pendingSendingMessage = true;
+                pendingMessage = new Message();
+                pendingMessage.what = UploaderService.UPLOAD_FILE;
+                pendingMessage.obj = model;
+                bindService(intent, connection, BIND_AUTO_CREATE);
+            } else {
+                Message message = new Message();
+                message.what = UploaderService.UPLOAD_FILE;
+                message.obj = model;
+                sendMessageToService(message);
+            }
         });
     }
 
@@ -217,5 +285,11 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     @Override
     public void viewMessage(String msg) {
         showToast(msg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbindService(connection);
+        super.onDestroy();
     }
 }
