@@ -61,7 +61,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private ImageButton backBtn;
     private Button uploadBrn;
     private ProgressBar uploadImageProgress;
-    private  UploadImageType imageType;
+    private UploadImageType imageType;
     private String imageCaption;
     private String draftState;
     private String imageLocation;
@@ -91,7 +91,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                         .setMessage(R.string.your_photo_uploaded)
                         .setPositiveButton(R.string.view_in_profile, (dialog, which) -> {
                             Intent intents = new Intent(this, MainActivity.class);
-                            intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
                                     | Intent.FLAG_ACTIVITY_CLEAR_TOP
                                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             intents.putExtra(Constants.MainActivityRedirectionValue.NAME, Constants.MainActivityRedirectionValue.TO_PROFILE);
@@ -143,10 +143,10 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
-        if ( bundle.getSerializable(IMAGE_TYPE) != null) {
-            imageType=(UploadImageType) bundle.getSerializable(IMAGE_TYPE);
-            imagePreviewPath =imageType.getImageUrl();
-            draftState =String.valueOf(imageType.isDraft());
+        if (bundle.getSerializable(IMAGE_TYPE) != null) {
+            imageType = (UploadImageType) bundle.getSerializable(IMAGE_TYPE);
+            imagePreviewPath = imageType.getImageUrl();
+            draftState = String.valueOf(imageType.isDraft());
 
             if (imageType.getImageCaption() != null)
                 imageCaption = imageType.getImageCaption();
@@ -285,11 +285,15 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                         newTag.name = autoCompleteTextView.getText().toString();
                         boolean tagAlreadyExsist = false;
                         for (Tag tag : tagList) {
-                            if (tag.name.equals(newTag.name))
+                            if (tag.name.equals(newTag.name)) {
                                 tagAlreadyExsist = true;
+                                break;
+                            }
                         }
-                        if (!tagAlreadyExsist)
+                        if (!tagAlreadyExsist) {
                             addSelectedTag(newTag);
+                            autoCompleteTextView.setText("");
+                        }
                     }
                 }
                 // Сохраняем текущую высоту view до следующего вызова.
