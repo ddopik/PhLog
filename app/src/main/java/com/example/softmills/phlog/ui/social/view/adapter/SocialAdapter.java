@@ -77,7 +77,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                     break;
                 }
                 case ENTITY_CAMPAIGN: {
-                    socialAdapterCampaignViewController = new SocialAdapterCampaignViewController(context);
+                    socialAdapterCampaignViewController = new SocialAdapterCampaignViewController(context, this,socialDataList);
                     bindCampaignEntity(socialDataList.get(i), socialViewHolder);
                     break;
                 }
@@ -199,10 +199,10 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     public interface OnSocialItemListener {
 
 
-        void onSocialCampaignJoined(int campaignId, boolean state);
+//        void onSocialCampaignJoined(int campaignId, boolean state);
 
 
-        void onSocialPhotoGrapherFollowed(int photographerId, boolean state);
+//        void onSocialPhotoGrapherFollowed(int photographerId, boolean state);
 
         void onSocialBrandFollowed(int brandId, boolean state);
 

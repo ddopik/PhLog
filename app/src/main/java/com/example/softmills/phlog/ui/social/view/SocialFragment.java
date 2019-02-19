@@ -113,32 +113,32 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
     }
 
 
-    @Override
-    public void onSocialCampaignJoined(int campaignId, boolean state) {
-        for (SocialData socialData : socialDataList) {
-            if (socialData.campaigns != null && socialData.campaigns.size() > 0)
-                for (Campaign campaign : socialData.campaigns) {
-                    if (campaignId == campaign.id) {
-                        campaign.isJoined = state;
-                    }
-                }
-        }
-        socialAdapter.notifyDataSetChanged();
-    }
+//    @Override
+//    public void onSocialCampaignJoined(int campaignId, boolean state) {
+//        for (SocialData socialData : socialDataList) {
+//            if (socialData.campaigns != null && socialData.campaigns.size() > 0)
+//                for (Campaign campaign : socialData.campaigns) {
+//                    if (campaignId == campaign.id) {
+//                        campaign.isJoined = state;
+//                    }
+//                }
+//        }
+//        socialAdapter.notifyDataSetChanged();
+//    }
 
 
-    @Override
-    public void onSocialPhotoGrapherFollowed(int userId, boolean state) {
-        for (SocialData socialData : socialDataList) {
-            if (socialData.profiles != null && socialData.profiles.size() > 0)
-                for (Photographer photographer : socialData.profiles) {
-                    if (photographer.id.equals(userId)) {
-                        photographer.isFollow = state;
-                    }
-                }
-        }
-        socialAdapter.notifyDataSetChanged();
-    }
+//    @Override
+//    public void onSocialPhotoGrapherFollowed(int userId, boolean state) {
+//        for (SocialData socialData : socialDataList) {
+//            if (socialData.profiles != null && socialData.profiles.size() > 0)
+//                for (Photographer photographer : socialData.profiles) {
+//                    if (photographer.id.equals(userId)) {
+//                        photographer.isFollow = state;
+//                    }
+//                }
+//        }
+//        socialAdapter.notifyDataSetChanged();
+//    }
 
 
     @Override
