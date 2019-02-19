@@ -72,7 +72,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             switch (socialDataList.get(i).entityId) {
 
                 case ENTITY_PROFILE: {
-                    socialAdapterProfileViewController = new SocialAdapterProfileViewController(context, this);
+                    socialAdapterProfileViewController = new SocialAdapterProfileViewController(context, this,socialDataList);
                     bindProfileEntity(socialDataList.get(i), socialViewHolder);
                     break;
                 }
@@ -113,7 +113,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
         FrameLayout socialProfileType3, socialImageSliderType5, socialCampaignType1, socialBrandType1, socialAlbumType4;
 
-        ImageView socialProfileType3Icon, socialProfileType3Img_1, socialProfileType3Img_2, socialProfileType3Img_3, socialProfileType3Img_4, socialProfileType3ImgDefaultContainer, socialDefaultAlbumImg;
+        ImageView socialProfileType3Icon, socialProfileType3Img_1, socialProfileType3Img_2, socialProfileType3Img_3, socialProfileType3Img_4, socialDefaultAlbumImg;
         TextView socialProfileType3FullName, socialProfileType3UserName;
         Button followSocialProfileType3Btn;
 
@@ -190,8 +190,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialProfileType3Img_2 = view.findViewById(R.id.social_profile_img_2);
             socialProfileType3Img_3 = view.findViewById(R.id.social_profile_img_3);
             socialProfileType3Img_4 = view.findViewById(R.id.social_profile_img_4);
-            socialProfileType3ImgDefaultContainer = view.findViewById(R.id.social_profile_type_3_img_container);
-            socialProfileAlbumType3PhotosContainer = view.findViewById(R.id.social_profile_album_type_3_photos_container);
+             socialProfileAlbumType3PhotosContainer = view.findViewById(R.id.social_profile_album_type_3_photos_container);
 
 
         }
@@ -215,7 +214,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         switch (socialData.displayType) {
 
             case PROFILE_DISPLAY_TYPE_3:
-                socialAdapterProfileViewController.setProfileType3(socialData.profiles.get(0), socialViewHolder, onSocialItemListener);
+                socialAdapterProfileViewController.setProfileType3(socialData, socialViewHolder, onSocialItemListener);
                 break;
         }
 

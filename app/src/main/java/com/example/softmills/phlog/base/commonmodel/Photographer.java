@@ -76,6 +76,8 @@ public class Photographer  extends MentionedUser implements Parcelable {
     public Integer id;
 
 
+    //note this is not An Api obj  it is just model obj for development purpose
+    public List<BaseImage> photoGrapherPhotos =new ArrayList<>();
 
     @SerializedName("followers_count")
     @Expose
