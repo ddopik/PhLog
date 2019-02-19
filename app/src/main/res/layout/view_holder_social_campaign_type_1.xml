@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-     app:cardCornerRadius="@dimen/item_card_corner_radius"
-    app:cardElevation="@dimen/item_card_elevation">
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:id="@+id/social_campaign_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/dp12">
+        android:padding="@dimen/widgets_padding"
+        tools:background="@color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginBottom="@dimen/dp8"
-            android:layout_height="40dp">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp8">
 
             <ImageView
                 android:id="@+id/social_campaign_icon"
@@ -46,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                tools:background="@drawable/splash_screen_background"/>
+                tools:background="@drawable/splash_screen_background" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -90,8 +89,8 @@
                         android:id="@+id/social_join_campaign_btn"
                         android:layout_width="@dimen/campaign_home_button_width"
                         android:layout_height="@dimen/campaign_button_size"
-                        android:fontFamily="@font/segoe_sb"
                         android:background="@drawable/rounded_campaign_button"
+                        android:fontFamily="@font/segoe_sb"
                         android:text="@string/join"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -102,4 +101,4 @@
     </LinearLayout>
 
 
-</android.support.v7.widget.CardView>
+</FrameLayout>

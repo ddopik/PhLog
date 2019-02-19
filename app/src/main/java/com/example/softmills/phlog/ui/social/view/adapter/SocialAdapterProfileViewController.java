@@ -24,11 +24,13 @@ import static com.example.softmills.phlog.ui.userprofile.view.UserProfileActivit
 public class SocialAdapterProfileViewController {
 
     private String TAG = SocialAdapterProfileViewController.class.getSimpleName();
+    private SocialAdapter socialAdapter;
     private Context context;
 
-    public SocialAdapterProfileViewController(Context context) {
+    public SocialAdapterProfileViewController(Context context,SocialAdapter socialAdapter) {
         this.context = context;
-    }
+        this.socialAdapter=socialAdapter;
+     }
 
 
     @SuppressLint("CheckResult")
@@ -101,13 +103,10 @@ public class SocialAdapterProfileViewController {
                                 }
 
                             }
-
+//                            socialAdapter.notifyDataSetChanged();
 
                         }
                         , throwable -> {
-
-//                            socialViewHolder.socialProfileAlbumType3PhotosContainer.setVisibility(View.INVISIBLE);
-//                            socialViewHolder.socialProfileType3ImgDefaultContainer.setVisibility(View.VISIBLE);
                             ErrorUtils.Companion.setError(context, TAG, throwable);
                         });
 
