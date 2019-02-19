@@ -67,6 +67,8 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private MapUtls mapUtls;
     private UploadImageType imageType;
 
+    public static final int UPLOAD_PHOTO_REQUEST_CODE = 325;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -150,6 +152,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
             extras.putSerializable(AddTagActivity.IMAGE_TYPE, imageType);
             intent.putExtras(extras);
             startActivity(intent);
+//            startActivityForResult(intent, UPLOAD_PHOTO_REQUEST_CODE);
         });
         backBtn.setOnClickListener(v -> onBackPressed());
 
@@ -247,6 +250,10 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         Log.e(TAG, "Google Places API connection suspended.");
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     public class GeocodeHandler extends Handler {
         @Override

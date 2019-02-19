@@ -44,7 +44,8 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTop">
         </activity>
         <activity android:name=".ui.campaigns.inner.ui.CampaignInnerActivity">
 

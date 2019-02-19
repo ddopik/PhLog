@@ -65,8 +65,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initPresenter();
         initView();
         initListener();
-        navigationManger.navigate(HOME);
 
+        handleIntent(getIntent());
+    }
+
+    private void handleIntent(Intent intent) {
+        if (intent.hasExtra(Constants.MainActivityRedirectionValue.NAME)) {
+            int redirection = intent.getIntExtra(Constants.MainActivityRedirectionValue.NAME, 0);
+            switch (redirection) {
+                case Constants.MainActivityRedirectionValue.TO_PROFILE:
+                    navigationManger.navigate(PROFILE);
+                    break;
+            }
+        } else {
+            navigationManger.navigate(HOME);
+        }
     }
 
     @Override
@@ -335,5 +348,4 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     }
-
 }

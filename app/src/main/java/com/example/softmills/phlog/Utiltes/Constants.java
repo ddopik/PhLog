@@ -86,4 +86,9 @@ public interface Constants {
         int CAMPAIGN_STATUS_PRIZE_PROCESSING = 6;
         int CAMPAIGN_STATUS_COMPLETED = 7;
     }
+
+    interface MainActivityRedirectionValue {
+        String NAME = MainActivityRedirectionValue.class.getSimpleName();
+        int TO_PROFILE = 1;
+    }
 }

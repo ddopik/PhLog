@@ -11,6 +11,8 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import android.support.v4.content.IntentCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -21,12 +23,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.Utiltes.uploader.UploaderService;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Tag;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.uploadimage.model.UploadPhotoModel;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenter;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenterImpl;
@@ -71,11 +75,44 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private Message pendingMessage;
     private Messenger messenger;
 
+    private UploaderService.Communicator communicator = action -> {
+        switch (action) {
+            case UPLOAD_STARTED:
+                uploadImageProgress.setVisibility(View.VISIBLE);
+                break;
+            case UPLOAD_FAILED:
+                showToast(getString(R.string.upload_failed));
+                uploadImageProgress.setVisibility(View.GONE);
+                break;
+            case UPLOAD_FINISHED:
+//                setResult(RESULT_OK);
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.done)
+                        .setMessage(R.string.your_photo_uploaded)
+                        .setPositiveButton(R.string.view_in_profile, (dialog, which) -> {
+                            Intent intents = new Intent(this, MainActivity.class);
+                            intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                    | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intents.putExtra(Constants.MainActivityRedirectionValue.NAME, Constants.MainActivityRedirectionValue.TO_PROFILE);
+                            startActivity(intents);
+                            finish();
+                            dialog.dismiss();
+                            finish();
+                        }).show();
+                break;
+        }
+    };
+
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             bound = true;
             messenger = new Messenger(service);
+            Message message = new Message();
+            message.what = UploaderService.ADD_COMMUNICATOR;
+            message.obj = communicator;
+            sendMessageToService(message);
             if (pendingSendingMessage) {
                 sendMessageToService(pendingMessage);
                 pendingSendingMessage = false;
@@ -289,6 +326,9 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
     @Override
     protected void onDestroy() {
+        Message message = new Message();
+        message.what = UploaderService.REMOVE_COMMUNICATOR;
+        sendMessageToService(message);
         unbindService(connection);
         super.onDestroy();
     }
