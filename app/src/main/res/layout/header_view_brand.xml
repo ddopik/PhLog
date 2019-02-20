@@ -46,18 +46,17 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dp8"
                 android:layout_marginBottom="@dimen/dp8"
-                android:fontFamily="@font/arial_rounded_font"
+                android:fontFamily="@font/segoe_b"
                 android:text="brand name"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium_s" />
 
-            <TextView
+            <com.example.softmills.phlog.base.widgets.CustomTextView
                 android:id="@+id/brand_num_followers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dp12"
-                android:fontFamily="@font/arial_rounded_font"
                 android:text="512 k follows"
                 android:textColor="@color/user_profile_text_header_color" />
 
@@ -66,11 +65,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/brand_type_view_height"
                 android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp12"
                 android:background="@color/white"
+                android:fontFamily="@font/segoe_sb"
                 android:paddingStart="@dimen/dp12"
                 android:paddingEnd="@dimen/dp12"
                 android:text="brand type"
-                android:layout_marginBottom="@dimen/dp12"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_small" />
 
@@ -78,11 +78,12 @@
                 android:id="@+id/follow_brand_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/brand_type_view_height"
-                android:textColor="@color/white"
-                android:text="@string/follow"
                 android:layout_gravity="center|bottom"
                 android:layout_marginBottom="@dimen/dp12"
-                android:background="@drawable/rounded_orange_btn"/>
+                android:background="@drawable/rounded_orange_btn"
+                android:fontFamily="@font/segoe_sb"
+                android:text="@string/follow"
+                android:textColor="@color/white" />
         </LinearLayout>
 
 

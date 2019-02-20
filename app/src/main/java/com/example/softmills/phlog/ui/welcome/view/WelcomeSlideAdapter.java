@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,9 @@ public class WelcomeSlideAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup view, int position) {
-        View imageLayout = inflater.inflate(R.layout.slidingimages_layout, view, false);
+        View imageLayout = null;
+//        if (position)
+        imageLayout = inflater.inflate(R.layout.slidingimages_layout, view, false);
         InitSlider item = urlList.get(position);
 
         ImageView slideImage = imageLayout.findViewById(R.id.slide_img);
@@ -59,7 +62,8 @@ public class WelcomeSlideAdapter extends PagerAdapter {
                 .placeholder(R.drawable.splash_screen_background)
                 .error(R.drawable.splash_screen_background)
                 .into(slideImage);
-        view.addView(imageLayout, 0);
+//        view.addView(imageLayout, 0);
+        ((ViewPager) view).addView(imageLayout);
         return imageLayout;
     }
 

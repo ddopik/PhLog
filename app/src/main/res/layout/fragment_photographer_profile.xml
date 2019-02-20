@@ -47,7 +47,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/photographer_profile_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"
         android:paddingBottom="@dimen/fragment_photographer_padding_bottom"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

@@ -36,7 +36,7 @@ public class UserProfilePhotosAdapter extends RecyclerView.Adapter<UserProfilePh
     public UserProfilePhotosAdapter.PhotosViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new PhotosViewHolder(layoutInflater.inflate(R.layout.view_holder_photo, viewGroup, false));
+        return new PhotosViewHolder(layoutInflater.inflate(R.layout.view_holder_photo_square, viewGroup, false));
     }
 
     @Override

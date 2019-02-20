@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".app.PhLogApp"
@@ -43,7 +44,8 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name=".ui.campaigns.inner.ui.CampaignInnerActivity">
 
@@ -94,6 +96,11 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDryqbBvzbQcReaUwKN9dABdnyfRf0eW5A" />
+
+        <service
+            android:name=".Utiltes.uploader.UploaderService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 

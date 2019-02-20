@@ -29,7 +29,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/dp16"
             android:lines="1"
-            android:fontFamily="@font/segoe_b"
+            android:fontFamily="@font/zappat"
             android:gravity="start|center"
             android:text="@string/app_name"
             android:textAllCaps="true"
@@ -105,7 +105,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/mail_input"
             app:layout_constraintTop_toBottomOf="@+id/mail_input"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white">
 
             <EditText
                 android:id="@+id/register_password"

@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_photographer_profile"/>
+        tools:src="@drawable/default_photographer_profile"/>
 
     <com.example.softmills.phlog.base.widgets.CustomTextView
         android:id="@+id/image_description"
@@ -21,7 +21,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
-        tools:text="Texgt herere"/>
+        tools:text="Text here"/>
 
 </FrameLayout>
 

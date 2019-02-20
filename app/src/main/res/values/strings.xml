@@ -176,5 +176,13 @@
     <string name="select_option">Select an option</string>
     <string name="select_from_photos">Select from photos</string>
     <string name="upload_new_photo">Upload new photo</string>
+    <string name="phlog_uploading">PHLOG is uploading your photo</string>
+    <string name="phlog_finished_uploading">PHLOG finished uploading your photo</string>
+    <string name="caption_is_required">Caption is required</string>
+    <string name="tag_is_required">Add at least one tag to your photo</string>
+    <string name="upload_failed">Upload failed</string>
+    <string name="done">Done</string>
+    <string name="your_photo_uploaded">Your photo is uploaded</string>
+    <string name="view_in_profile">View in profile</string>
 
 </resources>
