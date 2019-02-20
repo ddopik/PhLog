@@ -162,6 +162,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             @Override
             public void getPagingControllerCallBack(int page) {
                 if (albumSearch.getText().length() > 0) {
+                    promptView.setVisibility(View.GONE);
                     albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), page);
                 }
 
@@ -208,6 +209,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
                     return;
                 }
                 // user cleared search get default data
+                promptView.setVisibility(View.GONE);
                 albumSearchList.clear();
                 albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), 0);
                 Log.e(TAG,"search string: "+albumSearch.getText().toString());
@@ -237,6 +239,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         this.albumSearchList.addAll(albumSearchList);
         albumSearchAdapter.notifyDataSetChanged();
         searchResultCount.setVisibility(View.VISIBLE);
+        searchResultCount.setTextColor(getResources().getColor(R.color.white));
         searchResultCount.setText(new StringBuilder().append(this.albumSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
 
@@ -276,8 +279,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
         // omar continuing filter implementation
         searchResultCount.setText(R.string.apply);
+        searchResultCount.setTextColor(getResources().getColor(R.color.text_input_color));
         searchResultCount.setVisibility(View.VISIBLE);
         searchResultCount.setOnClickListener(v -> { //searchResultCount switched to Apply in case Filter was visible
+            promptView.setVisibility(View.GONE);
             albumSearchList.clear();
             albumSearchAdapter.notifyDataSetChanged();
             albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), searchFilterList, 0);

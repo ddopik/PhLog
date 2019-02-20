@@ -36,6 +36,9 @@ import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
+
 
 public class UserProfileActivity extends BaseActivity implements UserProfileActivityView {
 
@@ -53,6 +56,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private UserProfilePresenter userProfilePresenter;
     private List<BaseImage> userPhotoList = new ArrayList<>();
     private ProgressBar userProfilePhotosProgressBar;
+    private TextView placeHolder;
     private Button followUserBtn;
     private PagingController pagingController;
 
@@ -94,8 +98,9 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
             userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
             userProfilePresenter.getUserProfileData(userID);
-            userProfilePresenter.getUserPhotos(userID, 0);
             coverImage = findViewById(R.id.user_cover_img);
+            placeHolder = findViewById(R.id.place_holder);
+            userProfilePresenter.getUserPhotos(userID, 0);
         }
     }
 
@@ -180,8 +185,8 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     public void viewUserPhotos(List<BaseImage> userPhotoList) {
         this.userPhotoList.addAll(userPhotoList);
         userProfilePhotosAdapter.notifyDataSetChanged();
-        int h = userProfilePhotosRv.getHeight();
-        Log.e("height", "" + h);
+        if (userPhotoList.isEmpty())
+            placeHolder.setVisibility(View.VISIBLE);
     }
 
     @Override

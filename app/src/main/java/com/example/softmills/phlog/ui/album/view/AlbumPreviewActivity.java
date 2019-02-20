@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
@@ -166,6 +167,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
         };
 
+        followingNumber.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
     }
 }
 

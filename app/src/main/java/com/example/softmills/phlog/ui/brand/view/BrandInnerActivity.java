@@ -43,10 +43,10 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inner_brand);
-        if (getIntent().getIntExtra(BRAND_ID,0) != 0) {
+        if (getIntent().getIntExtra(BRAND_ID, 0) != 0) {
             initPresenter();
             initView();
-            brandInnerPresenter.getBrandInnerData(getIntent().getIntExtra(BRAND_ID,0));
+            brandInnerPresenter.getBrandInnerData(getIntent().getIntExtra(BRAND_ID, 0));
         }
     }
 
@@ -103,10 +103,10 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
             brandNumFollowers.setText(new StringBuilder().append(brand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
 
-//        if (brand.industry != null) {
-            brandType.setText("Brand Industry");
-//        }
-            
+            if (brand.industry != null) {
+                brandType.setText(brand.industry.nameEn);
+            }
+
             if (brand.isBrandText != null) {
                 brandData.setText(brand.description);
             }
@@ -119,31 +119,37 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
                 followBrandBtn.setText(getResources().getString(R.string.follow));
             }
 
+            if (brand.website != null)
+                brandWebsite.setText(brand.website);
+
+            if (brand.email != null)
+                brandMail.setText(brand.email);
+
             intiListeners();
 //        if (brand.email != null) {
 //            brandWebsite.setText(brand.email);
 //
 //        }
-        }catch (Exception e){
-            Log.e(BrandInnerActivity.class.getSimpleName(),"Error =====>"+e.getMessage());
+        } catch (Exception e) {
+            Log.e(BrandInnerActivity.class.getSimpleName(), "Error =====>" + e.getMessage());
         }
     }
 
     private void intiListeners() {
         followBrandBtn.setOnClickListener(v -> {
-            if (currentBrand != null){
-                if(currentBrand.isFollow){
+            if (currentBrand != null) {
+                if (currentBrand.isFollow) {
                     brandInnerPresenter.unFollowBrand(String.valueOf(currentBrand.id));
-                }else {
+                } else {
                     brandInnerPresenter.followBrand(String.valueOf(currentBrand.id));
                 }
 
             }
         });
 
-        brandCampaign.setOnClickListener(v->{
-            Intent intent=new Intent(this, BrandCampaignsActivity.class);
-            intent.putExtra(BrandCampaignsActivity.BRAND_ID,currentBrand.id);
+        brandCampaign.setOnClickListener(v -> {
+            Intent intent = new Intent(this, BrandCampaignsActivity.class);
+            intent.putExtra(BrandCampaignsActivity.BRAND_ID, currentBrand.id);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });
@@ -152,8 +158,10 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     @Override
     public void viwBrandFollowedState(Boolean state) {
         if (state) {
+            currentBrand.isFollow = true;
             followBrandBtn.setText(getResources().getString(R.string.following));
         } else {
+            currentBrand.isFollow = false;
             followBrandBtn.setText(getResources().getString(R.string.follow));
         }
     }
@@ -166,7 +174,6 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
             progressBar.setVisibility(View.GONE);
         }
     }
-
 
 
     @Override
