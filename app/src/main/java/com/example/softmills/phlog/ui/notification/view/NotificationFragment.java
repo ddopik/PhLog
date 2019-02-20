@@ -68,10 +68,10 @@ public class NotificationFragment extends BaseFragment implements NotificationFr
 
         notificationRv = mainView.findViewById(R.id.notification_rv);
         notificationProgress = mainView.findViewById(R.id.notification_progress);
-        NotificationList notificationList =new NotificationList();
-        notificationList.message=getContext().getResources().getString(R.string.earlier);
-        notificationList.entityId= itemType_NOTIFICATION_HEAD;
-        notificationListList.add(notificationList);
+//        NotificationList notificationList =new NotificationList();
+//        notificationList.message=getContext().getResources().getString(R.string.earlier);
+//        notificationList.entityId= itemType_NOTIFICATION_HEAD;
+//        notificationListList.add(notificationList);
         notificationAdapter = new NotificationAdapter(notificationListList);
         notificationRv.setAdapter(notificationAdapter);
 

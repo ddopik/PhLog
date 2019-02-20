@@ -84,8 +84,9 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
         }
 
-        if (brandSearch.getText().toString().length() > 0)
-            brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
+        if (brandSearch.getText().toString().length() > 0) {
+            promptView.setVisibility(View.GONE);
+            brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);}
     }
 
 
@@ -133,15 +134,14 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             @Override
             public void getPagingControllerCallBack(int page) {
 
+                promptView.setVisibility(View.GONE);
                 brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page );
-
-
             }
         };
 
         brandSearchAdapter.brandAdapterListener = brandSearch -> {
             Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
-            intent.putExtra(BrandInnerActivity.BRAND_ID, String.valueOf(brandSearch.id));
+            intent.putExtra(BrandInnerActivity.BRAND_ID, brandSearch.id);
             startActivity(intent);
         };
     }
@@ -157,6 +157,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
                 }
                 // user cleared search get default data
 
+                promptView.setVisibility(View.GONE);
                 brandSearchList.clear();
                 brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
                 brandSearchAdapter.notifyDataSetChanged();
@@ -181,6 +182,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         this.brandSearchList.addAll(brandSearchList);
         brandSearchAdapter.notifyDataSetChanged();
         searchResultCount.setVisibility(View.VISIBLE);
+        searchResultCount.setTextColor(getResources().getColor(R.color.white));
         searchResultCount.setText(new StringBuilder().append(this.brandSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
 

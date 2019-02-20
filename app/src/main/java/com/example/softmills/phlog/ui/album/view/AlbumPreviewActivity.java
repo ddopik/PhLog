@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
@@ -41,7 +42,8 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     private ImageView albumPreviewImg;
     private ProgressBar albumPreviewProgress;
     private CustomRecyclerView albumRv;
-    private CustomTextView albumNameTV, followingNumber, albumToolBarTitle;
+    private CustomTextView followingNumber, albumToolBarTitle;
+    private TextView albumNameTV;
     private PagingController pagingController;
     private AlbumPreviewActivityPresenter albumPreviewActivityPresenter;
 
@@ -93,18 +95,16 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         };
 
         albumAdapter.onAlbumImageClicked = albumImg -> {
-//            Intent intent = new Intent(this, Image.class);
+//            Intent intent = new Intent(this, AllAlbumImgActivity.class);
 //            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
 //            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
 //            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
 //            startActivity(intent);
 
-            Intent intent = new Intent(this, AllAlbumImgActivity.class);
-            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
-            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
-            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+            Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
+            intent.putExtra(ImageCommentActivity.IMAGE_DATA,albumImg);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
-
         };
     }
 
@@ -166,7 +166,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
                 .error(R.drawable.default_photographer_profile)
                 .into(albumPreviewImg);
         albumNameTV.setText(albumPreviewResponseData.name);
-
+        followingNumber.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
     }
 }
 

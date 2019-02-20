@@ -226,6 +226,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg, 0, 0);
                     notificationBtn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.VISIBLE);
+                    backBtn.setVisibility(View.GONE);
                     toolBarTitle.setText(getResources().getString(R.string.notification));
                     currentTab = NOTIFICATION;
                     break;

@@ -27,8 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/dp16"
-        android:fontFamily="@font/segoe_b"
-        android:gravity="start|center"
+        android:fontFamily="@font/zappat"
+        android:gravity="center"
         android:lines="1"
         android:text="@string/app_name"
         android:textAllCaps="true"
@@ -43,50 +43,97 @@
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
-    <Button
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/google_signing_btn"
         android:layout_width="0dp"
         android:layout_height="@dimen/social_login_btn_height"
         android:background="@drawable/rounded_google_btn"
-        android:drawableStart="@drawable/google_plus_symbol"
-        android:gravity="start|center"
-        android:paddingStart="@dimen/dp80"
-        android:drawablePadding="@dimen/dp16"
-        android:paddingEnd="@dimen/dp10"
-        android:text="@string/login_google"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_normal"
-        android:fontFamily="@font/segoe_sb"
         app:layout_constraintBottom_toTopOf="@+id/facebook_signing_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintWidth_percent=".8" />
+        app:layout_constraintWidth_percent=".8">
 
-    <Button
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/textView14"
+            app:layout_constraintHeight_percent=".5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/google_plus_symbol" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_sb"
+            android:paddingStart="@dimen/widgets_padding"
+            android:gravity="center_vertical"
+            android:text="@string/login_google"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".5" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/facebook_signing_btn"
         android:layout_width="0dp"
         android:layout_height="@dimen/social_login_btn_height"
         android:layout_marginTop="@dimen/dp16"
         android:background="@drawable/rounded_facebook_btn"
-        android:drawableStart="@drawable/com_facebook_button_icon"
-        android:gravity="start|center"
-        android:paddingStart="@dimen/dp80"
-        android:drawablePadding="@dimen/dp16"
-        android:paddingEnd="@dimen/dp10"
-        android:fontFamily="@font/segoe_sb"
-        android:text="@string/com_facebook_loginview_log_in_button_long"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_normal"
         app:layout_constraintBottom_toTopOf="@+id/textView10"
         app:layout_constraintEnd_toEndOf="@+id/google_signing_btn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/google_signing_btn"
-        app:layout_constraintTop_toBottomOf="@+id/google_signing_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/google_signing_btn">
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/facebook_signing_btn"
+            app:layout_constraintEnd_toStartOf="@+id/textView15"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/facebook_signing_btn"
+            app:srcCompat="@drawable/com_facebook_button_icon" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_sb"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/widgets_padding"
+            android:text="@string/sign_in_facebook"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView10"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".5" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView10"
@@ -225,4 +272,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
 </android.support.constraint.ConstraintLayout>

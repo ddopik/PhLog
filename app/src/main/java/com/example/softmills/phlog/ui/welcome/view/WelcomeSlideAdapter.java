@@ -45,23 +45,32 @@ public class WelcomeSlideAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup view, int position) {
         View imageLayout = null;
-//        if (position)
-        imageLayout = inflater.inflate(R.layout.slidingimages_layout, view, false);
         InitSlider item = urlList.get(position);
+        if (position != 0) {
+            imageLayout = inflater.inflate(R.layout.slidingimages_layout, view, false);
 
-        ImageView slideImage = imageLayout.findViewById(R.id.slide_img);
-        TextView imageText = imageLayout.findViewById(R.id.image_description);
+            ImageView slideImage = imageLayout.findViewById(R.id.slide_img);
+            TextView imageText = imageLayout.findViewById(R.id.image_description);
 
 
-        if (item.text != null)
-        imageText.setText(item.text);
-        GlideApp.with(context)
-                .load(item.image)
-                .centerCrop()
-//                .override(600, 200) //setImageDimension
-                .placeholder(R.drawable.splash_screen_background)
-                .error(R.drawable.splash_screen_background)
-                .into(slideImage);
+            if (item.text != null)
+                imageText.setText(item.text);
+            GlideApp.with(context)
+                    .load(item.image)
+                    .centerCrop()
+                    .placeholder(R.drawable.splash_screen_background)
+                    .error(R.drawable.splash_screen_background)
+                    .into(slideImage);
+        } else {
+            imageLayout = inflater.inflate(R.layout.slidingimages_layout_with_logo, view, false);
+            ImageView slideImage = imageLayout.findViewById(R.id.slide_img);
+            GlideApp.with(context)
+                    .load(item.image)
+                    .centerCrop()
+                    .placeholder(R.drawable.splash_screen_background)
+                    .error(R.drawable.splash_screen_background)
+                    .into(slideImage);
+        }
 //        view.addView(imageLayout, 0);
         ((ViewPager) view).addView(imageLayout);
         return imageLayout;

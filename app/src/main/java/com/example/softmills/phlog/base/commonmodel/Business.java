@@ -104,6 +104,8 @@ public class Business extends MentionedUser implements Parcelable {
     @Expose
     public Boolean isFollow;
 
+    @SerializedName("industry")
+    transient public Industry industry;
 
     public Business() {
     }

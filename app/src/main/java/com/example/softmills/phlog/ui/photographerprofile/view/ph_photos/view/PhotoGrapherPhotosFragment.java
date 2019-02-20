@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
@@ -36,6 +37,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
     private PhotoGrapherPhotosAdapter photographerSavedPhotoAdapter;
     private FragmentPhotoGrapherPhotosPresenter fragmentPhotoGrapherPhotosPresenter;
     private LinearLayoutManager mLayoutManager;
+    private TextView placeHolder;
     private CustomRecyclerView photosRv;
     private ProgressBar photosProgress;
     private PagingController pagingController;
@@ -74,7 +76,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         photosRv = mainView.findViewById(R.id.photos_rv);
         photosRv.setAdapter(photographerSavedPhotoAdapter);
         photosProgress = mainView.findViewById(R.id.photos_progress);
-
+        placeHolder = mainView.findViewById(R.id.place_holder);
     }
 
     private void initListener() {
@@ -100,6 +102,8 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
     public void showPhotos(List<BaseImage> photosList) {
         this.photoGrapherPhotoList.addAll(photosList);
         photographerSavedPhotoAdapter.notifyDataSetChanged();
+        if (photosList.isEmpty())
+            placeHolder.setVisibility(View.VISIBLE);
     }
 
     @Override

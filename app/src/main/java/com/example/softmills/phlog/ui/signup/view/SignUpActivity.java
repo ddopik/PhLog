@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseActivity;
+import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.login.view.LoginActivity;
 import com.example.softmills.phlog.ui.signup.model.Country;
 import com.example.softmills.phlog.ui.signup.presenter.SignUpPresenter;
@@ -29,6 +32,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
     private TextInputLayout nameInput, userNameInput, mailInput, registerPasswordInput, confirmRegister_passwordInput, mobileInput, countryInput;
     private Button registerCancel, register_signUp;
     private AutoCompleteTextView autoCompleteTextView;
+    private ProgressBar loading;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<Country> countryListObj = new ArrayList<>();
     private ArrayList<String> countryList = new ArrayList<>();
@@ -179,10 +183,10 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
 
             if (getCountryID() == 0) {
                 countryInput.setError(getString(R.string.select_country_not_exist));
-                failedStates.add(3, false);
+                failedStates.add(2, false);
             } else {
                 countryInput.setErrorEnabled(false);
-                failedStates.add(3, true);
+                failedStates.add(2, true);
             }
 
 
@@ -232,5 +236,23 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
     @Override
     public void showMessage(String msg) {
         showToast(msg);
+    }
+
+    @Override
+    public void setProgress(boolean b) {
+        if (b) {
+            loading.setVisibility(View.VISIBLE);
+        } else {
+            loading.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void navigateToHome() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 }

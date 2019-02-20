@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.view.SignUpView;
@@ -33,16 +34,19 @@ public class SignUpPresenterImpl implements SignUpPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void signUpUser(HashMap<String, String> signUpData) {
+        signUpView.setProgress(true);
         BaseNetworkApi.signUpUser(signUpData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(signUpResponse -> {
-                    Log.e(TAG,"signUpUser() --->"+signUpResponse.toString());
-                        signUpView.showMessage(signUpResponse.token);
-                        signUpView.showMessage("What should we do now");
-
+                    signUpView.setProgress(false);
+                    PrefUtils.setLoginState(context, true);
+                    PrefUtils.setUserToken(context, signUpResponse.token);
+//                    PrefUtils.setUserID(context, signUpResponse.id);
+                    signUpView.navigateToHome();
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
+                    signUpView.setProgress(false);
                 });
     }
 

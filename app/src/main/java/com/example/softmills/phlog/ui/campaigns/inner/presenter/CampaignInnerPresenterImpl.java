@@ -39,7 +39,7 @@ public class CampaignInnerPresenterImpl implements CampaignInnerPresenter {
                             if (response != null && response.campaign != null)
                                 campaignInnerActivityView.setCampaign(response.campaign);
                         }, throwable -> {
-                            ErrorUtils.Companion.setError(context, TAG, throwable.toString());
+                            ErrorUtils.Companion.setError(context, TAG, throwable);
                         });
     }
 

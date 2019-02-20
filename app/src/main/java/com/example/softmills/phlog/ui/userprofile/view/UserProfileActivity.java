@@ -5,6 +5,7 @@ package com.example.softmills.phlog.ui.userprofile.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -23,12 +24,16 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
+import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 
 public class UserProfileActivity extends BaseActivity implements UserProfileActivityView {
@@ -47,6 +52,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private UserProfilePresenter userProfilePresenter;
     private List<BaseImage> userPhotoList = new ArrayList<>();
     private ProgressBar userProfilePhotosProgressBar;
+    private TextView placeHolder;
     private Button followUserBtn;
     private PagingController pagingController;
 
@@ -88,8 +94,9 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
             userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
             userProfilePresenter.getUserProfileData(userID);
-            userProfilePresenter.getUserPhotos(userID, 0);
             coverImage = findViewById(R.id.user_cover_img);
+            placeHolder = findViewById(R.id.place_holder);
+            userProfilePresenter.getUserPhotos(userID, 0);
         }
     }
 
@@ -112,9 +119,14 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         });
 
         userProfilePhotosAdapter.photoAction= image -> {
-            Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
-            intent.putExtra(ImageCommentActivity.IMAGE_DATA,image);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
+//            intent.putExtra(ImageCommentActivity.IMAGE_DATA,image);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            startActivity(intent);
+
+            Intent intent = new Intent(this, AllAlbumImgActivity.class);
+            intent.putExtra(SELECTED_IMG_ID, image.id);
+            intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) userPhotoList);
             startActivity(intent);
         };
     }
@@ -173,8 +185,8 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     public void viewUserPhotos(List<BaseImage> userPhotoList) {
         this.userPhotoList.addAll(userPhotoList);
         userProfilePhotosAdapter.notifyDataSetChanged();
-        int h = userProfilePhotosRv.getHeight();
-        Log.e("height", "" + h);
+        if (userPhotoList.isEmpty())
+            placeHolder.setVisibility(View.VISIBLE);
     }
 
     @Override

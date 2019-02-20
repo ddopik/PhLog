@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.login.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,7 +32,8 @@ import io.reactivex.schedulers.Schedulers;
 public class LoginActivity extends BaseActivity implements LoginView {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private Button facebookSigning, googleSigningBtn, signUpBtn;
+    private Button signUpBtn;
+    private ConstraintLayout facebookSigning, googleSigningBtn;
     private TextView mail, passWord, signUpTxt, forgotPassword;
     private TextInputLayout mailInput, passwordInput;
     private ProgressBar loginProgressBar;

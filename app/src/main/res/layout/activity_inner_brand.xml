@@ -65,7 +65,8 @@
                 android:paddingStart="@dimen/dp24"
                 android:paddingEnd="@dimen/dp24"
                 android:paddingBottom="@dimen/dp16"
-                android:text="asdasjdbas;nal;xnnnnnnnnnnnasdasjdbas;nal;xnnnnnnnnnnnn
+                android:fontFamily="@font/regencie_light"
+                tools:text="asdasjdbas;nal;xnnnnnnnnnnnasdasjdbas;nal;xnnnnnnnnnnnn
                 nnnaaaaaaaasdasjdbas;nal;xnaaaaaasdjkasd" />
 
             <LinearLayout
@@ -83,7 +84,7 @@
                     android:background="@color/gray200"
                     android:gravity="center|start"
                     android:padding="@dimen/widgets_padding"
-                    tools:text="www.brand.come"
+                    tools:text="www.brand.com"
                     android:textColor="@color/black" />
 
                 <com.example.softmills.phlog.base.widgets.CustomTextView
@@ -93,7 +94,7 @@
                     android:background="@color/gray200"
                     android:gravity="center|start"
                     android:padding="@dimen/widgets_padding"
-                    android:text="@string/mail"
+                    tools:text="@string/mail"
                     android:textColor="@color/black" />
 
                 <com.example.softmills.phlog.base.widgets.CustomTextView
