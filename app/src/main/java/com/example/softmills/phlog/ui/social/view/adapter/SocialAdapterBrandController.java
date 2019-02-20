@@ -9,10 +9,15 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.base.commonmodel.Business;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 
+import java.util.List;
+
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -20,9 +25,13 @@ public class SocialAdapterBrandController {
 
     private String TAG=SocialAdapterBrandController.class.getSimpleName();
     private Context context;
-
-    public SocialAdapterBrandController(Context context) {
+    private SocialAdapter socialAdapter;
+    private List<SocialData> socialDataList;
+    public SocialAdapterBrandController(Context context, SocialAdapter socialAdapter, List<SocialData> socialDataList) {
         this.context = context;
+        this.socialAdapter = socialAdapter;
+        this.socialDataList = socialDataList;
+
     }
 
     public void setBrandViewType_1(SocialAdapter.SocialViewHolder socialViewHolder, SocialData socialData, SocialAdapter.OnSocialItemListener onSocialItemListener) {
@@ -57,31 +66,79 @@ public class SocialAdapterBrandController {
         }
         if (onSocialItemListener != null) {
             socialViewHolder.followBrandBtn.setOnClickListener(v -> {
-             followSocialBrand(socialData.brands.get(0).id,onSocialItemListener);
+                if (!socialData.brands.get(0).isFollow){
+                    followSocialBrand(socialData.brands.get(0).id,socialData);
+                }else{
+                    unFollowSocialBrand(socialData.brands.get(0).id,socialData);
+                }
+
             });
         }
     }
 
     @SuppressLint("CheckResult")
-    private void followSocialBrand(int brandId,SocialAdapter.OnSocialItemListener onSocialItemListener) {
+    private void followSocialBrand(int brandId,SocialData socialData) {
         BaseNetworkApi.followBrand(String.valueOf(brandId))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followBrandResponse -> {
-                    onSocialItemListener.onSocialBrandFollowed(brandId,true);
+
+                    socialData.brands.get(0).isFollow = true;
+                    getBrandIndex(brandId)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(index -> {
+                                if (index > 0) {
+                                    socialDataList.set(index, socialData);
+                                    socialAdapter.notifyDataSetChanged();
+                                }
+
+                            }, throwable -> {
+                                ErrorUtils.Companion.setError(context, TAG, throwable);
+                            });
+//                    onSocialItemListener.onSocialBrandFollowed(brandId,true);
                  }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
     @SuppressLint("CheckResult")
-     public void unFollowSocialBrand(int brandId,SocialAdapter.OnSocialItemListener onSocialItemListener) {
+     public void unFollowSocialBrand(int brandId,SocialData socialData) {
         BaseNetworkApi.unFollowBrand(String.valueOf(brandId))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followBrandResponse -> {
-                    onSocialItemListener.onSocialBrandFollowed(brandId,false);
+                    socialData.brands.get(0).isFollow = false;
+                    getBrandIndex(brandId)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(index -> {
+                                if (index > 0) {
+                                    socialDataList.set(index, socialData);
+                                    socialAdapter.notifyDataSetChanged();
+                                }
+
+                            }, throwable -> {
+                                ErrorUtils.Companion.setError(context, TAG, throwable);
+                            });
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
+    }
+
+
+    private Observable<Integer> getBrandIndex(int businessId) {
+        return Observable.fromCallable(() -> {
+
+            for (int i = 0; i < socialDataList.size(); i++) {
+                if (socialDataList.get(i).profiles != null && socialDataList.get(i).profiles.size() > 0)
+                    for (Business business : socialDataList.get(i).brands) {
+                        if (business.id.equals(businessId)) {
+                            return i;
+                        }
+                    }
+            }
+            return -1;
+        });
+
     }
 }

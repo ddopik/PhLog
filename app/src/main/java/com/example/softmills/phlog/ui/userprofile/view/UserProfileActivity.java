@@ -68,7 +68,6 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     @Override
     public void initView() {
 
-
         if (getIntent().getStringExtra(USER_ID) != null) {
             this.userID = getIntent().getStringExtra(USER_ID);
             userProfileLevel = findViewById(R.id.user_profile_level);

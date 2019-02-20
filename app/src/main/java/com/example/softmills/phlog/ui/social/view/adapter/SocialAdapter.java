@@ -92,7 +92,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                     break;
                 }
                 case ENTITY_BRAND: {
-                    socialAdapterBrandController = new SocialAdapterBrandController(context);
+                    socialAdapterBrandController = new SocialAdapterBrandController(context, this,socialDataList);
                     bindBrandEntity(socialDataList.get(i), socialViewHolder);
                     break;
                 }
@@ -197,12 +197,6 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
     }
 
     public interface OnSocialItemListener {
-
-
-//        void onSocialCampaignJoined(int campaignId, boolean state);
-
-
-//        void onSocialPhotoGrapherFollowed(int photographerId, boolean state);
 
         void onSocialBrandFollowed(int brandId, boolean state);
 
