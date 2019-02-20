@@ -13,4 +13,5 @@ public interface AddTagActivityPresenter {
 
 
     void uploadPhoto(String imagePath, String imageCaption, String location, String draftState, UploadImageType imageType, List<Tag> tagList);
+    void getAutoCompleteTags(String key);
 }

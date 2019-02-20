@@ -31,8 +31,8 @@ public class AutoCompleteTagMenuAdapter extends ArrayAdapter<Tag> {
         super(context, resource, items);
         this.resourceLayout = resource;
         this.mContext = context;
-        this.tagList = new ArrayList<>(items);
-        this.allTagList = new ArrayList<>(items);
+        this.tagList = items;
+        this.allTagList =items;
     }
 
 
