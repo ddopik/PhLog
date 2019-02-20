@@ -92,20 +92,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
             }
         };
 
-        albumAdapter.onAlbumImageClicked = albumImg -> {
-//            Intent intent = new Intent(this, Image.class);
-//            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
-//            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
-//            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
-//            startActivity(intent);
 
-            Intent intent = new Intent(this, AllAlbumImgActivity.class);
-            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
-            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
-            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
-            startActivity(intent);
-
-        };
     }
 
     @Override
@@ -166,6 +153,18 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
                 .error(R.drawable.default_photographer_profile)
                 .into(albumPreviewImg);
         albumNameTV.setText(albumPreviewResponseData.name);
+
+
+        albumAdapter.onAlbumImageClicked = albumImg -> {
+
+            Intent intent = new Intent(this, AllAlbumImgActivity.class);
+            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
+            intent.putExtra(AllAlbumImgActivity.LIST_NAME, albumPreviewResponseData.name);
+            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
+            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+            startActivity(intent);
+
+        };
 
     }
 }

@@ -14,6 +14,10 @@ public class SocialLoginResponse {
     @Expose
     public String token = null;
 
+    @SerializedName("user_name")
+    @Expose
+    public String userName;
+
     @SerializedName("state")
     public String state;
 }

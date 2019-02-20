@@ -13,11 +13,16 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.ui.earning.model.Earning;
 import com.example.softmills.phlog.ui.earning.presenter.EarningInnerPresenter;
 import com.example.softmills.phlog.ui.earning.presenter.EarningInnerPresenterImpl;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by abdalla_maged On Nov,2018
@@ -81,7 +86,7 @@ public class EarningInnerFragment extends BaseFragment implements EarningInnerVi
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
 
-        id.setText(getString(R.string.id_val, earning.id));
+        id.setText(new StringBuilder().append(getResources().getString(R.string.id_val)).append(earning.paymentGatewayTransId));
 
 
         GlideApp.with(this)
@@ -95,18 +100,39 @@ public class EarningInnerFragment extends BaseFragment implements EarningInnerVi
         GlideApp.with(this)
                 .load(earning.business.thumbnail)
                 .placeholder(R.drawable.default_place_holder)
+                .apply(requestOptions)
                 .error(R.drawable.default_error_img)
-
-
                 .into(buyerImage);
-        createdAt.setText(getString(R.string.created_at_val, earning.createdAt));
-//        by.setText(data.ph); // TODO: we should be saving our profile locally
+
+
+        try {
+            createdAt.setText(getString(R.string.created_at_val, parseData(earning.createdAt)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        by.setText(PrefUtils.getUserName(getContext()));
         buyerName.setText(earning.business.fullName);
         buyerWebsite.setText(earning.business.email);
         buyerPhone.setText(earning.business.phone);
         price.setText(String.format("%1$s $", earning.price));
-        if (earning.exclusive == 1)
+        if (earning.exclusive == 1){
             exclusive.setVisibility(View.VISIBLE);
-        else exclusive.setVisibility(View.INVISIBLE);
+        } else {
+            exclusive.setVisibility(View.INVISIBLE);
+        }
     }
-}
+
+
+    private String parseData(String data) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date convertedCurrentDate = sdf.parse(data);
+        String date = sdf.format(convertedCurrentDate);
+
+
+        String convertedCurrentDate2 = sdf.format(sdf.parse("2013-09-18"));
+
+        System.out.println(date);
+        System.out.println(convertedCurrentDate2);
+        return convertedCurrentDate2;
+    }
+    }

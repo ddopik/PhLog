@@ -9,7 +9,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center"
         android:layout_marginStart="@dimen/dp45"
         android:layout_marginEnd="@dimen/dp45"
         android:background="@color/white"
@@ -53,14 +53,15 @@
                         android:paddingStart="@dimen/earning_widget_start"
                         tools:text="ID  : 40%"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/font_large"
+                        android:textSize="@dimen/text_medium"
                         android:textStyle="bold" />
 
                     <com.example.softmills.phlog.base.widgets.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/earning_widget_start"
-                        tools:text="@string/user_id_sale" />
+                        android:textSize="@dimen/font_small"
+                        android:text="@string/user_id_sale" />
 
 
                 </LinearLayout>
@@ -86,8 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/earning_widget_start"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_normal"
+                     android:textSize="@dimen/font_normal"
                     tools:text="Crested at : 5/11/2016" />
 
                 <LinearLayout
@@ -110,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/dp8"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/font_large"
+                        android:textSize="@dimen/text_medium_s"
                         android:textStyle="bold"
                         tools:text="Omar" />
 
@@ -128,8 +128,8 @@
 
                 <ImageView
                     android:id="@+id/earning_item_img"
-                    android:layout_width="@dimen/dp45"
-                    android:layout_height="@dimen/dp45"
+                    android:layout_width="@dimen/dp65"
+                    android:layout_height="@dimen/dp65"
                     android:layout_marginEnd="@dimen/dp18"
                     android:layout_gravity="center|end"
                     android:scaleType="centerCrop"
@@ -194,8 +194,8 @@
 
                 <ImageView
                     android:id="@+id/earning_buyer_image"
-                    android:layout_width="@dimen/dp45"
-                    android:layout_height="@dimen/dp45"
+                    android:layout_width="@dimen/dp65"
+                    android:layout_height="@dimen/dp65"
                     android:layout_gravity="center|end"
                     android:layout_marginEnd="@dimen/dp18"
                     android:src="@drawable/default_place_holder" />

@@ -44,7 +44,7 @@ public class SocialAdapterCampaignViewController {
     public void setCampaignType_1(SocialAdapter.SocialViewHolder socialViewHolder, SocialData socialData, SocialAdapter.OnSocialItemListener onSocialItemListener) {
 
         socialViewHolder.socialCampaignType1.setVisibility(View.VISIBLE);
-
+        socialViewHolder.storyTitle.setText(socialData.title);
         GlideApp.with(context)
 //                .load(socialData.campaigns.get(0).business.thumbnail)
                 .load(socialData.campaigns.get(0).imageCover)

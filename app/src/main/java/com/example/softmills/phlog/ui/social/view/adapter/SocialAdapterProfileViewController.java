@@ -48,6 +48,7 @@ public class SocialAdapterProfileViewController {
     @SuppressLint("CheckResult")
     public void setProfileType3(SocialData socialData, SocialAdapter.SocialViewHolder socialViewHolder, SocialAdapter.OnSocialItemListener onSocialItemListener) {
         socialViewHolder.socialProfileAlbumType3PhotosContainer.setBackground(context.getResources().getDrawable(R.drawable.default_user_profile));
+        socialViewHolder.storyTitle.setText(socialData.title);
         socialViewHolder.socialProfileType3.setVisibility(View.VISIBLE);
         Photographer photographer = socialData.profiles.get(0);
         socialViewHolder.socialProfileType3FullName.setText(photographer.fullName);

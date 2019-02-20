@@ -157,6 +157,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
                     commentAdapterAction.onImageLike(previewImage);
                 });
+
+                commentViewHolder.commentAuthorIcon.setOnClickListener(v -> {
+                    commentAdapterAction.onCommentAuthorIconClicked(previewImage);
+                });
             }
 
 
@@ -526,6 +530,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         void onImageCommentClicked();
 
         void onSubmitComment(String comment);
+
+        void onCommentAuthorIconClicked(BaseImage baseImage);
     }
 
     @Override

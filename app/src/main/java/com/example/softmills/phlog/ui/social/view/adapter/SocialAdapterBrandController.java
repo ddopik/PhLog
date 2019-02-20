@@ -36,7 +36,7 @@ public class SocialAdapterBrandController {
 
     public void setBrandViewType_1(SocialAdapter.SocialViewHolder socialViewHolder, SocialData socialData, SocialAdapter.OnSocialItemListener onSocialItemListener) {
         socialViewHolder.socialBrandType1.setVisibility(View.VISIBLE);
-
+        socialViewHolder.storyTitle.setText(socialData.title);
         GlideApp.with(context)
                 .load(socialData.brands.get(0).thumbnail)
                 .placeholder(R.drawable.default_user_pic)

@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Business;
@@ -27,6 +28,7 @@ import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsData;
 import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentData;
 import com.example.softmills.phlog.ui.commentimage.presenter.ImageCommentActivityImpl;
 import com.example.softmills.phlog.ui.commentimage.presenter.ImageCommentActivityPresenter;
+import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +107,17 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
 
         commentsAdapter.commentAdapterAction = new CommentsAdapter.CommentAdapterAction() {
+
+            @Override
+            public void onCommentAuthorIconClicked(BaseImage baseImage) {
+                if (PrefUtils.getUserId(getBaseContext()).equals(String.valueOf(baseImage.photographer.id))) {
+                    Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
+                    intent.putExtra(UserProfileActivity.USER_ID, String.valueOf(baseImage.photographer.id));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    getBaseContext().startActivity(intent);
+                }
+            }
+
             @Override
             public void onImageLike(BaseImage baseImage) {
                 if (baseImage.isLiked) {

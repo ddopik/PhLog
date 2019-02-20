@@ -5,6 +5,7 @@ package com.example.softmills.phlog.ui.userprofile.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -23,12 +24,17 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
+import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 
 public class UserProfileActivity extends BaseActivity implements UserProfileActivityView {
@@ -57,6 +63,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         setContentView(R.layout.activity_user_profile);
         initPresenter();
         initView();
+        initListener();
 
     }
 
@@ -111,9 +118,10 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         });
 
         userProfilePhotosAdapter.photoAction= image -> {
-            Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
-            intent.putExtra(ImageCommentActivity.IMAGE_DATA,image);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, AllAlbumImgActivity.class);
+            intent.putExtra(SELECTED_IMG_ID, image.id);
+            intent.putExtra(LIST_NAME, image.photographer.userName);
+            intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) userPhotoList);
             startActivity(intent);
         };
     }

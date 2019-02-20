@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
@@ -90,11 +91,10 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
         };
 
         photoGrapherPhotosAdapter.photoAction = photoGrapherSavedPhoto -> {
-//            Intent intent=new Intent(getContext(), ImageCommentActivity.class);
-//            intent.putExtra(ImageCommentActivity.IMAGE_DATA, photoGrapherSavedPhoto);
-//            startActivity(intent);
+
             Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
+            intent.putExtra(LIST_NAME, photoGrapherSavedPhoto.photographer.userName);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherPhotoList);
             startActivity(intent);
         };

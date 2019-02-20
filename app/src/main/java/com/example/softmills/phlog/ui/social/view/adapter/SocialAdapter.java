@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 
 import java.util.List;
@@ -73,6 +74,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
                 case ENTITY_PROFILE: {
                     socialAdapterProfileViewController = new SocialAdapterProfileViewController(context, this,socialDataList);
+
                     bindProfileEntity(socialDataList.get(i), socialViewHolder);
                     break;
                 }
@@ -111,6 +113,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
     class SocialViewHolder extends RecyclerView.ViewHolder {
 
+        CustomTextView storyTitle;
         FrameLayout socialProfileType3, socialImageSliderType5, socialCampaignType1, socialBrandType1, socialAlbumType4;
 
         ImageView socialProfileType3Icon, socialProfileType3Img_1, socialProfileType3Img_2, socialProfileType3Img_3, socialProfileType3Img_4, socialDefaultAlbumImg;
@@ -122,16 +125,15 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
         /////
         CustomRecyclerView socialImgSlideRv;
-
-        TextView socialImageName;
+        CustomTextView socialImageName;
         /////
         LinearLayout socialCampaignContainer;
         ImageView socialCampaignIcon, socialCampaignImg;
-        TextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft;
+        CustomTextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft;
         Button socialJoinCampaignBtn;
         /////
         ImageView socialBrandIconImg, socialBrandImg;
-        TextView socialBrandName, socialBrandFollowing;
+        CustomTextView socialBrandName, socialBrandFollowing;
         Button followBrandBtn;
         /////
         ImageView socialAlbum1, socialAlbum2, socialAlbum3;
@@ -145,7 +147,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialCampaignType1 = view.findViewById(R.id.social_campaign_type_1);
             socialBrandType1 = view.findViewById(R.id.social_brand_type_1);
             socialAlbumType4 = view.findViewById(R.id.social_album_type_4);
-
+            storyTitle=view.findViewById(R.id.story_title);
 
             setProfileReferences(view);
 
@@ -208,6 +210,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         switch (socialData.displayType) {
 
             case PROFILE_DISPLAY_TYPE_3:
+                socialViewHolder.storyTitle.setText(socialData.title);
                 socialAdapterProfileViewController.setProfileType3(socialData, socialViewHolder, onSocialItemListener);
                 break;
         }

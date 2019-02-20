@@ -66,35 +66,34 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
                 .into(albumImgViewHolder.albumImg);
 
         String tagS = "";
-        if (albumImgList.get(i).tags !=null) {
+        if (albumImgList.get(i).tags != null) {
             for (Tag tag : albumImgList.get(i).tags) {
                 tagS = tagS + " #" + tag.name;
             }
         }
         albumImgViewHolder.imageCommentTagVal.setText(tagS);
-        if(albumImgList.get(i).thumbnailUrl !=null)
-        albumImgViewHolder.albumName.setText(albumImgList.get(i).thumbnailUrl);
-        if(albumImgList.get(i).photographer !=null)
-        albumImgViewHolder.albumAuthor.setText(albumImgList.get(i).photographer.fullName);
-        if(albumImgList.get(i).likesCount !=null)
-        albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append(albumImgList.get(i).likesCount).append(" Likes").toString());
-        if(albumImgList.get(i).commentsCount !=null)
-        albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append(albumImgList.get(i).commentsCount).append(" Comments").toString());
+        if (albumImgList.get(i).thumbnailUrl != null)
+            albumImgViewHolder.albumName.setText(albumImgList.get(i).thumbnailUrl);
+        if (albumImgList.get(i).photographer != null)
+            albumImgViewHolder.albumAuthor.setText(albumImgList.get(i).photographer.userName);
+        if (albumImgList.get(i).likesCount != null)
+            albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append(albumImgList.get(i).likesCount).append(" Likes").toString());
+        if (albumImgList.get(i).commentsCount != null)
+            albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append(albumImgList.get(i).commentsCount).append(" Comments").toString());
 
 
         //case this list is for current user and already saved to his profile
         if (albumImgList.get(i).photographer.id != Integer.parseInt(PrefUtils.getUserId(context))) {
             albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
 
-            if (albumImgList.get(i).isSaved){
+            if (albumImgList.get(i).isSaved) {
 //                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.GONE);
-                albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.un_save));
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
 
-            }else {
+            } else {
                 albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
 
             }
-
 
 
             if (onAlbumImgClicked != null)
@@ -107,7 +106,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         }
 
         //case this list is specified for multiple users not for only one
-        if (photosListType != null && photosListType == PhotosListType.SOCIAL_LIST && albumImgList.get(i).photographer.id != Integer.parseInt(PrefUtils.getUserId(context)) &&  !albumImgList.get(i).photographer.isFollow) {
+        if (photosListType != null && photosListType == PhotosListType.SOCIAL_LIST && albumImgList.get(i).photographer.id != Integer.parseInt(PrefUtils.getUserId(context)) && !albumImgList.get(i).photographer.isFollow) {
             albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.VISIBLE);
             if (onAlbumImgClicked != null)
                 albumImgViewHolder.followPhotoGrapherBtn.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgFollowClick(albumImgList.get(i)));
@@ -116,13 +115,13 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         }
 
 
-
         if (onAlbumImgClicked != null) {
             albumImgViewHolder.albumImg.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgLike.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgComment.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgLikeVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgCommentVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
+            albumImgViewHolder.albumIcon.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgPhotoGrapherIconClick(albumImgList.get(i)));
         }
 
     }
@@ -165,6 +164,8 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         void onAlbumImgSaveClick(BaseImage albumImg);
 
         void onAlbumImgFollowClick(BaseImage albumImg);
+
+        void onAlbumImgPhotoGrapherIconClick(BaseImage albumImg);
 
 
     }
