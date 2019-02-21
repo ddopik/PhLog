@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="@dimen/text_medium"
                 tools:text="Brand text" />
 

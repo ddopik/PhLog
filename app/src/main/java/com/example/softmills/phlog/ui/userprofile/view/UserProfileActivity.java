@@ -195,7 +195,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             followUserBtn.setText(getResources().getString(R.string.following));
             currentPhotographer.isFollow=true;
         } else {
-            followUserBtn.setText(getResources().getString(R.string.follow));
+            followUserBtn.setText(getResources().getString(R.string.un_follow));
             currentPhotographer.isFollow=false;
         }
     }

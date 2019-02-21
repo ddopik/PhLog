@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_title_head"
+        android:textSize="@dimen/font_large"
         android:textStyle="bold"
-        android:padding="@dimen/widgets_padding"
+        android:padding="@dimen/dp16"
         tools:text="Story title"/>
 
 
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_holder_item_list_height_med"
         android:layout_below="@+id/story_title"
-        android:layout_marginBottom="@dimen/dp8"
+
         app:cardCornerRadius="@dimen/item_card_corner_radius"
         app:cardElevation="@dimen/item_card_elevation">
 

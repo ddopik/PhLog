@@ -78,7 +78,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         addCommentProgress = findViewById(R.id.add_comment_progress);
 
         commentsRv = findViewById(R.id.comment_rv);
-        toolBarTitle.setText(previewImage.albumName);
+        toolBarTitle.setText(getResources().getString(R.string.photo));
         //force adapter to start to render Add commentView
         Comment userComment = new Comment();
         commentList.add(userComment); /// acts As default for image Header

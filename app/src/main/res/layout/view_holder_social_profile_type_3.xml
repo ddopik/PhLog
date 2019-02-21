@@ -55,7 +55,7 @@
 
             <Button
                 android:id="@+id/follow_social_profile"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp45"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"

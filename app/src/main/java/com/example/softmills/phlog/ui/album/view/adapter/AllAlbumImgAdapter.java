@@ -75,7 +75,9 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         if (albumImgList.get(i).thumbnailUrl != null)
             albumImgViewHolder.albumName.setText(albumImgList.get(i).thumbnailUrl);
         if (albumImgList.get(i).photographer != null)
-            albumImgViewHolder.albumAuthor.setText(albumImgList.get(i).photographer.userName);
+            albumImgViewHolder.albumName.setText(albumImgList.get(i).photographer.fullName);
+        if (albumImgList.get(i).photographer != null)
+            albumImgViewHolder.albumAuthor.setText(new StringBuilder().append("@").append(albumImgList.get(i).photographer.userName).toString());
         if (albumImgList.get(i).likesCount != null)
             albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append(albumImgList.get(i).likesCount).append(" Likes").toString());
         if (albumImgList.get(i).commentsCount != null)
@@ -85,14 +87,14 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         //case this list is for current user and already saved to his profile
         if (albumImgList.get(i).photographer.id != Integer.parseInt(PrefUtils.getUserId(context))) {
 
-            albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
-            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
+
 
             if (albumImgList.get(i).isSaved) {
-//                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.GONE);
+                 albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
                 albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
 
             } else {
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
                 albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
 
             }
