@@ -88,17 +88,6 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         }
 
 
-//        RecyclerView.SmoothScroller smoothScroller = new
-//                LinearSmoothScroller(getBaseContext()) {
-//                    @Override
-//                    protected int getVerticalSnapPreference() {
-//                        return LinearSmoothScroller.SNAP_TO_ANY;
-//                    }
-//                };
-//
-//        smoothScroller.setTargetPosition(6);
-//
-//        allAlbumImgRv.getLayoutManager().startSmoothScroll(smoothScroller);
 
     }
 
@@ -121,6 +110,11 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+            }
+
+            @Override
+            public void onAlbumImgDeleteClick(BaseImage albumImg) {
+                allAlbumImgPresnter.deleteImage(albumImg);
             }
 
             @Override
@@ -193,6 +187,17 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         for (BaseImage mBaseImage : albumImgList) {
             if (mBaseImage.id == baseImage.id) {
                 mBaseImage.photographer.isFollow = state;
+                break;
+            }
+        }
+        allAlbumImgAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onImagePhotoGrapherDeleted(BaseImage baseImage, boolean state) {
+        for (int i=0;i<albumImgList.size();i++) {
+            if (albumImgList.get(i).id == baseImage.id && state) {
+                albumImgList.remove(i);
                 break;
             }
         }

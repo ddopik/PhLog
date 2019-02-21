@@ -84,7 +84,9 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         //case this list is for current user and already saved to his profile
         if (albumImgList.get(i).photographer.id != Integer.parseInt(PrefUtils.getUserId(context))) {
+
             albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
 
             if (albumImgList.get(i).isSaved) {
 //                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.GONE);
@@ -96,10 +98,16 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             }
 
 
-            if (onAlbumImgClicked != null)
+            if (onAlbumImgClicked != null) {
                 albumImgViewHolder.albumImgSaveBtn.setOnClickListener(v -> {
                     onAlbumImgClicked.onAlbumImgSaveClick(albumImgList.get(i));
                 });
+                albumImgViewHolder.albumImgDeleteBtn.setOnClickListener(v -> {
+                    onAlbumImgClicked.onAlbumImgDeleteClick(albumImgList.get(i));
+                });
+
+            }
+
 
         } else {
             albumImgViewHolder.albumImgSaveBtn.setVisibility(View.GONE);
@@ -112,6 +120,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
                 albumImgViewHolder.followPhotoGrapherBtn.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgFollowClick(albumImgList.get(i)));
         } else {
             albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.GONE);
+            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.GONE);
         }
 
 
@@ -136,7 +145,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         ImageView albumIcon, albumImg;
         TextView albumName, albumAuthor, imageCommentTagVal, albumImgLikeVal, albumImgCommentVal;
         ImageButton albumImgLike, albumImgComment, albumImgSaveBtn;
-        Button followPhotoGrapherBtn;
+        Button followPhotoGrapherBtn,albumImgDeleteBtn;
 
         AlbumImgViewHolder(View view) {
             super(view);
@@ -150,12 +159,15 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgLike = view.findViewById(R.id.album_img_like_btn);
             albumImgComment = view.findViewById(R.id.album_img_comment);
             albumImgSaveBtn = view.findViewById(R.id.album_img_save_btn);
+            albumImgDeleteBtn = view.findViewById(R.id.album_img_delete_btn);
             followPhotoGrapherBtn = view.findViewById(R.id.follow_photographer);
         }
     }
 
     public interface OnAlbumImgClicked {
         void onAlbumImgClick(BaseImage albumImg);
+
+        void onAlbumImgDeleteClick(BaseImage albumImg);
 
         void onAlbumImgLikeClick(BaseImage albumImg);
 

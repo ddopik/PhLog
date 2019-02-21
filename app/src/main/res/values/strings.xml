@@ -188,5 +188,6 @@
     <string name="selcet_photos_from_phlog">Select from saved photos in PHLOG</string>
     <string name="you_havnt_uploaded_yet">You hav\'t uploaded any photos yet</string>
     <string name="photographer_hasnt_uploaded_yet">No photos yet</string>
+    <string name="delete">Delete</string>
 
 </resources>

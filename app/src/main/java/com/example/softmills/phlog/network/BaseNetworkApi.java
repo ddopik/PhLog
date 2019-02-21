@@ -120,6 +120,7 @@ public class BaseNetworkApi {
     private static final String GET_EARNING = BASE_URL + "/photographer/earning/list";
     private static final String UPLOAD_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/upload";
 
+    private static final String DELETE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/delete";
     private static final String LIKE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/like";
     private static final String LIKE_IMAGE = BASE_URL + "/photo/like";
     private static final String UN_LIKE_IMAGE = BASE_URL + "/photo/unlike";
@@ -363,6 +364,16 @@ public class BaseNetworkApi {
     }
         public static io.reactivex.Observable<BaseStateResponse> likePhoto(String imageId) {
         return Rx2AndroidNetworking.post(LIKE_PHOTOGRAPHER_PHOTO)
+                .addBodyParameter("photo_id", imageId)
+                .getResponseOnlyFromNetwork()
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(BaseStateResponse.class);
+    }
+
+
+    public static io.reactivex.Observable<BaseStateResponse> deleteImage(String imageId) {
+        return Rx2AndroidNetworking.post(DELETE_PHOTOGRAPHER_PHOTO)
                 .addBodyParameter("photo_id", imageId)
                 .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)
