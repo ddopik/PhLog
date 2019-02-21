@@ -362,7 +362,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(UserPhotosResponse.class);
 
     }
-        public static io.reactivex.Observable<BaseStateResponse> likePhoto(String imageId) {
+        public static io.reactivex.Observable<BaseStateResponse> likePhotoGrapherPhotoPhoto(String imageId) {
         return Rx2AndroidNetworking.post(LIKE_PHOTOGRAPHER_PHOTO)
                 .addBodyParameter("photo_id", imageId)
                 .getResponseOnlyFromNetwork()

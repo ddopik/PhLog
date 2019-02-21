@@ -46,7 +46,7 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
     @Override
     public void likePhoto(String photoId) {
         allAlbumImgActivityView.viewAlbumImageListProgress(true);
-        BaseNetworkApi.likePhoto(photoId)
+        BaseNetworkApi.likePhotoGrapherPhotoPhoto(photoId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(baseStateResponse -> {
