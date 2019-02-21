@@ -21,6 +21,7 @@ public abstract class PrefUtils {
     private static final String IS_LANGUAGE_SELECTED = "IS_LANGUAGE_SELECTED";
     private static final String IS_TOKEN_SAVED = "IS_TOKEN_SAVED";
     private static final String APP_LANG = "APP_LANG";
+    private static final String FIREBASE_TOKEN = "FIREBASE_TOKEN";
     private static String PREF_FILE_NAME;
 
     public PrefUtils() {
@@ -99,6 +100,17 @@ public abstract class PrefUtils {
 
     public static boolean isFirstTimeAskingPermission(Context context, String permission) {
         return context.getSharedPreferences(PREF_FILE_NAME, MODE_PRIVATE).getBoolean(permission, true);
+    }
+
+    public static void saveFirebaseToken(Context applicationContext, String token) {
+        applicationContext.getSharedPreferences(PREF_FILE_NAME, MODE_PRIVATE)
+                .edit()
+                .putString(FIREBASE_TOKEN, token)
+                .apply();
+    }
+
+    public static String getFirebaseToken(Context context) {
+        return getSharedPref(context).getString(FIREBASE_TOKEN, null);
     }
 
     public String getProjectName() {
