@@ -44,6 +44,7 @@ public class LoginPresenterImp implements LoginPresenter {
                     loginView.showMessage(loginResponse.loginData.fullName);
                     PrefUtils.setLoginState(context, true);
                     PrefUtils.setUserToken(context, loginResponse.loginData.token);
+                    PrefUtils.setUserName(context, loginResponse.loginData.userName);
                     PrefUtils.setUserID(context, loginResponse.loginData.id);
                     loginView.navigateToHome();
                     loginView.viewLoginProgress(false);
@@ -130,6 +131,7 @@ public class LoginPresenterImp implements LoginPresenter {
                     if (socialLoginResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
                         PrefUtils.setLoginState(context, true);
                         PrefUtils.setUserToken(context, socialLoginResponse.token);
+                        PrefUtils.setUserName(context, socialLoginResponse.userName);
 //                        PrefUtils.setUserID(context, socialLoginResponse.id);
                         loginView.navigateToHome();
                     }

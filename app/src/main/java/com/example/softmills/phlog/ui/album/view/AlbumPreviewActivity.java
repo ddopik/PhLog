@@ -42,8 +42,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     private ImageView albumPreviewImg;
     private ProgressBar albumPreviewProgress;
     private CustomRecyclerView albumRv;
-    private CustomTextView followingNumber, albumToolBarTitle;
-    private TextView albumNameTV;
+    private CustomTextView albumNameTV, followingNumber, albumToolBarTitle;
     private PagingController pagingController;
     private AlbumPreviewActivityPresenter albumPreviewActivityPresenter;
 
@@ -94,18 +93,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
             }
         };
 
-        albumAdapter.onAlbumImageClicked = albumImg -> {
-//            Intent intent = new Intent(this, AllAlbumImgActivity.class);
-//            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
-//            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
-//            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
-//            startActivity(intent);
 
-            Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
-            intent.putExtra(ImageCommentActivity.IMAGE_DATA,albumImg);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-        };
     }
 
     @Override
@@ -166,6 +154,19 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
                 .error(R.drawable.default_photographer_profile)
                 .into(albumPreviewImg);
         albumNameTV.setText(albumPreviewResponseData.name);
+
+
+        albumAdapter.onAlbumImageClicked = albumImg -> {
+
+            Intent intent = new Intent(this, AllAlbumImgActivity.class);
+            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
+            intent.putExtra(AllAlbumImgActivity.LIST_NAME, albumPreviewResponseData.name);
+            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
+            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+            startActivity(intent);
+
+        };
+
         followingNumber.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
     }
 }

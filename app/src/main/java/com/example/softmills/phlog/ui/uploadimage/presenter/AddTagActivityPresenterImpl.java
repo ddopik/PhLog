@@ -80,8 +80,18 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
     }
 
 
-    private void uploadPhotoGrapherPhoto() {
+    @SuppressLint("CheckResult")
+    @Override
+    public void getAutoCompleteTags(String key) {
+        BaseNetworkApi.getTagsAutoComplete(key)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(autoCompleteTagResponse -> {
+                    addTagActivityView.updateTagsList(autoCompleteTagResponse.data);
+                },throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
 
+                });
     }
 
     @Override

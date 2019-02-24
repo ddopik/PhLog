@@ -12,6 +12,7 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AutoCompleteTextView;
@@ -37,16 +38,24 @@ import com.example.softmills.phlog.ui.uploadimage.view.adapter.SelectedTagAdapte
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.jakewharton.rxbinding3.widget.RxTextView;
+import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by abdalla_maged on 10/28/2018.
  */
 public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
-    private static final String TAG = AddTagActivity.class.getSimpleName();
+    private String TAG=AddTagActivity.class.getSimpleName();
     public static String IMAGE_TYPE = "image_type";
 
     private AutoCompleteTextView autoCompleteTextView;
@@ -65,6 +74,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private String imageLocation;
 
     private AddTagActivityPresenter addTagActivityPresenter;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
 
     private boolean started;
@@ -171,7 +181,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         autoCompleteTextView = findViewById(R.id.tag_auto_complete);
         autoCompleteTagMenuAdapter = new AutoCompleteTagMenuAdapter(this, R.layout.item_drop_down, tagMenuList);
         autoCompleteTextView.setAdapter(autoCompleteTagMenuAdapter);
-        autoCompleteTextView.setThreshold(1);
+        autoCompleteTextView.setThreshold(0);
         autoCompleteTagMenuAdapter.notifyDataSetChanged();
         backBtn = findViewById(R.id.back_btn);
         GlideApp.with(getBaseContext())
@@ -226,7 +236,20 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
         initKeyBoardListener();
 
+        disposable.add(
+
+                RxTextView.textChangeEvents(autoCompleteTextView)
+                        .skipInitialValue()
+                        .debounce(Constants.QUERY_SEARCH_TIME_OUT, TimeUnit.MILLISECONDS)
+                        .distinctUntilChanged()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(getAutoCompleteKey()));
+
+
+
         backBtn.setOnClickListener((view) -> onBackPressed());
+
 
         uploadBrn.setOnClickListener(v -> {
 //            addTagActivityPresenter.uploadPhoto(imagePreviewPath, imageCaption, imageLocation, draftState, imageType, tagList);
@@ -256,15 +279,40 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         });
     }
 
+    private DisposableObserver<TextViewTextChangeEvent> getAutoCompleteKey() {
+        return new DisposableObserver<TextViewTextChangeEvent>() {
+            @Override
+            public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
+
+                if (textViewTextChangeEvent.getCount() == 0) {
+                    autoCompleteTextView.setHint(R.string.add_new_tag);
+                    return;
+                }
+                // user cleared search get default data
+//                tagMenuList.clear();
+                addTagActivityPresenter.getAutoCompleteTags(autoCompleteTextView.getText().toString().trim());
+                Log.e(TAG, "search string: " + autoCompleteTextView.getText().toString());
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }
+
+                ;
+    }
 
     private void initKeyBoardListener() {
-        // Минимальное значение клавиатуры. Threshold for minimal keyboard height.
         final int MIN_KEYBOARD_HEIGHT_PX = 150;
-        // Окно верхнего уровня view. Top-level window decor view.
         final View decorView = getWindow().getDecorView();
-        // Регистрируем глобальный слушатель. Register global layout listener.
         decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            // Видимый прямоугольник внутри окна. Retrieve visible rectangle inside window.
             private final Rect windowVisibleDisplayFrame = new Rect();
             private int lastVisibleDecorViewHeight;
 
@@ -321,10 +369,21 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         }
     }
 
+
+    @Override
+    public void updateTagsList(List<Tag> tagList) {
+        this.tagMenuList.clear();
+        this.tagMenuList.addAll(tagList);
+        autoCompleteTagMenuAdapter.notifyDataSetChanged();
+//        autoCompleteTagMenuAdapter.vi
+    }
+
     @Override
     public void viewMessage(String msg) {
         showToast(msg);
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -332,6 +391,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         message.what = UploaderService.REMOVE_COMMUNICATOR;
         sendMessageToService(message);
         unbindService(connection);
+        disposable.clear();
         super.onDestroy();
     }
 }

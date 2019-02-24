@@ -38,6 +38,7 @@ import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
 import com.example.softmills.phlog.ui.signup.model.UploadImgResponse;
 import com.example.softmills.phlog.ui.social.model.SocialResponse;
+import com.example.softmills.phlog.ui.uploadimage.model.AutoCompleteTagResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserPhotosResponse;
 import com.example.softmills.phlog.ui.welcome.model.InitSlider;
@@ -80,7 +81,8 @@ public class BaseNetworkApi {
     private static final String BASE_URL = "http://178.128.162.10/api";
     private static final String BASE_URL_COMMON = "http://178.128.162.10/public/api/common";
     private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider";
-    private static final String ALL_COUNTRES = BASE_URL + "/common/countries/list"; //done
+    private static final String ALL_COUNTRES = BASE_URL + "/common/countries/list";
+    private static final String TAG_AUTO_COMPLETE = BASE_URL + "/common/tags/search";
     private static final String SIGNUP_USER = BASE_URL + "/photographer/auth/signup";
     private static final String UPLOAD_CAMPAIGN_EXSISTING_PHOTO = BASE_URL + "/photographer/campaign/photo/assign";
     private static final String UPLOAD_PROFILE = BASE_URL + "/photographer/profile/upload";
@@ -117,6 +119,8 @@ public class BaseNetworkApi {
     private static final String GET_ALL_NOTIFICATION = BASE_URL + "/photographer/notification/list";
     private static final String GET_EARNING = BASE_URL + "/photographer/earning/list";
     private static final String UPLOAD_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/upload";
+
+    private static final String DELETE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/delete";
     private static final String LIKE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photographer/photo/like";
     private static final String LIKE_IMAGE = BASE_URL + "/photo/like";
     private static final String UN_LIKE_IMAGE = BASE_URL + "/photo/unlike";
@@ -152,6 +156,15 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AllCountersRepose.class);
+    }
+
+
+    public static io.reactivex.Observable<AutoCompleteTagResponse> getTagsAutoComplete(String keyword) {
+        return Rx2AndroidNetworking.post(TAG_AUTO_COMPLETE)
+                .addBodyParameter("keyword",keyword)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(AutoCompleteTagResponse.class);
     }
 
     public static io.reactivex.Observable<SignUpResponse> signUpUser(HashMap<String, String> signUpData) {
@@ -349,8 +362,18 @@ public class BaseNetworkApi {
                 .getObjectObservable(UserPhotosResponse.class);
 
     }
-        public static io.reactivex.Observable<BaseStateResponse> likePhoto(String imageId) {
+        public static io.reactivex.Observable<BaseStateResponse> likePhotoGrapherPhotoPhoto(String imageId) {
         return Rx2AndroidNetworking.post(LIKE_PHOTOGRAPHER_PHOTO)
+                .addBodyParameter("photo_id", imageId)
+                .getResponseOnlyFromNetwork()
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(BaseStateResponse.class);
+    }
+
+
+    public static io.reactivex.Observable<BaseStateResponse> deleteImage(String imageId) {
+        return Rx2AndroidNetworking.post(DELETE_PHOTOGRAPHER_PHOTO)
                 .addBodyParameter("photo_id", imageId)
                 .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)

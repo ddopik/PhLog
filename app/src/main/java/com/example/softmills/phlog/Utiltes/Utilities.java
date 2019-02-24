@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-
 import com.example.softmills.phlog.R;
 
 import java.security.MessageDigest;
@@ -37,12 +36,15 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
 /**
  * Created by ddopik @_@....
  */
 public class Utilities {
 
-    private static final String TAG =Utilities.class.getSimpleName();
+    private static final String TAG = Utilities.class.getSimpleName();
 
     /**
      * Convert arabic number to english number "," NOT added here
@@ -74,6 +76,7 @@ public class Utilities {
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
         return formatter.format(date);
     }
+
     @SuppressLint("MissingPermission")
     public static String getMacAddress(Context context) {
         WifiManager wimanager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
@@ -245,7 +248,10 @@ public class Utilities {
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
         System.exit(0);
     }
-    /** Returns the consumer friendly device name */
+
+    /**
+     * Returns the consumer friendly device name
+     */
     public static String getDeviceName() {
         String manufacturer = Build.MANUFACTURER;
         String model = Build.MODEL;
@@ -292,21 +298,64 @@ public class Utilities {
             Log.e(TAG, "printHashKey()", e);
         }
     }
+
     public static List<String> getMentionsList(String comment)
 
     {
 
 
         String regex = "@+([a-zA-Z0-9_]+)";
-        List<String> authorListId=new ArrayList<>();
+        List<String> authorListId = new ArrayList<>();
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(comment);
 
         while (matcher.find()) {
-            authorListId.add( matcher.group(1));
+            authorListId.add(matcher.group(1));
         }
 
         return authorListId;
 
+    }
+
+    public static void intializeData(String keyData) throws Exception {
+        byte[] seedValue = {
+                0x2d, 0x2a, 0x2d, 0x42, 0x55, 0x49, 0x4c, 0x44, 0x41, 0x43, 0x4f, 0x44, 0x45, 0x2d, 0x2a, 0x2d
+        };
+        String seedValue2 = "7w!z%C*F)J@NcRfUjXn2r5u8x/A?D(G+";
+        SecretKeySpec secretKey = new SecretKeySpec(seedValue2.getBytes(), "AES");
+
+
+// encrypt
+        String encryptedData = encrypt(keyData, secretKey);
+        Log.e(TAG, "intializeData()  encryptedData ---->" + encryptedData.toString().toString());
+// decrypt
+        String decryptedData = decrypt(encryptedData, secretKey);
+        Log.e(TAG, "intializeData()   decryptedData ---->" + decryptedData.toString().toString());
+    }
+
+    public static String encrypt(String data, SecretKeySpec secretKey) throws Exception {
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            byte[] cipherText = cipher.doFinal(data.getBytes("UTF8"));
+            String encryptedString = new String(Base64.encode(cipherText, Base64.DEFAULT));
+            return encryptedString;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String decrypt(String data, SecretKeySpec secretKey) throws Exception {
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            byte[] cipherText = Base64.decode(data.getBytes("UTF8"), Base64.DEFAULT);
+            String decryptedString = new String(cipher.doFinal(cipherText), "UTF-8");
+            return decryptedString;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -15,6 +15,7 @@ public abstract class PrefUtils {
     public static final String GUEST_USER_ID = "-1";
     private static final String LOGIN_PROVIDER = "LOGIN_PROVIDER";
     private static final String USER_ID = "USER_ID";
+    private static final String USER_NAME = "USER_NAME";
     private static final String USER_TOKEN = "USER_TOKEN";
     private static final String NOTIFICATION_TOKEN = "NOTIFICATION_TOKEN";
     private static final String IS_FIRST_LAUNCH = "IS_FIRST_LAUNCH";
@@ -35,6 +36,9 @@ public abstract class PrefUtils {
     public static void setUserID(Context context, String userID) {
         getSharedPref(context).edit().putString(USER_ID, userID).apply();
     }
+   public static void setUserName(Context context, String userName) {
+        getSharedPref(context).edit().putString(USER_NAME, userName).apply();
+    }
 
     public static void setUserToken(Context context, String userToken) {
         getSharedPref(context).edit().putString(USER_TOKEN, userToken).apply();
@@ -50,6 +54,10 @@ public abstract class PrefUtils {
 
     public static String getUserId(Context mContext) {
         return getSharedPref(mContext).getString(USER_ID, GUEST_USER_ID);
+    }
+
+    public static String getUserName(Context mContext) {
+        return getSharedPref(mContext).getString(USER_NAME, GUEST_USER_ID);
     }
 
     public static String getUserToken(Context mContext) {

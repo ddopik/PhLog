@@ -153,7 +153,7 @@
     <string name="no_sales_yet">You havn\'t sold any photos yet.</string>
     <string name="earning_price">Price: </string>
     <string name="earning_buyer">Buyer: </string>
-    <string name="id_val">ID : %1$d</string>
+    <string name="id_val">ID: </string>
     <string name="created_at_val">Created at : %1$s</string>
     <string name="exclusive">Exclusive</string>
     <string name="add_to_cart">Add to cart</string>
@@ -184,7 +184,11 @@
     <string name="done">Done</string>
     <string name="your_photo_uploaded">Your photo is uploaded</string>
     <string name="view_in_profile">View in profile</string>
+    <string name="earning_details">Earning details</string>
+    <string name="selcet_photos_from_phlog">Select from saved photos in PHLOG</string>
     <string name="you_havnt_uploaded_yet">You hav\'t uploaded any photos yet</string>
     <string name="photographer_hasnt_uploaded_yet">No photos yet</string>
+    <string name="delete">Delete</string>
+    <string name="photo">Photo</string>
 
 </resources>

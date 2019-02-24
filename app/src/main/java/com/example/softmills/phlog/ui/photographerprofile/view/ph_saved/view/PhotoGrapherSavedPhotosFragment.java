@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
@@ -86,6 +87,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
             public void onPhotoClicked(BaseImage photoGrapherSavedPhoto) {
                 Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
                 intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
+                intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.saved));
                 intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherSavedPhotoList);
                 startActivity(intent);
             }

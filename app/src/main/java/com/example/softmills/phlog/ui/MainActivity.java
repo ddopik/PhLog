@@ -334,8 +334,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
                         myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
                         myProfileBtn.setCompoundDrawablePadding(8);
-                        toolbar.setVisibility(View.GONE);
-                        toolBarTitle.setText(getResources().getString(R.string.profile));
+                        toolbar.setVisibility(View.VISIBLE);
+                        toolBarTitle.setText(getResources().getString(R.string.earning_details));
                         extraData = null;
                         currentTab = EARNING_INNER;
                     }

@@ -32,6 +32,7 @@ public class CustomRecyclerView extends RecyclerView {
             setLayoutManager(linearLayoutManager);
         } else if (recyclerOrientation == VERTICAL_RECYCLER_VIEW) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+//            linearLayoutManager.setAutoMeasureEnabled(false);
             setLayoutManager(linearLayoutManager);
         } else if (recyclerOrientation == GRID_RECYCLER_VIEW) {
             int spanSize = typedArray.getInteger(R.styleable.CustomRecyclerView_span_size, 2);

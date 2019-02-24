@@ -20,13 +20,13 @@ public class Tag implements Parcelable {
     @SerializedName("id")
     @Expose
     public Integer id;
+    @SerializedName("preview")
+    @Expose
+    public String preview;
+    @SerializedName("photos_count")
+    @Expose
+    public Integer photosCount;
 
-
-
-    protected Tag(Parcel in) {
-        name = in.readString();
-        id = in.readByte() == 0x00 ? null : in.readInt();
-    }
 
     @Override
     public int describeContents() {
@@ -35,20 +35,23 @@ public class Tag implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        if (id == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeInt(id);
-        }
+        dest.writeString(this.name);
+        dest.writeValue(this.id);
+        dest.writeString(this.preview);
+        dest.writeValue(this.photosCount);
     }
 
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Tag> CREATOR = new Parcelable.Creator<Tag>() {
+    protected Tag(Parcel in) {
+        this.name = in.readString();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.preview = in.readString();
+        this.photosCount = (Integer) in.readValue(Integer.class.getClassLoader());
+    }
+
+    public static final Creator<Tag> CREATOR = new Creator<Tag>() {
         @Override
-        public Tag createFromParcel(Parcel in) {
-            return new Tag(in);
+        public Tag createFromParcel(Parcel source) {
+            return new Tag(source);
         }
 
         @Override

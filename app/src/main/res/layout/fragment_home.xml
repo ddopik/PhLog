@@ -65,12 +65,14 @@
         android:layout_height="match_parent"
          android:layout_marginTop="@dimen/dp16"
         android:layout_marginBottom="@dimen/dp16"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
             android:id="@+id/social_mainContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="@dimen/widgets_padding">
 
             <com.example.softmills.phlog.base.widgets.CustomRecyclerView
                 android:id="@+id/social_rv"
@@ -80,16 +82,16 @@
                 app:orientation="vertical" />
 
 
-            <ProgressBar
-                android:id="@+id/social_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                toosl:visibility="visible" />
         </FrameLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
+    <ProgressBar
+        android:id="@+id/social_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        toosl:visibility="visible" />
 
 </android.support.design.widget.CoordinatorLayout>

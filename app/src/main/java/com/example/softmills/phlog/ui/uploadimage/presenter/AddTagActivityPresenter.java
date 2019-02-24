@@ -13,6 +13,7 @@ public interface AddTagActivityPresenter {
 
 
     void uploadPhoto(String imagePath, String imageCaption, String location, String draftState, UploadImageType imageType, List<Tag> tagList);
+    void getAutoCompleteTags(String key);
 
     UploadPhotoModel getUploadModel(String imagePreviewPath, String imageCaption, String imageLocation, String draftState, UploadImageType imageType, List<Tag> tagList);
 }

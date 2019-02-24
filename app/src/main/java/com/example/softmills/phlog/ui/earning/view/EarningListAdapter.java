@@ -12,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.ui.earning.model.Earning;
 
 import java.util.List;
@@ -43,10 +45,14 @@ public class EarningListAdapter extends RecyclerView.Adapter<EarningListAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull EarningListViewHolder earningListViewHolder, int i) {
-
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
         Earning earning = earningList.get(i);
-        Glide.with(context).load(earning.photo.url)
+        GlideApp.with(context).load(earning.photo.url)
                 .apply(new RequestOptions().transforms(new RoundedCorners(14)))
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
+                .apply(requestOptions)
                 .into(earningListViewHolder.earningImg);
         earningListViewHolder.earningPrice.setText("$" + earning.price);
         earningListViewHolder.earningBuyer.setText(earning.business.fullName);

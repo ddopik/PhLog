@@ -26,12 +26,27 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
         this.allAlbumImgActivityView = allAlbumImgActivityView;
     }
 
+    @SuppressLint("CheckResult")
+    @Override
+    public void deleteImage(BaseImage baseImage) {
+        allAlbumImgActivityView.viewAlbumImageListProgress(true);
+        BaseNetworkApi.deleteImage(String.valueOf(baseImage.id))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(baseStateResponse -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    allAlbumImgActivityView.onImagePhotoGrapherDeleted(baseImage,true);
+                }, throwable -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+    }
 
     @SuppressLint("CheckResult")
     @Override
     public void likePhoto(String photoId) {
         allAlbumImgActivityView.viewAlbumImageListProgress(true);
-        BaseNetworkApi.likePhoto(photoId)
+        BaseNetworkApi.likePhotoGrapherPhotoPhoto(photoId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(baseStateResponse -> {

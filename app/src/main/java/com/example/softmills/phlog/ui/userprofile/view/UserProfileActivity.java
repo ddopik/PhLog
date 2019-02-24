@@ -33,6 +33,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
+
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 
@@ -63,6 +67,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         setContentView(R.layout.activity_user_profile);
         initPresenter();
         initView();
+        initListener();
 
     }
 
@@ -75,7 +80,6 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
     @Override
     public void initView() {
-
 
         if (getIntent().getStringExtra(USER_ID) != null) {
             this.userID = getIntent().getStringExtra(USER_ID);
@@ -119,13 +123,9 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         });
 
         userProfilePhotosAdapter.photoAction= image -> {
-//            Intent intent=new Intent(getBaseContext(),ImageCommentActivity.class);
-//            intent.putExtra(ImageCommentActivity.IMAGE_DATA,image);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            startActivity(intent);
-
             Intent intent = new Intent(this, AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, image.id);
+            intent.putExtra(LIST_NAME, image.photographer.userName);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) userPhotoList);
             startActivity(intent);
         };
@@ -195,7 +195,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             followUserBtn.setText(getResources().getString(R.string.following));
             currentPhotographer.isFollow=true;
         } else {
-            followUserBtn.setText(getResources().getString(R.string.follow));
+            followUserBtn.setText(getResources().getString(R.string.un_follow));
             currentPhotographer.isFollow=false;
         }
     }

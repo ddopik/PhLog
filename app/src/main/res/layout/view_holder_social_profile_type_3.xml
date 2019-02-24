@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/social_profile_container"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/view_holder_item_list_height_med"
+    android:layout_height="match_parent"
     android:background="@color/white"
     app:cardCornerRadius="@dimen/item_card_corner_radius"
     app:cardElevation="@dimen/item_card_elevation">
@@ -19,7 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/widgets_padding">
 
             <ImageView
                 android:id="@+id/social_profile_type_3_icon_img"
@@ -27,6 +28,7 @@
                 android:layout_height="@dimen/icon_view_holder_size_s"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp4"
+                android:scaleType="centerCrop"
                 tools:src="@drawable/default_user_pic" />
 
             <LinearLayout
@@ -53,7 +55,7 @@
 
             <Button
                 android:id="@+id/follow_social_profile"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp45"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -75,7 +77,6 @@
                 android:id="@+id/social_profile_album_type_3_photos_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -83,6 +84,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
+
                     android:orientation="horizontal">
 
                     <ImageView
@@ -90,6 +92,7 @@
                         android:layout_width="@dimen/social_profile_img_w"
                         android:layout_height="@dimen/profile_search_icon_h"
                         android:layout_margin="@dimen/dp4"
+                        android:scaleType="centerCrop"
                         tools:background="@color/orangeF58624" />
 
                     <ImageView
@@ -97,7 +100,7 @@
                         android:layout_width="@dimen/social_profile_img_w"
                         android:layout_height="@dimen/profile_search_icon_h"
                         android:layout_margin="@dimen/dp4"
-
+                        android:scaleType="centerCrop"
                         tools:background="@color/colorRed" />
                 </LinearLayout>
 
@@ -115,6 +118,7 @@
                         android:layout_width="@dimen/social_profile_img_w"
                         android:layout_height="@dimen/profile_search_icon_h"
                         android:layout_margin="@dimen/dp4"
+                        android:scaleType="centerCrop"
                         tools:background="@color/gray2B2E00" />
 
                     <ImageView
@@ -122,19 +126,13 @@
                         android:layout_width="@dimen/social_profile_img_w"
                         android:layout_height="@dimen/profile_search_icon_h"
                         android:layout_margin="@dimen/dp4"
+                        android:scaleType="centerCrop"
                         tools:background="@color/blue3E549C" />
                 </LinearLayout>
 
 
             </LinearLayout>
-            <!--Acts As Default -->
-            <ImageView
-                android:id="@+id/social_profile_type_3_img_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/default_place_holder"
-                android:scaleType="centerCrop"
-                android:visibility="visible" />
+
 
         </FrameLayout>
 

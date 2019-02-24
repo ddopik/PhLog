@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/social_album_container"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/view_holder_item_list_height_med"
-    android:background="@color/white"
-    app:cardCornerRadius="@dimen/item_card_corner_radius"
-    app:cardElevation="@dimen/item_card_elevation">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/widgets_padding"
+    tools:background="@color/white">
 
     <LinearLayout
 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/widgets_padding">
+       >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <ImageView
@@ -107,7 +106,6 @@
                         android:layout_width="@dimen/social_album_icon_w"
                         android:layout_height="@dimen/social_album_icon_h_xl"
                         android:layout_margin="@dimen/dp2"
-
                         android:scaleType="centerCrop"
                         tools:background="@color/gray2B2E00" />
 
@@ -116,14 +114,13 @@
 
 
             </LinearLayout>
-
             <ImageView
                 android:id="@+id/album_img_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
         </FrameLayout>
 
     </LinearLayout>
-</android.support.v7.widget.CardView>
+</FrameLayout>

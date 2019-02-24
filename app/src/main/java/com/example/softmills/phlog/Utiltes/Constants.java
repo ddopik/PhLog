@@ -32,6 +32,7 @@ public interface Constants {
     int ENTITY_ALBUM=4;
     int ENTITY_IMAGE=3;
     int ENTITY_BRAND=5;
+
     ///////////////Entity Display-types
     String PROFILE_DISPLAY_TYPE_1 = "101";
     String PROFILE_DISPLAY_TYPE_2 = "102";
