@@ -84,43 +84,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         handleIntent(intent);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Disposable disposable = RxEventBus.getInstance().getSubject().subscribe(event -> {
-            switch (event.getType()) {
-                case POPUP:
-                    FirebaseNotificationData data = (FirebaseNotificationData) event.getObject();
-                    if (data.notification.popup != PopupType.NONE)
-                        PopupDialogFragment.newInstance(data, () -> {
-                            switch (data.notification.popup) {
-                                case PopupType.LEVEL_UP:
-                                    navigationManger.navigate(PROFILE);
-                                    break;
-                                case PopupType.WON_CAMPAIGN:
-                                    Intent intent = new Intent(this, CampaignInnerActivity.class);
-                                    intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(data.notification.campaign.id));
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                    startActivity(intent);
-                                    break;
-                            }
-                        }).show(getSupportFragmentManager(), null);
-                    break;
-            }
-        }, throwable -> {
-            Log.e("MainActivity-Noti", throwable.getMessage());
-        });
-        disposables.add(disposable);
-    }
-
-    private CompositeDisposable disposables = new CompositeDisposable();
-
-    @Override
-    protected void onDestroy() {
-        disposables.dispose();
-        super.onDestroy();
-    }
-
     private void handleIntent(Intent intent) {
         if (intent.hasExtra(MainActivityRedirectionValue.VALUE)) {
             int redirection = intent.getIntExtra(MainActivityRedirectionValue.VALUE, 0);
@@ -133,19 +96,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     FirebaseNotificationData data = NotificationParser.parse(payload);
                     navigationManger.navigate(HOME);
                     if (data != null && data.notification.popup != PopupType.NONE)
-                        PopupDialogFragment.newInstance(data, () -> {
-                            switch (data.notification.popup) {
-                                case PopupType.LEVEL_UP:
-                                    navigationManger.navigate(PROFILE);
-                                    break;
-                                case PopupType.WON_CAMPAIGN:
-                                    Intent i2 = new Intent(this, CampaignInnerActivity.class);
-                                    i2.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(data.notification.campaign.id));
-                                    i2.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                    startActivity(i2);
-                                    break;
-                            }
-                        }).show(getSupportFragmentManager(), null);
+                        showPopup(data);
                     break;
             }
         } else {

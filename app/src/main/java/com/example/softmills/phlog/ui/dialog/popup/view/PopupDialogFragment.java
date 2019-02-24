@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,12 +20,15 @@ public class PopupDialogFragment extends BaseDialogFragment {
 
     private ImageView image;
     private TextView text;
+    private Button close;
 
     private FirebaseNotificationData data;
+    private Action navigation;
 
     public static PopupDialogFragment newInstance(FirebaseNotificationData data, Action navigation) {
         PopupDialogFragment fragment = new PopupDialogFragment();
         fragment.data = data;
+        fragment.navigation = navigation;
         return fragment;
     }
 
@@ -39,7 +44,7 @@ public class PopupDialogFragment extends BaseDialogFragment {
     protected void setViews(View view) {
         image = view.findViewById(R.id.image);
         text = view.findViewById(R.id.text);
-
+        close = view.findViewById(R.id.close);
         Glide.with(this)
                 .load(data.notification.popupImage)
                 .into(image);
@@ -49,7 +54,11 @@ public class PopupDialogFragment extends BaseDialogFragment {
 
     @Override
     protected void setListeners() {
-        image.setOnClickListener(v -> {
+//        image.setOnClickListener(v -> {
+//            navigation.run();
+//            dismiss();
+//        });
+        close.setOnClickListener(v -> {
             dismiss();
         });
     }

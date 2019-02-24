@@ -190,5 +190,6 @@
     <string name="photographer_hasnt_uploaded_yet">No photos yet</string>
     <string name="delete">Delete</string>
     <string name="photo">Photo</string>
+    <string name="close">Close</string>
 
 </resources>
