@@ -91,4 +91,10 @@ public interface Constants {
         String NAME = MainActivityRedirectionValue.class.getSimpleName();
         int TO_PROFILE = 1;
     }
+
+    interface PopupType {
+        int LEVEL_UP = 1;
+        int WON_CAMPAIGN = 2;
+        int NONE = 0;
+    }
 }

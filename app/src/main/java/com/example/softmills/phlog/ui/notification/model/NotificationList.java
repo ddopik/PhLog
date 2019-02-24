@@ -40,4 +40,9 @@ public class NotificationList {
     @SerializedName("photo")
     @Expose
     public BaseImage photo;
+
+    @SerializedName("popup")
+    public int popup;
+    @SerializedName("popup_image")
+    public String popupImage;
 }

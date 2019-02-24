@@ -14,11 +14,16 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.Utiltes.Constants.PopupType;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.rxeventbus.RxEventBus;
 import com.example.softmills.phlog.app.PhLogApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
+import com.example.softmills.phlog.fgm.model.FirebaseNotificationData;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
+import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
+import com.example.softmills.phlog.ui.dialog.popup.view.PopupDialogFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningInnerFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningListFragment;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
@@ -29,6 +34,9 @@ import com.example.softmills.phlog.ui.splash.view.SplashActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
 
 import java.util.HashMap;
+
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.CAMPAIGN;
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EARNING_INNER;
@@ -51,7 +59,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FloatingActionButton picImgHomeBtn;
     private Toolbar toolbar;
     private ImageButton backBtn;
-    public  NavigationManger navigationManger;
+    public NavigationManger navigationManger;
 
 
     @Override
@@ -67,6 +75,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initListener();
 
         handleIntent(getIntent());
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Disposable disposable = RxEventBus.getInstance().getSubject().subscribe(event -> {
+            switch (event.getType()) {
+                case POPUP:
+                    FirebaseNotificationData data = (FirebaseNotificationData) event.getObject();
+                    if (data.notification.popup != PopupType.NONE)
+                        PopupDialogFragment.newInstance(data, () -> {
+                            switch (data.notification.popup) {
+                                case PopupType.LEVEL_UP:
+                                    navigationManger.navigate(PROFILE);
+                                    break;
+                                case PopupType.WON_CAMPAIGN:
+                                    Intent intent = new Intent(this, CampaignInnerActivity.class);
+                                    intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(data.notification.campaign.id));
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    startActivity(intent);
+                                    break;
+                            }
+                        }).show(getSupportFragmentManager(), null);
+                    break;
+            }
+        }, throwable -> {
+            Log.e("MainActivity-Noti", throwable.getMessage());
+        });
+        disposables.add(disposable);
+    }
+
+    private CompositeDisposable disposables = new CompositeDisposable();
+
+    @Override
+    protected void onDestroy() {
+        disposables.dispose();
+        super.onDestroy();
     }
 
     private void handleIntent(Intent intent) {
@@ -145,14 +191,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             default:
         }
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
 
     ////////
     public class NavigationManger {

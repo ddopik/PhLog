@@ -89,6 +89,7 @@ public class PhLogApp extends Application {
         } else {
             return false;
         }
+
     }
 
     /**
