@@ -4,14 +4,12 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
-import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -94,7 +92,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                             intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
                                     | Intent.FLAG_ACTIVITY_CLEAR_TOP
                                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intents.putExtra(Constants.MainActivityRedirectionValue.NAME, Constants.MainActivityRedirectionValue.TO_PROFILE);
+                            intents.putExtra(Constants.MainActivityRedirectionValue.VALUE, Constants.MainActivityRedirectionValue.TO_PROFILE);
                             startActivity(intents);
                             finish();
                             dialog.dismiss();

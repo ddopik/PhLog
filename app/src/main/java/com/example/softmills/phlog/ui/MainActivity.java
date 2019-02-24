@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.Utiltes.Constants.MainActivityRedirectionValue;
 import com.example.softmills.phlog.Utiltes.Constants.PopupType;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.rxeventbus.RxEventBus;
@@ -21,19 +22,19 @@ import com.example.softmills.phlog.app.PhLogApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.fgm.model.FirebaseNotificationData;
+import com.example.softmills.phlog.fgm.parse.NotificationParser;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.dialog.popup.view.PopupDialogFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningInnerFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningListFragment;
+import com.example.softmills.phlog.ui.notification.model.NotificationData;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.splash.view.SplashActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
-
-import java.util.HashMap;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -46,7 +47,6 @@ import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.HOM
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.NOTIFICATION;
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.PROFILE;
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.UPLOAD_PHOTO;
-import static com.example.softmills.phlog.network.BaseNetworkApi.IMAGE_TYPE_PHOTOS;
 
 /**
  * Created by abdalla_maged on 10/1/2018.
@@ -76,6 +76,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         handleIntent(getIntent());
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
     }
 
     @Override
@@ -116,11 +122,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void handleIntent(Intent intent) {
-        if (intent.hasExtra(Constants.MainActivityRedirectionValue.NAME)) {
-            int redirection = intent.getIntExtra(Constants.MainActivityRedirectionValue.NAME, 0);
+        if (intent.hasExtra(MainActivityRedirectionValue.VALUE)) {
+            int redirection = intent.getIntExtra(MainActivityRedirectionValue.VALUE, 0);
             switch (redirection) {
-                case Constants.MainActivityRedirectionValue.TO_PROFILE:
+                case MainActivityRedirectionValue.TO_PROFILE:
                     navigationManger.navigate(PROFILE);
+                    break;
+                case MainActivityRedirectionValue.TO_POPUP:
+                    String payload = intent.getStringExtra(MainActivityRedirectionValue.PAYLOAD);
+                    FirebaseNotificationData data = NotificationParser.parse(payload);
+                    navigationManger.navigate(HOME);
+                    if (data != null && data.notification.popup != PopupType.NONE)
+                        PopupDialogFragment.newInstance(data, () -> {
+                            switch (data.notification.popup) {
+                                case PopupType.LEVEL_UP:
+                                    navigationManger.navigate(PROFILE);
+                                    break;
+                                case PopupType.WON_CAMPAIGN:
+                                    Intent i2 = new Intent(this, CampaignInnerActivity.class);
+                                    i2.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(data.notification.campaign.id));
+                                    i2.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    startActivity(i2);
+                                    break;
+                            }
+                        }).show(getSupportFragmentManager(), null);
                     break;
             }
         } else {

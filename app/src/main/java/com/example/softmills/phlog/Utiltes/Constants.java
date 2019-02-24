@@ -88,8 +88,10 @@ public interface Constants {
     }
 
     interface MainActivityRedirectionValue {
-        String NAME = MainActivityRedirectionValue.class.getSimpleName();
+        String VALUE = MainActivityRedirectionValue.class.getSimpleName();
+        String PAYLOAD = "payload";
         int TO_PROFILE = 1;
+        int TO_POPUP = 2;
     }
 
     interface PopupType {
