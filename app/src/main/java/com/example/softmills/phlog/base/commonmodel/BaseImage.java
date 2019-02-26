@@ -85,6 +85,9 @@ public class BaseImage implements Parcelable {
     @Expose
     public float rate=0;
 
+    //this is custom flag for developing
+    public boolean isImageDeleted;
+
     @Override
     public int describeContents() {
         return 0;
@@ -107,11 +110,11 @@ public class BaseImage implements Parcelable {
         dest.writeValue(this.isLiked);
         dest.writeTypedList(this.tags);
         dest.writeString(this.filters);
-        dest.writeValue(this.isRated);
         dest.writeValue(this.commentsCount);
         dest.writeValue(this.savesCount);
         dest.writeValue(this.likesCount);
         dest.writeFloat(this.rate);
+        dest.writeByte(this.isImageDeleted ? (byte) 1 : (byte) 0);
     }
 
     protected BaseImage(Parcel in) {
@@ -130,11 +133,11 @@ public class BaseImage implements Parcelable {
         this.isLiked = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.tags = in.createTypedArrayList(Tag.CREATOR);
         this.filters = in.readString();
-        this.isRated = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.commentsCount = (Integer) in.readValue(Integer.class.getClassLoader());
         this.savesCount = (Integer) in.readValue(Integer.class.getClassLoader());
         this.likesCount = (Integer) in.readValue(Integer.class.getClassLoader());
         this.rate = in.readFloat();
+        this.isImageDeleted = in.readByte() != 0;
     }
 
     public static final Creator<BaseImage> CREATOR = new Creator<BaseImage>() {

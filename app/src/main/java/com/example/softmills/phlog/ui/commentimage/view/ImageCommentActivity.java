@@ -174,6 +174,11 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
                 }
             }
+
+            @Override
+            public void onDeleteImageClickd(BaseImage baseImage) {
+                imageCommentActivityPresenter.deleteImage(baseImage);
+            }
         };
 
 
@@ -296,6 +301,13 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
     }
 
+    @Override
+    public void onImageDeleted(BaseImage baseImage,boolean state) {
+        if (state){
+         previewImage.isImageDeleted=state;
+         commentsAdapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public void viewImageProgress(Boolean state) {

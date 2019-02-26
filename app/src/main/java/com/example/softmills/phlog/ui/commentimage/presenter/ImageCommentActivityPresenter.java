@@ -8,8 +8,12 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
  */
 public interface ImageCommentActivityPresenter {
     void getImageComments(String imageId, String page);
+
     void likePhoto(BaseImage baseImage);
+
     void unLikePhoto(BaseImage baseImage);
+
+    void deleteImage(BaseImage baseImage);
 
     void submitComment(String imageId, String comment);
 }

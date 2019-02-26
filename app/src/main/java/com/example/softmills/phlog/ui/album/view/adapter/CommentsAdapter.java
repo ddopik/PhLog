@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Business;
@@ -111,6 +113,14 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             commentViewHolder.authorName.setText(previewImage.photographer.fullName);
             commentViewHolder.authorUserName.setText(previewImage.photographer.userName);
 
+            if (previewImage.photographer.id == Integer.parseInt(PrefUtils.getUserId(context))  && !previewImage.isImageDeleted) {
+                commentViewHolder.imageDeleteBtn.setVisibility(View.VISIBLE);
+            } else {
+                commentViewHolder.imageDeleteBtn.setVisibility(View.INVISIBLE);
+
+            }
+
+
             GlideApp.with(context)
                     .load(previewImage.photographer.imageProfile)
                     .error(R.drawable.default_error_img)
@@ -163,6 +173,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 });
             }
 
+            commentViewHolder.imageDeleteBtn.setOnClickListener(v -> {
+                commentAdapterAction.onDeleteImageClickd(previewImage);
+            });
 
 //////////////////////////////////////COMMENT/////////////////////////////////////////
         } else if (getItemViewType(i) == COMMENT) {
@@ -195,6 +208,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             if (commentList.get(i).comment != null) {
                 handleCommentBody(commentViewHolder.commentVal, commentList.get(i).comment);
             }
+
 
             ////////////////////////////////ADD_COMMENT///////////////////////////////////////////////
         } else if (getItemViewType(i) == ADD_COMMENT) {
@@ -486,6 +500,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         ImageView commentImg, commentAuthorIcon;
         ImageButton imageLikeBtn, imageCommentBtn;
         RatingBar photoRating;
+        Button imageDeleteBtn;
         ///Comment_value Cell
         TextView commentVal;
         CustomTextView commentAuthorName;
@@ -502,7 +517,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 commentAuthorIcon = view.findViewById(R.id.comment_author_icon);
                 authorName = view.findViewById(R.id.author_name);
                 authorUserName = view.findViewById(R.id.author_user_name);
-
+                imageDeleteBtn = view.findViewById(R.id.album_img_delete_btn);
                 commentImg = view.findViewById(R.id.comment_preview_img);
                 commentPreviewImgTags = view.findViewById(R.id.comment_preview_img_tag);
                 imageLikeBtn = view.findViewById(R.id.comment_preview_img_like_btn);
@@ -530,6 +545,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         void onImageCommentClicked();
 
         void onSubmitComment(String comment);
+
+        void onDeleteImageClickd(BaseImage baseImage);
 
         void onCommentAuthorIconClicked(BaseImage baseImage);
     }

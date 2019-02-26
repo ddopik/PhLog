@@ -23,4 +23,6 @@ public interface ImageCommentActivityView {
     void viewOnImageRate(BaseImage baseImage);
 
     void viewMessage(String msg);
+
+    void onImageDeleted(BaseImage baseImage,boolean state);
 }
