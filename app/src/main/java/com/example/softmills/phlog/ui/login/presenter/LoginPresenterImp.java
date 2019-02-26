@@ -25,9 +25,9 @@ public class LoginPresenterImp implements LoginPresenter {
     private LoginView loginView;
     private Context context;
 
-    public LoginPresenterImp(Context context,LoginView loginView) {
+    public LoginPresenterImp(Context context, LoginView loginView) {
         this.loginView = loginView;
-        this.context=context;
+        this.context = context;
 
     }
 
@@ -41,14 +41,29 @@ public class LoginPresenterImp implements LoginPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loginResponse -> {
+                    loginView.viewLoginProgress(false);
                     loginView.showMessage(loginResponse.loginData.fullName);
                     PrefUtils.setLoginState(context, true);
                     PrefUtils.setUserToken(context, loginResponse.loginData.token);
                     PrefUtils.setUserName(context, loginResponse.loginData.userName);
                     PrefUtils.setUserID(context, loginResponse.loginData.id);
-                    loginView.navigateToHome();
+                    sendFirebaseToken();
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     loginView.viewLoginProgress(false);
+                });
+    }
 
+    private void sendFirebaseToken() {
+        loginView.navigateToHome();
+        BaseNetworkApi.updateFirebaseToken(PrefUtils.getUserToken(context), PrefUtils.getFirebaseToken(context))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    loginView.viewLoginProgress(false);
+                    if (response == null)
+                        return;
+                    loginView.navigateToHome();
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     loginView.viewLoginProgress(false);
@@ -133,7 +148,7 @@ public class LoginPresenterImp implements LoginPresenter {
                         PrefUtils.setUserToken(context, socialLoginResponse.token);
                         PrefUtils.setUserName(context, socialLoginResponse.userName);
 //                        PrefUtils.setUserID(context, socialLoginResponse.id);
-                        loginView.navigateToHome();
+                        sendFirebaseToken();
                     }
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);

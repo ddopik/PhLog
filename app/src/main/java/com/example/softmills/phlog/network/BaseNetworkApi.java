@@ -631,6 +631,16 @@ public class BaseNetworkApi {
                 .getObjectObservable(AddImageToCartResponse.class);
     }
 
+    public static Observable<LoginResponse> updateFirebaseToken(String token, String firebaseToken) {
+        return Rx2AndroidNetworking.upload(UPDATE_PROGILE_URL)
+                .addHeaders("x-auth-token", token)
+                .addHeaders("x-user-type", DEFAULT_USER_TYPE)
+                .addHeaders("x-lang-code", "en-us")
+                .addMultipartParameter("firebase_token", firebaseToken)
+                .build()
+                .getObjectObservable(LoginResponse.class);
+    }
+
 //    public static io.reactivex.Observable<GeoCodeAutoCompleteResponse> getGeoGodeAutoCompleteResponse(String key){
 //        return Rx2AndroidNetworking.get()
 //

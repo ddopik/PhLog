@@ -207,8 +207,21 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
                 ((MainActivity) getActivity()).navigationManger.navigate(EDIT_PROFILE);
                 break;
             case R.id.action_logout:
-                photoGrapherProfileActivityPresenter.logout(getContext());
-                ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
+                new AlertDialog.Builder(getContext()).setTitle(R.string.logout_confirmation)
+                        .setCancelable(true)
+                        .setItems(new CharSequence[]{getString(R.string.yes), getString(R.string.no)}
+                                , (dialog, which) -> {
+                                    switch (which) {
+                                        case 0:
+                                            photoGrapherProfileActivityPresenter.logout(getContext());
+                                            ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
+                                            dialog.dismiss();
+                                            break;
+                                        case 1:
+                                            dialog.dismiss();
+                                            break;
+                                    }
+                                }).show();
                 break;
             default:
                 break;
