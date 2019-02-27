@@ -5,7 +5,7 @@ import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewImagesResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
- import com.example.softmills.phlog.ui.album.model.SavePhotoResponse;
+import com.example.softmills.phlog.ui.album.model.SavePhotoResponse;
 import com.example.softmills.phlog.ui.allphotos.model.PhotoGrapherPhotosResponse;
 import com.example.softmills.phlog.ui.brand.model.BrandInnerResponse;
 import com.example.softmills.phlog.ui.brand.model.FollowBrandResponse;
@@ -13,9 +13,9 @@ import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotoRe
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
- import com.example.softmills.phlog.ui.earning.model.EarningDetailsResponse;
+import com.example.softmills.phlog.ui.earning.model.EarningDetailsResponse;
 import com.example.softmills.phlog.ui.earning.model.EarningListResponse;
- import com.example.softmills.phlog.ui.commentimage.model.AddImageToCartResponse;
+import com.example.softmills.phlog.ui.commentimage.model.AddImageToCartResponse;
 import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsResponse;
 import com.example.softmills.phlog.ui.commentimage.model.LikeImageResponse;
 import com.example.softmills.phlog.ui.commentimage.model.SocialAutoCompleteResponse;
@@ -78,8 +78,9 @@ public class BaseNetworkApi {
     public static String NEW_FACEBOOK_USER_STATUS = "0";
     //
 //    private static final String BASE_URL = "http://178.128.162.10/public/api/photographer";
-    private static final String BASE_URL = "http://178.128.162.10/api";
-    private static final String BASE_URL_COMMON = "http://178.128.162.10/public/api/common";
+    private static final String BASE_SERVER_URL = "http://178.128.162.10";
+    private static final String BASE_URL = BASE_SERVER_URL + "/api";
+    private static final String BASE_URL_COMMON = BASE_SERVER_URL + "/public/api/common";
     private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider";
     private static final String ALL_COUNTRES = BASE_URL + "/common/countries/list";
     private static final String TAG_AUTO_COMPLETE = BASE_URL + "/common/tags/search";
@@ -93,7 +94,7 @@ public class BaseNetworkApi {
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/photographer/photo/list";
     private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/photographer/details";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/list";
-    private static final String GET_ALBUM_IMAGES_PREVIEW = BASE_URL +"/photographer/album/photos";
+    private static final String GET_ALBUM_IMAGES_PREVIEW = BASE_URL + "/photographer/album/photos";
     private static final String PHOTOGRAPHER_FOLLOW_USER_URL = BASE_URL + "/photographer/follow";
     private static final String PHOTOGRAPHER_UN_FOLLOW_USER_URL = BASE_URL + "/photographer/unfollow";
     private static final String ALL_CAMPAIGN_URL = BASE_URL + "/photographer/campaign/running";
@@ -132,8 +133,9 @@ public class BaseNetworkApi {
     private static final String UNSAVE_PHOTO_URL = BASE_URL + "/photographer/photo/unsave";
     private static final String FORGOT_PASSWORD_URL = BASE_URL + "/photographer/auth/forgot_password";
     private static final String UPDATE_PROGILE_URL = BASE_URL + "/photographer/profile/update";
-     private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
-     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
+    private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
+    private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
+    private static final String LOGOUT_URL = BASE_URL + "/photographer/auth/logout";
 
 
     //Path Parameters
@@ -161,7 +163,7 @@ public class BaseNetworkApi {
 
     public static io.reactivex.Observable<AutoCompleteTagResponse> getTagsAutoComplete(String keyword) {
         return Rx2AndroidNetworking.post(TAG_AUTO_COMPLETE)
-                .addBodyParameter("keyword",keyword)
+                .addBodyParameter("keyword", keyword)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AutoCompleteTagResponse.class);
@@ -221,7 +223,9 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(FollowUserResponse.class);
-    }  public static io.reactivex.Observable<FollowUserResponse> unFollowUser(String userID) {
+    }
+
+    public static io.reactivex.Observable<FollowUserResponse> unFollowUser(String userID) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_UN_FOLLOW_USER_URL)
                 .addBodyParameter("photographer_id", userID)
                 .setPriority(Priority.HIGH)
@@ -350,9 +354,7 @@ public class BaseNetworkApi {
     }
 
 
-
-
-    public static io.reactivex.Observable<UserPhotosResponse> getUserProfilePhotos( String userID, int page) {
+    public static io.reactivex.Observable<UserPhotosResponse> getUserProfilePhotos(String userID, int page) {
         return Rx2AndroidNetworking.post(USER_PROFILE_PHOTOS)
                 .addBodyParameter("photographer_id", userID)
                 .addQueryParameter(PAGER_PATH_PARAMETER, String.valueOf(page))
@@ -362,7 +364,8 @@ public class BaseNetworkApi {
                 .getObjectObservable(UserPhotosResponse.class);
 
     }
-        public static io.reactivex.Observable<BaseStateResponse> likePhotoGrapherPhotoPhoto(String imageId) {
+
+    public static io.reactivex.Observable<BaseStateResponse> likePhotoGrapherPhotoPhoto(String imageId) {
         return Rx2AndroidNetworking.post(LIKE_PHOTOGRAPHER_PHOTO)
                 .addBodyParameter("photo_id", imageId)
                 .getResponseOnlyFromNetwork()
@@ -409,8 +412,8 @@ public class BaseNetworkApi {
 
     public static io.reactivex.Observable<AlbumPreviewImagesResponse> getAlbumImagesPreview(String albumId, String page) {
         return Rx2AndroidNetworking.post(GET_ALBUM_IMAGES_PREVIEW)
-                .addQueryParameter(PAGER_PATH_PARAMETER,page)
-                .addBodyParameter("album_id",albumId)
+                .addQueryParameter(PAGER_PATH_PARAMETER, page)
+                .addBodyParameter("album_id", albumId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(AlbumPreviewImagesResponse.class);
@@ -465,10 +468,10 @@ public class BaseNetworkApi {
     public static io.reactivex.Observable<SocialResponse> getSocialData(boolean firstTime) {
 
         String url;
-        if (firstTime){
-            url=SOCIAL_DATA_URL_RESET;
-        }else {
-            url=SOCIAL_DATA_URL;
+        if (firstTime) {
+            url = SOCIAL_DATA_URL_RESET;
+        } else {
+            url = SOCIAL_DATA_URL;
         }
         return Rx2AndroidNetworking.post(url)
                 .setPriority(Priority.HIGH)
@@ -496,7 +499,7 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignExistingPhoto(Map<String,String> data) {
+    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignExistingPhoto(Map<String, String> data) {
         return Rx2AndroidNetworking.post(UPLOAD_CAMPAIGN_EXSISTING_PHOTO)
                 .addBodyParameter(data)
                 .setPriority(Priority.HIGH)
@@ -561,7 +564,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(SavePhotoResponse.class);
     }
 
-    public static io.reactivex.Observable<AlbumSearchResponse> getSearchAlbum(String key, Map<String,String> filtersMap, String page) {
+    public static io.reactivex.Observable<AlbumSearchResponse> getSearchAlbum(String key, Map<String, String> filtersMap, String page) {
         return Rx2AndroidNetworking.post(SEARCH_ALBUM)
                 .addQueryParameter(PAGER_PATH_PARAMETER, page)
                 .addBodyParameter("keyword", key)
@@ -579,7 +582,7 @@ public class BaseNetworkApi {
                 .getStringObservable();
     }
 
-    public static io.reactivex.Observable<String> updateProfile(HashMap<String,File> files, HashMap<String,String> data) {
+    public static io.reactivex.Observable<String> updateProfile(HashMap<String, File> files, HashMap<String, String> data) {
         Rx2ANRequest.MultiPartBuilder builder = Rx2AndroidNetworking.upload(UPDATE_PROGILE_URL).setPriority(Priority.HIGH);
         if (files != null)
             builder.addMultipartFile(files);
@@ -587,7 +590,7 @@ public class BaseNetworkApi {
         return builder.build().getStringObservable();
     }
 
-     public static io.reactivex.Observable<EarningDetailsResponse> getEarningDetails(String earningId) {
+    public static io.reactivex.Observable<EarningDetailsResponse> getEarningDetails(String earningId) {
         return Rx2AndroidNetworking.post(EARNING_DETAILS_URL)
                 .addBodyParameter("transaction_id", earningId)
                 .setPriority(Priority.HIGH)
@@ -595,14 +598,13 @@ public class BaseNetworkApi {
                 .getObjectObservable(EarningDetailsResponse.class);
     }
 
-     public static Observable<SocialAutoCompleteResponse> getSocialAutoComplete(String keyword) {
+    public static Observable<SocialAutoCompleteResponse> getSocialAutoComplete(String keyword) {
         return Rx2AndroidNetworking.post(SOCIAL_AUTO_COMPLETE)
-                .addBodyParameter("keyword",keyword)
+                .addBodyParameter("keyword", keyword)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(SocialAutoCompleteResponse.class);
     }
-
 
 
     public static io.reactivex.Observable<LikeImageResponse> likeImage(String imageId) {
@@ -626,7 +628,7 @@ public class BaseNetworkApi {
     public static io.reactivex.Observable<AddImageToCartResponse> addImageToCart(String imageID) {
         return Rx2AndroidNetworking.post(ADD_IMG_TO_CART_URL)
                 .setPriority(Priority.HIGH)
-                .addBodyParameter("photo_id",imageID)
+                .addBodyParameter("photo_id", imageID)
                 .build()
                 .getObjectObservable(AddImageToCartResponse.class);
     }
@@ -639,6 +641,13 @@ public class BaseNetworkApi {
                 .addMultipartParameter("firebase_token", firebaseToken)
                 .build()
                 .getObjectObservable(LoginResponse.class);
+    }
+
+    public static Observable<String> logout() {
+        return Rx2AndroidNetworking.post(LOGOUT_URL)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getStringObservable();
     }
 
 //    public static io.reactivex.Observable<GeoCodeAutoCompleteResponse> getGeoGodeAutoCompleteResponse(String key){

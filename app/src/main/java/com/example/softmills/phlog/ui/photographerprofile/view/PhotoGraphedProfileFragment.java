@@ -30,6 +30,7 @@ import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
@@ -45,6 +46,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -213,9 +216,20 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
                                 , (dialog, which) -> {
                                     switch (which) {
                                         case 0:
-                                            photoGrapherProfileActivityPresenter.logout(getContext());
-                                            ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
-                                            dialog.dismiss();
+                                            photoGrapherProfileActivityPresenter.logout()
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(success -> {
+                                                        if (success) {
+                                                            photoGrapherProfileActivityPresenter.logout(getContext());
+                                                            ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
+                                                            dialog.dismiss();
+                                                        } else
+                                                            showMessage(getString(R.string.error_logout));
+                                                    }, throwable -> {
+                                                        showMessage(getString(R.string.error_logout));
+                                                        ErrorUtils.Companion.setError(getContext(), TAG, throwable);
+                                                    });
                                             break;
                                         case 1:
                                             dialog.dismiss();

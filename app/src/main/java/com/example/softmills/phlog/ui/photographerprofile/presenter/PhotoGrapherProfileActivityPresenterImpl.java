@@ -11,6 +11,7 @@ import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGrapherProfi
 
 import java.io.File;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -60,5 +61,11 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
     public void logout(Context context) {
         PrefUtils.setLoginState(context, false);
         PrefUtils.setUserToken(context, null);
+    }
+
+    @Override
+    public Observable<Boolean> logout() {
+        return BaseNetworkApi.logout()
+                .map(s -> s != null);
     }
 }
