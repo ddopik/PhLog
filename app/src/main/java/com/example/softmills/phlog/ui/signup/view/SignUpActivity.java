@@ -76,7 +76,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         autoCompleteTextView.setAdapter(arrayAdapter);
 //        autoCompleteTextView.setDropDownHeight(500);
 
-
+        loading = findViewById(R.id.loading);
     }
 
     @Override
