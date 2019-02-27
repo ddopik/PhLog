@@ -25,10 +25,10 @@ public class PhlogFirebaseInstanceIdService extends FirebaseInstanceIdService {
             BaseNetworkApi.updateFirebaseToken(PrefUtils.getUserToken(getApplicationContext()), token)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-
+                    .subscribe(s -> {
+                        PrefUtils.setFirebaseTokenSentToServer(getApplicationContext(), true);
                     }, throwable -> {
-
+                        PrefUtils.setFirebaseTokenSentToServer(getApplicationContext(), false);
                     });
     }
 }

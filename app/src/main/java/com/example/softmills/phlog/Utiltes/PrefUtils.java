@@ -25,6 +25,8 @@ public abstract class PrefUtils {
     private static final String FIREBASE_TOKEN = "FIREBASE_TOKEN";
     private static String PREF_FILE_NAME;
 
+    private static final String FIREBASE_TOKEN_SENT = "firebase_token_sent";
+
     public PrefUtils() {
         PREF_FILE_NAME = getProjectName();
     }
@@ -36,7 +38,8 @@ public abstract class PrefUtils {
     public static void setUserID(Context context, String userID) {
         getSharedPref(context).edit().putString(USER_ID, userID).apply();
     }
-   public static void setUserName(Context context, String userName) {
+
+    public static void setUserName(Context context, String userName) {
         getSharedPref(context).edit().putString(USER_NAME, userName).apply();
     }
 
@@ -93,11 +96,12 @@ public abstract class PrefUtils {
         return getSharedPref(context).getBoolean(IS_TOKEN_SAVED, false);
     }
 
-    public static void setLoginState(Context context,boolean state) {
+    public static void setLoginState(Context context, boolean state) {
         getSharedPref(context).edit().putBoolean(LOGIN_PROVIDER, state).apply();
 
     }
-    public static boolean isLoginProvided(Context context){
+
+    public static boolean isLoginProvided(Context context) {
         return getSharedPref(context).getBoolean(LOGIN_PROVIDER, false);
     }
 
@@ -126,4 +130,17 @@ public abstract class PrefUtils {
     }
 
     public abstract void setPrefFileName(String projectName);
+
+
+    public static void setFirebaseTokenSentToServer(Context context, boolean isSent) {
+        getSharedPref(context)
+                .edit()
+                .putBoolean(FIREBASE_TOKEN_SENT, isSent)
+                .apply();
+    }
+
+    public static boolean isFirebaseTokenSentToServer(Context context) {
+        return getSharedPref(context)
+                .getBoolean(FIREBASE_TOKEN_SENT, false);
+    }
 }
