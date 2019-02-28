@@ -3,11 +3,13 @@ package com.example.softmills.phlog.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.rxeventbus.RxEventBus;
 import com.example.softmills.phlog.fgm.model.FirebaseNotificationData;
@@ -58,6 +60,16 @@ public  abstract  class BaseActivity extends AppCompatActivity {
                     FirebaseNotificationData data = (FirebaseNotificationData) event.getObject();
                     if (data.notification.popup != Constants.PopupType.NONE)
                         showPopup(data);
+                    break;
+                case CONNECTIVITY:
+                    boolean connected = (Boolean) event.getObject();
+                    if (!connected) {
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content)
+                                , R.string.connection_problem_check_network
+                                , Snackbar.LENGTH_LONG);
+                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbar.show();
+                    }
                     break;
             }
         }, throwable -> {

@@ -196,4 +196,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="error_logout">An error occured. Try again later.</string>
+    <string name="connection_problem_check_network">Connection error. Please, check your network.</string>
 </resources>
