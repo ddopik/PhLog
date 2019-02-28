@@ -2,6 +2,7 @@ package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
 import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
+import com.example.softmills.phlog.base.commonmodel.Device;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewImagesResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
@@ -639,6 +640,13 @@ public class BaseNetworkApi {
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
                 .addHeaders("x-lang-code", "en-us")
                 .addMultipartParameter("firebase_token", firebaseToken)
+                .build()
+                .getObjectObservable(LoginResponse.class);
+    }
+
+    public static Observable<LoginResponse> updateFirebaseToken(Device device) {
+        return Rx2AndroidNetworking.post(UPDATE_PROGILE_URL)
+                .addBodyParameter(device)
                 .build()
                 .getObjectObservable(LoginResponse.class);
     }
