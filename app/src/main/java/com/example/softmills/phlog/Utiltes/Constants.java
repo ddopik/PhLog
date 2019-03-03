@@ -100,4 +100,7 @@ public interface Constants {
         int WON_CAMPAIGN = 2;
         int NONE = 0;
     }
+
+    int STATUS_LOGGED_IN = 1;
+    int STATUS_LOGGED_OUT = 0;
 }

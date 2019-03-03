@@ -12,5 +12,5 @@ public interface PhotoGrapherProfileActivityPresenter {
 
     void logout(Context context);
 
-    Observable<Boolean> logout();
+    void logout();
 }

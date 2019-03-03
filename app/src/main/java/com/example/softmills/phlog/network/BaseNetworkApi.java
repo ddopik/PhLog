@@ -137,6 +137,7 @@ public class BaseNetworkApi {
     private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
     private static final String LOGOUT_URL = BASE_URL + "/photographer/auth/logout";
+    private static final String UPDATE_FIREBASE_TOKEN_URL = BASE_URL + "/photographer/auth/device/set";
 
 
     //Path Parameters
@@ -644,11 +645,11 @@ public class BaseNetworkApi {
                 .getObjectObservable(LoginResponse.class);
     }
 
-    public static Observable<LoginResponse> updateFirebaseToken(Device device) {
-        return Rx2AndroidNetworking.post(UPDATE_PROGILE_URL)
+    public static Observable<String> updateFirebaseToken(Device device) {
+        return Rx2AndroidNetworking.post(UPDATE_FIREBASE_TOKEN_URL)
                 .addBodyParameter(device)
                 .build()
-                .getObjectObservable(LoginResponse.class);
+                .getStringObservable();
     }
 
     public static Observable<String> logout() {

@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
+import com.example.softmills.phlog.base.commonmodel.Device;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.login.view.LoginView;
 import com.jaychang.sa.AuthCallback;
@@ -56,7 +57,7 @@ public class LoginPresenterImp implements LoginPresenter {
 
     private void sendFirebaseToken() {
         loginView.navigateToHome();
-        BaseNetworkApi.updateFirebaseToken(PrefUtils.getUserToken(context), PrefUtils.getFirebaseToken(context))
+        BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), true, PrefUtils.getFirebaseToken(context)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

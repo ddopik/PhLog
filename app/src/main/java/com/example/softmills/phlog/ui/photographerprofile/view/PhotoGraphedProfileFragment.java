@@ -216,20 +216,8 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
                                 , (dialog, which) -> {
                                     switch (which) {
                                         case 0:
-                                            photoGrapherProfileActivityPresenter.logout()
-                                                    .subscribeOn(Schedulers.io())
-                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                    .subscribe(success -> {
-                                                        if (success) {
-                                                            photoGrapherProfileActivityPresenter.logout(getContext());
-                                                            ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
-                                                            dialog.dismiss();
-                                                        } else
-                                                            showMessage(getString(R.string.error_logout));
-                                                    }, throwable -> {
-                                                        showMessage(getString(R.string.error_logout));
-                                                        ErrorUtils.Companion.setError(getContext(), TAG, throwable);
-                                                    });
+                                            photoGrapherProfileActivityPresenter.logout();
+                                            dialog.dismiss();
                                             break;
                                         case 1:
                                             dialog.dismiss();
@@ -338,5 +326,11 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void logoutSuccess() {
+        photoGrapherProfileActivityPresenter.logout(getContext());
+        ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
     }
 }

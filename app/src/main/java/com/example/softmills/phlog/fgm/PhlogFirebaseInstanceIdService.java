@@ -6,6 +6,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
+import com.example.softmills.phlog.base.commonmodel.Device;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
@@ -22,7 +24,7 @@ public class PhlogFirebaseInstanceIdService extends FirebaseInstanceIdService {
         Log.e("Firebase token", token);
         PrefUtils.saveFirebaseToken(getApplicationContext(), token);
         if (PrefUtils.isLoginProvided(getApplicationContext()))
-            BaseNetworkApi.updateFirebaseToken(PrefUtils.getUserToken(getApplicationContext()), token)
+            BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), true, PrefUtils.getFirebaseToken(getApplicationContext())))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(s -> {
