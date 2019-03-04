@@ -7,7 +7,7 @@ ext {
 
     // App dependencies
     constrain_layuout_version = '1.1.3'
-    supportLibraryVersion = '28.0.0-rc02'
+    supportLibraryVersion = '28.0.0'
     location_Services = '15.0.1'
     glide_version = '4.8.0'
     facebook_stetho_version = '1.5.0'
@@ -120,7 +120,6 @@ dependencies {
 
     // Fast Android Network
     implementation "com.amitshekhar.android:rx2-android-networking:$fast_android_network_version"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     //Image Filter
     implementation 'info.androidhive:imagefilters:1.0.7'
@@ -133,8 +132,12 @@ dependencies {
 
     //RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+    //Event bus
+    implementation "org.greenrobot:eventbus:$event_bus_version"
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
 }
 repositories {
     mavenCentral()
 }
 apply plugin: 'realm-android'
+apply plugin: 'com.google.gms.google-services'

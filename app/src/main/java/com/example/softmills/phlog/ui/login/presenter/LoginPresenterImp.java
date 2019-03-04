@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
+import com.example.softmills.phlog.base.commonmodel.Device;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.login.view.LoginView;
 import com.jaychang.sa.AuthCallback;
@@ -25,9 +26,9 @@ public class LoginPresenterImp implements LoginPresenter {
     private LoginView loginView;
     private Context context;
 
-    public LoginPresenterImp(Context context,LoginView loginView) {
+    public LoginPresenterImp(Context context, LoginView loginView) {
         this.loginView = loginView;
-        this.context=context;
+        this.context = context;
 
     }
 
@@ -41,14 +42,29 @@ public class LoginPresenterImp implements LoginPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loginResponse -> {
+                    loginView.viewLoginProgress(false);
                     loginView.showMessage(loginResponse.loginData.fullName);
                     PrefUtils.setLoginState(context, true);
                     PrefUtils.setUserToken(context, loginResponse.loginData.token);
                     PrefUtils.setUserName(context, loginResponse.loginData.userName);
                     PrefUtils.setUserID(context, loginResponse.loginData.id);
-                    loginView.navigateToHome();
+                    sendFirebaseToken();
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                     loginView.viewLoginProgress(false);
+                });
+    }
 
+    private void sendFirebaseToken() {
+        loginView.navigateToHome();
+        BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), true, PrefUtils.getFirebaseToken(context)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    loginView.viewLoginProgress(false);
+                    if (response == null)
+                        return;
+                    loginView.navigateToHome();
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     loginView.viewLoginProgress(false);
@@ -133,7 +149,7 @@ public class LoginPresenterImp implements LoginPresenter {
                         PrefUtils.setUserToken(context, socialLoginResponse.token);
                         PrefUtils.setUserName(context, socialLoginResponse.userName);
 //                        PrefUtils.setUserID(context, socialLoginResponse.id);
-                        loginView.navigateToHome();
+                        sendFirebaseToken();
                     }
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);

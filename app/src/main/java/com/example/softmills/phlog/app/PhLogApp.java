@@ -2,10 +2,15 @@ package com.example.softmills.phlog.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 
 
 import com.androidnetworking.AndroidNetworking;
+import com.example.softmills.phlog.Utiltes.networkstatus.NetworkChangeBroadcastReceiver;
+import com.example.softmills.phlog.Utiltes.networkstatus.NetworkStateChangeManager;
 import com.example.softmills.phlog.network.BasicAuthInterceptor;
 import com.example.softmills.phlog.realm.RealmConfigFile;
 import com.example.softmills.phlog.realm.RealmDbMigration;
@@ -31,8 +36,8 @@ public class PhLogApp extends Application {
     public static Realm realm;
     public static PhLogApp app;
 
-
-
+    private NetworkStateChangeManager networkStateChangeManager;
+    private NetworkChangeBroadcastReceiver networkChangeBroadcastReceiver;
 
     @Override
     public void onCreate() {
@@ -44,6 +49,27 @@ public class PhLogApp extends Application {
 //        intializeSteatho();
 //        deleteCache(app);   ///for developing        ##################
 //        initializeDepInj(); ///intializing Dagger Dependancy
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            networkStateChangeManager = new NetworkStateChangeManager(this);
+            networkStateChangeManager.listen();
+        } else {
+            networkChangeBroadcastReceiver = new NetworkChangeBroadcastReceiver();
+            IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(networkChangeBroadcastReceiver, filter);
+        }
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (networkStateChangeManager != null)
+                networkStateChangeManager.stopListening();
+        } else {
+            if (networkChangeBroadcastReceiver != null)
+                unregisterReceiver(networkChangeBroadcastReceiver);
+        }
     }
 
     /**
@@ -89,6 +115,7 @@ public class PhLogApp extends Application {
         } else {
             return false;
         }
+
     }
 
     /**

@@ -95,7 +95,18 @@ public interface Constants {
     }
 
     interface MainActivityRedirectionValue {
-        String NAME = MainActivityRedirectionValue.class.getSimpleName();
+        String VALUE = MainActivityRedirectionValue.class.getSimpleName();
+        String PAYLOAD = "payload";
         int TO_PROFILE = 1;
+        int TO_POPUP = 2;
     }
+
+    interface PopupType {
+        int LEVEL_UP = 1;
+        int WON_CAMPAIGN = 2;
+        int NONE = 0;
+    }
+
+    int STATUS_LOGGED_IN = 1;
+    int STATUS_LOGGED_OUT = 0;
 }

@@ -30,6 +30,7 @@ import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
@@ -45,6 +46,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -207,8 +210,20 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
                 ((MainActivity) getActivity()).navigationManger.navigate(EDIT_PROFILE);
                 break;
             case R.id.action_logout:
-                photoGrapherProfileActivityPresenter.logout(getContext());
-                ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
+                new AlertDialog.Builder(getContext()).setTitle(R.string.logout_confirmation)
+                        .setCancelable(true)
+                        .setItems(new CharSequence[]{getString(R.string.yes), getString(R.string.no)}
+                                , (dialog, which) -> {
+                                    switch (which) {
+                                        case 0:
+                                            photoGrapherProfileActivityPresenter.logout();
+                                            dialog.dismiss();
+                                            break;
+                                        case 1:
+                                            dialog.dismiss();
+                                            break;
+                                    }
+                                }).show();
                 break;
             default:
                 break;
@@ -311,5 +326,11 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void logoutSuccess() {
+        photoGrapherProfileActivityPresenter.logout(getContext());
+        ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.LOGOUT);
     }
 }

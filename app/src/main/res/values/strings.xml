@@ -194,5 +194,11 @@
     <string name="view_more">view more</string>
     <string name="replies">Replies</string>
 
+    <string name="close">Close</string>
 
+    <string name="logout_confirmation">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="error_logout">An error occured. Try again later.</string>
+    <string name="connection_problem_check_network">Connection error. Please, check your network.</string>
 </resources>

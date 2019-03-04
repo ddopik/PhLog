@@ -4,13 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
+import com.example.softmills.phlog.base.commonmodel.Device;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGrapherProfileActivityView;
 
 import java.io.File;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -60,5 +64,35 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
     public void logout(Context context) {
         PrefUtils.setLoginState(context, false);
         PrefUtils.setUserToken(context, null);
+    }
+
+    @Override
+    public void logout() {
+        BaseNetworkApi.logout()
+                .subscribeOn(Schedulers.io())
+                .subscribe(s -> {
+                    if (s != null)
+                        sendFirebaseTokenAsLoggedOut();
+                    else
+                        photoGrapherProfileActivityView.showMessage(context.getString(R.string.error_logout));
+                }, throwable -> {
+                    photoGrapherProfileActivityView.showMessage(context.getString(R.string.error_logout));
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+    }
+
+    private void sendFirebaseTokenAsLoggedOut() {
+        BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), false, PrefUtils.getFirebaseToken(context)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if (response != null)
+                        photoGrapherProfileActivityView.logoutSuccess();
+                    else
+                        photoGrapherProfileActivityView.showMessage(context.getString(R.string.error_logout));
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    photoGrapherProfileActivityView.showMessage(context.getString(R.string.error_logout));
+                });
     }
 }

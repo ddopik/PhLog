@@ -11,4 +11,6 @@ public interface PhotoGrapherProfileActivityView {
     void showProfileProgress(boolean State);
 
     void UploadProfileImgFinished(Boolean state);
+
+    void logoutSuccess();
 }

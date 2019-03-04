@@ -2,6 +2,7 @@ package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
 import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
+import com.example.softmills.phlog.base.commonmodel.Device;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewImagesResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
@@ -13,6 +14,8 @@ import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotoRe
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
+import com.example.softmills.phlog.ui.earning.model.EarningDetailsResponse;
+import com.example.softmills.phlog.ui.earning.model.EarningListResponse;
 import com.example.softmills.phlog.ui.commentimage.model.AddImageToCartResponse;
 import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsResponse;
 import com.example.softmills.phlog.ui.commentimage.model.LikeImageResponse;
@@ -133,6 +136,10 @@ public class BaseNetworkApi {
     private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
     private static final String COMMENT_REPLAY_URL = BASE_URL + "photographer/photo/comment/list";
+    private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
+    private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
+    private static final String LOGOUT_URL = BASE_URL + "/photographer/auth/logout";
+    private static final String UPDATE_FIREBASE_TOKEN_URL = BASE_URL + "/photographer/auth/device/set";
 
 
     //Path Parameters
@@ -419,7 +426,7 @@ public class BaseNetworkApi {
     public static io.reactivex.Observable<ImageCommentsResponse> getImageComments(String image_id, String page) {
         return Rx2AndroidNetworking.post(GET_IMAGE_COMMENT)
                 .addQueryParameter("photo_id", image_id)
-                .addQueryParameter(PAGER_QUERY_PARAMETER, page)
+                .addQueryParameter(PAGER_PATH_PARAMETER, page)
                 .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)
                 .build()
@@ -630,6 +637,35 @@ public class BaseNetworkApi {
                 .getObjectObservable(AddImageToCartResponse.class);
     }
 
+    public static Observable<LoginResponse> updateFirebaseToken(String token, String firebaseToken) {
+        return Rx2AndroidNetworking.upload(UPDATE_PROGILE_URL)
+                .addHeaders("x-auth-token", token)
+                .addHeaders("x-user-type", DEFAULT_USER_TYPE)
+                .addHeaders("x-lang-code", "en-us")
+                .addMultipartParameter("firebase_token", firebaseToken)
+                .build()
+                .getObjectObservable(LoginResponse.class);
+    }
+
+    public static Observable<String> updateFirebaseToken(Device device) {
+        return Rx2AndroidNetworking.post(UPDATE_FIREBASE_TOKEN_URL)
+                .addBodyParameter(device)
+                .build()
+                .getStringObservable();
+    }
+
+    public static Observable<String> logout() {
+        return Rx2AndroidNetworking.post(LOGOUT_URL)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getStringObservable();
+    }
+
+//    public static io.reactivex.Observable<GeoCodeAutoCompleteResponse> getGeoGodeAutoCompleteResponse(String key){
+//        return Rx2AndroidNetworking.get()
+//
+//    }
+//
     public static Observable<ImageCommentsResponse> getCommentReplies(int repliesId, int imageID, String page) {
         return Rx2AndroidNetworking.post(COMMENT_REPLAY_URL)
                 .setPriority(Priority.HIGH)
