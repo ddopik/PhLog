@@ -135,7 +135,7 @@ public class BaseNetworkApi {
     private static final String UPDATE_PROGILE_URL = BASE_URL + "/photographer/profile/update";
     private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
-    private static final String COMMENT_REPLAY_URL = BASE_URL + "photographer/photo/comment/list";
+    private static final String COMMENT_REPLAY_URL = BASE_URL + "/photographer/photo/comment/list";
     private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
     private static final String LOGOUT_URL = BASE_URL + "/photographer/auth/logout";
@@ -426,7 +426,7 @@ public class BaseNetworkApi {
     public static io.reactivex.Observable<ImageCommentsResponse> getImageComments(String image_id, String page) {
         return Rx2AndroidNetworking.post(GET_IMAGE_COMMENT)
                 .addQueryParameter("photo_id", image_id)
-                .addQueryParameter(PAGER_PATH_PARAMETER, page)
+                .addQueryParameter(PAGER_QUERY_PARAMETER, page)
                 .getResponseOnlyFromNetwork()
                 .setPriority(Priority.HIGH)
                 .build()
