@@ -190,5 +190,9 @@
     <string name="photographer_hasnt_uploaded_yet">No photos yet</string>
     <string name="delete">Delete</string>
     <string name="photo">Photo</string>
+    <string name="replay">replay</string>
+    <string name="view_more">view more</string>
+    <string name="replies">Replies</string>
+
 
 </resources>
