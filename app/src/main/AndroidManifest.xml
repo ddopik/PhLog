@@ -92,6 +92,7 @@
         <activity android:name=".ui.allphotos.view.AllPhotographerPhotosActivity" />
         <activity android:name=".ui.brand.view.BrandCampaignsActivity" />
         <activity android:name=".ui.commentimage.view.ImageCommentActivity" />
+        <activity android:name=".ui.commentimage.replay.view.ReplayCommentActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

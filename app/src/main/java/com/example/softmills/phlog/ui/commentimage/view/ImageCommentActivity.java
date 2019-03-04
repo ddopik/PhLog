@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -32,6 +31,7 @@ import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsData;
 import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentData;
 import com.example.softmills.phlog.ui.commentimage.presenter.ImageCommentActivityImpl;
 import com.example.softmills.phlog.ui.commentimage.presenter.ImageCommentActivityPresenter;
+import com.example.softmills.phlog.ui.commentimage.replay.view.ReplayCommentActivity;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 
 import java.util.ArrayList;
@@ -40,7 +40,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -90,7 +89,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         addCommentProgress = findViewById(R.id.add_comment_progress);
 
         commentsRv = findViewById(R.id.comment_rv);
-        toolBarTitle.setText(getResources().getString(R.string.photo));
+        toolBarTitle.setText(previewImage.albumName);
         //force adapter to start to render Add commentView
         Comment userComment = new Comment();
         commentList.add(userComment); /// acts As default for image Header
@@ -167,9 +166,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
                             switch (newState) {
                                 case SCROLL_STATE_IDLE:
                                     //we reached the target position
-                                    int xx = commentsRv.getChildCount();
-                                    showToast("-->" + xx);
-                                    CustomAutoCompleteTextView customAutoCompleteTextView = (CustomAutoCompleteTextView) commentsRv.getChildAt(xx - 1).findViewById(R.id.img_send_comment_val);
+                                    CustomAutoCompleteTextView customAutoCompleteTextView = commentsRv.getChildAt(commentsRv.getChildCount()).findViewById(R.id.img_send_comment_val);
                                     customAutoCompleteTextView.requestFocus();
 //
                                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -187,25 +184,21 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
                 }
             }
 
-            @Override
-            public void onImageRateClick(BaseImage baseImage, float rating) {
 
-            }
-
-            @Override
-            public void onAddToCartClick(BaseImage baseImage) {
-
-            }
 
             @Override
             public void onReplayClicked(Comment comment, Constants.CommentListType commentListType) {
 
+                Intent intent = new Intent(getBaseContext(), ReplayCommentActivity.class);
+
+                intent.putExtra(ReplayCommentActivity.COMMENT_IMAGE, previewImage);
+                intent.putExtra(ReplayCommentActivity.COMMENT_LIST_TYPE, commentListType);
+                intent.putExtra(ReplayCommentActivity.REPLY_HEADER_COMMENT, comment);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
 
-            @Override
-            public void onChooseWinnerClick(BaseImage previewImage, Consumer<Boolean> success) {
 
-            }
         };
 
 
@@ -307,13 +300,6 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     }
 
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra(IMAGE_DATA, previewImage);
-        setResult(RESULT_OK, intent);
-        finish();
-    }
     private Observable<Mentions> reSortMentionList(Mentions mentionsNew) {
 
         Mentions mentions = new Mentions();
@@ -352,6 +338,14 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
             return mentions;
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(IMAGE_DATA, previewImage);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 

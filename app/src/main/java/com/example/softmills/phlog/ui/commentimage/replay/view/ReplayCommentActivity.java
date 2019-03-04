@@ -164,17 +164,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
 
 
-            @Override
-            public void onAddToCartClick(BaseImage baseImage) {
 
-
-            }
-
-            @Override
-            public void onImageRateClick(BaseImage baseImage, float rating) {
-
-
-            }
 
             @Override
             public void onImageCommentClicked() {
@@ -193,10 +183,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
                 startActivity(intent);
             }
 
-            @Override
-            public void onChooseWinnerClick(BaseImage previewImage, Consumer<Boolean> success) {
 
-            }
         };
         backBtn.setOnClickListener(v -> {
             onBackPressed();

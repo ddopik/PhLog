@@ -35,6 +35,8 @@ public class ReplayCommentPresenterImpl implements ReplayCommentPresenter {
                     replayCommentActivityView.viewReplies(repliesResponse.data);
                 }, throwable -> {
                     replayCommentActivityView.viewRepliesProgress(false);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+
                 });
 
     }

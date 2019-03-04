@@ -531,7 +531,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         for (int i = 0; i < mentionsList.size(); i++) {
 
-            int spannableStartPoint = mentionsList.get(i).startPoint;
+            int spannableStartPoint = mentionsList.get(i).startPoint-1;
             int spannableEndPoint = mentionsList.get(i).endPoint;
 
             if (spannableStartPoint <= 0) {
@@ -664,10 +664,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         void onImageCommentClicked();
 
-        void onImageRateClick(BaseImage baseImage, float rating);
 
-
-        void onAddToCartClick(BaseImage baseImage);
 
         void onSubmitComment(String comment);
 
@@ -676,8 +673,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         void onReplayClicked(Comment comment, Constants.CommentListType commentListType);
 
-        void onChooseWinnerClick(BaseImage previewImage, Consumer<Boolean> success);
-    }
+     }
 
     @Override
     public void viewMentionedUsers(List<MentionedUser> mentionedUserList) {
