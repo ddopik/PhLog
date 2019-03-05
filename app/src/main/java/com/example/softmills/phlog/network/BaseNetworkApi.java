@@ -133,9 +133,7 @@ public class BaseNetworkApi {
     private static final String UNSAVE_PHOTO_URL = BASE_URL + "/photographer/photo/unsave";
     private static final String FORGOT_PASSWORD_URL = BASE_URL + "/photographer/auth/forgot_password";
     private static final String UPDATE_PROGILE_URL = BASE_URL + "/photographer/profile/update";
-    private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
-    private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
-    private static final String COMMENT_REPLAY_URL = BASE_URL + "/photographer/photo/comment/list";
+     private static final String COMMENT_REPLAY_URL = BASE_URL + "/photographer/photo/comment/list";
     private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
     private static final String LOGOUT_URL = BASE_URL + "/photographer/auth/logout";
