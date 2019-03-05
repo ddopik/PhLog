@@ -22,7 +22,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/social_profile_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/view_holder_item_list_height_med"
+        android:layout_height="@dimen/view_holder_item_list_height_large"
         android:layout_below="@+id/story_title"
 
         app:cardCornerRadius="@dimen/item_card_corner_radius"
