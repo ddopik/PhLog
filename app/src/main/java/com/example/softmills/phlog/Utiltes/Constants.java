@@ -26,6 +26,10 @@ public interface Constants {
         CAMPAIGN_IMG, NORMAL_IMG
     }
 
+    enum UserType {
+
+        USER_TYPE_BUSINESS, USER_TYPE_PHOTOGRAPHER;
+    }
     ///////////////////////Entity-type For socialFragment
     int ENTITY_PROFILE=1;
     int ENTITY_CAMPAIGN=2;
@@ -67,13 +71,15 @@ public interface Constants {
     String BRAND_DISPLAY_TYPE_5 = "505";
 
     ///////////////////////////////
-    enum UserType {
 
-        USER_TYPE_BUSINESS, USER_TYPE_PHOTOGRAPHER;
-    }
 
     enum PhotosListType{
         SOCIAL_LIST,PHOTO_GRAPHER_LIST
+    }
+
+
+    enum CommentListType{
+        VIEW_REPLIES, MAIN_COMMENT,REPLAY_ON_COMMENT;
     }
 
     interface CampaignStatus {

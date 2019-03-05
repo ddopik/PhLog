@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -17,9 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -27,6 +32,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Business;
@@ -51,8 +57,13 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.example.softmills.phlog.Utiltes.Constants.CommentListType.MAIN_COMMENT;
+import static com.example.softmills.phlog.Utiltes.Constants.CommentListType.REPLAY_ON_COMMENT;
+import static com.example.softmills.phlog.Utiltes.Constants.CommentListType.VIEW_REPLIES;
 
 /**
  * Created by abdalla_maged On Nov,2018
@@ -60,27 +71,33 @@ import io.reactivex.schedulers.Schedulers;
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> implements CommentsAdapterView {
 
     private String TAG = CommentsAdapter.class.getSimpleName();
+    private Constants.CommentListType commentListType;
     private Context context;
     private List<Comment> commentList;
     private Mentions mentions;
-
+    private LayoutInflater layoutInflater;
     private List<MentionedUser> mentionedUserList = new ArrayList<>();
     private MentionsAutoCompleteAdapter mentionsAutoCompleteAdapter;
     private CommentAdapterPresenter commentAdapterPresenter;
     private CompositeDisposable disposable = new CompositeDisposable();
     private BaseImage previewImage;
+    private boolean shouldShowChooseWinnerButton;
     public CommentAdapterAction commentAdapterAction;
     private int HEAD = 0;
     private int COMMENT = 1;
     private int ADD_COMMENT = 2;
+    private int REPLY_COMMENT = 3;
+
     private final String USER_MENTION_IDENTIFIER = "%";
     private DisposableObserver<TextViewTextChangeEvent> searchQuery;
 
 
-    public CommentsAdapter(BaseImage previewImage, List<Comment> commentList, Mentions mentions) {
+    public CommentsAdapter(BaseImage previewImage, List<Comment> commentList, Mentions mentions, Constants.CommentListType commentListType) {
         this.commentList = commentList;
         this.previewImage = previewImage;
         this.mentions = mentions;
+        this.commentListType = commentListType;
+
 
     }
 
@@ -93,7 +110,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         if (i == HEAD) {
             return new CommentViewHolder(layoutInflater.inflate(R.layout.view_holder_comment_start_item, viewGroup, false), HEAD);
-        } else if (i == commentList.size()) {
+        } else if (i == ADD_COMMENT) {
             return new CommentViewHolder(layoutInflater.inflate(R.layout.view_holder_image_send_comment, viewGroup, false), ADD_COMMENT);
         } else {
             return new CommentViewHolder(layoutInflater.inflate(R.layout.view_holder_image_comment, viewGroup, false), COMMENT);
@@ -104,7 +121,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder commentViewHolder, int i) {
 //////////////////////////////////////HEAD/////////////////////////////////////////
-
         if (getItemViewType(i) == HEAD) {
 
 
@@ -164,8 +180,14 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             }
 
 
+
+
+
+
+
+
 //////////////////////////////////////COMMENT/////////////////////////////////////////
-        } else if (getItemViewType(i) == COMMENT) {
+        } else if (getItemViewType(i) == COMMENT || getItemViewType(i) == REPLY_COMMENT) {
             if (commentList.get(i).business != null) {
 
                 if (commentList.get(i).business.thumbnail != null)
@@ -176,7 +198,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                             .override(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
                             .apply(RequestOptions.circleCropTransform())
                             .into(commentViewHolder.commentAuthorImg);
-                commentViewHolder.commentAuthorName.setText(commentList.get(i).business.firstName + " " + commentList.get(i).business.lastName);
+                commentViewHolder.commentAuthorName.setText(new StringBuilder().append(commentList.get(i).business.firstName).append(" ").append(commentList.get(i).business.lastName).toString());
 
 
             } else if (commentList.get(i).photographer != null) {
@@ -194,7 +216,34 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
             if (commentList.get(i).comment != null) {
                 handleCommentBody(commentViewHolder.commentVal, commentList.get(i).comment);
+                if (getItemViewType(i) == REPLY_COMMENT) {
+                    commentViewHolder.commentValSubContainer.setBackgroundColor(context.getResources().getColor(R.color.black242B31));
+                    commentViewHolder.commentValSubContainer.setPadding(12, 12, 12, 12);
+                }
             }
+
+
+            if (commentList.get(i).repliesCount != null && commentList.get(i).repliesCount > 0) {
+                commentViewHolder.imageCommentReplayBtn.setText(new StringBuilder().append(context.getResources().getString(R.string.view_more)).append(" ").append(commentList.get(i).repliesCount).append(" ").append(context.getResources().getString(R.string.replay)).toString());
+            } else {
+                commentViewHolder.imageCommentReplayBtn.setText(context.getResources().getString(R.string.replay));
+            }
+            if (commentAdapterAction != null && getItemViewType(i) != REPLY_COMMENT) {
+                commentViewHolder.imageCommentReplayBtn.setOnClickListener(v -> {
+                            if (commentViewHolder.imageCommentReplayBtn.getText().equals(context.getResources().getString(R.string.replay))) {
+                                commentAdapterAction.onReplayClicked(commentList.get(i), REPLAY_ON_COMMENT);
+                            } else {
+                                commentAdapterAction.onReplayClicked(commentList.get(i), VIEW_REPLIES);
+
+                            }
+
+                        }
+                );
+
+            } else {
+                commentViewHolder.imageCommentReplayBtn.setVisibility(View.GONE);
+            }
+
 
             ////////////////////////////////ADD_COMMENT///////////////////////////////////////////////
         } else if (getItemViewType(i) == ADD_COMMENT) {
@@ -250,8 +299,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             if (commentAdapterAction != null) {
                 commentViewHolder.sendCommentBtn.setOnClickListener(v -> {
                     String comment = commentViewHolder.sendCommentImgVal.prepareCommentToSend();
+
                     commentAdapterAction.onSubmitComment(comment);
                     commentViewHolder.sendCommentImgVal.getText().clear();
+
                 });
             }
 
@@ -295,6 +346,33 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         };
     }
 
+    //
+//    private List<MentionRange> getMentionRanges(String commnetVal,List<String> mentionsPhotoGrapherIdIdList, List<String> mentionBusinessIdList){
+//        List<MentionRange> mentionRangeList=new ArrayList<>();
+//
+//        for (String word : commnetVal.split("\\s+"))
+//        {
+//            MentionRange mentionRange=new MentionRange();
+//            for (String photoGrapherId:mentionsPhotoGrapherIdIdList){
+//                if (word.equals(photoGrapherId)){
+//                    mentionRange.startPoint=
+//                    break;
+//                }
+//
+//            }
+//            for (String bussinessId:mentionBusinessIdList){
+//                if (word.equals(bussinessId)){
+//
+//                    break;
+//                }
+//
+//            }
+//
+//        }
+//
+//        return  mentionRangeList;
+//    };
+
     private void handleCommentBody(TextView commentView, String commentFinalValue) {
 
         List<String> authorsId = Utilities.getMentionsList(commentFinalValue);
@@ -319,37 +397,41 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
             /// Append unique identifier to mentioned user to get highLighted later
             /// And Replacing All Occurrence of photoGrapherId with actualValue
-            for (String photoGrapherId : mentionsPhotoGrapherIdIdList) {
-                Photographer photographer = getMentionedPhotoGrapher(photoGrapherId);
-                if (photographer != null) {
-
-                    commentFinalValue = commentFinalValue.replace("@0_" + photoGrapherId, photographer.fullName + USER_MENTION_IDENTIFIER);
-                    commentView.setText(commentFinalValue);
+//            for (String photoGrapherId : mentionsPhotoGrapherIdIdList) {
+            for (int i = 0; i < mentionsPhotoGrapherIdIdList.size(); i++) {
+                Photographer photographer = getMentionedPhotoGrapher(mentionsPhotoGrapherIdIdList.get(i));
+                if (mentionsPhotoGrapherIdIdList.get(i) != null) {
+                    if (photographer != null) {
+                        commentFinalValue = commentFinalValue.replace("@0_" + mentionsPhotoGrapherIdIdList.get(i), photographer.fullName + USER_MENTION_IDENTIFIER);
+                        commentView.setText(commentFinalValue);
+                    }
                 }
             }
 
             /// Append unique identifier to mentioned user to get highLighted later
             /// And Replacing All Occurrence of businessId with actualValue
-            for (String businessId : mentionBusinessIdList) {
-                if (getMentionedBusiness(businessId) != null) {
-                    Business business = getMentionedBusiness(businessId);
+//            for (String businessId : mentionBusinessIdList) {
+            for (int i = 0; i < mentionBusinessIdList.size(); i++) {
+                if (getMentionedBusiness(mentionBusinessIdList.get(i)) != null) {
+                    Business business = getMentionedBusiness(mentionBusinessIdList.get(i));
                     if (business != null) {
-                        commentFinalValue = commentFinalValue.replace("@1_" + businessId, business.firstName + " " + business.lastName + USER_MENTION_IDENTIFIER);
+                        commentFinalValue = commentFinalValue.replace("@1_" + mentionBusinessIdList.get(i), business.firstName + " " + business.lastName + USER_MENTION_IDENTIFIER);
                         commentView.setText(commentFinalValue);
                     }
                 }
             }
 
 
-            for (String photographerId : mentionsPhotoGrapherIdIdList) {
-                if (getMentionedPhotoGrapher(photographerId) != null) {
-                    Photographer photographer = getMentionedPhotoGrapher(photographerId);
+            for (int i = 0; i < mentionsPhotoGrapherIdIdList.size(); i++) {
+                final int xx = i;
+                if (getMentionedPhotoGrapher(mentionsPhotoGrapherIdIdList.get(i)) != null) {
+                    Photographer photographer = getMentionedPhotoGrapher(mentionsPhotoGrapherIdIdList.get(i));
                     ///////PhotoGrapher CallBack
                     ClickableSpan noUnderLineClickSpan = new ClickableSpan() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(context, UserProfileActivity.class);
-                            intent.putExtra(UserProfileActivity.USER_ID, photographerId);
+                            intent.putExtra(UserProfileActivity.USER_ID, mentionsPhotoGrapherIdIdList.get(xx));
                             intent.putExtra(UserProfileActivity.USER_TYPE, Constants.UserType.USER_TYPE_PHOTOGRAPHER);
                             context.startActivity(intent);
                         }
@@ -362,14 +444,20 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                         }
                     };
 
-
+                    ////////////////
                     String replacement = photographer.fullName + USER_MENTION_IDENTIFIER;
-                    int replacementStart = commentFinalValue.indexOf(replacement) - 1;
-                    int replacementEnd = replacementStart + replacement.length();
-                    MentionRange mentionRange = new MentionRange();
-                    mentionRange.startPoint = replacementStart;
-                    mentionRange.endPoint = replacementEnd;
-                    mentionsPoint.add(mentionRange);
+                    int replacementStart = commentFinalValue.indexOf(replacement);
+                    while (replacementStart >= 0) {
+                        MentionRange mentionRange = new MentionRange();
+                        mentionRange.startPoint = replacementStart  ;
+                        mentionRange.endPoint = replacementStart + replacement.length()  ;
+                        replacementStart = commentFinalValue.indexOf(replacement, replacementStart + 1);
+                        mentionsPoint.add(mentionRange);
+                    }
+
+
+                    ////////////////////////////////////////
+
                     clickableSpanList.add(noUnderLineClickSpan);
                     commentFinalValue = commentFinalValue.replace(replacement, replacement.substring(0, replacement.length() - 1));
                 }
@@ -378,15 +466,18 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
             //////////////////////////////////////////////////////////
 
-            for (String businessId : mentionBusinessIdList) {
-                if (getMentionedBusiness(businessId) != null) {
-                    Business business = getMentionedBusiness(businessId);
+            for (int i = 0; i < mentionBusinessIdList.size(); i++) {
+
+                final int xx = i;
+
+                if (getMentionedBusiness(mentionBusinessIdList.get(i)) != null) {
+                    Business business = getMentionedBusiness(mentionBusinessIdList.get(i));
                     //////business CallBack
                     ClickableSpan noUnderLineClickSpan2 = new ClickableSpan() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(context, UserProfileActivity.class);
-                            intent.putExtra(UserProfileActivity.USER_ID, businessId);
+                            intent.putExtra(UserProfileActivity.USER_ID, mentionBusinessIdList.get(xx));
                             intent.putExtra(UserProfileActivity.USER_TYPE, Constants.UserType.USER_TYPE_BUSINESS);
                             context.startActivity(intent);
                         }
@@ -398,17 +489,26 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                             ds.setColor(Color.MAGENTA); // specific color for this link
                         }
                     };
+/////////////////
+
                     String replacement = business.firstName + " " + business.lastName + USER_MENTION_IDENTIFIER;
-                    int replacementStart = commentFinalValue.indexOf(replacement) - 1;
-                    int replacementEnd = replacementStart + replacement.length();
-                    MentionRange mentionRange = new MentionRange();
-                    mentionRange.startPoint = replacementStart;
-                    mentionRange.endPoint = replacementEnd;
-                    mentionsPoint.add(mentionRange);
+                    int replacementStart = commentFinalValue.indexOf(replacement);
+                    while (replacementStart >= 0) {
+                        MentionRange mentionRange = new MentionRange();
+                        mentionRange.startPoint = replacementStart  ;
+                        mentionRange.endPoint = replacementStart + replacement.length() ;
+                        replacementStart = commentFinalValue.indexOf(replacement, replacementStart + 1);
+
+                        mentionsPoint.add(mentionRange);
+                    }
+
+
+////////////////////
                     clickableSpanList.add(noUnderLineClickSpan2);
                     commentFinalValue = commentFinalValue.replace(replacement, replacement.substring(0, replacement.length() - 1));
                 }
             }
+
             makeLinks(commentView, mentionsPoint, clickableSpanList, commentFinalValue);
         } else {
             commentView.setText(commentFinalValue);
@@ -416,6 +516,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
 
     }
+
+
 
 
     /**
@@ -426,8 +528,23 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
      */
     private void makeLinks(TextView viewHolder, List<MentionRange> mentionsList, List<ClickableSpan> clickableSpanList, String commentFinalValue) {
         SpannableString spannableString = new SpannableString(commentFinalValue);
+
         for (int i = 0; i < mentionsList.size(); i++) {
-            spannableString.setSpan(clickableSpanList.get(i), mentionsList.get(i).startPoint + 1, mentionsList.get(i).endPoint, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            int spannableStartPoint = mentionsList.get(i).startPoint-1;
+            int spannableEndPoint = mentionsList.get(i).endPoint;
+
+            if (spannableStartPoint <= 0) {
+                spannableStartPoint = 0;
+            }
+
+            while (spannableEndPoint > commentFinalValue.length())
+            {
+                spannableEndPoint--;
+            }
+
+
+            spannableString.setSpan(clickableSpanList.get(i), spannableStartPoint, spannableEndPoint, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         viewHolder.setLinksClickable(true);
         viewHolder.setClickable(true);
@@ -461,13 +578,18 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         return null;
     }
 
-
+    /**
+     * HEAD and ADD_COMMENT section are disabled when using this adapter with "replies_list"
+     * for design purposes
+     */
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
+        if (position == 0 && commentListType.equals(MAIN_COMMENT)) {
             return HEAD; //-->For Image Header Preview
+        } else if (position == 0 && commentListType.equals(VIEW_REPLIES)) {
+            return REPLY_COMMENT; //-->For Image Header Preview
         } else if (position == (commentList.size() - 1)) {
-            return ADD_COMMENT; //---> normal Comment viewHolder
+            return ADD_COMMENT;
         } else {
             return COMMENT; //--->  Comment Cell
         }
@@ -479,17 +601,23 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         return commentList.size();
     }
 
+    public void setShouldShowChooseWinnerButton(boolean shouldShowChooseWinnerButton) {
+        this.shouldShowChooseWinnerButton = shouldShowChooseWinnerButton;
+    }
+
     public class CommentViewHolder extends RecyclerView.ViewHolder {
         //header cell
-        FrameLayout addToCartBtn;
+
         CustomTextView imgLikeNum, imgCommentNum, commentPreviewImgTags, authorName, authorUserName;
         ImageView commentImg, commentAuthorIcon;
         ImageButton imageLikeBtn, imageCommentBtn;
         RatingBar photoRating;
+
         ///Comment_value Cell
-        TextView commentVal;
-        CustomTextView commentAuthorName;
+        CardView parentCommentView;
+        CustomTextView commentVal, commentAuthorName, imageCommentReplayBtn;
         ImageView commentAuthorImg;
+        LinearLayout commentValSubContainer;
         //SendCommentCell
         CustomAutoCompleteTextView sendCommentImgVal;
         ImageButton sendCommentBtn;
@@ -498,6 +626,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         CommentViewHolder(View view, int type) {
             super(view);
             if (type == HEAD) {
+
 
                 commentAuthorIcon = view.findViewById(R.id.comment_author_icon);
                 authorName = view.findViewById(R.id.author_name);
@@ -511,10 +640,15 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 imgCommentNum = view.findViewById(R.id.comment_preview_img_comment_num);
                 photoRating = view.findViewById(R.id.photo_rating);
 
+
+
             } else if (type == COMMENT) {
+                parentCommentView = view.findViewById(R.id.comment_parent_view);
                 commentVal = view.findViewById(R.id.comment_val);
                 commentAuthorImg = view.findViewById(R.id.commentAuthorImg);
                 commentAuthorName = view.findViewById(R.id.comment_author);
+                imageCommentReplayBtn = view.findViewById(R.id.image_comment_replay_btn);
+                commentValSubContainer = view.findViewById(R.id.comment_val_sub_container);
             } else if (type == ADD_COMMENT) {
                 sendCommentImgVal = view.findViewById(R.id.img_send_comment_val);
                 sendCommentBtn = view.findViewById(R.id.send_comment_btn);
@@ -524,15 +658,22 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     }
 
+
     public interface CommentAdapterAction {
         void onImageLike(BaseImage baseImage);
 
         void onImageCommentClicked();
 
+
+
         void onSubmitComment(String comment);
 
         void onCommentAuthorIconClicked(BaseImage baseImage);
-    }
+
+
+        void onReplayClicked(Comment comment, Constants.CommentListType commentListType);
+
+     }
 
     @Override
     public void viewMentionedUsers(List<MentionedUser> mentionedUserList) {

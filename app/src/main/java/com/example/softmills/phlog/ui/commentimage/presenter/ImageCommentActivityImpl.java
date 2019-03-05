@@ -66,17 +66,16 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
         imageCommentActivityView.viewImageProgress(true);
 
 
-
-            BaseNetworkApi.likeImage(String.valueOf(baseImage.id))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(likeImageResponse -> {
-                        imageCommentActivityView.onImageLiked(likeImageResponse.data);
-                        imageCommentActivityView.viewImageProgress(false);
-                    }, throwable -> {
-                        imageCommentActivityView.viewImageProgress(false);
-                        ErrorUtils.Companion.setError(context, TAG, throwable);
-                    });
+        BaseNetworkApi.likeImage(String.valueOf(baseImage.id))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(likeImageResponse -> {
+                    imageCommentActivityView.onImageLiked(likeImageResponse.data);
+                    imageCommentActivityView.viewImageProgress(false);
+                }, throwable -> {
+                    imageCommentActivityView.viewImageProgress(false);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
 
 
     }
@@ -97,6 +96,20 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
     }
 
 
-
+    @SuppressLint("CheckResult")
+    @Override
+    public void deleteImage(BaseImage baseImage) {
+        imageCommentActivityView.viewImageProgress(true);
+        BaseNetworkApi.deleteImage(String.valueOf(baseImage.id))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(baseStateResponse -> {
+                    imageCommentActivityView.viewImageProgress(false);
+                    imageCommentActivityView.onImageDeleted(baseImage, true);
+                }, throwable -> {
+                    imageCommentActivityView.viewImageProgress(false);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+    }
 
 }
