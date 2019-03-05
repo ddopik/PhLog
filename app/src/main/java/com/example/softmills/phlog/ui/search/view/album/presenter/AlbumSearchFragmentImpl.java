@@ -60,7 +60,7 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumSearchResponse -> {
-                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data.data);
+                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data);
                     albumSearchFragmentView.showFilterSearchProgress(false);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
@@ -88,7 +88,7 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumSearchResponse -> {
-                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data.data);
+                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data);
                     albumSearchFragmentView.showFilterSearchProgress(false);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
