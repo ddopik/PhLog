@@ -7,8 +7,8 @@
     <ImageView
 
         android:id="@+id/photographer_photo"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/view_holder_item_list_height"
+        android:layout_width="@dimen/view_holder_item_list_height_small"
+        android:layout_height="@dimen/view_holder_item_list_height_small"
         android:padding="1dp"
         tools:src="@drawable/default_campaign_header_view"/>
 

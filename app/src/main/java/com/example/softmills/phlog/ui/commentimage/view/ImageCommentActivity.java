@@ -225,6 +225,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
         commentsAdapter.notifyDataSetChanged();
 
+
     }
 
 

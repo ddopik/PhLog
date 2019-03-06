@@ -22,6 +22,7 @@ import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
+import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearchData;
 import com.example.softmills.phlog.ui.search.view.profile.presenter.ProfileSearchPresenter;
 import com.example.softmills.phlog.ui.search.view.profile.presenter.ProfileSearchPresenterImpl;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
@@ -179,12 +180,12 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     }
 
     @Override
-    public void viewProfileSearchItems(List<Photographer> profileSearchList) {
-        this.profileSearchList.addAll(profileSearchList);
+    public void viewProfileSearchItems(ProfileSearchData profileSearchData) {
+        this.profileSearchList.addAll(profileSearchData.data);
         profileSearchAdapter.notifyDataSetChanged();
         searchResultCount.setVisibility(View.VISIBLE);
         searchResultCount.setTextColor(getResources().getColor(R.color.white));
-        searchResultCount.setText(new StringBuilder().append(this.profileSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCount.setText(new StringBuilder().append(profileSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
 
         if (this.profileSearchList.size() == 0) {

@@ -38,7 +38,7 @@ public class BrandSearchFragmentPresenterImpl implements BrandSearchFragmentPres
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(brandSearchResponse -> {
                     brandSearchFragmentView.viewBrandSearchProgress(false);
-                    brandSearchFragmentView.viewBrandSearchItems(brandSearchResponse.data.data);
+                    brandSearchFragmentView.viewBrandSearchItems(brandSearchResponse.data);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     brandSearchFragmentView.viewBrandSearchProgress(false);

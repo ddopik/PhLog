@@ -22,7 +22,9 @@ import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.model.PhotographerFollowingBrandData;
 import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
+import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearchData;
 import com.example.softmills.phlog.ui.search.view.brand.presenter.BrandSearchFragmentPresenter;
 import com.example.softmills.phlog.ui.search.view.brand.presenter.BrandSearchFragmentPresenterImpl;
 import com.jakewharton.rxbinding3.widget.RxTextView;
@@ -86,7 +88,8 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
         if (brandSearch.getText().toString().length() > 0) {
             promptView.setVisibility(View.GONE);
-            brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);}
+            brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
+        }
     }
 
 
@@ -135,7 +138,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             public void getPagingControllerCallBack(int page) {
 
                 promptView.setVisibility(View.GONE);
-                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page );
+                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page);
             }
         };
 
@@ -178,12 +181,12 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     }
 
     @Override
-    public void viewBrandSearchItems(List<Business> brandSearchList) {
-        this.brandSearchList.addAll(brandSearchList);
+    public void viewBrandSearchItems(BrandSearchData brandSearchData) {
+        this.brandSearchList.addAll(brandSearchData.data);
         brandSearchAdapter.notifyDataSetChanged();
         searchResultCount.setVisibility(View.VISIBLE);
         searchResultCount.setTextColor(getResources().getColor(R.color.white));
-        searchResultCount.setText(new StringBuilder().append(this.brandSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCount.setText(new StringBuilder().append(brandSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
 
 

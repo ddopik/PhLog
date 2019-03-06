@@ -22,7 +22,7 @@
 
         android:id="@+id/photographer_following_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:layout_below="@+id/search_following"
         app:orientation="vertical" />

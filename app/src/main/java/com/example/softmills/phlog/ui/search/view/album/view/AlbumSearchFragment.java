@@ -29,6 +29,7 @@ import com.example.softmills.phlog.ui.album.view.AlbumPreviewActivity;
 import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearch;
+import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearchData;
 import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchFragmentImpl;
@@ -231,16 +232,16 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 }
 
     @Override
-    public void viewSearchAlbum(List<AlbumSearch> albumSearchList) {
+    public void viewSearchAlbum(AlbumSearchData albumSearchData) {
         filterExpListView.setVisibility(View.GONE);
         albumSearchRv.setVisibility(View.VISIBLE);
 
 
-        this.albumSearchList.addAll(albumSearchList);
+        this.albumSearchList.addAll(albumSearchData.data);
         albumSearchAdapter.notifyDataSetChanged();
         searchResultCount.setVisibility(View.VISIBLE);
         searchResultCount.setTextColor(getResources().getColor(R.color.white));
-        searchResultCount.setText(new StringBuilder().append(this.albumSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCount.setText(new StringBuilder().append(albumSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
 
         if (this.albumSearchList.size() == 0) {

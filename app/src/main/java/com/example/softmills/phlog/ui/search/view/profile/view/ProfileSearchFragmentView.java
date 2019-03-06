@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.search.view.profile.view;
 
 import com.example.softmills.phlog.base.commonmodel.Photographer;
+import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearchData;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface ProfileSearchFragmentView {
 
-    void viewProfileSearchItems(List<Photographer>profileSearchList);
+    void viewProfileSearchItems(ProfileSearchData profileSearchData);
 
     void viewProfileSearchProgress(Boolean state);
 

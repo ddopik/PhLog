@@ -35,7 +35,7 @@ public class ProfileSearchPresenterImpl implements ProfileSearchPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profileSearchResponse -> {
                     profileSearchFragmentView.viewProfileSearchProgress(false);
-                    profileSearchFragmentView.viewProfileSearchItems(profileSearchResponse.data.data);
+                    profileSearchFragmentView.viewProfileSearchItems(profileSearchResponse.data);
                 }, throwable -> {
                     profileSearchFragmentView.viewProfileSearchProgress(false);
                     Log.e(TAG, "getProfileSearchList() ---> Error " + throwable.getMessage());

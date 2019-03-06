@@ -92,7 +92,16 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
                 albumPreviewActivityPresenter.getAlbumPreviewImages(albumID, page);
             }
         };
+        albumAdapter.onAlbumImageClicked = albumImg -> {
 
+            Intent intent = new Intent(this, AllAlbumImgActivity.class);
+            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
+            intent.putExtra(AllAlbumImgActivity.LIST_NAME, albumToolBarTitle.getText());
+            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
+            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+            startActivity(intent);
+
+        };
 
     }
 
@@ -147,6 +156,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     @Override
     public void viewAlumPreview(AlbumPreviewResponseData albumPreviewResponseData) {
 
+
         albumToolBarTitle.setText(albumPreviewResponseData.name);
         GlideApp.with(this)
                 .load(albumPreviewResponseData.preview)
@@ -156,16 +166,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         albumNameTV.setText(albumPreviewResponseData.name);
 
 
-        albumAdapter.onAlbumImageClicked = albumImg -> {
 
-            Intent intent = new Intent(this, AllAlbumImgActivity.class);
-            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
-            intent.putExtra(AllAlbumImgActivity.LIST_NAME, albumPreviewResponseData.name);
-            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
-            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
-            startActivity(intent);
-
-        };
 
         followingNumber.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
     }
