@@ -50,8 +50,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import okhttp3.OkHttpClient;
 
 
 /**
@@ -135,9 +137,7 @@ public class BaseNetworkApi {
     private static final String UPDATE_PROGILE_URL = BASE_URL + "/photographer/profile/update";
     private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
-    private static final String COMMENT_REPLAY_URL = BASE_URL + "/photographer/photo/comment/list";
-    private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
-    private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
+    private static final String COMMENT_REPLAY_URL = BASE_URL + "/photographer/photo/comment/list";;
     private static final String LOGOUT_URL = BASE_URL + "/photographer/auth/logout";
     private static final String UPDATE_FIREBASE_TOKEN_URL = BASE_URL + "/photographer/auth/device/set";
 
@@ -533,6 +533,11 @@ public class BaseNetworkApi {
                 .addMultipartParameter(tagList)
                 .addMultipartFile("image", imgPath)
                 .setPriority(Priority.HIGH)
+                .setOkHttpClient(new OkHttpClient.Builder()
+//                        .connectTimeout(5, TimeUnit.MINUTES)
+                        .readTimeout(1, TimeUnit.MINUTES)
+                        .writeTimeout(1, TimeUnit.MINUTES)
+                        .build())
                 .build()
                 .getObjectObservable(UploadImgResponse.class);
     }

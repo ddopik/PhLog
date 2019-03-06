@@ -44,7 +44,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
 
     public static String USER_ID = "user_id";
-    public static String USER_TYPE="user_type";
+    public static String USER_TYPE = "user_type";
 
     private String userID;
     private Photographer currentPhotographer;
@@ -109,20 +109,20 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         pagingController = new PagingController(userProfilePhotosRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                userProfilePresenter.getUserPhotos(userID, page );
+                userProfilePresenter.getUserPhotos(userID, page);
             }
         };
 
         followUserBtn.setOnClickListener(v -> {
-            if (currentPhotographer.isFollow){
+            if (currentPhotographer.isFollow) {
                 userProfilePresenter.unFollowUser(String.valueOf(currentPhotographer.id));
-                }else{
+            } else {
                 userProfilePresenter.followUser(String.valueOf(currentPhotographer.id));
-                }
+            }
 
         });
 
-        userProfilePhotosAdapter.photoAction= image -> {
+        userProfilePhotosAdapter.photoAction = image -> {
             Intent intent = new Intent(this, AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, image.id);
             intent.putExtra(LIST_NAME, image.photographer.userName);
@@ -134,7 +134,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     @Override
     public void viewUserData(Photographer photographer) {
 
-        currentPhotographer=photographer;
+        currentPhotographer = photographer;
 
         if (photographer.userName != null)
             userProfileUserName.setText(String.format("@%1$s", photographer.userName));
@@ -153,7 +153,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             userProfileFollowingCount.setText(String.valueOf(photographer.followingCount));
 
         if (photographer.isFollow) {
-            followUserBtn.setText(getResources().getString(R.string.following));
+            followUserBtn.setText(getResources().getString(R.string.un_follow));
         } else {
             followUserBtn.setText(getResources().getString(R.string.follow));
         }
@@ -185,18 +185,18 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     public void viewUserPhotos(List<BaseImage> userPhotoList) {
         this.userPhotoList.addAll(userPhotoList);
         userProfilePhotosAdapter.notifyDataSetChanged();
-        if (userPhotoList.isEmpty())
+        if (this.userPhotoList.isEmpty())
             placeHolder.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void viewUserFollowingState(Boolean state) {
         if (state) {
-            followUserBtn.setText(getResources().getString(R.string.following));
-            currentPhotographer.isFollow=true;
-        } else {
             followUserBtn.setText(getResources().getString(R.string.un_follow));
-            currentPhotographer.isFollow=false;
+            currentPhotographer.isFollow = true;
+        } else {
+            followUserBtn.setText(getResources().getString(R.string.follow));
+            currentPhotographer.isFollow = false;
         }
     }
 

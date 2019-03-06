@@ -118,7 +118,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
 
         photoGrapherFollowingBrandAdapter.brandAdapterListener= brand -> {
             Intent intent=new Intent(getActivity(),BrandInnerActivity.class);
-            intent.putExtra(BrandInnerActivity.BRAND_ID,String.valueOf(brand.id));
+            intent.putExtra(BrandInnerActivity.BRAND_ID,brand.id);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         };

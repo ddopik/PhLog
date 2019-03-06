@@ -41,6 +41,10 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
         return new PhotographerCampaignsFragment();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
 
     @Nullable
     @Override

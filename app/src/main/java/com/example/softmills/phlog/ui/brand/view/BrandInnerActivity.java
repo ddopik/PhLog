@@ -46,6 +46,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         if (getIntent().getIntExtra(BRAND_ID, 0) != 0) {
             initPresenter();
             initView();
+            intiListeners();
             brandInnerPresenter.getBrandInnerData(getIntent().getIntExtra(BRAND_ID, 0));
         }
     }
@@ -75,64 +76,59 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
     @Override
     public void viewInnerBrandData(Business brand) {
-        try {
-            this.currentBrand = brand;
-            GlideApp.with(this)
-                    .load(brand.imageCover)
-                    .placeholder(R.drawable.default_place_holder)
-                    .error(R.drawable.default_error_img)
-                    .into(new SimpleTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
-                            brandHeaderImg.setBackground(resource);
-                        }
-                    });
+        this.currentBrand = brand;
+        GlideApp.with(this)
+                .load(brand.imageCover)
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
+                        brandHeaderImg.setBackground(resource);
+                    }
+                });
 
-            GlideApp.with(this).load(brand.thumbnail)
-                    .placeholder(R.drawable.default_place_holder)
-                    .error(R.drawable.default_error_img)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(brandIconImg);
-
-
-            if (brand.fullName != null) {
-                brandName.setText(brand.fullName);
-                aboutBrand.setText(new StringBuilder().append(getResources().getString(R.string.about_brand)).append(" : ").append(brand.fullName).toString());
-            }
+        GlideApp.with(this).load(brand.thumbnail)
+                .placeholder(R.drawable.default_place_holder)
+                .error(R.drawable.default_error_img)
+                .apply(RequestOptions.circleCropTransform())
+                .into(brandIconImg);
 
 
-            brandNumFollowers.setText(new StringBuilder().append(brand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
+        if (brand.fullName != null) {
+            brandName.setText(brand.fullName);
+            aboutBrand.setText(new StringBuilder().append(getResources().getString(R.string.about_brand)).append(" : ").append(brand.fullName).toString());
+        }
 
-            if (brand.industry != null) {
-                brandType.setText(brand.industry.nameEn);
-            }
 
-            if (brand.isBrandText != null) {
-                brandData.setText(brand.description);
-            }
-            if (brand.website != null) {
-                brandWebsite.setText(brand.website);
-            }
-            if (brand.isFollow) {
-                followBrandBtn.setText(getResources().getString(R.string.following));
-            } else {
-                followBrandBtn.setText(getResources().getString(R.string.follow));
-            }
+        brandNumFollowers.setText(new StringBuilder().append(brand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
 
-            if (brand.website != null)
-                brandWebsite.setText(brand.website);
+        if (brand.industry != null) {
+            brandType.setText(brand.industry.nameEn);
+        }
 
-            if (brand.email != null)
-                brandMail.setText(brand.email);
+        if (brand.isBrandText != null) {
+            brandData.setText(brand.description);
+        }
+        if (brand.website != null) {
+            brandWebsite.setText(brand.website);
+        }
+        if (brand.isFollow) {
+            followBrandBtn.setText(getResources().getString(R.string.following));
+        } else {
+            followBrandBtn.setText(getResources().getString(R.string.follow));
+        }
 
-            intiListeners();
+        if (brand.website != null)
+            brandWebsite.setText(brand.website);
+
+        if (brand.email != null)
+            brandMail.setText(brand.email);
+
 //        if (brand.email != null) {
 //            brandWebsite.setText(brand.email);
 //
 //        }
-        } catch (Exception e) {
-            Log.e(BrandInnerActivity.class.getSimpleName(), "Error =====>" + e.getMessage());
-        }
     }
 
     private void intiListeners() {
@@ -160,10 +156,13 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         if (state) {
             currentBrand.isFollow = true;
             followBrandBtn.setText(getResources().getString(R.string.following));
+            currentBrand.followersCount++;
         } else {
             currentBrand.isFollow = false;
             followBrandBtn.setText(getResources().getString(R.string.follow));
+            currentBrand.followersCount--;
         }
+        brandNumFollowers.setText(new StringBuilder().append(currentBrand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
     }
 
     @Override

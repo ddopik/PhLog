@@ -97,6 +97,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
                             .subscribe(followBrandResponse -> {
                                 brandList.get(i).isFollow = false;
                                 brandSearchViewHolder.brandFollowBtn.setText(context.getResources().getString(R.string.follow));
+                                notifyItemChanged(i);
                             }, throwable -> {
                                 ErrorUtils.Companion.setError(context, TAG, throwable);
                             });
@@ -107,6 +108,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
                             .subscribe(followBrandResponse -> {
                                 brandList.get(i).isFollow = true;
                                 brandSearchViewHolder.brandFollowBtn.setText(context.getResources().getString(R.string.following));
+                                notifyItemChanged(i);
                             }, throwable -> {
                                 ErrorUtils.Companion.setError(context, TAG, throwable);
                             });

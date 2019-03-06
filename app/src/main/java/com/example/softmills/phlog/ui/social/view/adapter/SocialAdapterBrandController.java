@@ -59,7 +59,7 @@ public class SocialAdapterBrandController {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, BrandInnerActivity.class);
-                    intent.putExtra(BrandInnerActivity.BRAND_ID, String.valueOf(socialData.brands.get(0).id));
+                    intent.putExtra(BrandInnerActivity.BRAND_ID, socialData.brands.get(0).id);
                     context.startActivity(intent);
                 }
             });

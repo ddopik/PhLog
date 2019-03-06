@@ -70,6 +70,7 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
     public void logout() {
         BaseNetworkApi.logout()
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
                     if (s != null)
                         sendFirebaseTokenAsLoggedOut();

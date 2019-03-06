@@ -110,6 +110,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         photographerProfileProgressBar = mainView.findViewById(R.id.photographer_profile_progress_bar);
         TabLayout userProfileTabs = mainView.findViewById(R.id.photographer_profile_tabs);
         ViewPager userProfileViewpager = mainView.findViewById(R.id.photographer_profile_viewpager);
+//        userProfileViewpager.setOffscreenPageLimit(1);
         PhotoGrapherProfileViewPagerAdapter photographerProfileViewPagerAdapter = new PhotoGrapherProfileViewPagerAdapter(getChildFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
         userProfileViewpager.setAdapter(photographerProfileViewPagerAdapter);
         userProfileTabs.setupWithViewPager(userProfileViewpager);

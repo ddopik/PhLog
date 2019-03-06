@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/ef_white">
 
 
     <android.support.design.widget.AppBarLayout
@@ -14,12 +15,11 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
+            app:layout_collapseMode="parallax"
             app:layout_scrollFlags="scroll|snap"
-            app:titleEnabled="false"
-            app:layout_collapseMode="parallax">
+            app:titleEnabled="false">
 
-            <include
-                layout="@layout/user_profile_header_view_2" />
+            <include layout="@layout/user_profile_header_view_2" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -36,15 +36,16 @@
         android:id="@+id/place_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/font_normal"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginTop="@dimen/widgets_padding"
         android:layout_gravity="top|center"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginTop="@dimen/dp65"
+        android:gravity="center"
+        android:text="@string/photographer_hasnt_uploaded_yet"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_normal"
         android:visibility="gone"
-        tools:visibility="visible"
-        android:text="@string/photographer_hasnt_uploaded_yet"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:visibility="visible" />
+
     <ProgressBar
         android:id="@+id/user_profile_photos_progress_bar"
         android:layout_width="wrap_content"
