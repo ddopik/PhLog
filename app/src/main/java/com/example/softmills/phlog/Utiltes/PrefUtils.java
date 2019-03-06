@@ -56,7 +56,8 @@ public abstract class PrefUtils {
     }
 
     public static String getUserId(Context mContext) {
-        return getSharedPref(mContext).getString(USER_ID, GUEST_USER_ID);
+//        return getSharedPref(mContext).getString(USER_ID, GUEST_USER_ID);
+        return "a72907a015f69ca277cfb0953107289d";
     }
 
     public static String getUserName(Context mContext) {
