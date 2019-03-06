@@ -23,8 +23,11 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.present
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_PHOTOS_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_TYPE;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
@@ -91,7 +94,8 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         photographerSavedPhotoAdapter.photoAction= photoGrapherSavedPhoto -> {
             Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
-            intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.saved));
+            intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.photos));
+            intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_PHOTOS_LIST);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherPhotoList);
             startActivity(intent);
         };

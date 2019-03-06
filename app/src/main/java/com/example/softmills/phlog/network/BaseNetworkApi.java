@@ -91,7 +91,7 @@ public class BaseNetworkApi {
     private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/auth/signup_facebook";
     private static final String USER_PROFILE_URL = BASE_URL + "/details";
     private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/photo/saved";
-    private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/photographer/photo/list";
+    private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/photo/list";
     private static final String PHOTOGRAPHER_PROFILE_INFO = BASE_URL + "/details";
     private static final String PHOTOGRAPHER_ALL_CAMPAIGN_URL = BASE_URL + "/campaign/list";
     private static final String GET_ALBUM_IMAGES_PREVIEW = BASE_URL + "/album/photos";

@@ -74,12 +74,12 @@ public interface Constants {
 
 
     enum PhotosListType{
-        SOCIAL_LIST,PHOTO_GRAPHER_LIST
+        SOCIAL_LIST,CURRENT_PHOTOGRAPHER_PHOTOS_LIST,CURRENT_PHOTOGRAPHER_SAVED_LIST
     }
 
 
     enum CommentListType{
-        VIEW_REPLIES, MAIN_COMMENT,REPLAY_ON_COMMENT;
+        VIEW_REPLIES, MAIN_COMMENT,REPLAY_ON_COMMENT
     }
 
     interface CampaignStatus {

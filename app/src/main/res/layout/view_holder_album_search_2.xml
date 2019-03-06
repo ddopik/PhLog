@@ -109,7 +109,7 @@
                 app:srcCompat="@drawable/ic_right_arrow_circle" />
 
             <com.example.softmills.phlog.base.widgets.CustomTextView
-                android:id="@+id/album_name"
+                android:id="@+id/author_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -123,8 +123,8 @@
                 android:id="@+id/album_photo_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/album_name"
-                app:layout_constraintTop_toBottomOf="@+id/album_name"
+                app:layout_constraintStart_toStartOf="@+id/author_name"
+                app:layout_constraintTop_toBottomOf="@+id/author_name"
                 tools:text="239 photo" />
 
             <Space

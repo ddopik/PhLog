@@ -3,6 +3,9 @@ package com.example.softmills.phlog.Utiltes;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.softmills.phlog.base.commonmodel.Photographer;
+import com.google.gson.Gson;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -22,6 +25,7 @@ public abstract class PrefUtils {
     private static final String IS_LANGUAGE_SELECTED = "IS_LANGUAGE_SELECTED";
     private static final String IS_TOKEN_SAVED = "IS_TOKEN_SAVED";
     private static final String APP_LANG = "APP_LANG";
+    private static final String CURRENT_USER_OBJ = "current_user_obj";
     private static final String FIREBASE_TOKEN = "FIREBASE_TOKEN";
     private static String PREF_FILE_NAME;
 
@@ -36,7 +40,10 @@ public abstract class PrefUtils {
     }
 
     public static void setUserID(Context context, String userID) {
-        getSharedPref(context).edit().putString(USER_ID, userID).apply();
+        getSharedPref(context)
+                .edit()
+                .putString(USER_ID, userID)
+                .apply();
     }
 
     public static void setUserName(Context context, String userName) {
@@ -56,7 +63,7 @@ public abstract class PrefUtils {
     }
 
     public static String getUserId(Context mContext) {
-        return getSharedPref(mContext).getString(USER_ID, GUEST_USER_ID);
+        return getSharedPref(mContext).getString(USER_ID, "0");
 
     }
 
@@ -143,5 +150,19 @@ public abstract class PrefUtils {
     public static boolean isFirebaseTokenSentToServer(Context context) {
         return getSharedPref(context)
                 .getBoolean(FIREBASE_TOKEN_SENT, false);
+    }
+
+
+    public static void setCurrentUser(Context context, Photographer photographer) {
+        Gson gson = new Gson();
+        String json = gson.toJson(photographer);
+        getSharedPref(context).edit().putString(CURRENT_USER_OBJ, json).apply();
+    }
+
+    public static Photographer getCurrentUser(Context context) {
+        Gson gson = new Gson();
+        String json = getSharedPref(context).getString(CURRENT_USER_OBJ, "");
+        Photographer photographer = gson.fromJson(json, Photographer.class);
+        return photographer;
     }
 }

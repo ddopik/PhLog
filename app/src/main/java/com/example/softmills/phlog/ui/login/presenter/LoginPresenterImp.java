@@ -55,6 +55,7 @@ public class LoginPresenterImp implements LoginPresenter {
                 });
     }
 
+    @SuppressLint("CheckResult")
     private void sendFirebaseToken() {
         loginView.navigateToHome();
         BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), true, PrefUtils.getFirebaseToken(context)))

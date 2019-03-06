@@ -55,7 +55,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     @Override
     public void initView() {
         if (getIntent().getParcelableArrayListExtra(ALL_ALBUM_IMAGES) != null) {
-            topBarTitle=findViewById(R.id.toolbar_title);
+            topBarTitle = findViewById(R.id.toolbar_title);
             mainBackBtn = findViewById(R.id.back_btn);
             mainBackBtn.setVisibility(View.INVISIBLE);
             albumImgProgress = findViewById(R.id.album_img_list_progress_bar);
@@ -64,7 +64,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             PhotosListType photosListType = (PhotosListType) getIntent().getSerializableExtra(LIST_TYPE);
 
 
-            if (getIntent().getStringExtra(LIST_NAME) !=null){
+            if (getIntent().getStringExtra(LIST_NAME) != null) {
                 topBarTitle.setText(getIntent().getStringExtra(LIST_NAME));
             }
 
@@ -86,7 +86,6 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
             initListener();
         }
-
 
 
     }
@@ -119,9 +118,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
             @Override
             public void onAlbumImgLikeClick(BaseImage albumImg) {
-                if (albumImg.isLiked){
+                if (albumImg.isLiked) {
                     allAlbumImgPresnter.unLikePhoto(String.valueOf(albumImg.id));
-                }else {
+                } else {
                     allAlbumImgPresnter.likePhoto(String.valueOf(albumImg.id));
                 }
 
@@ -201,7 +200,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
     @Override
     public void onImagePhotoGrapherDeleted(BaseImage baseImage, boolean state) {
-        for (int i=0;i<albumImgList.size();i++) {
+        for (int i = 0; i < albumImgList.size(); i++) {
             if (albumImgList.get(i).id == baseImage.id && state) {
                 albumImgList.remove(i);
                 break;
@@ -212,9 +211,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
     @Override
     public void onImagePhotoGrapherLiked(int photoId, boolean state) {
-        for (int i=0;i<albumImgList.size();i++) {
+        for (int i = 0; i < albumImgList.size(); i++) {
             if (albumImgList.get(i).id == photoId && state) {
-                albumImgList.get(i).isLiked=state;
+                albumImgList.get(i).isLiked = state;
                 break;
             }
         }

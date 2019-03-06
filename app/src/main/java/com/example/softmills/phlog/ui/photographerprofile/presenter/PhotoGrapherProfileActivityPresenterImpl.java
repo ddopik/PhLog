@@ -38,8 +38,9 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(profilePhotoGrapherInfoResponse -> {
                     photoGrapherProfileActivityView.showPhotoGrapherProfileData(profilePhotoGrapherInfoResponse.data);
+                    PrefUtils.setCurrentUser(context,profilePhotoGrapherInfoResponse.data);
                 }, throwable -> {
-                    Log.e(TAG, "getPhotoGrapherProfileData() --->" + throwable.getMessage());
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
     }

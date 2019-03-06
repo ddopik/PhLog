@@ -108,7 +108,7 @@ class AlbumSearchAdapter(private var albumSearchList: List<AlbumSearch>?) : Recy
             image2 = view.findViewById(R.id.album_search_img_2)
             image3 = view.findViewById(R.id.album_search_img_3)
 
-            albumName = view.findViewById(R.id.album_name)
+            albumName = view.findViewById(R.id.author_name)
             albumPhotoCount = view.findViewById(R.id.album_photo_count)
 
         }
