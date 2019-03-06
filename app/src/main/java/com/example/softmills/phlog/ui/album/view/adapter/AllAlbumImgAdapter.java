@@ -86,9 +86,6 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         //case this list is for current user and already saved to his profile
         if (albumImgList.get(i).photographer.id != Integer.parseInt(PrefUtils.getUserId(context))) {
-
-
-
             if (albumImgList.get(i).photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
                  albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
                 albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
