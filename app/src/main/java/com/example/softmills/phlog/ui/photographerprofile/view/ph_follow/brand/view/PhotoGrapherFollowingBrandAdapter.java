@@ -47,7 +47,7 @@ public class PhotoGrapherFollowingBrandAdapter extends RecyclerView.Adapter<Phot
 
         context = viewGroup.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new BrandViewHolder(layoutInflater.inflate(R.layout.view_holder_brand, viewGroup, false));
+        return new BrandViewHolder(layoutInflater.inflate(R.layout.view_holder_brand_following, viewGroup, false));
 
     }
 

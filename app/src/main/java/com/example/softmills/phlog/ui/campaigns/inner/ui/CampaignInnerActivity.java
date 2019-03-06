@@ -164,7 +164,9 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                 public void onTabReselected(TabLayout.Tab tab) {
                 }
             });
-            uploadCampaignBtn.setVisibility(View.INVISIBLE);
+            uploadCampaignBtn.setVisibility(View.VISIBLE);
+        } else {
+            uploadCampaignBtn.setVisibility(View.GONE);
         }
         campaignTabs.setupWithViewPager(campaignViewPager);
     }

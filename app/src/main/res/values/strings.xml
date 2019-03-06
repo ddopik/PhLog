@@ -124,10 +124,10 @@
     <string name="comment">Comments</string>
     <string name="comment_cant_not_be_null">Comment can\'t be null</string>
     <string name="result">Result</string>
-    <string name="action_logout">LogOut</string>
+    <string name="action_logout">Logout</string>
     <string name="action_edit">Edit</string>
     <string name="followed">Followed</string>
-    <string name="un_follow">Un follow</string>
+    <string name="un_follow">Unfollow</string>
     <string name="image_saved">Image saved</string>
     <string name="failed_to_save">Failed to save</string>
     <string name="failed_to_unsave">Failed to unsave</string>

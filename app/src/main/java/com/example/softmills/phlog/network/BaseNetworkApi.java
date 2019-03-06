@@ -50,8 +50,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import okhttp3.OkHttpClient;
 
 
 /**
@@ -531,6 +533,11 @@ public class BaseNetworkApi {
                 .addMultipartParameter(tagList)
                 .addMultipartFile("image", imgPath)
                 .setPriority(Priority.HIGH)
+                .setOkHttpClient(new OkHttpClient.Builder()
+//                        .connectTimeout(5, TimeUnit.MINUTES)
+                        .readTimeout(1, TimeUnit.MINUTES)
+                        .writeTimeout(1, TimeUnit.MINUTES)
+                        .build())
                 .build()
                 .getObjectObservable(UploadImgResponse.class);
     }
