@@ -119,7 +119,13 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
             @Override
             public void onAlbumImgLikeClick(BaseImage albumImg) {
-                allAlbumImgPresnter.likePhoto(String.valueOf(albumImg.id));
+                if (albumImg.isLiked){
+                    allAlbumImgPresnter.unLikePhoto(String.valueOf(albumImg.id));
+                }else {
+                    allAlbumImgPresnter.likePhoto(String.valueOf(albumImg.id));
+                }
+
+
             }
 
             @Override
@@ -198,6 +204,17 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         for (int i=0;i<albumImgList.size();i++) {
             if (albumImgList.get(i).id == baseImage.id && state) {
                 albumImgList.remove(i);
+                break;
+            }
+        }
+        allAlbumImgAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onImagePhotoGrapherLiked(int photoId, boolean state) {
+        for (int i=0;i<albumImgList.size();i++) {
+            if (albumImgList.get(i).id == photoId && state) {
+                albumImgList.get(i).isLiked=state;
                 break;
             }
         }

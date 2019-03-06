@@ -51,6 +51,22 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(baseStateResponse -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    allAlbumImgActivityView.onImagePhotoGrapherLiked(Integer.parseInt(photoId),true);
+                }, throwable -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+    }
+    @SuppressLint("CheckResult")
+    @Override
+    public void unLikePhoto(String photoId) {
+        allAlbumImgActivityView.viewAlbumImageListProgress(true);
+        BaseNetworkApi.unlikeImage(photoId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(baseStateResponse -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    allAlbumImgActivityView.onImagePhotoGrapherLiked(Integer.parseInt(photoId),false);
                 }, throwable -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
