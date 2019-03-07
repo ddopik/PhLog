@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_PHOTOS_LIST;
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_SAVED_LIST;
+
 /**
  * Created by abdalla_maged on 11/5/2018.
  */
@@ -35,6 +38,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     public static String SELECTED_IMG_ID = "selected_img_id";
     public static String LIST_TYPE = "list_type";
     public static String LIST_NAME = "list_name";
+    private PhotosListType photosListType;
     private ImageButton mainBackBtn;
     private CustomTextView topBarTitle;
     private AllAlbumImgAdapter allAlbumImgAdapter;
@@ -61,7 +65,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             albumImgProgress = findViewById(R.id.album_img_list_progress_bar);
             CustomRecyclerView allAlbumImgRv = findViewById(R.id.album_img_list_rv);
 
-            PhotosListType photosListType = (PhotosListType) getIntent().getSerializableExtra(LIST_TYPE);
+            photosListType = (PhotosListType) getIntent().getSerializableExtra(LIST_TYPE);
 
 
             if (getIntent().getStringExtra(LIST_NAME) != null) {
@@ -106,6 +110,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             @Override
             public void onAlbumImgClick(BaseImage albumImg) {
                 Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
+                if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) || photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
+                    albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
+                }
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
@@ -138,10 +145,10 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             @Override
             public void onAlbumImgSaveClick(BaseImage albumImg) {
 
-                if (!albumImg.isSaved) {
-                    allAlbumImgPresnter.saveToProfileImage(albumImg);
-                } else {
+                if (albumImg.isSaved) {
                     allAlbumImgPresnter.unSaveToProfileImage(albumImg);
+                } else {
+                    allAlbumImgPresnter.saveToProfileImage(albumImg);
 
                 }
             }
@@ -176,9 +183,19 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
     @Override
     public void onImageSavedToProfile(BaseImage baseImage, boolean state) {
-        for (BaseImage mBaseImage : albumImgList) {
-            if (mBaseImage.id == baseImage.id) {
-                mBaseImage.isSaved = state;
+        for (int i=0;i< albumImgList.size();i++) {
+
+
+
+
+            if (albumImgList.get(i).id == baseImage.id) {
+                albumImgList.get(i).isSaved = state;
+                if (!state){
+                    if(photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)){
+                        albumImgList.remove(i);
+                    }
+
+                }
                 break;
             }
         }

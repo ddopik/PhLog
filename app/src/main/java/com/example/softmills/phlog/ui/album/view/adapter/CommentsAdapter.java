@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -20,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,7 +28,7 @@ import android.widget.TextView;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
-import com.example.softmills.phlog.Utiltes.GlideApp;
+ import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
@@ -57,7 +54,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -81,6 +77,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     private CommentAdapterPresenter commentAdapterPresenter;
     private CompositeDisposable disposable = new CompositeDisposable();
     private BaseImage previewImage;
+
     private boolean shouldShowChooseWinnerButton;
     public CommentAdapterAction commentAdapterAction;
     private int HEAD = 0;
@@ -124,8 +121,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         if (getItemViewType(i) == HEAD) {
 
 
-            commentViewHolder.authorName.setText(previewImage.photographer.fullName);
-            commentViewHolder.authorUserName.setText(previewImage.photographer.userName);
+
+                commentViewHolder.authorName.setText(previewImage.photographer.fullName);
+                commentViewHolder.authorUserName.setText(previewImage.photographer.userName);
+
+
 
             GlideApp.with(context)
                     .load(previewImage.photographer.imageProfile)
@@ -178,12 +178,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                     commentAdapterAction.onCommentAuthorIconClicked(previewImage);
                 });
             }
-
-
-
-
-
-
 
 
 //////////////////////////////////////COMMENT/////////////////////////////////////////
@@ -506,9 +500,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     }
 
 
-
-
-
     /**
      * @param viewHolder        --->view holder contain comment value
      * @param mentionsList      --->replacement user_value flaged with (?*_)
@@ -544,7 +535,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         viewHolder.setText(spannableString);
 
     }
-
 
 
     private Photographer getMentionedPhotoGrapher(String userId) {
@@ -633,7 +623,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 photoRating = view.findViewById(R.id.photo_rating);
 
 
-
             } else if (type == COMMENT) {
                 parentCommentView = view.findViewById(R.id.comment_parent_view);
                 commentVal = view.findViewById(R.id.comment_val);
@@ -657,7 +646,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         void onImageCommentClicked();
 
 
-
         void onSubmitComment(String comment);
 
         void onCommentAuthorIconClicked(BaseImage baseImage);
@@ -665,7 +653,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         void onReplayClicked(Comment comment, Constants.CommentListType commentListType);
 
-     }
+    }
 
     @Override
     public void viewMentionedUsers(List<MentionedUser> mentionedUserList) {

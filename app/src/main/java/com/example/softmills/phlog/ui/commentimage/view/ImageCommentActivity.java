@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
-import com.example.softmills.phlog.Utiltes.ErrorUtils;
+ import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseActivity;
@@ -50,10 +50,11 @@ import static com.example.softmills.phlog.Utiltes.Constants.CommentListType.MAIN
  */
 public class ImageCommentActivity extends BaseActivity implements ImageCommentActivityView {
 
-    public String TAG=ImageCommentActivity.class.getSimpleName();
+    public String TAG = ImageCommentActivity.class.getSimpleName();
     public static String IMAGE_DATA = "image_data";
+    public static String IMAGE_TYPE = "image_type";
     public static final int ImageComment_REQUEST_CODE = 1396;
-    private CustomTextView toolBarTitle;
+     private CustomTextView toolBarTitle;
     private ImageButton backBtn;
     private BaseImage previewImage;
     private FrameLayout addCommentProgress;
@@ -72,6 +73,9 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         if (getIntent().getParcelableExtra(IMAGE_DATA) != null) {
             setContentView(R.layout.activity_image_commnet);
             previewImage = getIntent().getExtras().getParcelable(IMAGE_DATA);
+
+
+
             initPresenter();
             initView();
             initListener();
@@ -185,7 +189,6 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
             }
 
 
-
             @Override
             public void onReplayClicked(Comment comment, Constants.CommentListType commentListType) {
 
@@ -277,10 +280,10 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     }
 
     @Override
-    public void onImageDeleted(BaseImage baseImage,boolean state) {
-        if (state){
-         previewImage.isImageDeleted=state;
-         commentsAdapter.notifyDataSetChanged();
+    public void onImageDeleted(BaseImage baseImage, boolean state) {
+        if (state) {
+            previewImage.isImageDeleted = state;
+            commentsAdapter.notifyDataSetChanged();
         }
     }
 

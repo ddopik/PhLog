@@ -92,7 +92,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         };
 
         photographerSavedPhotoAdapter.photoAction= photoGrapherSavedPhoto -> {
-            Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
+            Intent intent = new Intent(getContext(), AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
             intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.photos));
             intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_PHOTOS_LIST);

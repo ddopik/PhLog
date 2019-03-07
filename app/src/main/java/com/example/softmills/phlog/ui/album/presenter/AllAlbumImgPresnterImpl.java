@@ -86,8 +86,7 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                 .subscribe(savePhotoResponse -> {
                     allAlbumImgActivityView.onImageSavedToProfile(baseImage, true);
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
-                    allAlbumImgActivityView.showMessage(context.getResources().getText(R.string.saved).toString());
-                }, throwable -> {
+                 }, throwable -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
 
@@ -116,16 +115,31 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
     public void followImagePhotoGrapher(BaseImage baseImage) {
         allAlbumImgActivityView.viewAlbumImageListProgress(true);
 
-        BaseNetworkApi.followUser(String.valueOf(baseImage.photographer.id))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(followUserResponse -> {
-                    allAlbumImgActivityView.onImagePhotoGrapherFollowed(baseImage, true);
-                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
-                }, throwable -> {
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
-                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
-                });
+        if (baseImage.photographer.isFollow) {
+            BaseNetworkApi.unFollowUser(String.valueOf(baseImage.photographer.id))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(followUserResponse -> {
+                        allAlbumImgActivityView.onImagePhotoGrapherFollowed(baseImage, false);
+                        allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    }, throwable -> {
+                        ErrorUtils.Companion.setError(context, TAG, throwable);
+                        allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    });
+
+        } else {
+            BaseNetworkApi.followUser(String.valueOf(baseImage.photographer.id))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(followUserResponse -> {
+                        allAlbumImgActivityView.onImagePhotoGrapherFollowed(baseImage, true);
+                        allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    }, throwable -> {
+                        ErrorUtils.Companion.setError(context, TAG, throwable);
+                        allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    });
+
+        }
 
     }
 }

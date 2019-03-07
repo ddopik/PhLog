@@ -138,14 +138,14 @@
 
                     <ImageButton
                         android:id="@+id/album_img_save_btn"
-                        android:layout_width="@dimen/ic_size"
-                        android:layout_height="@dimen/ic_size"
+                        android:layout_width="@dimen/ic_size_med"
+                        android:layout_height="@dimen/ic_size_med"
                         android:layout_gravity="end"
                         android:layout_marginTop="@dimen/dp8"
                         android:layout_marginEnd="@dimen/dp16"
                         android:background="@color/transparent"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/ic_download" />
+                        app:srcCompat="@drawable/ic_saved" />
                 </FrameLayout>
 
                 <com.example.softmills.phlog.base.widgets.CustomTextView

@@ -25,7 +25,6 @@ import java.util.List;
 
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_PHOTOS_LIST;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_SAVED_LIST;
-import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.SOCIAL_LIST;
 
 /**
  * Created by abdalla_maged on 11/5/2018.
@@ -35,7 +34,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
     private List<BaseImage> albumImgList;
     private Context context;
     private PhotosListType photosListType;
-     public OnAlbumImgClicked onAlbumImgClicked;
+    public OnAlbumImgClicked onAlbumImgClicked;
 
 
     public AllAlbumImgAdapter(List<BaseImage> albumImgList, PhotosListType photosListType) {
@@ -56,6 +55,26 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull AlbumImgViewHolder albumImgViewHolder, int i) {
+
+
+        Photographer photographer;
+        if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) || photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
+            photographer = PrefUtils.getCurrentUser(context);
+        } else {
+            photographer = albumImgList.get(i).photographer;
+        }
+
+
+        if (photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
+            albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.GONE);
+        } else {
+            if (!photographer.isFollow) {
+                albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
+            } else {
+                albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.following));
+
+            }
+        }
 
         GlideApp.with(context)
                 .load(albumImgList.get(i).thumbnailUrl)
@@ -78,6 +97,13 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
                 tagS = tagS + " #" + tag.name;
             }
         }
+
+
+        if (albumImgList.get(i).isSaved){
+            albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_saved));
+        }else {
+            albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.un_saved));
+        }
         albumImgViewHolder.imageCommentTagVal.setText(tagS);
 
 
@@ -91,43 +117,13 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgViewHolder.albumImgLike.setImageResource(R.drawable.ic_like_on);
         }
 
-
+        setImagePhotoGrapherInfo(albumImgViewHolder, photographer);
         //case this Image is for current user and already saved to his profile
-        if (photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
-            setImagePhotoGrapherInfo(albumImgViewHolder, PrefUtils.getCurrentUser(context));
+        if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
             albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
-            albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
 
-        } else if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
-            setImagePhotoGrapherInfo(albumImgViewHolder, PrefUtils.getCurrentUser(context));
-            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
-            albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
-
-        } else if (photosListType.equals(SOCIAL_LIST)) {
-            setImagePhotoGrapherInfo(albumImgViewHolder, albumImgList.get(i).photographer);
-            if (albumImgList.get(i).photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
-                if (albumImgList.get(i).isSaved) {
-                    albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
-                } else {
-                    albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
-
-                }
-            } else {
-                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
-                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.GONE);
-            }
-
-        }
-
-
-        if (onAlbumImgClicked != null) {
-            albumImgViewHolder.albumImgSaveBtn.setOnClickListener(v -> {
-                onAlbumImgClicked.onAlbumImgSaveClick(albumImgList.get(i));
-            });
-            albumImgViewHolder.albumImgDeleteBtn.setOnClickListener(v -> {
-                onAlbumImgClicked.onAlbumImgDeleteClick(albumImgList.get(i));
-            });
-
+        } else {
+            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.GONE);
         }
 
 
@@ -139,6 +135,12 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgViewHolder.albumImgCommentVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
             albumImgViewHolder.albumIcon.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgPhotoGrapherIconClick(albumImgList.get(i)));
             albumImgViewHolder.followPhotoGrapherBtn.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgFollowClick(albumImgList.get(i)));
+            albumImgViewHolder.albumImgSaveBtn.setOnClickListener(v -> {
+                onAlbumImgClicked.onAlbumImgSaveClick(albumImgList.get(i));
+            });
+            albumImgViewHolder.albumImgDeleteBtn.setOnClickListener(v -> {
+                onAlbumImgClicked.onAlbumImgDeleteClick(albumImgList.get(i));
+            });
 
         }
 

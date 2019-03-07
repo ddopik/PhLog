@@ -84,16 +84,13 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
             }
         };
 
-        photographerSavedPhotoAdapter.photoAction=new PhotographerSavedPhotoAdapter.PhotoAction() {
-            @Override
-            public void onPhotoClicked(BaseImage photoGrapherSavedPhoto) {
-                Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
-                intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
-                intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_SAVED_LIST);
-                intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.saved));
-                intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherSavedPhotoList);
-                startActivity(intent);
-            }
+        photographerSavedPhotoAdapter.photoAction= photoGrapherSavedPhoto -> {
+            Intent intent = new Intent(getContext(), AllAlbumImgActivity.class);
+            intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
+            intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_SAVED_LIST);
+            intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.saved));
+            intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherSavedPhotoList);
+            startActivity(intent);
         };
     }
 

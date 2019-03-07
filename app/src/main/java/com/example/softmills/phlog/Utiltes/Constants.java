@@ -30,6 +30,13 @@ public interface Constants {
 
         USER_TYPE_BUSINESS, USER_TYPE_PHOTOGRAPHER;
     }
+
+    /**
+     * PERSONAL --->Case image specified for current user
+     * */
+    enum  ImageType{
+        PERSONAL,SOCIAL
+    }
     ///////////////////////Entity-type For socialFragment
     int ENTITY_PROFILE=1;
     int ENTITY_CAMPAIGN=2;

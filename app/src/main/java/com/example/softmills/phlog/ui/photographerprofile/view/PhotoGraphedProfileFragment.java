@@ -83,8 +83,8 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews();
         initPresenter();
+        initViews();
         initListener();
         if (getActivity() != null) {
             ((MainActivity) getActivity()).setSupportActionBar(profileFragmentToolBar);
