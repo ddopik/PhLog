@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.album.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.network.BaseNetworkApi;
@@ -35,7 +36,7 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(baseStateResponse -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
-                    allAlbumImgActivityView.onImagePhotoGrapherDeleted(baseImage,true);
+                    allAlbumImgActivityView.onImagePhotoGrapherDeleted(baseImage, true);
                 }, throwable -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
@@ -51,6 +52,23 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(baseStateResponse -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    allAlbumImgActivityView.onImagePhotoGrapherLiked(Integer.parseInt(photoId), true);
+                }, throwable -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void unLikePhoto(String photoId) {
+        allAlbumImgActivityView.viewAlbumImageListProgress(true);
+        BaseNetworkApi.unlikeImage(photoId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(baseStateResponse -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    allAlbumImgActivityView.onImagePhotoGrapherLiked(Integer.parseInt(photoId), false);
                 }, throwable -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
@@ -68,6 +86,7 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                 .subscribe(savePhotoResponse -> {
                     allAlbumImgActivityView.onImageSavedToProfile(baseImage, true);
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    allAlbumImgActivityView.showMessage(context.getResources().getText(R.string.saved).toString());
                 }, throwable -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);

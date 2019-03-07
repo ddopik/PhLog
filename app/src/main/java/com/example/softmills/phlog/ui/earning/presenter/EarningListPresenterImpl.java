@@ -33,8 +33,8 @@ public class EarningListPresenterImpl implements EarningListPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(earningListResponse -> {
-                    if (earningListResponse.data != null && earningListResponse.data.earningList != null ) {
-                        earningListFragmentView.viewEarningList(earningListResponse.data.earningList);
+                    if (earningListResponse.data != null && earningListResponse.data.transactions.data != null ) {
+                        earningListFragmentView.viewEarningList(earningListResponse.data.transactions.data);
                         earningListFragmentView.setSalesNumber(earningListResponse.data.total);
                     }
                     earningListFragmentView.viewEaringListProgress(false);

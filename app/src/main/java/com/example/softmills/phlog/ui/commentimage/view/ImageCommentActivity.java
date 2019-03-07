@@ -243,6 +243,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         // (1) is A default value to view AddComment layout in case there is now Comments
         this.commentList.add(commentList.size() - 1, commentData.comment);
 
+        // prevent mentioned user from duplication
         reSortMentionList(commentData.mentions).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mentions -> {
@@ -252,8 +253,6 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
                 }, throwable -> {
                     ErrorUtils.Companion.setError(this, TAG, throwable);
                 });
-
-
         Utilities.hideKeyboard(this);
 
     }

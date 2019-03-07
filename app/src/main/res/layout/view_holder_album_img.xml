@@ -53,21 +53,21 @@
             android:orientation="vertical">
 
             <com.example.softmills.phlog.base.widgets.CustomTextView
-                android:id="@+id/album_name"
+                android:id="@+id/author_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium_s"
-                tools:text="album name" />
+                tools:text="full name" />
 
             <com.example.softmills.phlog.base.widgets.CustomTextView
-                android:id="@+id/album_author"
+                android:id="@+id/author_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:textColor="@color/white"
-                tools:text="author name" />
+                tools:text=" @user name" />
 
         </LinearLayout>
 
@@ -102,7 +102,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="3"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/default_user_profile" />
+                    android:src="@drawable/default_user_profile"
+                    />
 
 
                 <FrameLayout

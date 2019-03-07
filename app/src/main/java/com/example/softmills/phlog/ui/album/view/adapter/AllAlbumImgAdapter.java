@@ -18,9 +18,14 @@ import com.example.softmills.phlog.Utiltes.Constants.PhotosListType;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.commonmodel.Tag;
 
 import java.util.List;
+
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_PHOTOS_LIST;
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_SAVED_LIST;
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.SOCIAL_LIST;
 
 /**
  * Created by abdalla_maged on 11/5/2018.
@@ -30,11 +35,13 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
     private List<BaseImage> albumImgList;
     private Context context;
     private PhotosListType photosListType;
-    public OnAlbumImgClicked onAlbumImgClicked;
+     public OnAlbumImgClicked onAlbumImgClicked;
+
 
     public AllAlbumImgAdapter(List<BaseImage> albumImgList, PhotosListType photosListType) {
         this.albumImgList = albumImgList;
         this.photosListType = photosListType;
+
     }
 
 
@@ -72,57 +79,55 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             }
         }
         albumImgViewHolder.imageCommentTagVal.setText(tagS);
-        if (albumImgList.get(i).thumbnailUrl != null)
-            albumImgViewHolder.albumName.setText(albumImgList.get(i).thumbnailUrl);
-        if (albumImgList.get(i).photographer != null)
-            albumImgViewHolder.albumName.setText(albumImgList.get(i).photographer.fullName);
-        if (albumImgList.get(i).photographer != null)
-            albumImgViewHolder.albumAuthor.setText(new StringBuilder().append("@").append(albumImgList.get(i).photographer.userName).toString());
+
+
         if (albumImgList.get(i).likesCount != null)
             albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append(albumImgList.get(i).likesCount).append(" Likes").toString());
         if (albumImgList.get(i).commentsCount != null)
             albumImgViewHolder.albumImgCommentVal.setText(new StringBuilder().append(albumImgList.get(i).commentsCount).append(" Comments").toString());
-
-
-        //case this list is for current user and already saved to his profile
-        if (albumImgList.get(i).photographer.id != Integer.parseInt(PrefUtils.getUserId(context))) {
-
-
-
-            if (albumImgList.get(i).photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
-                 albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
-                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
-
-            } else {
-                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
-                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
-
-            }
-
-
-            if (onAlbumImgClicked != null) {
-                albumImgViewHolder.albumImgSaveBtn.setOnClickListener(v -> {
-                    onAlbumImgClicked.onAlbumImgSaveClick(albumImgList.get(i));
-                });
-                albumImgViewHolder.albumImgDeleteBtn.setOnClickListener(v -> {
-                    onAlbumImgClicked.onAlbumImgDeleteClick(albumImgList.get(i));
-                });
-
-            }
-
-
+        if (!albumImgList.get(i).isLiked) {
+            albumImgViewHolder.albumImgLike.setImageResource(R.drawable.ic_like_off_gray);
         } else {
-            albumImgViewHolder.albumImgSaveBtn.setVisibility(View.GONE);
+            albumImgViewHolder.albumImgLike.setImageResource(R.drawable.ic_like_on);
         }
 
-        //case this list is specified for multiple users not for only one
-        if (photosListType != null && photosListType == PhotosListType.SOCIAL_LIST && albumImgList.get(i).photographer.id != Integer.parseInt(PrefUtils.getUserId(context)) && !albumImgList.get(i).photographer.isFollow) {
-            albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.VISIBLE);
-            if (onAlbumImgClicked != null)
-                albumImgViewHolder.followPhotoGrapherBtn.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgFollowClick(albumImgList.get(i)));
-        } else {
-            albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.GONE);
-            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.GONE);
+
+        //case this Image is for current user and already saved to his profile
+        if (photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
+            setImagePhotoGrapherInfo(albumImgViewHolder, PrefUtils.getCurrentUser(context));
+            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
+            albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
+
+        } else if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
+            setImagePhotoGrapherInfo(albumImgViewHolder, PrefUtils.getCurrentUser(context));
+            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+            albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+
+        } else if (photosListType.equals(SOCIAL_LIST)) {
+            setImagePhotoGrapherInfo(albumImgViewHolder, albumImgList.get(i).photographer);
+            if (albumImgList.get(i).photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
+                if (albumImgList.get(i).isSaved) {
+                    albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
+                } else {
+                    albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+
+                }
+            } else {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.GONE);
+            }
+
+        }
+
+
+        if (onAlbumImgClicked != null) {
+            albumImgViewHolder.albumImgSaveBtn.setOnClickListener(v -> {
+                onAlbumImgClicked.onAlbumImgSaveClick(albumImgList.get(i));
+            });
+            albumImgViewHolder.albumImgDeleteBtn.setOnClickListener(v -> {
+                onAlbumImgClicked.onAlbumImgDeleteClick(albumImgList.get(i));
+            });
+
         }
 
 
@@ -133,7 +138,21 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgViewHolder.albumImgLikeVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgCommentVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
             albumImgViewHolder.albumIcon.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgPhotoGrapherIconClick(albumImgList.get(i)));
+            albumImgViewHolder.followPhotoGrapherBtn.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgFollowClick(albumImgList.get(i)));
+
         }
+
+    }
+
+    private void setImagePhotoGrapherInfo(AlbumImgViewHolder albumImgViewHolder, Photographer photoGrapherInfo) {
+        albumImgViewHolder.authorName.setText(photoGrapherInfo.fullName);
+        albumImgViewHolder.authorUserName.setText(new StringBuilder().append("@").append(photoGrapherInfo.userName).toString());
+        GlideApp.with(context)
+                .load(photoGrapherInfo.imageProfile)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .placeholder(R.drawable.default_user_pic)
+                .error(R.drawable.phlog_logo)
+                .into(albumImgViewHolder.albumIcon);
 
     }
 
@@ -145,17 +164,17 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
     public class AlbumImgViewHolder extends RecyclerView.ViewHolder {
 
         ImageView albumIcon, albumImg;
-        TextView albumName, albumAuthor, imageCommentTagVal, albumImgLikeVal, albumImgCommentVal;
+        TextView authorName, authorUserName, imageCommentTagVal, albumImgLikeVal, albumImgCommentVal;
         ImageButton albumImgLike, albumImgComment, albumImgSaveBtn;
-        Button followPhotoGrapherBtn,albumImgDeleteBtn;
+        Button followPhotoGrapherBtn, albumImgDeleteBtn;
 
         AlbumImgViewHolder(View view) {
             super(view);
             albumIcon = view.findViewById(R.id.album_icon);
             albumImg = view.findViewById(R.id.album_img);
-            albumName = view.findViewById(R.id.album_name);
+            authorName = view.findViewById(R.id.author_name);
             imageCommentTagVal = view.findViewById(R.id.image_comment_tag_val);
-            albumAuthor = view.findViewById(R.id.album_author);
+            authorUserName = view.findViewById(R.id.author_user_name);
             albumImgLikeVal = view.findViewById(R.id.album_img_like_count);
             albumImgCommentVal = view.findViewById(R.id.album_img_comment_count);
             albumImgLike = view.findViewById(R.id.album_img_like_btn);

@@ -9,6 +9,7 @@ public interface AllAlbumImgPresnter {
 
     void deleteImage(BaseImage baseImage);
     void likePhoto(String photoId);
+    void unLikePhoto(String photoId);
 
     void saveToProfileImage(BaseImage baseImage);
     void unSaveToProfileImage(BaseImage baseImage);
