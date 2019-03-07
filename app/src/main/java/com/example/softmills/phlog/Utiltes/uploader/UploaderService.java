@@ -9,6 +9,7 @@ import android.os.Messenger;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.androidnetworking.interfaces.UploadProgressListener;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
@@ -77,8 +78,10 @@ public class UploaderService extends Service {
                     String token = PrefUtils.getUserToken(getApplicationContext());
                     switch (object.uploadImageType.getUploadImageType()) {
                         case NORMAL_IMG:
-                            Disposable d1 = BaseNetworkApi.uploadPhotoGrapherPhoto(token, object.imageCaption, object.location, new File(object.imagePath), object.tags)
-                                    .subscribeOn(Schedulers.io())
+                            Disposable d1 = BaseNetworkApi.uploadPhotoGrapherPhoto(token, object.imageCaption, object.location, new File(object.imagePath), object.tags, (bytesUploaded, totalBytes) -> {
+                                int p = (int) ((bytesUploaded / (float) totalBytes) * 100);
+                                communicator.onAction(Action.PROGRESS, p);
+                            }).subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(responseConsumer, throwableConsumer);
                             disposables.add(d1);
@@ -154,9 +157,10 @@ public class UploaderService extends Service {
     }
 
     public interface Communicator {
-        void onAction(Action action);
+        void onAction(Action action, Object... objects);
 
         enum Action {
+            PROGRESS,
             UPLOAD_STARTED,
             UPLOAD_FINISHED,
             UPLOAD_FAILED

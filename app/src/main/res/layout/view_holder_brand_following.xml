@@ -63,7 +63,6 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_photographer_profile" />
 
-
                 <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/brand_search_following"
                     android:layout_width="wrap_content"

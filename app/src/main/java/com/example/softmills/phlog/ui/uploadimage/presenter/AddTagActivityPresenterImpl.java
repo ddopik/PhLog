@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.uploadimage.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.androidnetworking.interfaces.UploadProgressListener;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
@@ -46,7 +47,11 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
             case NORMAL_IMG: {
                 //user is uploading Normal Photo
                 addTagActivityView.viewUploadProgress(true);
-                BaseNetworkApi.uploadPhotoGrapherPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected)
+                BaseNetworkApi.uploadPhotoGrapherPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected, new UploadProgressListener() {
+                    @Override
+                    public void onProgress(long bytesUploaded, long totalBytes) {
+                    }
+                })
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(uploadImgResponse -> {

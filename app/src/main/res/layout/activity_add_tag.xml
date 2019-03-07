@@ -122,11 +122,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center|top"
-                android:background="@drawable/rounded_orange_btn"
+                android:background="@color/text_input_color"
                 android:fontFamily="@font/segoe_sb"
                 android:text="@string/upload_photo"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
+
+            <ProgressBar
+                tools:progress="40"
+                android:id="@+id/upload_progress"
+                style="@style/PhlogHorizontalProgressBarThem"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp4" />
 
         </LinearLayout>
 

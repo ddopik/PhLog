@@ -69,21 +69,6 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
 
     @Override
     public void logout() {
-        BaseNetworkApi.logout()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> {
-                    if (s != null)
-                        sendFirebaseTokenAsLoggedOut();
-                    else
-                        photoGrapherProfileActivityView.showMessage(context.getString(R.string.error_logout));
-                }, throwable -> {
-                    photoGrapherProfileActivityView.showMessage(context.getString(R.string.error_logout));
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
-                });
-    }
-
-    private void sendFirebaseTokenAsLoggedOut() {
         BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), false, PrefUtils.getFirebaseToken(context)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

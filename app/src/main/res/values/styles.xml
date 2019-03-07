@@ -93,4 +93,9 @@
         <!-- We do not want to change the status bar color -->
         <item name="colorPrimaryDark">@color/transparent</item>
     </style>
+
+    <style name="PhlogHorizontalProgressBarThem" parent="Base.Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:colorControlActivated">@color/text_input_color</item>
+    </style>
 </resources>
