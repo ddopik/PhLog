@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.network;
 
 import com.androidnetworking.common.Priority;
+import com.androidnetworking.interfaces.UploadProgressListener;
 import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
 import com.example.softmills.phlog.base.commonmodel.Device;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
@@ -21,8 +22,6 @@ import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsResponse;
 import com.example.softmills.phlog.ui.commentimage.model.LikeImageResponse;
 import com.example.softmills.phlog.ui.commentimage.model.SocialAutoCompleteResponse;
 import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentResponse;
-import com.example.softmills.phlog.ui.earning.model.EarningDetailsResponse;
-import com.example.softmills.phlog.ui.earning.model.EarningListResponse;
 import com.example.softmills.phlog.ui.login.model.LoginResponse;
 import com.example.softmills.phlog.ui.login.model.SocialLoginResponse;
 import com.example.softmills.phlog.ui.notification.model.NotificationResponse;
@@ -138,7 +137,6 @@ public class BaseNetworkApi {
      private static final String COMMENT_REPLAY_URL = BASE_URL + "/photographer/photo/comment/list";
     private static final String EARNING_DETAILS_URL = BASE_URL + "/photographer/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
-    private static final String LOGOUT_URL = BASE_URL + "/photographer/auth/logout";
     private static final String UPDATE_FIREBASE_TOKEN_URL = BASE_URL + "/photographer/auth/device/set";
 
 
@@ -523,7 +521,7 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<UploadImgResponse> uploadPhotoGrapherPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList) {
+    public static io.reactivex.Observable<UploadImgResponse> uploadPhotoGrapherPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, UploadProgressListener progressListener) {
         return Rx2AndroidNetworking.upload(UPLOAD_PHOTOGRAPHER_PHOTO)
                 .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
@@ -539,6 +537,7 @@ public class BaseNetworkApi {
                         .writeTimeout(1, TimeUnit.MINUTES)
                         .build())
                 .build()
+                .setUploadProgressListener(progressListener)
                 .getObjectObservable(UploadImgResponse.class);
     }
 
@@ -655,13 +654,6 @@ public class BaseNetworkApi {
     public static Observable<String> updateFirebaseToken(Device device) {
         return Rx2AndroidNetworking.post(UPDATE_FIREBASE_TOKEN_URL)
                 .addBodyParameter(device)
-                .build()
-                .getStringObservable();
-    }
-
-    public static Observable<String> logout() {
-        return Rx2AndroidNetworking.post(LOGOUT_URL)
-                .setPriority(Priority.HIGH)
                 .build()
                 .getStringObservable();
     }

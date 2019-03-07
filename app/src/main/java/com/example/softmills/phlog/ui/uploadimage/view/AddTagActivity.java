@@ -72,6 +72,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private String imageCaption;
     private String draftState;
     private String imageLocation;
+    private ProgressBar progress;
 
     private AddTagActivityPresenter addTagActivityPresenter;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -83,7 +84,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private Message pendingMessage;
     private Messenger messenger;
 
-    private UploaderService.Communicator communicator = action -> {
+    private UploaderService.Communicator communicator = (action, objects) -> {
         switch (action) {
             case UPLOAD_STARTED:
                 uploadImageProgress.setVisibility(View.VISIBLE);
@@ -108,6 +109,10 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                             dialog.dismiss();
                             finish();
                         }).show();
+                break;
+            case PROGRESS:
+                int p = (int) objects[0];
+                progress.setProgress(p);
                 break;
         }
     };
@@ -205,6 +210,8 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         selectedTagAdapter = new SelectedTagAdapter(tagList);
 
         tagsRv.setAdapter(selectedTagAdapter);
+
+        progress = findViewById(R.id.upload_progress);
     }
 
     @Override

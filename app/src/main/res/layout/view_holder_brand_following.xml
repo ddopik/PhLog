@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/view_holder_item_list_height_med"
+    android:layout_height="@dimen/view_holder_item_list_height_large"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/dp8"
     app:cardBackgroundColor="@color/black"
@@ -62,7 +62,6 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_photographer_profile" />
-
 
                 <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/brand_search_following"
