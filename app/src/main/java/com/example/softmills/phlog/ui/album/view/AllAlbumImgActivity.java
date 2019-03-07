@@ -110,7 +110,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             @Override
             public void onAlbumImgClick(BaseImage albumImg) {
                 Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
-                if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) || photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
+                if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) ) {
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                 }
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);

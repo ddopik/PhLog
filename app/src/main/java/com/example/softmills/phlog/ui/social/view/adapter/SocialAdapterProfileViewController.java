@@ -53,7 +53,7 @@ public class SocialAdapterProfileViewController {
         Photographer photographer = socialData.profiles.get(0);
         socialViewHolder.socialProfileType3FullName.setText(photographer.fullName);
         socialViewHolder.socialProfileType3UserName.setText(new StringBuilder().append("@").append(photographer.userName).toString());
-        getUserPhotos(photographer.id, socialData);
+//        getUserPhotos(photographer.id, socialData);
 
         GlideApp.with(context)
                 .load(photographer.imageProfile)
@@ -63,17 +63,17 @@ public class SocialAdapterProfileViewController {
                 .into(socialViewHolder.socialProfileType3Icon);
 
 
-        if (photographer.photoGrapherPhotos.size() >= 3) {
+        if (photographer.photos.size() >= 3) {
             socialViewHolder.socialProfileAlbumType3PhotosContainer.setBackgroundResource(0);
             GlideApp.with(context)
-                    .load(photographer.photoGrapherPhotos.get(0).url)
+                    .load(photographer.photos.get(0) )
                     .centerCrop()
                     .placeholder(R.drawable.default_photographer_profile)
                     .error(R.drawable.default_photographer_profile)
                     .into(socialViewHolder.socialProfileType3Img_1);
 
             GlideApp.with(context)
-                    .load(photographer.photoGrapherPhotos.get(1).url)
+                    .load(photographer.photos.get(1))
                     .placeholder(R.drawable.default_photographer_profile)
                     .centerCrop()
                     .error(R.drawable.default_photographer_profile)
@@ -81,7 +81,7 @@ public class SocialAdapterProfileViewController {
 
 
             GlideApp.with(context)
-                    .load(photographer.photoGrapherPhotos.get(2).url)
+                    .load(photographer.photos.get(2))
                     .centerCrop()
                     .placeholder(R.drawable.default_photographer_profile)
                     .error(R.drawable.default_photographer_profile)
@@ -89,7 +89,7 @@ public class SocialAdapterProfileViewController {
 
 
             GlideApp.with(context)
-                    .load(photographer.photoGrapherPhotos.get(3).url)
+                    .load(photographer.photos.get(3))
                     .error(R.drawable.default_photographer_profile)
                     .apply(new RequestOptions().centerCrop())
                     .into(socialViewHolder.socialProfileType3Img_4);
@@ -222,33 +222,33 @@ public class SocialAdapterProfileViewController {
 
     }
 
-    @SuppressLint("CheckResult")
-    private void getUserPhotos(int userId, SocialData socialData) {
-
-
-        BaseNetworkApi.getUserProfilePhotos(String.valueOf(userId), 0)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(userPhotosResponse -> {
-                            getUserIndex(userId)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(index -> {
-                                        socialData.profiles.get(0).photoGrapherPhotos = userPhotosResponse.data.data;
-                                        if (index > 0) {
-                                            socialDataList.set(index, socialData);
-                                            socialAdapter.notifyDataSetChanged();
-                                        }
-
-                                    }, throwable -> {
-                                        ErrorUtils.Companion.setError(context, TAG, throwable);
-                                    });
-
-                        }
-                        , throwable -> {
-                            ErrorUtils.Companion.setError(context, TAG, throwable);
-                        });
-    }
+//    @SuppressLint("CheckResult")
+//    private void getUserPhotos(int userId, SocialData socialData) {
+//
+//
+//        BaseNetworkApi.getUserProfilePhotos(String.valueOf(userId), 0)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(userPhotosResponse -> {
+//                            getUserIndex(userId)
+//                                    .subscribeOn(Schedulers.io())
+//                                    .observeOn(AndroidSchedulers.mainThread())
+//                                    .subscribe(index -> {
+//                                        socialData.profiles.get(0).photoGrapherPhotos = userPhotosResponse.data.data;
+//                                        if (index > 0) {
+//                                            socialDataList.set(index, socialData);
+//                                            socialAdapter.notifyDataSetChanged();
+//                                        }
+//
+//                                    }, throwable -> {
+//                                        ErrorUtils.Companion.setError(context, TAG, throwable);
+//                                    });
+//
+//                        }
+//                        , throwable -> {
+//                            ErrorUtils.Companion.setError(context, TAG, throwable);
+//                        });
+//    }
 
 
     private Observable<Integer> getUserIndex(int userId) {

@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +11,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Business;
-import com.example.softmills.phlog.base.commonmodel.Campaign;
-import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
@@ -41,6 +36,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
     private SocialAdapter socialAdapter;
     private List<SocialData> socialDataList = new ArrayList<>();
     private PagingController pagingController;
+    private boolean isLoading;
 
     @Nullable
     @Override
@@ -95,10 +91,17 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
 
             @Override
             public void getPagingControllerCallBack(int page) {
-                socialFragmentPresenter.getSocialData(false);
+                if (page < 6) {
+                    socialFragmentPresenter.getSocialData(false);
+                }
+
+
             }
         };
+
+
     }
+
 
     @Override
     public void viewSocialData(List<SocialData> socialDataList) {
@@ -110,6 +113,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
 
     @Override
     public void viewSocialDataProgress(boolean state) {
+        isLoading = state;
         if (state) {
             socialProgress.setVisibility(View.VISIBLE);
         } else {
