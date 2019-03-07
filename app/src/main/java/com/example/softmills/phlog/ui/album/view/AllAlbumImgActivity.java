@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.album.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -120,7 +121,14 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
             @Override
             public void onAlbumImgDeleteClick(BaseImage albumImg) {
-                allAlbumImgPresnter.deleteImage(albumImg);
+                new AlertDialog.Builder(AllAlbumImgActivity.this)
+                        .setTitle(R.string.confirmation)
+                        .setMessage(R.string.delete_photo_confirmation)
+                        .setPositiveButton(R.string.yes, (dialog, which) -> {
+                            allAlbumImgPresnter.deleteImage(albumImg);
+                            dialog.dismiss();
+                        }).setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss())
+                        .show();
             }
 
             @Override
@@ -220,10 +228,10 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         for (int i = 0; i < albumImgList.size(); i++) {
             if (albumImgList.get(i).id == baseImage.id && state) {
                 albumImgList.remove(i);
+                allAlbumImgAdapter.notifyItemRemoved(i);
                 break;
             }
         }
-        allAlbumImgAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -234,7 +242,6 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                 break;
             }
         }
-        allAlbumImgAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -282,8 +283,15 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     @Override
     public void onImageDeleted(BaseImage baseImage, boolean state) {
         if (state) {
-            previewImage.isImageDeleted = state;
-            commentsAdapter.notifyDataSetChanged();
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.confirmation)
+                    .setMessage(R.string.delete_photo_confirmation)
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
+                        previewImage.isImageDeleted = state;
+                        commentsAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }).setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss())
+                    .show();
         }
     }
 
