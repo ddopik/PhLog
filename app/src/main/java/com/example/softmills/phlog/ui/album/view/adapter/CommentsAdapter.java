@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -179,6 +180,14 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 });
             }
 
+            if (previewImage.photographer != null) {
+                if (previewImage.photographer.id.equals(Integer.valueOf(PrefUtils.getUserId(context)))) {
+                    commentViewHolder.deleteBtn.setVisibility(View.VISIBLE);
+                }
+            }
+            commentViewHolder.deleteBtn.setOnClickListener(v -> {
+                commentAdapterAction.onDeleteClicked();
+            });
 
 //////////////////////////////////////COMMENT/////////////////////////////////////////
         } else if (getItemViewType(i) == COMMENT || getItemViewType(i) == REPLY_COMMENT) {
@@ -594,6 +603,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         ImageView commentImg, commentAuthorIcon;
         ImageButton imageLikeBtn, imageCommentBtn;
         RatingBar photoRating;
+        Button deleteBtn;
 
         ///Comment_value Cell
         CardView parentCommentView;
@@ -621,7 +631,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 imgLikeNum = view.findViewById(R.id.comment_preview_img_like_num);
                 imgCommentNum = view.findViewById(R.id.comment_preview_img_comment_num);
                 photoRating = view.findViewById(R.id.photo_rating);
-
+                deleteBtn = view.findViewById(R.id.album_img_delete_btn);
 
             } else if (type == COMMENT) {
                 parentCommentView = view.findViewById(R.id.comment_parent_view);
@@ -652,6 +662,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
 
         void onReplayClicked(Comment comment, Constants.CommentListType commentListType);
+
+        default void onDeleteClicked() {
+        }
 
     }
 

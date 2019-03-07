@@ -55,7 +55,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     public static String IMAGE_DATA = "image_data";
     public static String IMAGE_TYPE = "image_type";
     public static final int ImageComment_REQUEST_CODE = 1396;
-     private CustomTextView toolBarTitle;
+    private CustomTextView toolBarTitle;
     private ImageButton backBtn;
     private BaseImage previewImage;
     private FrameLayout addCommentProgress;
@@ -202,7 +202,17 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
                 startActivity(intent);
             }
 
-
+            @Override
+            public void onDeleteClicked() {
+                new AlertDialog.Builder(ImageCommentActivity.this)
+                        .setTitle(R.string.confirmation)
+                        .setMessage(R.string.delete_photo_confirmation)
+                        .setPositiveButton(R.string.yes, (dialog, which) -> {
+                            imageCommentActivityPresenter.deleteImage(previewImage);
+                            dialog.dismiss();
+                        }).setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss())
+                        .show();
+            }
         };
 
 
@@ -282,17 +292,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
     @Override
     public void onImageDeleted(BaseImage baseImage, boolean state) {
-        if (state) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.confirmation)
-                    .setMessage(R.string.delete_photo_confirmation)
-                    .setPositiveButton(R.string.yes, (dialog, which) -> {
-                        previewImage.isImageDeleted = state;
-                        commentsAdapter.notifyDataSetChanged();
-                        dialog.dismiss();
-                    }).setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss())
-                    .show();
-        }
+        finish();
     }
 
     @Override
