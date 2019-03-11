@@ -91,10 +91,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
 
             @Override
             public void getPagingControllerCallBack(int page) {
-                if (page < 6) {
                     socialFragmentPresenter.getSocialData(false);
-                }
-
 
             }
         };

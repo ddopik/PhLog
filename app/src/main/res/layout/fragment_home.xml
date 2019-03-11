@@ -77,7 +77,7 @@
             <com.example.softmills.phlog.base.widgets.CustomRecyclerView
                 android:id="@+id/social_rv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/social_fragment_recycler_height"
                 android:layout_marginBottom="@dimen/dp45"
                 app:orientation="vertical" />
 

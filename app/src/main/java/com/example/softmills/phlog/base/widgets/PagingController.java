@@ -73,10 +73,8 @@ public abstract class PagingController {
 
         // If it isn’t currently loading, we check to see if we have breached
         // the visibleThreshold and need to reload more data.
-        // If we do need to reload some more data, we execute onLoadMore to fetch the data.
-        if (!loading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
-            //            onLoadMore(currentPage + 1, totalItemCount);
-            getPagingControllerCallBack(currentPage + 1);
+         if (!loading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
+             getPagingControllerCallBack(currentPage + 1);
             loading = true;
         }
     }

@@ -162,7 +162,7 @@
 
 
 
-
+    <dimen name="social_fragment_recycler_height">750dp</dimen>
     <dimen name="social_img_slider_w">175dp</dimen>
     <dimen name="social_img_slider_h">280dp</dimen>
     <dimen name="social_profile_img_w">300dp</dimen>
@@ -173,5 +173,6 @@
     <dimen name="comment_header_photo_h">300dp</dimen>
     <dimen name="search_bar_radius">10dp</dimen>
     <dimen name="ic_size_med">28dp</dimen>
+
 
 </resources>
