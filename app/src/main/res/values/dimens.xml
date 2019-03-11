@@ -131,7 +131,6 @@
     <dimen name="item_flex_height_l">250dp</dimen>
     <dimen name="item_flex_height_s">175dp</dimen>
     <dimen name="ic_size">24dp</dimen>
-    <dimen name="ic_size_med">28dp</dimen>
     <dimen name="dp1">1dp</dimen>
     <dimen name="ic_size_s">12dp</dimen>
     <dimen name="ic_size_m">16dp</dimen>
@@ -173,5 +172,6 @@
     <dimen name="bottom_bar_item_padding">2dp</dimen>
     <dimen name="comment_header_photo_h">300dp</dimen>
     <dimen name="search_bar_radius">10dp</dimen>
+    <dimen name="ic_size_med">28dp</dimen>
 
 </resources>
