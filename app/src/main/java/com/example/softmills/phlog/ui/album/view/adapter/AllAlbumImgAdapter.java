@@ -25,6 +25,7 @@ import java.util.List;
 
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_PHOTOS_LIST;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_SAVED_LIST;
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.SOCIAL_LIST;
 
 /**
  * Created by abdalla_maged on 11/5/2018.
@@ -58,8 +59,13 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
 
         Photographer photographer;
+        if (photosListType ==null ){
+            photosListType=SOCIAL_LIST;
+        }
         if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) || photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
             photographer = PrefUtils.getCurrentUser(context);
+
+
         } else {
             photographer = albumImgList.get(i).photographer;
         }
