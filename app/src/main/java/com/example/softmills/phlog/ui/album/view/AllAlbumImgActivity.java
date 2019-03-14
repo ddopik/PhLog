@@ -37,6 +37,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     public static String ALBUM_ID = "album_id";
     public static String ALL_ALBUM_IMAGES = "album_list";
     public static String SELECTED_IMG_ID = "selected_img_id";
+    /// set your Proper type of list for later processes
     public static String LIST_TYPE = "list_type";
     public static String LIST_NAME = "list_name";
     private PhotosListType photosListType;
@@ -59,7 +60,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
     @Override
     public void initView() {
-        if (getIntent().getParcelableArrayListExtra(ALL_ALBUM_IMAGES) != null) {
+        if (getIntent().getParcelableArrayListExtra(ALL_ALBUM_IMAGES) != null  ) {
             topBarTitle = findViewById(R.id.toolbar_title);
             mainBackBtn = findViewById(R.id.back_btn);
             mainBackBtn.setVisibility(View.INVISIBLE);
@@ -111,7 +112,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             @Override
             public void onAlbumImgClick(BaseImage albumImg) {
                 Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
-                if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) ) {
+                if ( photosListType !=null && photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) ) {
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                 }
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
