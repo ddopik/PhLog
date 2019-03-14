@@ -60,10 +60,10 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
     @Override
     public void initView() {
-        if (getIntent().getParcelableArrayListExtra(ALL_ALBUM_IMAGES) != null  ) {
+        if (getIntent().getParcelableArrayListExtra(ALL_ALBUM_IMAGES) != null) {
             topBarTitle = findViewById(R.id.toolbar_title);
             mainBackBtn = findViewById(R.id.back_btn);
-            mainBackBtn.setVisibility(View.INVISIBLE);
+            mainBackBtn.setVisibility(View.VISIBLE);
             albumImgProgress = findViewById(R.id.album_img_list_progress_bar);
             CustomRecyclerView allAlbumImgRv = findViewById(R.id.album_img_list_rv);
 
@@ -112,7 +112,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             @Override
             public void onAlbumImgClick(BaseImage albumImg) {
                 Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
-                if ( photosListType !=null && photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) ) {
+                if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                 }
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
@@ -178,7 +178,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             }
         };
 
-
+        mainBackBtn.setOnClickListener(v -> {
+            onBackPressed();
+        });
     }
 
     @Override
@@ -192,15 +194,13 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
     @Override
     public void onImageSavedToProfile(BaseImage baseImage, boolean state) {
-        for (int i=0;i< albumImgList.size();i++) {
-
-
+        for (int i = 0; i < albumImgList.size(); i++) {
 
 
             if (albumImgList.get(i).id == baseImage.id) {
                 albumImgList.get(i).isSaved = state;
-                if (!state){
-                    if(photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)){
+                if (!state) {
+                    if (photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
                         albumImgList.remove(i);
                     }
 

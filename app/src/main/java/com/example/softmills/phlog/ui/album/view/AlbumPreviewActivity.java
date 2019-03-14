@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
 
     public static final String ALBUM_PREVIEW_ID = "album_preview_id";
+    private ImageButton backBtn;
+
     private int albumID;
     private List<AlbumGroup> albumGroupList = new ArrayList<>();
     private List<BaseImage> imageList = new ArrayList<>();
@@ -63,6 +66,8 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
     @Override
     public void initView() {
+        backBtn = findViewById(R.id.back_btn);
+        backBtn.setVisibility(View.VISIBLE);
         albumToolBarTitle = findViewById(R.id.toolbar_title);
         albumPreviewImg = findViewById(R.id.album_preview_img);
         albumRv = findViewById(R.id.album_rv);
@@ -102,7 +107,9 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
             startActivity(intent);
 
         };
-
+        backBtn.setOnClickListener(v -> {
+            onBackPressed();
+        });
     }
 
     @Override
