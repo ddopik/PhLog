@@ -47,6 +47,7 @@ import static com.example.softmills.phlog.Utiltes.Constants.CommentListType.VIEW
 
 public class ReplayCommentActivity extends BaseActivity implements ReplayCommentActivityView {
 
+    public static final String MENTIONS = "mention";
     private String TAG = ReplayCommentActivity.class.getSimpleName();
     public static String COMMENT_IMAGE = "comment_image";
     public static String COMMENT_LIST_TYPE = "comment_list_type";
@@ -174,13 +175,15 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
 
             @Override
-            public void onReplayClicked(Comment comment, Constants.CommentListType commentListType) {
+            public void onReplayClicked(Comment comment, Mentions mentions, Constants.CommentListType commentListType) {
                 Intent intent = new Intent(getBaseContext(), ReplayCommentActivity.class);
                 intent.putExtra(ReplayCommentActivity.COMMENT_IMAGE, previewImage);
                 intent.putExtra(ReplayCommentActivity.COMMENT_LIST_TYPE, commentListType);
                 intent.putExtra(ReplayCommentActivity.REPLY_HEADER_COMMENT, comment);
+                intent.putExtra(ReplayCommentActivity.MENTIONS, mentions);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                intent.putExtra(ReplayCommentActivity.MENTIONS, mentions);
             }
 
 
