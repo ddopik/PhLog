@@ -157,36 +157,40 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
             @Override
             public void onImageCommentClicked() {
 
-                if (commentList.size() == 2) {
-                    commentsRv.scrollToPosition(commentList.size() - 1);
-                    CustomAutoCompleteTextView customAutoCompleteTextView = (CustomAutoCompleteTextView) commentsRv.getChildAt(commentList.size() - 1).findViewById(R.id.img_send_comment_val);
-                    customAutoCompleteTextView.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(customAutoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
+
+//                if (commentList.size() <= 3) {
+//                    commentsRgit v.scrollToPosition(commentList.size() - 1);
+//                    CustomAutoCompleteTextView customAutoCompleteTextView = (CustomAutoCompleteTextView) commentsRv.getChildAt(commentList.size() - 1).findViewById(R.id.img_send_comment_val);
+//                    customAutoCompleteTextView.requestFocus();
+//                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.showSoftInput(customAutoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
+////
+//                } else {
+                   /**
+                    *  Pegging causing this block to crash
+                    * */
+//                    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+//                        @Override
+//                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                            switch (newState) {
+//                                case SCROLL_STATE_IDLE:
+//                                    //we reached the target position
+//                                    CustomAutoCompleteTextView customAutoCompleteTextView = commentsRv.getChildAt(commentsRv.getChildCount()-1).findViewById(R.id.img_send_comment_val);
+//                                    customAutoCompleteTextView.requestFocus();
+////
+//                                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                                    imm.showSoftInput(customAutoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
+//                                    recyclerView.removeOnScrollListener(this);
+//                                    break;
+//                            }
+//                        }
+//                    };
 //
-                } else {
-                    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-                        @Override
-                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                            switch (newState) {
-                                case SCROLL_STATE_IDLE:
-                                    //we reached the target position
-                                    CustomAutoCompleteTextView customAutoCompleteTextView = commentsRv.getChildAt(commentsRv.getChildCount()).findViewById(R.id.img_send_comment_val);
-                                    customAutoCompleteTextView.requestFocus();
-//
-                                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    imm.showSoftInput(customAutoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
-                                    recyclerView.removeOnScrollListener(this);
-                                    break;
-                            }
-                        }
-                    };
-
-                    commentsRv.addOnScrollListener(onScrollListener);
-                    commentsRv.getLayoutManager().smoothScrollToPosition(commentsRv, null, commentList.size() - 1);
+//                    commentsRv.addOnScrollListener(onScrollListener);
+//                    commentsRv.getLayoutManager().smoothScrollToPosition(commentsRv, null, commentList.size() - 1);
 
 
-                }
+//                }
             }
 
 
