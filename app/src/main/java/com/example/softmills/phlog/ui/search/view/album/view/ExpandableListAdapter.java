@@ -135,4 +135,5 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         void onChildViewClickListener(FilterOption filterOption);
 
     }
+
 }

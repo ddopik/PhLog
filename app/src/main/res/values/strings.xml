@@ -54,9 +54,9 @@
     <string name="edit">Edit</string>
     <string name="total_photos">Total Photos</string>
     <string name="followers">Followers</string>
-    <string name="home">Home</string>
+    <string name="home">Stories</string>
     <string name="missions">Missions</string>
-    <string name="Notification">Notification</string>
+    <string name="Notification">Notifications</string>
     <string name="me">Me</string>
     <string name="remind_me">REMIND ME</string>
     <string name="join">JOIN</string>
@@ -203,4 +203,5 @@
     <string name="connection_problem_check_network">Connection error. Please, check your network.</string>
     <string name="delete_photo_confirmation">Are you sure you want to delete this photo?</string>
     <string name="confirmation">Confirmation</string>
+    <string name="clear_all">Clear All</string>
 </resources>

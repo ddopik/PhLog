@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
+import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
 import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragmentView;
 
@@ -71,6 +72,23 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void getAlbumSearchQuery(String s, List<SearchFilter> searchFilterList, int page) {
+
+        
+        albumSearchFragmentView.showFilterSearchProgress(true);
+        BaseNetworkApi.getSearchAlbum(s, getFilter(searchFilterList),String.valueOf(page))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(albumSearchResponse -> {
+                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data);
+                    albumSearchFragmentView.showFilterSearchProgress(false);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    albumSearchFragmentView.showFilterSearchProgress(false);
+                });
+    }
+
+    @Override
+    public Map<String,String> getFilter(List<SearchFilter> searchFilterList){
         int filterCount=0;
         Map<String,String> filtersMap=new HashMap<String, String>();
         for (int i=0;i<searchFilterList.size();i++){
@@ -82,17 +100,9 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
             }
 
         }
-        
-        albumSearchFragmentView.showFilterSearchProgress(true);
-        BaseNetworkApi.getSearchAlbum(s, filtersMap,String.valueOf(page))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(albumSearchResponse -> {
-                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data);
-                    albumSearchFragmentView.showFilterSearchProgress(false);
-                }, throwable -> {
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
-                    albumSearchFragmentView.showFilterSearchProgress(false);
-                });
+        return filtersMap;
     }
+
+
+
 }
