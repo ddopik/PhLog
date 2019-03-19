@@ -19,7 +19,7 @@
             app:layout_scrollFlags="scroll|snap"
             app:titleEnabled="false">
 
-            <include layout="@layout/user_profile_header_view_2" />
+            <include layout="@layout/user_profile_header_view" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 

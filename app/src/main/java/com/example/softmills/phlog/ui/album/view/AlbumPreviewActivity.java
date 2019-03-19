@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
@@ -22,11 +21,11 @@ import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponseData;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenter;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenterImpl;
 import com.example.softmills.phlog.ui.album.view.adapter.AlbumAdapter;
-import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.SOCIAL_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
@@ -45,7 +44,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     private ImageView albumPreviewImg;
     private ProgressBar albumPreviewProgress;
     private CustomRecyclerView albumRv;
-    private CustomTextView albumNameTV, followingNumber, albumToolBarTitle;
+    private CustomTextView albumNameTV, photosCount, albumToolBarTitle;
     private PagingController pagingController;
     private AlbumPreviewActivityPresenter albumPreviewActivityPresenter;
 
@@ -73,7 +72,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         albumRv = findViewById(R.id.album_rv);
         albumPreviewProgress = findViewById(R.id.user_profile_progress_bar);
         albumNameTV = findViewById(R.id.album_name_text_view);
-        followingNumber = findViewById(R.id.following_number_text_view);
+        photosCount = findViewById(R.id.album_photos_number_text_view);
         // Set adapter object.
         albumAdapter = new AlbumAdapter(getBaseContext(), albumGroupList);
         albumRv.setAdapter(albumAdapter);
@@ -103,6 +102,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
             intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
             intent.putExtra(AllAlbumImgActivity.LIST_NAME, albumToolBarTitle.getText());
             intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
+            intent.putExtra(AllAlbumImgActivity.LIST_TYPE, SOCIAL_LIST);
             intent.putExtra(SELECTED_IMG_ID, albumImg.id);
             startActivity(intent);
 
@@ -175,7 +175,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
 
 
-        followingNumber.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
+        photosCount.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
     }
 }
 

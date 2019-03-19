@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -31,8 +30,8 @@ import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearch;
 import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearchData;
-import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
 import com.example.softmills.phlog.ui.search.view.album.model.Filter;
+import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchFragmentImpl;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchPresenter;
 import com.jakewharton.rxbinding3.widget.RxTextView;
@@ -48,7 +47,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.example.softmills.phlog.ui.album.view.AlbumPreviewActivity.ALBUM_PREVIEW_ID;
 
 /**
@@ -79,7 +77,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private ImageView promptImage;
     private TextView promptText;
     private CustomTextView filterIcon, clearFilterBtn;
-    private String totalResultCount="0";
+    private String totalResultCount = "0";
 
 
     public static AlbumSearchFragment getInstance() {
@@ -304,6 +302,15 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
 
                 if (textViewTextChangeEvent.getCount() == 0) {
+
+
+                    if (textViewTextChangeEvent.getCount() == 0) {
+                        setTotalResultCount("0");
+                        if (searchResultCount != null) {
+                            searchResultCount.setVisibility(View.INVISIBLE);
+                        }
+                    }
+
                     promptView.setVisibility(View.VISIBLE);
                     promptText.setText(R.string.type_something_album);
                     return;
@@ -332,7 +339,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     public void viewSearchAlbum(AlbumSearchData albumSearchData) {
         setTotalResultCount(String.valueOf(albumSearchData.total));
         filterExpListView.setVisibility(View.GONE);
-        if ( clearFilterBtn!=null ){
+        if (clearFilterBtn != null) {
             clearFilterBtn.setVisibility(View.INVISIBLE);
         }
         albumSearchRv.setVisibility(View.VISIBLE);
@@ -427,17 +434,19 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         filterExpListView.setVisibility(View.GONE);
         albumSearchRv.setVisibility(View.VISIBLE);
 
-        searchResultCount.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString())  ;  }
+        searchResultCount.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
+    }
 
 
     public void setAlbumSearchView(OnSearchTabSelected onSearchTabSelected) {
         this.onSearchTabSelected = onSearchTabSelected;
     }
 
-    private void setTotalResultCount(String count){
-        totalResultCount =count;
+    private void setTotalResultCount(String count) {
+        totalResultCount = count;
     }
-    private String getTotalResultCount(){
+
+    private String getTotalResultCount() {
         return totalResultCount;
     }
 

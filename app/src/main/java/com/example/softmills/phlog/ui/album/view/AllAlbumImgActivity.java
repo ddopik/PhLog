@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.Constants.PhotosListType;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.BaseActivity;
@@ -168,13 +169,21 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             }
 
             @Override
-            public void onAlbumImgPhotoGrapherIconClick(BaseImage albumImg) {
+            public void onAlbumImgHeaderClick(BaseImage albumImg) {
+
                 if (PrefUtils.getUserId(getBaseContext()).equals(String.valueOf(albumImg.photographer.id))) {
                     Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
                     intent.putExtra(UserProfileActivity.USER_ID, String.valueOf(albumImg.photographer.id));
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     getBaseContext().startActivity(intent);
+                }else if ( !photosListType.equals(PhotosListType.USER_PROFILE_PHOTOS_LIST) ){ //case user already came from photographer Profile list do not navigate
+                    Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
+                    intent.putExtra(UserProfileActivity.USER_ID, String.valueOf(albumImg.photographer.id));
+                    intent.putExtra(UserProfileActivity.USER_TYPE, Constants.UserType.USER_TYPE_BUSINESS);
+                    getBaseContext().startActivity(intent);
                 }
+
+
             }
         };
 

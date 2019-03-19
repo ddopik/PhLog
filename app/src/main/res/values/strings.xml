@@ -127,7 +127,7 @@
     <string name="action_logout">Logout</string>
     <string name="action_edit">Edit</string>
     <string name="followed">Followed</string>
-    <string name="un_follow">Unfollow</string>
+    <string name="un_follow">UnFollow</string>
     <string name="image_saved">Image saved</string>
     <string name="failed_to_save">Failed to save</string>
     <string name="failed_to_unsave">Failed to unsave</string>
@@ -160,7 +160,7 @@
     <string name="view_in_cart">View in cart</string>
 
     <string name="login">Login</string>
-    <string name="photos_number">%1$d Photos</string>
+    <string name="photos_number">%1$d Photo</string>
     <string name="unfollowing_state">You un-followed</string>
     <string name="days_left_value">Days Left</string>
     <string name="hosted_by_value">Hosted by %1$s</string>
@@ -176,8 +176,8 @@
     <string name="select_option">Select an option</string>
     <string name="select_from_photos">Select from photos</string>
     <string name="upload_new_photo">Upload new photo</string>
-    <string name="phlog_uploading">PHLOG is uploading your photo</string>
-    <string name="phlog_finished_uploading">PHLOG finished uploading your photo</string>
+    <string name="phlog_uploading">Phlog is uploading your photo</string>
+    <string name="phlog_finished_uploading">Phlog finished uploading your photo</string>
     <string name="caption_is_required">Caption is required</string>
     <string name="tag_is_required">Add at least one tag to your photo</string>
     <string name="upload_failed">Upload failed</string>
@@ -185,7 +185,7 @@
     <string name="your_photo_uploaded">Your photo is uploaded</string>
     <string name="view_in_profile">View in profile</string>
     <string name="earning_details">Earning details</string>
-    <string name="selcet_photos_from_phlog">Select from saved photos in PHLOG</string>
+    <string name="selcet_photos_from_phlog">Select from saved photos in Phlog</string>
     <string name="you_havnt_uploaded_yet">You hav\'t uploaded any photos yet</string>
     <string name="photographer_hasnt_uploaded_yet">No photos yet</string>
     <string name="delete">Delete</string>

@@ -6,7 +6,7 @@
     android:layout_height="?actionBarSize"
     android:layout_gravity="bottom"
     android:background="@color/gray400"
-    app:fabCradleVerticalOffset="12dp"
+
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     tools:ignore="BottomAppBar">

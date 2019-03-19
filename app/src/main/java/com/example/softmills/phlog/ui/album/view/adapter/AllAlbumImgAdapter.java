@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -139,7 +140,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgViewHolder.albumImgComment.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgLikeVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgCommentVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
-            albumImgViewHolder.albumIcon.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgPhotoGrapherIconClick(albumImgList.get(i)));
+            albumImgViewHolder.albumImgHeader.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgHeaderClick(albumImgList.get(i)));
             albumImgViewHolder.followPhotoGrapherBtn.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgFollowClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgSaveBtn.setOnClickListener(v -> {
                 onAlbumImgClicked.onAlbumImgSaveClick(albumImgList.get(i));
@@ -171,6 +172,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
     public class AlbumImgViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout albumImgHeader;
         ImageView albumIcon, albumImg;
         TextView authorName, authorUserName, imageCommentTagVal, albumImgLikeVal, albumImgCommentVal;
         ImageButton albumImgLike, albumImgComment, albumImgSaveBtn;
@@ -178,6 +180,8 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         AlbumImgViewHolder(View view) {
             super(view);
+            albumImgHeader = view.findViewById(R.id.album_img_header);
+
             albumIcon = view.findViewById(R.id.album_icon);
             albumImg = view.findViewById(R.id.album_img);
             authorName = view.findViewById(R.id.author_name);
@@ -206,7 +210,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         void onAlbumImgFollowClick(BaseImage albumImg);
 
-        void onAlbumImgPhotoGrapherIconClick(BaseImage albumImg);
+        void onAlbumImgHeaderClick(BaseImage albumImg);
 
 
     }

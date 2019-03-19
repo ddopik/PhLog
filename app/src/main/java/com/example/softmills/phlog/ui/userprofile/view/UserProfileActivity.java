@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.SOCIAL_LIST;
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.USER_PROFILE_PHOTOS_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_TYPE;
@@ -128,7 +129,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             Intent intent = new Intent(this, AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, image.id);
             intent.putExtra(LIST_NAME, image.photographer.userName);
-            intent.putExtra(LIST_TYPE, SOCIAL_LIST);
+            intent.putExtra(LIST_TYPE, USER_PROFILE_PHOTOS_LIST);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) userPhotoList);
             startActivity(intent);
         };
