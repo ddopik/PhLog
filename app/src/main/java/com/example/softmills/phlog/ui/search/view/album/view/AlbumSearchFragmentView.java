@@ -1,8 +1,7 @@
 package com.example.softmills.phlog.ui.search.view.album.view;
 
-import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearch;
 import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearchData;
-import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
+import com.example.softmills.phlog.ui.search.view.album.model.Filter;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
  */
 public interface AlbumSearchFragmentView {
 
-    void viewSearchFilters(List<SearchFilter> searchFilterList);
+    void viewSearchFilters(List<Filter> filterList);
     void viewSearchAlbum(AlbumSearchData albumSearchData);
     void showMessage(String msg);
     void showFilterSearchProgress(boolean state);

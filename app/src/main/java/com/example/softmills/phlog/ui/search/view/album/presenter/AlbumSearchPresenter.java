@@ -1,7 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.album.presenter;
 
-import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearchData;
-import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
+import com.example.softmills.phlog.ui.search.view.album.model.Filter;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import java.util.Map;
 public interface AlbumSearchPresenter {
 
     void getSearchFilters();
-    void getAlbumSearchQuery(String key, int page);
-     Map<String,String> getFilter(List<SearchFilter> searchFilterList);
-    void getAlbumSearchQuery(String s, List<SearchFilter> searchFilterList, int page);
+      Map<String,String> getFilter(List<Filter> filterList);
+    void getAlbumSearchQuery(String s, List<Filter> filterList, int page);
 }

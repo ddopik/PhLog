@@ -97,10 +97,10 @@ public class SearchActivity extends BaseActivity {
 
         albumTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_album);
-            filterTab.setVisibility(View.VISIBLE);
             clearFilterResultBtn.setVisibility(View.INVISIBLE);
+            filterTab.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             filterTab.setText(getResources().getString(R.string.filters));
-
+            filterTab.setVisibility(View.VISIBLE);
             albumSearchFragment = AlbumSearchFragment.getInstance();
             onFilterClicked = albumSearchFragment;
             albumSearchFragment.setAlbumSearchView(onSearchTabSelected);

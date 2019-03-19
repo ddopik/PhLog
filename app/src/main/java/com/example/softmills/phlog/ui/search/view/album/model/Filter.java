@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by abdalla_maged on 10/30/2018.
  */
-public class SearchFilter {
+public class Filter {
     @SerializedName("id")
     @Expose
     public Integer id;
