@@ -101,6 +101,8 @@ public class SocialAdapterCampaignViewController {
                 context.startActivity(intent);
             });
 
+            if (socialData.campaigns.get(0).prize != null)
+                socialViewHolder.campaignPrize.setText(socialData.campaigns.get(0).prize);
         }
     }
 
