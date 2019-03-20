@@ -16,6 +16,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.ui.social.model.SocialData;
+import com.o_bdreldin.loadingbutton.LoadingButton;
 
 import java.util.List;
 
@@ -122,7 +123,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
         ImageView socialProfileType3Icon, socialProfileType3Img_1, socialProfileType3Img_2, socialProfileType3Img_3, socialProfileType3Img_4, socialDefaultAlbumImg;
         TextView socialProfileType3FullName, socialProfileType3UserName;
-        Button followSocialProfileType3Btn;
+        LoadingButton followSocialProfileType3Btn;
 
         LinearLayout socialAlbumImgGroupContainer, socialProfileAlbumType3PhotosContainer, socialProfileType3ItemHeader;
 
@@ -133,7 +134,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         /////
         LinearLayout socialCampaignContainer;
         ImageView socialCampaignIcon, socialCampaignImg;
-        CustomTextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft;
+        CustomTextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft, campaignPrize;
         Button socialJoinCampaignBtn;
         /////
         ImageView socialBrandIconImg, socialBrandImg;
@@ -166,6 +167,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialCampaignTitle = view.findViewById(R.id.social_campaign_title);
             socialCampaignDayLeft = view.findViewById(R.id.social_campaign_day_left);
             socialJoinCampaignBtn = view.findViewById(R.id.social_join_campaign_btn);
+            campaignPrize = view.findViewById(R.id.campaign_prize);
             /////BrandItemView
             socialBrandIconImg = view.findViewById(R.id.social_brand_icon_img);
             socialBrandImg = view.findViewById(R.id.social_brand_img);

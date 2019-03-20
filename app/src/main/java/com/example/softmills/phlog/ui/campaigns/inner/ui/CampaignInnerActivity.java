@@ -54,7 +54,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
     private Button uploadCampaignBtn;
     private TextView campaignTitle, campaignHostedBy, campaignDayLeft;
     private TabLayout campaignTabs;
-    private SwitchableViewPager campaignViewPager;
+    private ViewPager campaignViewPager;
     private CampaignInnerPresenter campaignInnerPresenter;
 //    private OnMissionCampaignDataRecived onMissionCampaignDataRecived;
 
@@ -150,20 +150,6 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                 , getFragmentTitles(campaign.status, campaign.photosCount));
         campaignViewPager.setAdapter(innerCampaignFragmentPagerAdapter);
         if (campaign.status == CAMPAIGN_STATUS_APPROVED || campaign.status == CAMPAIGN_STATUS_RUNNING) {
-            campaignViewPager.setPagingEnabled(false);
-            campaignTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    if (tab.getPosition() == 1)
-                        campaignViewPager.setCurrentItem(0);
-                }
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-                }
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-                }
-            });
             uploadCampaignBtn.setVisibility(View.VISIBLE);
         } else {
             uploadCampaignBtn.setVisibility(View.GONE);
@@ -173,7 +159,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
 
     private List<Fragment> getFragmentPagerFragment(Campaign campaign) {
         int status = campaign.status;
-        List<Fragment> fragmentList = new ArrayList<Fragment>();
+        List<Fragment> fragmentList = new ArrayList<>();
         CampaignInnerMissionFragment campaignInnerMissionFragment = CampaignInnerMissionFragment.getInstance(campaign);
 //        onMissionCampaignDataRecived = campaignInnerMissionFragment; // pass mission description to campaignInnerMissionFragment
         fragmentList.add(campaignInnerMissionFragment);
@@ -183,7 +169,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
 
     private List<String> getFragmentTitles(int status, int photosCount) {
         List<String> fragmentList = new ArrayList<String>();
-        fragmentList.add(getResources().getString(R.string.tab_mission));
+        fragmentList.add(getResources().getString(R.string.details));
         fragmentList.add(photosCount + " " + getResources().getString(R.string.tab_photos));
         return fragmentList;
     }

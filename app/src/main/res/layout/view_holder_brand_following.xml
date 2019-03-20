@@ -39,16 +39,18 @@
                 android:textSize="@dimen/text_medium"
                 tools:text="Brand text" />
 
-            <Button
+            <com.o_bdreldin.loadingbutton.LoadingButton
                 android:id="@+id/follow_brand"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_orange_btn"
-                android:fontFamily="@font/segoe_sb"
-                android:text="@string/follow"
-                android:textColor="@color/white" />
+                android:layout_weight="2"
+                app:background_color="@color/text_input_color"
+                app:font_family="@font/segoe_sb"
+                app:text="@string/follow"
+                app:text_size="@dimen/font_normal"
+                app:padding="@dimen/dp4"
+                app:text_color="@color/white" />
         </LinearLayout>
 
         <FrameLayout

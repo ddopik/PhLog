@@ -53,16 +53,16 @@
                     tools:text="user name" />
             </LinearLayout>
 
-            <Button
+            <com.o_bdreldin.loadingbutton.LoadingButton
                 android:id="@+id/follow_social_profile"
                 android:layout_width="@dimen/dp45"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_orange_btn"
-                android:fontFamily="@font/segoe_sb"
-                android:text="@string/follow"
-                android:textColor="@color/white" />
+                app:background_color="@color/text_input_color"
+                app:text_color="@color/white"
+                app:font_family="@font/segoe_sb"
+                app:text="@string/follow" />
         </LinearLayout>
 
         <FrameLayout

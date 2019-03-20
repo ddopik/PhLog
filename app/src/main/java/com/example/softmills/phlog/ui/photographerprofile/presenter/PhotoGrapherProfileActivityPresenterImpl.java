@@ -69,7 +69,7 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
 
     @Override
     public void logout() {
-        BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), false, PrefUtils.getFirebaseToken(context)))
+        BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), false, PrefUtils.getFirebaseToken(context)), PrefUtils.getUserToken(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

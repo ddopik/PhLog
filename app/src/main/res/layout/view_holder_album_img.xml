@@ -2,19 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Button
+    <com.o_bdreldin.loadingbutton.LoadingButton
         android:id="@+id/follow_photographer"
         android:layout_width="100dp"
         android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dp16"
-        android:background="@drawable/rounded_orange_btn"
-        android:fontFamily="@string/filters"
+        app:padding="@dimen/dp4"
+        app:background_color="@color/text_input_color"
+        app:font_family="@font/segoe_sb"
         android:text="@string/follow"
-        android:textColor="@color/white"
+        app:loading_drawable="@drawable/loading_2"
+        app:text_color="@color/white"
         android:visibility="gone" />
 
     <Button

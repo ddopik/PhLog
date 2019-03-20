@@ -21,6 +21,7 @@ import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.commonmodel.Tag;
+import com.o_bdreldin.loadingbutton.LoadingButton;
 
 import java.util.List;
 
@@ -63,10 +64,22 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) || photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
             imagePhotographer = PrefUtils.getCurrentUser(context);
-
-
         } else {
             imagePhotographer = albumImgList.get(i).photographer;
+        }
+
+
+        albumImgViewHolder.followPhotoGrapherBtn.setLoading(false);
+        if (imagePhotographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
+            albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.GONE);
+        } else {
+            imagePhotographer = albumImgList.get(i).photographer;
+            if (!imagePhotographer.isFollow) {
+                albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
+            } else {
+                albumImgViewHolder.followPhotoGrapherBtn.setText(context.getString(R.string.un_follow));
+
+            }
         }
 
 
@@ -101,10 +114,9 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         albumImgViewHolder.imageCommentTagVal.setText(tagS);
 
 
-
-        if (imagePhotographer.isFollow){
+        if (imagePhotographer.isFollow) {
             albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.un_follow));
-        }else {
+        } else {
             albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
         }
 
@@ -128,7 +140,10 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgViewHolder.albumImgLikeVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgCommentVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgHeader.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgHeaderClick(albumImgList.get(i)));
-            albumImgViewHolder.followPhotoGrapherBtn.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgFollowClick(albumImgList.get(i)));
+            albumImgViewHolder.followPhotoGrapherBtn.setOnClickListener(v -> {
+                albumImgViewHolder.followPhotoGrapherBtn.setLoading(true);
+                onAlbumImgClicked.onAlbumImgFollowClick(albumImgList.get(i));
+            });
             albumImgViewHolder.albumImgSaveBtn.setOnClickListener(v -> {
                 onAlbumImgClicked.onAlbumImgSaveClick(albumImgList.get(i));
             });
@@ -209,13 +224,14 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         return albumImgList.size();
     }
 
-    public class AlbumImgViewHolder extends RecyclerView.ViewHolder {
+    class AlbumImgViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout albumImgHeader;
         ImageView albumIcon, albumImg;
         TextView authorName, authorUserName, imageCommentTagVal, albumImgLikeVal, albumImgCommentVal;
         ImageButton albumImgLike, albumImgComment, albumImgSaveBtn;
-        Button followPhotoGrapherBtn, albumImgDeleteBtn;
+        Button albumImgDeleteBtn;
+        LoadingButton followPhotoGrapherBtn;
 
         AlbumImgViewHolder(View view) {
             super(view);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,8 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
         socailRv = mainView.findViewById(R.id.social_rv);
         socialProgress = mainView.findViewById(R.id.social_progress);
 
-
+        // this line disables the flash effect when calling notifyItemChanged
+        ((SimpleItemAnimator) socailRv.getItemAnimator()).setSupportsChangeAnimations(false);
         this.socialAdapter = new SocialAdapter(socialDataList, getActivity(), this);
         socailRv.setAdapter(socialAdapter);
 

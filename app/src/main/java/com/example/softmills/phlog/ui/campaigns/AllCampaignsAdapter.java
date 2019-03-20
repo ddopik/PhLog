@@ -88,6 +88,9 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
                 .placeholder(R.drawable.default_place_holder)
                 .apply(RequestOptions.circleCropTransform())
                 .into(campaignViewHolder.campaignBusinessIcon);
+
+        if (homeCampaign.prize != null)
+            campaignViewHolder.campaignPrize.setText(homeCampaign.prize);
     }
 
     @Override
@@ -98,7 +101,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     public class CampaignViewHolder extends RecyclerView.ViewHolder {
         private ImageView campaignImage;
         private ImageView campaignBusinessIcon;
-        private TextView campaignBusinessName, campaignTitle, campaignDayLeft;
+        private TextView campaignBusinessName, campaignTitle, campaignDayLeft, campaignPrize;
         private Button joinCampaignBtn;
 
         public CampaignViewHolder(View view) {
@@ -111,7 +114,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
             campaignDayLeft = view.findViewById(R.id.campaign_days_left);
 //            readMeBtn = view.findViewById(R.id.remind_me_btn);
             joinCampaignBtn = view.findViewById(R.id.join_campaign_btn);
-
+            campaignPrize = view.findViewById(R.id.campaign_prize);
         }
     }
 

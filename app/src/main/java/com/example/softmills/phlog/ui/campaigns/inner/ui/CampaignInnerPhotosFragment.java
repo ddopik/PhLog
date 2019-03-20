@@ -75,8 +75,9 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
 
         photoGrapherPhotosAdapter = new PhotoGrapherPhotosAdapter(getContext(), photoGrapherPhotoList);
         campaignInnerRv.setAdapter(photoGrapherPhotosAdapter);
-        if (shouldLoadImage)
-            campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, 0);
+        if (!shouldLoadImage)
+            mainView.findViewById(R.id.still_running_prompt).setVisibility(View.VISIBLE);
+        campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, 0);
     }
 
     @Override

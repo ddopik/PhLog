@@ -21,6 +21,7 @@ import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerDataPresenterImpl;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerPresenter;
+import com.o_bdreldin.loadingbutton.LoadingButton;
 
 import io.reactivex.annotations.NonNull;
 
@@ -31,9 +32,9 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
     public static String BRAND_ID = "brand_id";
     private Business currentBrand;
-    private FrameLayout brandHeaderImg;
+    private ImageView brandHeaderImg;
     private ImageView brandIconImg;
-    private Button followBrandBtn;
+    private LoadingButton followBrandBtn;
     private TextView brandName, brandNumFollowers, brandType, aboutBrand, brandData, brandWebsite, brandMail, brandCampaign;
     private BrandInnerPresenter brandInnerPresenter;
     private ProgressBar progressBar;
@@ -81,12 +82,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
                 .load(brand.imageCover)
                 .placeholder(R.drawable.default_place_holder)
                 .error(R.drawable.default_error_img)
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
-                        brandHeaderImg.setBackground(resource);
-                    }
-                });
+                .into(brandHeaderImg);
 
         GlideApp.with(this).load(brand.thumbnail)
                 .placeholder(R.drawable.default_place_holder)
@@ -134,6 +130,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     private void intiListeners() {
         followBrandBtn.setOnClickListener(v -> {
             if (currentBrand != null) {
+                followBrandBtn.setLoading(true);
                 if (currentBrand.isFollow) {
                     brandInnerPresenter.unFollowBrand(String.valueOf(currentBrand.id));
                 } else {
@@ -153,9 +150,10 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
     @Override
     public void viwBrandFollowedState(Boolean state) {
+        followBrandBtn.setLoading(false);
         if (state) {
             currentBrand.isFollow = true;
-            followBrandBtn.setText(getResources().getString(R.string.following));
+            followBrandBtn.setText(getString(R.string.un_follow));
             currentBrand.followersCount++;
         } else {
             currentBrand.isFollow = false;
