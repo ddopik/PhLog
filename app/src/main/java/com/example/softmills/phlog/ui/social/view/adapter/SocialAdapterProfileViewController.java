@@ -120,10 +120,7 @@ public class SocialAdapterProfileViewController {
 
 
         }
-//        else {
-//            socialViewHolder.socialProfileAlbumType3PhotosContainer.setBackground(context.getResources().getDrawable(R.drawable.default_user_profile));
-//
-//        }
+
 
 
         if (photographer.isFollow)
@@ -163,7 +160,7 @@ public class SocialAdapterProfileViewController {
         };
 
         socialViewHolder.socialProfileAlbumType3PhotosContainer.setOnClickListener(onProfileClickListener);
-        socialViewHolder.socialProfileAlbumType3PhotosContainer.setOnClickListener(onProfileClickListener);
+        socialViewHolder.socialProfileType3ItemHeader.setOnClickListener(onProfileClickListener);
 
     }
 

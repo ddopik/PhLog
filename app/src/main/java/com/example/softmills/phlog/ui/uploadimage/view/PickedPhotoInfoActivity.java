@@ -78,7 +78,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
         if (bundle.getSerializable(IMAGE_TYPE) != null) {
-            setContentView(R.layout.activity_photo_info_activity_2);
+            setContentView(R.layout.activity_photo_info_activity);
 
             imageType = (UploadImageType) bundle.getSerializable(IMAGE_TYPE);
             imagePath = imageType.getImageUrl();

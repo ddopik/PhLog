@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="4dp"
-    android:layout_margin="@dimen/dp2"
-    app:cardElevation="0dp">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:.9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/flex_album_img_1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_flex_height_l"
-                android:padding="@dimen/widgets_padding_s"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/default_photographer_profile"
-                android:background="@color/black"/>
+                app:layout_constraintBottom_toTopOf="@+id/flex_album_img_3"
+                app:layout_constraintEnd_toStartOf="@+id/flex_album_img_2"
+                app:layout_constraintHeight_percent=".62"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".47"
+                tools:src="@drawable/default_photographer_profile" />
 
             <ImageView
                 android:id="@+id/flex_album_img_3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_flex_height_s"
-                android:background="@color/black"
-                android:padding="@dimen/widgets_padding_s"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/flex_album_img_1"
+                app:layout_constraintHeight_percent=".31"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/flex_album_img_1"
                 tools:src="@drawable/default_user_profile" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/flex_album_img_2"
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:background="@color/black"
-                android:padding="@dimen/widgets_padding_s"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
                 android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@+id/flex_album_img_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent=".31"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/flex_album_img_1"
+                app:layout_constraintTop_toTopOf="@id/flex_album_img_1"
+                app:layout_constraintWidth_percent=".47"
                 tools:src="@drawable/default_photographer_profile" />
 
             <ImageView
                 android:id="@+id/flex_album_img_4"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:padding="@dimen/widgets_padding_s"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/default_campaign_header_view"
-                android:background="@color/black"/>
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-</android.support.v7.widget.CardView>
+                app:layout_constraintBottom_toBottomOf="@+id/flex_album_img_3"
+                app:layout_constraintEnd_toEndOf="@+id/flex_album_img_2"
+                app:layout_constraintHeight_percent=".62"
+                app:layout_constraintStart_toStartOf="@+id/flex_album_img_2"
+                tools:src="@drawable/default_campaign_header_view" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

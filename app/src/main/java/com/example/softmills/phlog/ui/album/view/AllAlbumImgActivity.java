@@ -116,6 +116,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                 if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                 }
+                else if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
+                    albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
+                }
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);

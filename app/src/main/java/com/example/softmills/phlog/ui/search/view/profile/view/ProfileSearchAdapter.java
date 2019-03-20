@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
@@ -44,7 +43,7 @@ public class ProfileSearchAdapter extends RecyclerView.Adapter<ProfileSearchAdap
     public ProfileSearchViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new ProfileSearchViewHolder(layoutInflater.inflate(R.layout.view_holder_profile_search_2, viewGroup, false));
+        return new ProfileSearchViewHolder(layoutInflater.inflate(R.layout.view_holder_profile_search, viewGroup, false));
 
     }
 

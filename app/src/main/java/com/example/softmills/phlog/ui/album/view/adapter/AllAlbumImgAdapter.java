@@ -60,8 +60,8 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
 
         Photographer photographer;
-        if (photosListType ==null ){
-            photosListType=SOCIAL_LIST;
+        if (photosListType == null) {
+            photosListType = SOCIAL_LIST;
         }
         if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) || photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
             photographer = PrefUtils.getCurrentUser(context);
@@ -106,9 +106,9 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         }
 
 
-        if (albumImgList.get(i).isSaved){
+        if (albumImgList.get(i).isSaved) {
             albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_saved));
-        }else {
+        } else {
             albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.un_saved));
         }
         albumImgViewHolder.imageCommentTagVal.setText(tagS);
@@ -129,8 +129,10 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
             albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
 
+
         } else {
-            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.GONE);
+            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+
         }
 
 

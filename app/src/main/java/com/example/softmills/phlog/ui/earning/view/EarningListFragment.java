@@ -41,7 +41,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.fragment_earning_2, container, false);
+        mainView = inflater.inflate(R.layout.fragment_earning, container, false);
         return mainView;
     }
 

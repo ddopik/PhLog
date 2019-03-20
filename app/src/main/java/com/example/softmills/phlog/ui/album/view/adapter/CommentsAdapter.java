@@ -29,7 +29,7 @@ import android.widget.TextView;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
- import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
@@ -122,10 +122,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         if (getItemViewType(i) == HEAD) {
 
 
-
-                commentViewHolder.authorName.setText(previewImage.photographer.fullName);
-                commentViewHolder.authorUserName.setText(previewImage.photographer.userName);
-
+            commentViewHolder.authorName.setText(previewImage.photographer.fullName);
+            commentViewHolder.authorUserName.setText(previewImage.photographer.userName);
 
 
             GlideApp.with(context)
@@ -135,6 +133,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                     .apply(RequestOptions.circleCropTransform())
                     .override(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
                     .into(commentViewHolder.commentAuthorIcon);
+
 
 
             int rate = Math.round(previewImage.rate);
@@ -183,6 +182,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             if (previewImage.photographer != null) {
                 if (previewImage.photographer.id.equals(Integer.valueOf(PrefUtils.getUserId(context)))) {
                     commentViewHolder.deleteBtn.setVisibility(View.VISIBLE);
+                    commentViewHolder.photoRating.setVisibility(View.VISIBLE);
+                    commentViewHolder.photoRating.setIsIndicator(false);
                 }
             }
             commentViewHolder.deleteBtn.setOnClickListener(v -> {

@@ -22,7 +22,7 @@ class AlbumSearchAdapter(private var albumSearchList: List<AlbumSearch>?) : Recy
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AlbumSearchViewHolder {
         this.context = viewGroup.context
         val layoutInflater = LayoutInflater.from(context)
-        val view = layoutInflater.inflate(R.layout.view_holder_album_search_2, viewGroup, false)
+        val view = layoutInflater.inflate(R.layout.view_holder_album_search, viewGroup, false)
         return AlbumSearchViewHolder(view)
     }
 
