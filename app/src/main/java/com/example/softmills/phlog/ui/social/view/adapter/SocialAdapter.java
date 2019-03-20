@@ -69,18 +69,22 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         socialViewHolder.socialCampaignType1.setVisibility(View.GONE);
         socialViewHolder.socialBrandType1.setVisibility(View.GONE);
         socialViewHolder.socialAlbumType4.setVisibility(View.GONE);
+        /// reInstall socialViewHolder  Header  and padding  as "ENTITY_IMAGE"  is clear it
+        socialViewHolder.storyTitle.setPadding(16, 16, 16, 16);
+        socialViewHolder.storyTitle.setText("");
+        ////
 
         if (socialDataList.size() > 0)
             switch (socialDataList.get(i).entityId) {
 
                 case ENTITY_PROFILE: {
-                    socialAdapterProfileViewController = new SocialAdapterProfileViewController(context, this,socialDataList);
+                    socialAdapterProfileViewController = new SocialAdapterProfileViewController(context, this, socialDataList);
 
                     bindProfileEntity(socialDataList.get(i), socialViewHolder);
                     break;
                 }
                 case ENTITY_CAMPAIGN: {
-                    socialAdapterCampaignViewController = new SocialAdapterCampaignViewController(context, this,socialDataList);
+                    socialAdapterCampaignViewController = new SocialAdapterCampaignViewController(context, this, socialDataList);
                     bindCampaignEntity(socialDataList.get(i), socialViewHolder);
                     break;
                 }
@@ -95,7 +99,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                     break;
                 }
                 case ENTITY_BRAND: {
-                    socialAdapterBrandController = new SocialAdapterBrandController(context, this,socialDataList);
+                    socialAdapterBrandController = new SocialAdapterBrandController(context, this, socialDataList);
                     bindBrandEntity(socialDataList.get(i), socialViewHolder);
                     break;
                 }
@@ -121,7 +125,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         TextView socialProfileType3FullName, socialProfileType3UserName;
         LoadingButton followSocialProfileType3Btn;
 
-        LinearLayout socialAlbumImgGroupContainer, socialProfileAlbumType3PhotosContainer;
+        LinearLayout socialAlbumImgGroupContainer, socialProfileAlbumType3PhotosContainer, socialProfileType3ItemHeader;
 
 
         /////
@@ -148,7 +152,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialCampaignType1 = view.findViewById(R.id.social_campaign_type_1);
             socialBrandType1 = view.findViewById(R.id.social_brand_type_1);
             socialAlbumType4 = view.findViewById(R.id.social_album_type_4);
-            storyTitle=view.findViewById(R.id.story_title);
+            storyTitle = view.findViewById(R.id.story_title);
 
             setProfileReferences(view);
 
@@ -185,8 +189,9 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         private void setProfileReferences(View view) {
 
 
-            /////profileItemView type_1
+            /////profileItemView type_3
             socialProfileType3Icon = view.findViewById(R.id.social_profile_type_3_icon_img);
+            socialProfileType3ItemHeader = view.findViewById(R.id.social_profile_item_header);
             socialProfileType3FullName = view.findViewById(R.id.social_profile_full_name);
             socialProfileType3UserName = view.findViewById(R.id.social_profile_user_name);
             followSocialProfileType3Btn = view.findViewById(R.id.follow_social_profile);
@@ -194,7 +199,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialProfileType3Img_2 = view.findViewById(R.id.social_profile_img_2);
             socialProfileType3Img_3 = view.findViewById(R.id.social_profile_img_3);
             socialProfileType3Img_4 = view.findViewById(R.id.social_profile_img_4);
-             socialProfileAlbumType3PhotosContainer = view.findViewById(R.id.social_profile_album_type_3_photos_container);
+            socialProfileAlbumType3PhotosContainer = view.findViewById(R.id.social_profile_album_type_3_photos_container);
 
 
         }

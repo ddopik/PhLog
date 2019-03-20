@@ -3,6 +3,8 @@ package com.example.softmills.phlog.ui.search.view;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.softmills.phlog.base.widgets.CustomTextView;
+
 /**
  * Created by abdalla_maged On Dec,2018
  */
@@ -12,5 +14,5 @@ import android.widget.TextView;
  * **/
 public interface OnSearchTabSelected {
     EditText getSearchView();
-    TextView getSearchResultCount();
+    CustomTextView getSearchResultCountView();
 }

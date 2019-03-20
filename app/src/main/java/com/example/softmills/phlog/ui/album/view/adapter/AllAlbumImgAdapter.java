@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -59,23 +60,18 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
     public void onBindViewHolder(@NonNull AlbumImgViewHolder albumImgViewHolder, int i) {
 
 
-        Photographer photographer;
-        if (photosListType == null) {
-            photosListType = SOCIAL_LIST;
-        }
+        Photographer imagePhotographer;
+
         if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) || photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
-            photographer = PrefUtils.getCurrentUser(context);
+            imagePhotographer = PrefUtils.getCurrentUser(context);
 
-
-        } else {
-            photographer = albumImgList.get(i).photographer;
-        }
 
 
         albumImgViewHolder.followPhotoGrapherBtn.setLoading(false);
         if (photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
             albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.GONE);
         } else {
+            imagePhotographer = albumImgList.get(i).photographer;
             if (!photographer.isFollow) {
                 albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
             } else {
@@ -83,6 +79,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
             }
         }
+
 
         GlideApp.with(context)
                 .load(albumImgList.get(i).thumbnailUrl)
@@ -115,6 +112,13 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         albumImgViewHolder.imageCommentTagVal.setText(tagS);
 
 
+
+        if (imagePhotographer.isFollow){
+            albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.un_follow));
+        }else {
+            albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
+        }
+
         if (albumImgList.get(i).likesCount != null)
             albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append(albumImgList.get(i).likesCount).append(" Likes").toString());
         if (albumImgList.get(i).commentsCount != null)
@@ -125,14 +129,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgViewHolder.albumImgLike.setImageResource(R.drawable.ic_like_on);
         }
 
-        setImagePhotoGrapherInfo(albumImgViewHolder, photographer);
-        //case this Image is for current user and already saved to his profile
-        if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
-            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
-
-        } else {
-            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.GONE);
-        }
+        setImagePhotoGrapherInfo(albumImgViewHolder, imagePhotographer);
 
 
         if (onAlbumImgClicked != null) {
@@ -141,6 +138,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgViewHolder.albumImgComment.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgLikeVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgLikeClick(albumImgList.get(i)));
             albumImgViewHolder.albumImgCommentVal.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgCommentClick(albumImgList.get(i)));
+            albumImgViewHolder.albumImgHeader.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgHeaderClick(albumImgList.get(i)));
             albumImgViewHolder.albumIcon.setOnClickListener(v -> onAlbumImgClicked.onAlbumImgPhotoGrapherIconClick(albumImgList.get(i)));
             albumImgViewHolder.followPhotoGrapherBtn.setOnClickListener(v -> {
                 albumImgViewHolder.followPhotoGrapherBtn.setLoading(true);
@@ -154,6 +152,58 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             });
 
         }
+
+
+        albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
+        albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+        albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
+        switch (photosListType) {
+            case SOCIAL_LIST: {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+                if (imagePhotographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
+                    albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
+                } else if (albumImgList.get(i).photographer.isFollow) {
+                    albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.un_follow));
+                } else {
+                    albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
+                }
+                break;
+            }
+            case CURRENT_PHOTOGRAPHER_SAVED_LIST: {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
+                break;
+            }
+            case CURRENT_PHOTOGRAPHER_PHOTOS_LIST: {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
+                break;
+            }
+            case USER_PROFILE_PHOTOS_LIST: {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.VISIBLE);
+                break;
+            }
+            case ALBUM_PREVIEW_LIST: {
+
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.VISIBLE);
+                break;
+            }
+//            currently not available
+//            case CAMPAIGN_IMAGES_LIST: {
+//                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+//                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+//                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.VISIBLE);
+//                break;
+//            }
+        }
+
 
     }
 
@@ -176,6 +226,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
     public class AlbumImgViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout albumImgHeader;
         ImageView albumIcon, albumImg;
         TextView authorName, authorUserName, imageCommentTagVal, albumImgLikeVal, albumImgCommentVal;
         ImageButton albumImgLike, albumImgComment, albumImgSaveBtn;
@@ -184,6 +235,8 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         AlbumImgViewHolder(View view) {
             super(view);
+            albumImgHeader = view.findViewById(R.id.album_img_header);
+
             albumIcon = view.findViewById(R.id.album_icon);
             albumImg = view.findViewById(R.id.album_img);
             authorName = view.findViewById(R.id.author_name);
@@ -212,7 +265,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         void onAlbumImgFollowClick(BaseImage albumImg);
 
-        void onAlbumImgPhotoGrapherIconClick(BaseImage albumImg);
+        void onAlbumImgHeaderClick(BaseImage albumImg);
 
 
     }

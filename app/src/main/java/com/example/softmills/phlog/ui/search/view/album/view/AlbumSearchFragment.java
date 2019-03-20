@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
@@ -30,8 +30,8 @@ import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearch;
 import com.example.softmills.phlog.ui.search.view.album.model.AlbumSearchData;
+import com.example.softmills.phlog.ui.search.view.album.model.Filter;
 import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
-import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchFragmentImpl;
 import com.example.softmills.phlog.ui.search.view.album.presenter.AlbumSearchPresenter;
 import com.jakewharton.rxbinding3.widget.RxTextView;
@@ -47,7 +47,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.example.softmills.phlog.ui.album.view.AlbumPreviewActivity.ALBUM_PREVIEW_ID;
 
 /**
@@ -55,25 +54,31 @@ import static com.example.softmills.phlog.ui.album.view.AlbumPreviewActivity.ALB
  */
 public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFragmentView, SearchActivity.OnFilterClicked {
 
+
     private String TAG = AlbumSearchFragment.class.getSimpleName();
     private View mainView;
     private EditText albumSearch;
-    private TextView searchResultCount;
+    private TextView searchResultCountView;
     private ExpandableListAdapter expandableListAdapter;
     private CustomRecyclerView albumSearchRv;
     private ExpandableListView filterExpListView;
     private ProgressBar progressBar;
     private AlbumSearchPresenter albumSearchPresenter;
-    private List<SearchFilter> searchFilterList = new ArrayList<>();
+    private List<Filter> filterList = new ArrayList<>();
     private DisplayMetrics metrics = new DisplayMetrics();
     private List<AlbumSearch> albumSearchList = new ArrayList<AlbumSearch>();
     private AlbumSearchAdapter albumSearchAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
     private PagingController pagingController;
     private OnSearchTabSelected onSearchTabSelected;
+
+
     private ConstraintLayout promptView;
     private ImageView promptImage;
     private TextView promptText;
+    private CustomTextView filterIcon, clearFilterBtn;
+    private String totalResultCount = "0";
+
 
     public static AlbumSearchFragment getInstance() {
         AlbumSearchFragment albumSearchFragment = new AlbumSearchFragment();
@@ -96,14 +101,14 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             initPresenter();
             initViews();
             initListener();
-
-
+            albumSearchPresenter.getSearchFilters();
 
         }
 
         if (albumSearch.getText().toString().length() > 0) {
+            promptView.setVisibility(View.GONE);
             albumSearchList.clear();
-            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), 0);
+            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, 0);
         } //there is A search query exist
 
     }
@@ -117,31 +122,32 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void initViews() {
+
         albumSearch = onSearchTabSelected.getSearchView();
-        searchResultCount = onSearchTabSelected.getSearchResultCount();
+        searchResultCountView = onSearchTabSelected.getSearchResultCountView();
         progressBar = mainView.findViewById(R.id.album_search_filter_progress);
         filterExpListView = mainView.findViewById(R.id.filters_expand);
         albumSearchRv = mainView.findViewById(R.id.album_search_rv);
-        expandableListAdapter = new ExpandableListAdapter(getActivity(), searchFilterList);
+        filterList.clear();
+        expandableListAdapter = new ExpandableListAdapter(getActivity(), filterList);
         albumSearchAdapter = new AlbumSearchAdapter(albumSearchList);
         albumSearchRv.setAdapter(albumSearchAdapter);
         filterExpListView.setAdapter(expandableListAdapter);
 
-        //////// setting ExpandableList indicator to right
+        //////// setting ExpandableList indicator to RIGHT
         Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = metrics.widthPixels;
-        filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
-        filterExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
+        filterExpListView.setIndicatorBoundsRelative(width - Utilities.GetPixelFromDips(getContext(), 50), width - Utilities.GetPixelFromDips(getContext(), 10));
+        filterExpListView.setIndicatorBoundsRelative(width - Utilities.GetPixelFromDips(getContext(), 50), width - Utilities.GetPixelFromDips(getContext(), 10));
         ///////////
+        searchResultCountView.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCountView.setTextColor(getActivity().getResources().getColor(R.color.white));
 
         promptView = mainView.findViewById(R.id.prompt_view);
         promptImage = mainView.findViewById(R.id.prompt_image);
-        promptText = mainView.findViewById(R.id.prompt_text);
-
         promptImage.setBackgroundResource(R.drawable.ic_album_search);
+        promptText = mainView.findViewById(R.id.prompt_text);
         promptText.setText(R.string.type_something_album);
-
-        searchResultCount.setVisibility(View.INVISIBLE);
     }
 
     private void initListener() {
@@ -164,7 +170,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             public void getPagingControllerCallBack(int page) {
                 if (albumSearch.getText().length() > 0) {
                     promptView.setVisibility(View.GONE);
-                    albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), page);
+                    albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, page);
                 }
 
             }
@@ -172,16 +178,14 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
 
         expandableListAdapter.onChildViewListener = filterOption -> {
-            showToast(filterOption.displayName);
-            searchResultCount.setVisibility(View.VISIBLE);
-            for (int i = 0; i < searchFilterList.size(); i++) {
-                for (int x = 0; x < searchFilterList.get(i).options.size(); x++) {
-                    FilterOption currFilterOption = searchFilterList.get(i).options.get(x);
+            for (int i = 0; i < filterList.size(); i++) {
+                for (int x = 0; x < filterList.get(i).options.size(); x++) {
+                    FilterOption currFilterOption = filterList.get(i).options.get(x);
                     if (currFilterOption.displayName.equals(filterOption.displayName)) {
                         if (currFilterOption.isSelected) {
-                            searchFilterList.get(i).options.get(x).isSelected = false;
+                            filterList.get(i).options.get(x).isSelected = false;
                         } else {
-                            searchFilterList.get(i).options.get(x).isSelected = true;
+                            filterList.get(i).options.get(x).isSelected = true;
                         }
                         expandableListAdapter.notifyDataSetChanged();
                         return;
@@ -190,14 +194,107 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             }
         };
 
+
         albumSearchAdapter.setOnAlbumPreview(albumSearch -> {
             Intent intent = new Intent(getActivity(), AlbumPreviewActivity.class);
             intent.putExtra(ALBUM_PREVIEW_ID, albumSearch.getId());
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });
+
+
+        expandableListAdapter.onChildViewListener = this::setAlbumResultStats;
+
+
     }
 
+
+    @Override
+    public void onFilterIconClicked(CustomTextView filterIcon, CustomTextView clearFilterBtn) {
+
+        this.filterIcon = filterIcon;
+        this.clearFilterBtn = clearFilterBtn;
+
+        if (filterExpListView.getVisibility() == View.GONE) { ///handle Search result screen
+
+            filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_filter), null);
+            setSearchFilterView();
+
+
+        } else { //handle filter result screen
+            filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            searchResultCountView.setTextColor(getResources().getColor(R.color.white));
+            filterExpListView.setVisibility(View.VISIBLE);
+            clearFilterBtn.setVisibility(View.INVISIBLE);
+            albumSearchRv.setVisibility(View.GONE);
+            setAlbumSearchView();
+
+            if (albumSearchList.size() == 0) {
+                promptView.setVisibility(View.VISIBLE);
+                promptImage.setBackgroundResource(R.drawable.ic_album_search);
+                promptText.setText(R.string.type_something_album);
+            }
+
+        }
+
+
+    }
+
+    @Override
+    public void onFilterCleared(CustomTextView clearResultBtn, boolean state) {
+        clearSelectedFilters();
+    }
+
+
+    private void setAlbumResultStats(FilterOption filterOption) {
+
+        searchResultCountView.setVisibility(View.VISIBLE);
+
+        for (int i = 0; i < filterList.size(); i++) {
+            for (int x = 0; x < filterList.get(i).options.size(); x++) {
+                FilterOption currFilterOption = filterList.get(i).options.get(x);
+                if (currFilterOption.displayName.equals(filterOption.displayName)) {
+                    if (currFilterOption.isSelected) {
+                        filterList.get(i).options.get(x).isSelected = false;
+                    } else {
+                        filterList.get(i).options.get(x).isSelected = true;
+                    }
+
+                    expandableListAdapter.notifyDataSetChanged();
+                    break;
+                }
+            }
+        }
+
+
+        if (filterIcon != null) {
+            filterIcon.setText(new StringBuilder().append(getResources().getString(R.string.filters)).append(" ( ").append(albumSearchPresenter.getFilter(filterList).size()).append(" )").toString());
+        }
+
+
+        //// listing for filter list selecting state
+        if (albumSearchPresenter.getFilter(filterList).size() > 0) {
+            clearFilterBtn.setVisibility(View.VISIBLE);
+
+        } else {
+            clearFilterBtn.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    private void clearSelectedFilters() {
+
+        for (int i = 0; i < filterList.size(); i++) {
+            for (int x = 0; x < filterList.get(i).options.size(); x++) {
+                filterList.get(i).options.get(x).isSelected = false;
+
+            }
+            expandableListAdapter.notifyDataSetChanged();
+        }
+
+        filterIcon.setText(getResources().getString(R.string.filters));
+
+    }
 
     private DisposableObserver<TextViewTextChangeEvent> searchQuery() {
         return new DisposableObserver<TextViewTextChangeEvent>() {
@@ -205,44 +302,59 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
 
                 if (textViewTextChangeEvent.getCount() == 0) {
+
+
+                    if (textViewTextChangeEvent.getCount() == 0) {
+                        setTotalResultCount("0");
+                        if (searchResultCountView != null) {
+                            searchResultCountView.setVisibility(View.INVISIBLE);
+                        }
+                    }
+
                     promptView.setVisibility(View.VISIBLE);
                     promptText.setText(R.string.type_something_album);
                     return;
                 }
-                // user cleared search get default data
                 promptView.setVisibility(View.GONE);
+                // user cleared search get default data
                 albumSearchList.clear();
-                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), 0);
-                Log.e(TAG,"search string: "+albumSearch.getText().toString());
+                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, 0);
+                Log.e(TAG, "search string: " + albumSearch.getText().toString());
 
-        }
+            }
 
-        @Override
-        public void onError (Throwable e){
+            @Override
+            public void onError(Throwable e) {
 
-        }
+            }
 
-        @Override
-        public void onComplete () {
+            @Override
+            public void onComplete() {
 
-        }
+            }
+        };
     }
-
-    ;
-}
 
     @Override
     public void viewSearchAlbum(AlbumSearchData albumSearchData) {
+        setTotalResultCount(String.valueOf(albumSearchData.total));
         filterExpListView.setVisibility(View.GONE);
+        if (clearFilterBtn != null) {
+            clearFilterBtn.setVisibility(View.INVISIBLE);
+        }
         albumSearchRv.setVisibility(View.VISIBLE);
-
-
         this.albumSearchList.addAll(albumSearchData.data);
         albumSearchAdapter.notifyDataSetChanged();
-        searchResultCount.setVisibility(View.VISIBLE);
-        searchResultCount.setTextColor(getResources().getColor(R.color.white));
-        searchResultCount.setText(new StringBuilder().append(albumSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
-        hideSoftKeyBoard();
+
+        /**
+         * Replacing (Apply) in case Expandable was previously visible
+         * */
+        searchResultCountView.setVisibility(View.VISIBLE);
+        searchResultCountView.setTextColor(getResources().getColor(R.color.white));
+        searchResultCountView.setText(new StringBuilder().append(albumSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCountView.setTextColor(getActivity().getResources().getColor(R.color.white));
+        Utilities.hideKeyboard(getActivity());
+
 
         if (this.albumSearchList.size() == 0) {
             promptView.setVisibility(View.VISIBLE);
@@ -258,38 +370,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     }
 
 
-    private int GetPixelFromDips(float pixels) {
-        // Get the screen's density scale
-        final float scale = getResources().getDisplayMetrics().density;
-        // Convert the dps to pixels, based on density scale
-        return (int) (pixels * scale + 0.5f);
-    }
-
-    @Override
-    public void viewSearchFilters(List<SearchFilter> searchFilterList) {
-        this.searchFilterList.clear();
-        this.searchFilterList.addAll(searchFilterList);
-        setSearchFilterView();
-    }
-
-    private void setSearchFilterView() {
-        filterExpListView.setVisibility(View.VISIBLE);
-        albumSearchRv.setVisibility(View.GONE);
-        expandableListAdapter.notifyDataSetChanged();
-        promptView.setVisibility(View.GONE);
-
-        // omar continuing filter implementation
-        searchResultCount.setText(R.string.apply);
-        searchResultCount.setTextColor(getResources().getColor(R.color.text_input_color));
-        searchResultCount.setVisibility(View.VISIBLE);
-        searchResultCount.setOnClickListener(v -> { //searchResultCount switched to Apply in case Filter was visible
-            promptView.setVisibility(View.GONE);
-            albumSearchList.clear();
-            albumSearchAdapter.notifyDataSetChanged();
-            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), searchFilterList, 0);
-        });
-    }
-
     @Override
     public void showMessage(String msg) {
         showToast(msg);
@@ -304,39 +384,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         }
     }
 
-    @Override
-    public void onFilterIconClicked(CustomTextView filterIcon) {
-
-        if (filterExpListView.getVisibility() == View.GONE ) {
-                albumSearchPresenter.getSearchFilters();
-                filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_filter), null);
-                setSearchFilterView();
-
-        } else {
-            filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-            filterExpListView.setVisibility(View.VISIBLE);
-            albumSearchRv.setVisibility(View.GONE);
-            setAlbumSearchView();
-
-            if (albumSearchList.size() ==0){
-                promptView.setVisibility(View.VISIBLE);
-                promptImage.setBackgroundResource(R.drawable.ic_album_search);
-                promptText.setText(R.string.type_something_album);
-            }
-
-        }
-
-        searchResultCount.setVisibility(View.INVISIBLE);
-    }
-
-
-
-    private void setAlbumSearchView() {
-        filterExpListView.setVisibility(View.GONE);
-        albumSearchRv.setVisibility(View.VISIBLE);
-        // omar continuing filter implementation
-        searchResultCount.setText(new StringBuilder().append(this.albumSearchList.size()).append(" ").append(getResources().getString(R.string.result)).toString());
-    }
 
     @Override
     public void onDestroy() {
@@ -345,17 +392,62 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     }
 
 
-    private void hideSoftKeyBoard() {
-        albumSearch.clearFocus();
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
-        if (imm.isAcceptingText()) { // verify if the soft keyboard is open
-            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
-        }
+    @Override
+    public void viewSearchFilters(List<Filter> filterList) {
+        this.filterList.clear();
+        this.filterList.addAll(filterList);
+
     }
+
+    private void setSearchFilterView() {
+
+        filterExpListView.setVisibility(View.VISIBLE);
+        albumSearchRv.setVisibility(View.GONE);
+        expandableListAdapter.notifyDataSetChanged();
+        promptView.setVisibility(View.GONE);
+
+        //// change state of (Apply and Clear All) Btn --->wither expandable list visible ot not
+        if (albumSearchPresenter.getFilter(filterList).size() > 0 && filterExpListView.getVisibility() == View.VISIBLE) {
+            clearFilterBtn.setVisibility(View.VISIBLE);
+
+        } else {
+            clearFilterBtn.setVisibility(View.INVISIBLE);
+        }
+
+
+        searchResultCountView.setText(R.string.apply);
+        searchResultCountView.setTextColor(getResources().getColor(R.color.text_input_color));
+        searchResultCountView.setVisibility(View.VISIBLE);
+        searchResultCountView.setOnClickListener(v -> { //searchResultCountView switched to Apply in case Filter was visible
+            filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            searchResultCountView.setTextColor(getResources().getColor(R.color.white));
+            clearFilterBtn.setVisibility(View.INVISIBLE);
+            ////
+            promptView.setVisibility(View.GONE);
+            albumSearchList.clear();
+            albumSearchAdapter.notifyDataSetChanged();
+            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), filterList, 0);
+        });
+    }
+
+    private void setAlbumSearchView() {
+        filterExpListView.setVisibility(View.GONE);
+        albumSearchRv.setVisibility(View.VISIBLE);
+
+        searchResultCountView.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
+    }
+
 
     public void setAlbumSearchView(OnSearchTabSelected onSearchTabSelected) {
         this.onSearchTabSelected = onSearchTabSelected;
     }
 
+    private void setTotalResultCount(String count) {
+        totalResultCount = count;
+    }
+
+    private String getTotalResultCount() {
+        return totalResultCount;
+    }
 
 }

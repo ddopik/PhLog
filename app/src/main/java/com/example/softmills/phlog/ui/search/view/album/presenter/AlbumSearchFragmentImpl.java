@@ -5,9 +5,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
+import com.example.softmills.phlog.ui.search.view.album.model.Filter;
 import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragmentView;
 
 import java.util.HashMap;
@@ -52,11 +51,15 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
 
     }
 
+
+
     @SuppressLint("CheckResult")
     @Override
-    public void getAlbumSearchQuery(String key, int page) {
+    public void getAlbumSearchQuery(String s, List<Filter> filterList, int page) {
+
+        
         albumSearchFragmentView.showFilterSearchProgress(true);
-        BaseNetworkApi.getSearchAlbum(key, String.valueOf(page))
+        BaseNetworkApi.getSearchAlbum(s, getFilter(filterList),String.valueOf(page))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumSearchResponse -> {
@@ -68,31 +71,22 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                 });
     }
 
-    @SuppressLint("CheckResult")
     @Override
-    public void getAlbumSearchQuery(String s, List<SearchFilter> searchFilterList, int page) {
+    public Map<String,String> getFilter(List<Filter> filterList){
         int filterCount=0;
         Map<String,String> filtersMap=new HashMap<String, String>();
-        for (int i=0;i<searchFilterList.size();i++){
-            for (int x=0;x<searchFilterList.get(i).options.size();x++){
-                if (searchFilterList.get(i).options.get(x).isSelected) {
-                    filtersMap.put("filter["+filterCount+"]",searchFilterList.get(i).options.get(x).id.toString());
+        for (int i = 0; i< filterList.size(); i++){
+            for (int x = 0; x< filterList.get(i).options.size(); x++){
+                if (filterList.get(i).options.get(x).isSelected) {
+                    filtersMap.put("filter["+filterCount+"]", filterList.get(i).options.get(x).id.toString());
                     filterCount ++;
                 }
             }
 
         }
-        
-        albumSearchFragmentView.showFilterSearchProgress(true);
-        BaseNetworkApi.getSearchAlbum(s, filtersMap,String.valueOf(page))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(albumSearchResponse -> {
-                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data);
-                    albumSearchFragmentView.showFilterSearchProgress(false);
-                }, throwable -> {
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
-                    albumSearchFragmentView.showFilterSearchProgress(false);
-                });
+        return filtersMap;
     }
+
+
+
 }

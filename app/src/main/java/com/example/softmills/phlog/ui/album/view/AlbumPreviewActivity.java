@@ -2,13 +2,11 @@ package com.example.softmills.phlog.ui.album.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
@@ -27,8 +25,6 @@ import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
-
 /**
  * Created by abdalla_maged on 11/4/2018.
  */
@@ -45,7 +41,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     private ImageView albumPreviewImg;
     private ProgressBar albumPreviewProgress;
     private CustomRecyclerView albumRv;
-    private CustomTextView albumNameTV, followingNumber, albumToolBarTitle;
+    private CustomTextView albumNameTV, photosCount, albumToolBarTitle;
     private PagingController pagingController;
     private AlbumPreviewActivityPresenter albumPreviewActivityPresenter;
 
@@ -73,7 +69,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         albumRv = findViewById(R.id.album_rv);
         albumPreviewProgress = findViewById(R.id.user_profile_progress_bar);
         albumNameTV = findViewById(R.id.album_name_text_view);
-        followingNumber = findViewById(R.id.following_number_text_view);
+        photosCount = findViewById(R.id.album_photos_number_text_view);
         // Set adapter object.
         albumAdapter = new AlbumAdapter(getBaseContext(), albumGroupList);
         albumRv.setAdapter(albumAdapter);
@@ -99,12 +95,20 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         };
         albumAdapter.onAlbumImageClicked = albumImg -> {
 
-            Intent intent = new Intent(this, AllAlbumImgActivity.class);
-            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
-            intent.putExtra(AllAlbumImgActivity.LIST_NAME, albumToolBarTitle.getText());
-            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
-            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+
+            Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
+            intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+
+            ///Currently disabled
+//            Intent intent = new Intent(this, AllAlbumImgActivity.class);
+//            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
+//            intent.putExtra(AllAlbumImgActivity.LIST_NAME, albumToolBarTitle.getText());
+//            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
+//            intent.putExtra(AllAlbumImgActivity.LIST_TYPE, ALBUM_PREVIEW_LIST);
+//            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+//            startActivity(intent);
 
         };
         backBtn.setOnClickListener(v -> {
@@ -173,9 +177,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         albumNameTV.setText(albumPreviewResponseData.name);
 
 
-
-
-        followingNumber.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
+        photosCount.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
     }
 }
 

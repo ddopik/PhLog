@@ -3,7 +3,6 @@ package com.example.softmills.phlog.ui.search.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -22,7 +21,7 @@ import com.example.softmills.phlog.ui.search.view.profile.view.ProfileSearchFrag
 public class SearchActivity extends BaseActivity {
 
     private EditText searchView;
-    private CustomTextView brandTab, profileTab, albumTab, filterTab, searchResult;
+    private CustomTextView brandTab, profileTab, albumTab, filterTab, searchResult, clearFilterResultBtn;
     private FrameLayout searchContainer;
     private AlbumSearchFragment albumSearchFragment;
     private OnFilterClicked onFilterClicked;
@@ -31,7 +30,7 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_2);
+        setContentView(R.layout.activity_search);
         initPresenter();
         initView();
         initListener();
@@ -55,7 +54,7 @@ public class SearchActivity extends BaseActivity {
         searchContainer = findViewById(R.id.search_container);
         filterTab = findViewById(R.id.filter_ic);
         searchResult = findViewById(R.id.search_result);
-
+        clearFilterResultBtn = findViewById(R.id.clear_filter_result_btn);
         TextView title = findViewById(R.id.toolbar_title);
         title.setText(R.string.search);
         ImageButton back = findViewById(R.id.back_btn);
@@ -69,14 +68,14 @@ public class SearchActivity extends BaseActivity {
 
     private void initListener() {
 
-        onSearchTabSelected=new OnSearchTabSelected() {
+        onSearchTabSelected = new OnSearchTabSelected() {
             @Override
             public EditText getSearchView() {
                 return searchView;
             }
 
             @Override
-            public TextView getSearchResultCount() {
+            public CustomTextView getSearchResultCountView() {
                 return searchResult;
             }
         };
@@ -98,6 +97,9 @@ public class SearchActivity extends BaseActivity {
 
         albumTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_album);
+            clearFilterResultBtn.setVisibility(View.INVISIBLE);
+            filterTab.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            filterTab.setText(getResources().getString(R.string.filters));
             filterTab.setVisibility(View.VISIBLE);
             albumSearchFragment = AlbumSearchFragment.getInstance();
             onFilterClicked = albumSearchFragment;
@@ -105,9 +107,16 @@ public class SearchActivity extends BaseActivity {
             addFragment(R.id.search_container, albumSearchFragment, AlbumSearchFragment.class.getSimpleName(), false);
         });
 
+
         filterTab.setOnClickListener(v -> {
             if (onFilterClicked != null) {
-                onFilterClicked.onFilterIconClicked(filterTab);
+                onFilterClicked.onFilterIconClicked(filterTab, clearFilterResultBtn);
+            }
+        });
+
+        clearFilterResultBtn.setOnClickListener(v -> {
+            if (onFilterClicked != null) {
+                onFilterClicked.onFilterCleared(clearFilterResultBtn, true);
             }
         });
     }
@@ -152,8 +161,8 @@ public class SearchActivity extends BaseActivity {
     }
 
     public interface OnFilterClicked {
-        void onFilterIconClicked(CustomTextView filterTab);
-//        android:drawableEnd="@drawable/ic_filter"
+        void onFilterIconClicked(CustomTextView filterIcon, CustomTextView clearFilterBtn);
 
+        void onFilterCleared(CustomTextView clearResultBtn, boolean state);
     }
 }

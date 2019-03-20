@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
@@ -40,7 +39,7 @@ public class PhotoGrapherFollowingAdapter extends RecyclerView.Adapter<PhotoGrap
     public PhotoGrapherFollowingInViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new PhotoGrapherFollowingInViewHolder(layoutInflater.inflate(R.layout.view_holder_profile_search_2, viewGroup, false));
+        return new PhotoGrapherFollowingInViewHolder(layoutInflater.inflate(R.layout.view_holder_profile_search, viewGroup, false));
 
     }
 

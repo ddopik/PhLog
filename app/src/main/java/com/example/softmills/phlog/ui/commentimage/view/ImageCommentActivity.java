@@ -53,8 +53,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
     public String TAG = ImageCommentActivity.class.getSimpleName();
     public static String IMAGE_DATA = "image_data";
-    public static String IMAGE_TYPE = "image_type";
-    public static final int ImageComment_REQUEST_CODE = 1396;
+     public static final int ImageComment_REQUEST_CODE = 1396;
     private CustomTextView toolBarTitle;
     private ImageButton backBtn;
     private BaseImage previewImage;

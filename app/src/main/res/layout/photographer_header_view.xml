@@ -1,187 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/user_profile_background_img"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/photographer_profile_main_preview_height">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/photographer_profile_background_img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1.05"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/photographer_profile_background_img"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            tools:background="@drawable/default_user_profile"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.19" />
+
+        <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/upload_background"
+            android:alpha=".4"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_photographer_profile" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0.4"
-        android:background="@drawable/graduant_layer" />
-
-
-    <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/profile_tool_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/widgets_padding">
-
-            <ImageView
-                android:id="@+id/earning_btn"
-                android:layout_width="@dimen/icon_view_holder_size_s"
-                android:layout_height="@dimen/icon_view_holder_size_s"
-                android:layout_gravity="start"
-                android:src="@drawable/ic_earning" />
-
-
-
-        </android.support.v7.widget.Toolbar>
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/photographer_profile_img"
-            android:layout_width="@dimen/header_img_size"
-            android:layout_height="@dimen/header_img_size"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/phlog_logo" />
-
+            android:id="@+id/earning_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="start"
+            android:layout_margin="@dimen/ef_margin_small"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_earning"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".09"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05" />
 
         <TextView
-            android:id="@+id/photographer_profile_full_name"
+            android:id="@+id/photographer_level"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dp18"
-            android:layout_marginBottom="@dimen/dp10"
-            android:fontFamily="@font/arial_rounded_font"
-            android:text="@string/full_name"
+            android:layout_height="0dp"
+            android:background="@drawable/level_background"
+            android:fontFamily="@font/segoe_sb"
+            android:gravity="center"
+            android:padding="@dimen/widgets_padding_s"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_normal" />
-
-        <TextView
-            android:id="@+id/photographer_profile_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/dp10"
-            android:background="@drawable/rounded_frame_btn"
-            android:padding="@dimen/dp4"
-            android:text="@string/user_name"
-            android:textColor="@color/white" />
+            app:autoSizeMinTextSize="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".06"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_rating"
+            tools:text="Level #" />
 
         <RatingBar
             android:id="@+id/profile_rating"
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
-            android:layout_width="@dimen/user_profile_rating_bar_width"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:numStars="5"
-            android:layout_gravity="center" />
+            app:layout_constraintBottom_toTopOf="@+id/photographer_level"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photographer_profile_username"
+            tools:rating="2" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:alpha=".2"
+            android:background="@drawable/circle"
+            app:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/photographer_profile_img"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".27"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/photographer_profile_img" />
+
+        <ImageView
+            android:id="@+id/photographer_profile_img"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2"
+            tools:src="@drawable/phlog_logo" />
 
         <TextView
-            android:id="@+id/photographer_level"
-            android:background="@drawable/level_background"
-            android:padding="@dimen/widgets_padding_s"
+            android:id="@+id/photographer_profile_full_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/segoe_b"
+            android:gravity="center"
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            app:autoSizeMinTextSize="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/photographer_profile_username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".06"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photographer_profile_img"
+            app:layout_constraintVertical_chainStyle="spread"
+            tools:text="@string/full_name" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:padding="@dimen/widgets_padding">
+        <TextView
+            android:id="@+id/photographer_profile_username"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:fontFamily="@font/segoe_sb"
+            android:textColor="@color/white"
+            app:autoSizeMinTextSize="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/profile_rating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".05"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photographer_profile_full_name"
+            tools:text="@string/full_name" />
 
-        <LinearLayout
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".8" />
+
+        <TextView
+            android:id="@+id/photos_val"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:fontFamily="@font/segoe_sb"
+            android:textColor="@color/white"
+            app:autoSizeMinTextSize="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/total_photos_tag"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".055"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintWidth_percent=".2" />
 
-            <TextView
-                android:id="@+id/photos_val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_medium_s"
-                tools:text="101" />
-
-            <TextView
-                android:id="@+id/total_photos_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_frame_btn_white_btn"
-                android:padding="@dimen/dp6"
-                android:text="@string/total_photos"
-                android:textAlignment="center"
-                android:textColor="@color/gray45494E" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/total_photos_tag"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp8"
-            android:layout_toStartOf="@+id/following_tag_container"
+            android:layout_height="0dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:fontFamily="@font/segoe_sb"
+            android:text="@string/total_photos"
+            android:background="@drawable/rounded_frame_btn_white_btn"
+            android:padding="@dimen/dp6"
+            android:textColor="@color/gray800"
+            app:autoSizeMinTextSize="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/photos_val"
+            app:layout_constraintHeight_percent=".07"
+            app:layout_constraintStart_toStartOf="@+id/photos_val"
+            app:layout_constraintTop_toBottomOf="@+id/photos_val" />
 
-            <TextView
-                android:id="@id/followers_val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_medium_s"
-                tools:text="56" />
+        <TextView
+            android:id="@+id/followers_val"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:fontFamily="@font/segoe_sb"
+            android:textColor="@color/white"
+            app:autoSizeMinTextSize="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="@+id/photos_val"
+            app:layout_constraintEnd_toStartOf="@+id/following_val"
+            app:layout_constraintHeight_percent=".055"
+            app:layout_constraintHorizontal_bias="0.99"
+            app:layout_constraintStart_toEndOf="@+id/photos_val"
+            app:layout_constraintTop_toTopOf="@+id/photos_val"
+            app:layout_constraintWidth_percent=".2" />
 
-            <TextView
-                android:id="@+id/followers_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_frame_btn_white_btn"
-                android:padding="@dimen/dp6"
-                android:text="@string/followers"
-                android:textAlignment="center"
-                android:textColor="@color/gray45494E"
-                tools:ignore="RelativeOverlap" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/following_tag_container"
+        <TextView
+            android:id="@+id/followers_tag"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_height="0dp"
+            android:background="@drawable/rounded_frame_btn_white_btn"
             android:gravity="center"
-            android:orientation="vertical">
+            android:fontFamily="@font/segoe_sb"
+            android:padding="@dimen/dp6"
+            android:text="@string/followers"
+            android:textColor="@color/gray800"
+            app:autoSizeMinTextSize="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="@+id/total_photos_tag"
+            app:layout_constraintEnd_toEndOf="@+id/followers_val"
+            app:layout_constraintHeight_percent=".07"
+            app:layout_constraintStart_toStartOf="@+id/followers_val"
+            app:layout_constraintTop_toTopOf="@+id/total_photos_tag" />
 
-            <TextView
-                android:id="@+id/following_val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_medium_s"
-                tools:text="56" />
+        <TextView
+            android:id="@+id/following_val"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:fontFamily="@font/segoe_sb"
+            android:textColor="@color/white"
+            app:autoSizeMinTextSize="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="@+id/followers_val"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".055"
+            app:layout_constraintHorizontal_bias="0.98"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/followers_val"
+            app:layout_constraintWidth_percent=".2" />
 
-            <TextView
-                android:id="@+id/following_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_frame_btn_white_btn"
-                android:padding="@dimen/dp6"
-                android:text="@string/following"
-                android:textAlignment="center"
-                android:textColor="@color/gray45494E" />
+        <TextView
+            android:id="@+id/following_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:fontFamily="@font/segoe_sb"
+            android:text="@string/following"
+            android:textColor="@color/gray800"
+            android:background="@drawable/rounded_frame_btn_white_btn"
+            android:padding="@dimen/dp6"
+            app:autoSizeMinTextSize="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="@+id/followers_tag"
+            app:layout_constraintEnd_toEndOf="@+id/following_val"
+            app:layout_constraintHeight_percent=".07"
+            app:layout_constraintStart_toStartOf="@+id/following_val"
+            app:layout_constraintTop_toTopOf="@+id/followers_tag" />
 
-        </LinearLayout>
-
-
-    </RelativeLayout>
-</FrameLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

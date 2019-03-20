@@ -12,7 +12,7 @@ public class SearchFiltersResponse {
 
     @SerializedName("data")
     @Expose
-    public List<SearchFilter> data = null;
+    public List<Filter> data = null;
     @SerializedName("msg")
     @Expose
     public String msg;

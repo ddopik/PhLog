@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.ui.search.view.album.model.FilterOption;
-import com.example.softmills.phlog.ui.search.view.album.model.SearchFilter;
+import com.example.softmills.phlog.ui.search.view.album.model.Filter;
 
 import java.util.List;
 
@@ -24,17 +24,17 @@ import java.util.List;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
-    private List<SearchFilter> searchFilterList;
+    private List<Filter> filterList;
     public OnChildViewListener onChildViewListener;
 
-    public ExpandableListAdapter(Context context, List<SearchFilter> searchFilterList) {
+    public ExpandableListAdapter(Context context, List<Filter> filterList) {
         this._context = context;
-        this.searchFilterList = searchFilterList;
+        this.filterList = filterList;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return searchFilterList.get(groupPosition).options.get(childPosition);
+        return filterList.get(groupPosition).options.get(childPosition);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        FilterOption filterOption = searchFilterList.get(groupPosition).options.get(childPosition);
+        FilterOption filterOption = filterList.get(groupPosition).options.get(childPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -76,18 +76,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return searchFilterList.get(groupPosition).options.size();
+        return filterList.get(groupPosition).options.size();
 
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return searchFilterList.get(groupPosition).options;
+        return filterList.get(groupPosition).options;
     }
 
     @Override
     public int getGroupCount() {
-        return searchFilterList.size();
+        return filterList.size();
     }
 
     @Override
@@ -98,7 +98,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String headerTitle = searchFilterList.get(groupPosition).displayName;
+        String headerTitle = filterList.get(groupPosition).displayName;
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -135,4 +135,5 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         void onChildViewClickListener(FilterOption filterOption);
 
     }
+
 }

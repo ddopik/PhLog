@@ -48,7 +48,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     private String TAG = ProfileSearchFragment.class.getSimpleName();
     private View mainView;
     private EditText profileSearch;
-    private TextView searchResultCount;
+    private TextView searchResultCountView;
     private ProgressBar profileSearchProgress;
     private CustomRecyclerView profileSearchRv;
     private OnSearchTabSelected onSearchTabSelected;
@@ -59,6 +59,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     private ConstraintLayout promptView;
     private ImageView promptImage;
     private TextView promptText;
+    private String totalResultCount = "0";
 
     private ProfileSearchPresenter profileSearchPresenter;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -103,17 +104,18 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
         profileSearchRv = mainView.findViewById(R.id.profile_search_rv);
         profileSearchProgress = mainView.findViewById(R.id.profile_search_progress_bar);
         profileSearch = onSearchTabSelected.getSearchView();
-        searchResultCount = onSearchTabSelected.getSearchResultCount();
+        searchResultCountView = onSearchTabSelected.getSearchResultCountView();
         profileSearchAdapter = new ProfileSearchAdapter(getContext(), profileSearchList);
         profileSearchRv.setAdapter(profileSearchAdapter);
-
+        searchResultCountView.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCountView.setTextColor(getActivity().getResources().getColor(R.color.white));
         promptView = mainView.findViewById(R.id.prompt_view);
         promptImage = mainView.findViewById(R.id.prompt_image);
         promptImage.setBackgroundResource(R.drawable.ic_profile_search);
         promptText = mainView.findViewById(R.id.prompt_text);
         promptText.setText(R.string.type_something_profile);
 
-        searchResultCount.setVisibility(View.INVISIBLE);
+        searchResultCountView.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -183,9 +185,9 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     public void viewProfileSearchItems(ProfileSearchData profileSearchData) {
         this.profileSearchList.addAll(profileSearchData.data);
         profileSearchAdapter.notifyDataSetChanged();
-        searchResultCount.setVisibility(View.VISIBLE);
-        searchResultCount.setTextColor(getResources().getColor(R.color.white));
-        searchResultCount.setText(new StringBuilder().append(profileSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCountView.setVisibility(View.VISIBLE);
+        searchResultCountView.setTextColor(getResources().getColor(R.color.white));
+        searchResultCountView.setText(new StringBuilder().append(profileSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
 
         if (this.profileSearchList.size() == 0) {
@@ -223,6 +225,12 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     public void setOnSearchProfile(OnSearchTabSelected onSearchTabSelected) {
         this.onSearchTabSelected = onSearchTabSelected;
     }
+    private void setTotalResultCount(String count) {
+        totalResultCount = count;
+    }
 
+    private String getTotalResultCount() {
+        return totalResultCount;
+    }
 
 }

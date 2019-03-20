@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.base.commonmodel.BaseImage;
-import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenterImpl;
@@ -23,8 +23,10 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.Ph
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.ALBUM_PREVIEW_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_TYPE;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
@@ -96,6 +98,7 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
             Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
             intent.putExtra(LIST_NAME, photoGrapherSavedPhoto.photographer.userName);
+            intent.putExtra(LIST_TYPE, ALBUM_PREVIEW_LIST);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherPhotoList);
             startActivity(intent);
         };

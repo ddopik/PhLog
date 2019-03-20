@@ -41,7 +41,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup_2);
+        setContentView(R.layout.activity_signup);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 

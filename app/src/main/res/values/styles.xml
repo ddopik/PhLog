@@ -24,7 +24,40 @@
         <!--<item name="android:navigationBarColor">@color/theme_color</item>-->
         <!--////Custom dropDownMenu -->
         <item name="android:actionOverflowButtonStyle">@style/custom_menu_btn</item>
+
+        <!--///Customizing rating bar color-->
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/text_input_color</item>
     </style>
+
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+
+        <!--<item name="windowActionBar">false</item>-->
+        <!--&lt;!&ndash; colorPrimaryDark is used for the status bar &ndash;&gt;-->
+        <!--<item name="colorPrimaryDark">@color/black</item>-->
+
+        <!--&lt;!&ndash; Your Toolbar Color&ndash;&gt;-->
+        <!--<item name="colorPrimary">@color/default_tool_bar_color</item>-->
+
+        <!--&lt;!&ndash; colorAccent is used as the default value for colorControlActivated,-->
+         <!--which is used to tint widgets &ndash;&gt;-->
+        <!--<item name="colorAccent">@color/cyan93E2</item>-->
+
+        <!--&lt;!&ndash; You can also set colorControlNormal, colorControlActivated-->
+         <!--colorControlHighlight, and colorSwitchThumbNormal. &ndash;&gt;-->
+        <!--<item name="textInputStyle">@style/Widget.Design.TextInputLayout</item>-->
+        <!--&lt;!&ndash;The color of the screen background.&ndash;&gt;-->
+        <!--<item name="android:windowBackground">@color/black</item>-->
+
+        <!--&lt;!&ndash;//this is requred by in api 21&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="android:navigationBarColor">@color/theme_color</item>&ndash;&gt;-->
+
+        <!--<item name="colorControlNormal">@color/white</item>-->
+        <!--<item name="colorControlActivated">@color/text_input_color</item>-->
+
+        <!--<item name="checkboxStyle">@style/CartCheckBox</item>-->
+        <!--<item name="android:ratingBarStyle">@style/PhlogRatingBarThem</item>-->
+    <!--</style>-->
 
     <style name="custom_menu_btn">
         <item name="android:src">@drawable/ic_menu</item>
@@ -39,7 +72,7 @@
         <item name="colorControlActivated">#c51162</item>
     </style>
 
-    <style name="RatingBar_1" parent="Theme.AppCompat">
+    <style name="RatingBar_1"   parent="android:style/Widget.Material.RatingBar.Small">
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">@color/text_input_color</item>
     </style>

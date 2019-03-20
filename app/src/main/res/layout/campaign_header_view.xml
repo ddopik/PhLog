@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/campaign_header_img"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/default_place_holder">
-
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/campaign_header_img"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:alpha=".4"
         android:scaleType="fitXY"
-        android:src="@drawable/graduant_layer" />
+        android:src="@drawable/graduant_layer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/dp12">
+        app:layout_constraintVertical_bias="1"
+        android:padding="@dimen/dp12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,25 +54,25 @@
                     android:id="@+id/campaign_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/arial_rounded_font"
+                    android:fontFamily="@font/segoe_b"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_large"
-                    tools:text="campaign" />
+                    tools:text="Food Photography" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/campaign_hosted_by"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     tools:text="Hosted by" />
 
-                <TextView
+                <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/campaign_header_day_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_time_white"
                     android:drawablePadding="@dimen/campaign_drawable_padding"
-                    android:gravity="bottom"
+                    android:gravity="center"
                     android:textColor="@color/white"
                     tools:text="5 day left" />
 
@@ -69,6 +86,7 @@
                 android:layout_gravity="end"
                 android:background="@color/transparent"
                 android:paddingTop="@dimen/dp8"
+                android:visibility="invisible"
                 app:srcCompat="@drawable/ic_share_black_24dp" />
 
         </RelativeLayout>
@@ -76,4 +94,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
