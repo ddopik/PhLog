@@ -58,7 +58,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private String TAG = AlbumSearchFragment.class.getSimpleName();
     private View mainView;
     private EditText albumSearch;
-    private TextView searchResultCount;
+    private TextView searchResultCountView;
     private ExpandableListAdapter expandableListAdapter;
     private CustomRecyclerView albumSearchRv;
     private ExpandableListView filterExpListView;
@@ -124,7 +124,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     protected void initViews() {
 
         albumSearch = onSearchTabSelected.getSearchView();
-        searchResultCount = onSearchTabSelected.getSearchResultCount();
+        searchResultCountView = onSearchTabSelected.getSearchResultCountView();
         progressBar = mainView.findViewById(R.id.album_search_filter_progress);
         filterExpListView = mainView.findViewById(R.id.filters_expand);
         albumSearchRv = mainView.findViewById(R.id.album_search_rv);
@@ -140,8 +140,8 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         filterExpListView.setIndicatorBoundsRelative(width - Utilities.GetPixelFromDips(getContext(), 50), width - Utilities.GetPixelFromDips(getContext(), 10));
         filterExpListView.setIndicatorBoundsRelative(width - Utilities.GetPixelFromDips(getContext(), 50), width - Utilities.GetPixelFromDips(getContext(), 10));
         ///////////
-        searchResultCount.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
-        searchResultCount.setTextColor(getActivity().getResources().getColor(R.color.white));
+        searchResultCountView.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCountView.setTextColor(getActivity().getResources().getColor(R.color.white));
 
         promptView = mainView.findViewById(R.id.prompt_view);
         promptImage = mainView.findViewById(R.id.prompt_image);
@@ -223,7 +223,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
         } else { //handle filter result screen
             filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-            searchResultCount.setTextColor(getResources().getColor(R.color.white));
+            searchResultCountView.setTextColor(getResources().getColor(R.color.white));
             filterExpListView.setVisibility(View.VISIBLE);
             clearFilterBtn.setVisibility(View.INVISIBLE);
             albumSearchRv.setVisibility(View.GONE);
@@ -248,7 +248,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
     private void setAlbumResultStats(FilterOption filterOption) {
 
-        searchResultCount.setVisibility(View.VISIBLE);
+        searchResultCountView.setVisibility(View.VISIBLE);
 
         for (int i = 0; i < filterList.size(); i++) {
             for (int x = 0; x < filterList.get(i).options.size(); x++) {
@@ -306,8 +306,8 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
                     if (textViewTextChangeEvent.getCount() == 0) {
                         setTotalResultCount("0");
-                        if (searchResultCount != null) {
-                            searchResultCount.setVisibility(View.INVISIBLE);
+                        if (searchResultCountView != null) {
+                            searchResultCountView.setVisibility(View.INVISIBLE);
                         }
                     }
 
@@ -349,10 +349,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         /**
          * Replacing (Apply) in case Expandable was previously visible
          * */
-        searchResultCount.setVisibility(View.VISIBLE);
-        searchResultCount.setTextColor(getResources().getColor(R.color.white));
-        searchResultCount.setText(new StringBuilder().append(albumSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
-        searchResultCount.setTextColor(getActivity().getResources().getColor(R.color.white));
+        searchResultCountView.setVisibility(View.VISIBLE);
+        searchResultCountView.setTextColor(getResources().getColor(R.color.white));
+        searchResultCountView.setText(new StringBuilder().append(albumSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCountView.setTextColor(getActivity().getResources().getColor(R.color.white));
         Utilities.hideKeyboard(getActivity());
 
 
@@ -415,12 +415,12 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         }
 
 
-        searchResultCount.setText(R.string.apply);
-        searchResultCount.setTextColor(getResources().getColor(R.color.text_input_color));
-        searchResultCount.setVisibility(View.VISIBLE);
-        searchResultCount.setOnClickListener(v -> { //searchResultCount switched to Apply in case Filter was visible
+        searchResultCountView.setText(R.string.apply);
+        searchResultCountView.setTextColor(getResources().getColor(R.color.text_input_color));
+        searchResultCountView.setVisibility(View.VISIBLE);
+        searchResultCountView.setOnClickListener(v -> { //searchResultCountView switched to Apply in case Filter was visible
             filterIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-            searchResultCount.setTextColor(getResources().getColor(R.color.white));
+            searchResultCountView.setTextColor(getResources().getColor(R.color.white));
             clearFilterBtn.setVisibility(View.INVISIBLE);
             ////
             promptView.setVisibility(View.GONE);
@@ -434,7 +434,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         filterExpListView.setVisibility(View.GONE);
         albumSearchRv.setVisibility(View.VISIBLE);
 
-        searchResultCount.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCountView.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
     }
 
 

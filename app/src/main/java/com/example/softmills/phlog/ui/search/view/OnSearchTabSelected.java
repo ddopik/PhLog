@@ -14,5 +14,5 @@ import com.example.softmills.phlog.base.widgets.CustomTextView;
  * **/
 public interface OnSearchTabSelected {
     EditText getSearchView();
-    CustomTextView getSearchResultCount();
+    CustomTextView getSearchResultCountView();
 }

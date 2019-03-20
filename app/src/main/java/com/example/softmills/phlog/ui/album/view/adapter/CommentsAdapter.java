@@ -135,7 +135,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                     .into(commentViewHolder.commentAuthorIcon);
 
 
-
             int rate = Math.round(previewImage.rate);
             commentViewHolder.photoRating.setRating(rate);
 
@@ -631,7 +630,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 imageCommentBtn = view.findViewById(R.id.comment_preview_img_comment_btn);
                 imgLikeNum = view.findViewById(R.id.comment_preview_img_like_num);
                 imgCommentNum = view.findViewById(R.id.comment_preview_img_comment_num);
-                photoRating = view.findViewById(R.id.photo_rating);
+                photoRating = view.findViewById(R.id.photo_rate);
                 deleteBtn = view.findViewById(R.id.album_img_delete_btn);
 
             } else if (type == COMMENT) {

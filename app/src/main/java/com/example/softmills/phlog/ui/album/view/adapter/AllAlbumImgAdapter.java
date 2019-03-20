@@ -59,29 +59,16 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
     public void onBindViewHolder(@NonNull AlbumImgViewHolder albumImgViewHolder, int i) {
 
 
-        Photographer photographer;
-        if (photosListType == null) {
-            photosListType = SOCIAL_LIST;
-        }
+        Photographer imagePhotographer;
+
         if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) || photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
-            photographer = PrefUtils.getCurrentUser(context);
+            imagePhotographer = PrefUtils.getCurrentUser(context);
 
 
         } else {
-            photographer = albumImgList.get(i).photographer;
+            imagePhotographer = albumImgList.get(i).photographer;
         }
 
-
-        if (photographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
-            albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.GONE);
-        } else {
-            if (!photographer.isFollow) {
-                albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
-            } else {
-                albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.following));
-
-            }
-        }
 
         GlideApp.with(context)
                 .load(albumImgList.get(i).thumbnailUrl)
@@ -114,6 +101,13 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         albumImgViewHolder.imageCommentTagVal.setText(tagS);
 
 
+
+        if (imagePhotographer.isFollow){
+            albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.un_follow));
+        }else {
+            albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
+        }
+
         if (albumImgList.get(i).likesCount != null)
             albumImgViewHolder.albumImgLikeVal.setText(new StringBuilder().append(albumImgList.get(i).likesCount).append(" Likes").toString());
         if (albumImgList.get(i).commentsCount != null)
@@ -124,16 +118,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             albumImgViewHolder.albumImgLike.setImageResource(R.drawable.ic_like_on);
         }
 
-        setImagePhotoGrapherInfo(albumImgViewHolder, photographer);
-        //case this Image is for current user and already saved to his profile
-        if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
-            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
-
-
-        } else {
-            albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
-
-        }
+        setImagePhotoGrapherInfo(albumImgViewHolder, imagePhotographer);
 
 
         if (onAlbumImgClicked != null) {
@@ -152,6 +137,58 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             });
 
         }
+
+
+        albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
+        albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+        albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
+        switch (photosListType) {
+            case SOCIAL_LIST: {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+                if (imagePhotographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
+                    albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
+                } else if (albumImgList.get(i).photographer.isFollow) {
+                    albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.un_follow));
+                } else {
+                    albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
+                }
+                break;
+            }
+            case CURRENT_PHOTOGRAPHER_SAVED_LIST: {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
+                break;
+            }
+            case CURRENT_PHOTOGRAPHER_PHOTOS_LIST: {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
+                break;
+            }
+            case USER_PROFILE_PHOTOS_LIST: {
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.VISIBLE);
+                break;
+            }
+            case ALBUM_PREVIEW_LIST: {
+
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.VISIBLE);
+                break;
+            }
+//            currently not available
+//            case CAMPAIGN_IMAGES_LIST: {
+//                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+//                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
+//                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.VISIBLE);
+//                break;
+//            }
+        }
+
 
     }
 

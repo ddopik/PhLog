@@ -182,7 +182,7 @@
 
 
                 <RatingBar
-                    android:id="@+id/photo_rating"
+                    android:id="@+id/photo_rate"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -190,7 +190,8 @@
                     android:layout_margin="@dimen/dp14"
                     android:isIndicator="false"
                     android:stepSize="1"
-                    tools:rating="3" />
+                    tools:rating="3"
+                    android:visibility="invisible"/>
 
 
             </FrameLayout>

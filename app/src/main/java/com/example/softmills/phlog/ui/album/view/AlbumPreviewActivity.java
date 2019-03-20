@@ -2,7 +2,6 @@ package com.example.softmills.phlog.ui.album.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,12 +20,10 @@ import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponseData;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenter;
 import com.example.softmills.phlog.ui.album.presenter.AlbumPreviewActivityPresenterImpl;
 import com.example.softmills.phlog.ui.album.view.adapter.AlbumAdapter;
+import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.SOCIAL_LIST;
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 /**
  * Created by abdalla_maged on 11/4/2018.
@@ -98,13 +95,20 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
         };
         albumAdapter.onAlbumImageClicked = albumImg -> {
 
-            Intent intent = new Intent(this, AllAlbumImgActivity.class);
-            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
-            intent.putExtra(AllAlbumImgActivity.LIST_NAME, albumToolBarTitle.getText());
-            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
-            intent.putExtra(AllAlbumImgActivity.LIST_TYPE, SOCIAL_LIST);
-            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+
+            Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
+            intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+
+            ///Currently disabled
+//            Intent intent = new Intent(this, AllAlbumImgActivity.class);
+//            intent.putExtra(AllAlbumImgActivity.ALBUM_ID, albumID);
+//            intent.putExtra(AllAlbumImgActivity.LIST_NAME, albumToolBarTitle.getText());
+//            intent.putExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) imageList);
+//            intent.putExtra(AllAlbumImgActivity.LIST_TYPE, ALBUM_PREVIEW_LIST);
+//            intent.putExtra(SELECTED_IMG_ID, albumImg.id);
+//            startActivity(intent);
 
         };
         backBtn.setOnClickListener(v -> {
@@ -171,8 +175,6 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
                 .error(R.drawable.default_photographer_profile)
                 .into(albumPreviewImg);
         albumNameTV.setText(albumPreviewResponseData.name);
-
-
 
 
         photosCount.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));

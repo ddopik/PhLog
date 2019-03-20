@@ -22,7 +22,6 @@ import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
-import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.model.PhotographerFollowingBrandData;
 import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearchData;
 import com.example.softmills.phlog.ui.search.view.brand.presenter.BrandSearchFragmentPresenter;
@@ -49,7 +48,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private String TAG = BrandSearchFragment.class.getSimpleName();
     private View mainView;
     private EditText brandSearch;
-    private TextView searchResultCount;
+    private TextView searchResultCountView;
     private CustomRecyclerView searchBrandRv;
     private ProgressBar searchBrandProgress;
     private BrandSearchAdapter brandSearchAdapter;
@@ -103,7 +102,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
 //        brandSearch = mainView.findViewById(R.id.search_brand);
         brandSearch = onSearchTabSelected.getSearchView();
-        searchResultCount = onSearchTabSelected.getSearchResultCount();
+        searchResultCountView = onSearchTabSelected.getSearchResultCountView();
         searchBrandRv = mainView.findViewById(R.id.search_brand_rv);
         searchBrandProgress = mainView.findViewById(R.id.search_brand_progress_bar);
         brandSearchAdapter = new BrandSearchAdapter(getContext(), brandSearchList);
@@ -117,7 +116,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         promptText.setText(R.string.type_something_brand);
 
 
-        searchResultCount.setVisibility(View.INVISIBLE);
+        searchResultCountView.setVisibility(View.INVISIBLE);
     }
 
     private void initListener() {
@@ -184,9 +183,9 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     public void viewBrandSearchItems(BrandSearchData brandSearchData) {
         this.brandSearchList.addAll(brandSearchData.data);
         brandSearchAdapter.notifyDataSetChanged();
-        searchResultCount.setVisibility(View.VISIBLE);
-        searchResultCount.setTextColor(getResources().getColor(R.color.white));
-        searchResultCount.setText(new StringBuilder().append(brandSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
+        searchResultCountView.setVisibility(View.VISIBLE);
+        searchResultCountView.setTextColor(getResources().getColor(R.color.white));
+        searchResultCountView.setText(new StringBuilder().append(brandSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
         hideSoftKeyBoard();
 
 

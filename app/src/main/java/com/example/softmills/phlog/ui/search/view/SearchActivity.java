@@ -37,7 +37,7 @@ public class SearchActivity extends BaseActivity {
 
         setTapSelected(R.id.tab_album);
         filterTab.setVisibility(View.VISIBLE);
-         albumSearchFragment = AlbumSearchFragment.getInstance();
+        albumSearchFragment = AlbumSearchFragment.getInstance();
         onFilterClicked = albumSearchFragment;
         albumSearchFragment.setAlbumSearchView(onSearchTabSelected);
         addFragment(R.id.search_container, albumSearchFragment, AlbumSearchFragment.class.getSimpleName(), false);
@@ -75,7 +75,7 @@ public class SearchActivity extends BaseActivity {
             }
 
             @Override
-            public CustomTextView getSearchResultCount() {
+            public CustomTextView getSearchResultCountView() {
                 return searchResult;
             }
         };
@@ -110,13 +110,13 @@ public class SearchActivity extends BaseActivity {
 
         filterTab.setOnClickListener(v -> {
             if (onFilterClicked != null) {
-                onFilterClicked.onFilterIconClicked(filterTab,clearFilterResultBtn);
+                onFilterClicked.onFilterIconClicked(filterTab, clearFilterResultBtn);
             }
         });
 
-        clearFilterResultBtn.setOnClickListener(v->{
+        clearFilterResultBtn.setOnClickListener(v -> {
             if (onFilterClicked != null) {
-                onFilterClicked.onFilterCleared(clearFilterResultBtn,true);
+                onFilterClicked.onFilterCleared(clearFilterResultBtn, true);
             }
         });
     }
@@ -161,7 +161,8 @@ public class SearchActivity extends BaseActivity {
     }
 
     public interface OnFilterClicked {
-        void onFilterIconClicked(CustomTextView filterIcon,CustomTextView clearFilterBtn);
-        void onFilterCleared(CustomTextView clearResultBtn,boolean state);
+        void onFilterIconClicked(CustomTextView filterIcon, CustomTextView clearFilterBtn);
+
+        void onFilterCleared(CustomTextView clearResultBtn, boolean state);
     }
 }
