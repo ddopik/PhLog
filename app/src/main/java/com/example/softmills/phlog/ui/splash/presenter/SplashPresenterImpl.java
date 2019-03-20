@@ -20,7 +20,7 @@ public class SplashPresenterImpl implements SplashPresenter {
 
     @Override
     public Observable<Boolean> sendFirebaseToken(Context context) {
-        return BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), true, PrefUtils.getFirebaseToken(context)))
+        return BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), true, PrefUtils.getFirebaseToken(context)), PrefUtils.getUserToken(context))
                 .map(response -> {
                     if (response != null) {
                         PrefUtils.setFirebaseTokenSentToServer(context, true);

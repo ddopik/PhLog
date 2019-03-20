@@ -16,6 +16,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.ui.social.model.SocialData;
+import com.o_bdreldin.loadingbutton.LoadingButton;
 
 import java.util.List;
 
@@ -118,7 +119,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
         ImageView socialProfileType3Icon, socialProfileType3Img_1, socialProfileType3Img_2, socialProfileType3Img_3, socialProfileType3Img_4, socialDefaultAlbumImg;
         TextView socialProfileType3FullName, socialProfileType3UserName;
-        Button followSocialProfileType3Btn;
+        LoadingButton followSocialProfileType3Btn;
 
         LinearLayout socialAlbumImgGroupContainer, socialProfileAlbumType3PhotosContainer;
 

@@ -28,6 +28,7 @@ import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
+import com.o_bdreldin.loadingbutton.LoadingButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private List<BaseImage> userPhotoList = new ArrayList<>();
     private ProgressBar userProfilePhotosProgressBar;
     private TextView placeHolder;
-    private Button followUserBtn;
+    private LoadingButton followUserBtn;
     private PagingController pagingController;
 
 
@@ -116,6 +117,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         };
 
         followUserBtn.setOnClickListener(v -> {
+            followUserBtn.setLoading(true);
             if (currentPhotographer.isFollow) {
                 userProfilePresenter.unFollowUser(String.valueOf(currentPhotographer.id));
             } else {
@@ -194,13 +196,20 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
     @Override
     public void viewUserFollowingState(Boolean state) {
+        followUserBtn.setLoading(false);
         if (state) {
             followUserBtn.setText(getResources().getString(R.string.un_follow));
             currentPhotographer.isFollow = true;
+            if (currentPhotographer.followersCount != null)
+                currentPhotographer.followersCount++;
         } else {
             followUserBtn.setText(getResources().getString(R.string.follow));
             currentPhotographer.isFollow = false;
+            if (currentPhotographer.followersCount != null)
+                currentPhotographer.followersCount--;
         }
+        if (currentPhotographer.followersCount != null)
+            userProfileFolloweresCount.setText(String.valueOf(currentPhotographer.followersCount));
     }
 
     @Override

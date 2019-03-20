@@ -50,7 +50,7 @@ class ErrorUtils {
                         }
                         return
                     }
-                    Log.e(TAG, contextTAG + "--------------->" + throwable?.message)
+                    Log.e(TAG, contextTAG + "--------------->" + throwable.message)
                 }
 
             } catch (e: Exception) {

@@ -58,7 +58,7 @@ public class LoginPresenterImp implements LoginPresenter {
     @SuppressLint("CheckResult")
     private void sendFirebaseToken() {
         loginView.navigateToHome();
-        BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), true, PrefUtils.getFirebaseToken(context)))
+        BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), true, PrefUtils.getFirebaseToken(context)), PrefUtils.getUserToken(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

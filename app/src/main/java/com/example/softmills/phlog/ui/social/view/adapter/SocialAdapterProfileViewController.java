@@ -125,11 +125,11 @@ public class SocialAdapterProfileViewController {
 //
 //        }
 
-
+        socialViewHolder.followSocialProfileType3Btn.setLoading(false);
         if (photographer.isFollow)
 
         {
-            socialViewHolder.followSocialProfileType3Btn.setText(context.getResources().getString(R.string.following));
+            socialViewHolder.followSocialProfileType3Btn.setText(context.getString(R.string.un_follow));
         } else
 
         {
@@ -139,6 +139,7 @@ public class SocialAdapterProfileViewController {
         socialViewHolder.followSocialProfileType3Btn.setOnClickListener(v ->
 
         {
+            socialViewHolder.followSocialProfileType3Btn.setLoading(true);
             if (photographer.isFollow) {
                 unFollowUser(photographer.id, socialData);
             } else {
@@ -174,20 +175,12 @@ public class SocialAdapterProfileViewController {
         BaseNetworkApi.followUser(String.valueOf(userId))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    int index = socialDataList.indexOf(socialData);
+                    socialAdapter.notifyItemChanged(index);
+                })
                 .subscribe(followUserResponse -> {
                     socialData.profiles.get(0).isFollow = true;
-                    getUserIndex(userId)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(index -> {
-                                if (index > 0) {
-                                    socialDataList.set(index, socialData);
-                                    socialAdapter.notifyDataSetChanged();
-                                }
-
-                            }, throwable -> {
-                                ErrorUtils.Companion.setError(context, TAG, throwable);
-                            });
 //                    onSocialItemListener.onSocialPhotoGrapherFollowed(Integer.parseInt(userId), true);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
@@ -199,22 +192,12 @@ public class SocialAdapterProfileViewController {
         BaseNetworkApi.unFollowUser(String.valueOf(userID))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    int index = socialDataList.indexOf(socialData);
+                    socialAdapter.notifyItemChanged(index);
+                })
                 .subscribe(followUserResponse -> {
-
                     socialData.profiles.get(0).isFollow = false;
-                    getUserIndex(userID)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(index -> {
-                                if (index > 0) {
-                                    socialDataList.set(index, socialData);
-                                    socialAdapter.notifyDataSetChanged();
-                                }
-
-                            }, throwable -> {
-                                ErrorUtils.Companion.setError(context, TAG, throwable);
-                            });
-
 //                    onSocialItemListener.onSocialPhotoGrapherFollowed(Integer.parseInt(userID), false);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);

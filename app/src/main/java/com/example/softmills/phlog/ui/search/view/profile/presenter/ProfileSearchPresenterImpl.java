@@ -38,7 +38,7 @@ public class ProfileSearchPresenterImpl implements ProfileSearchPresenter {
                     profileSearchFragmentView.viewProfileSearchItems(profileSearchResponse.data);
                 }, throwable -> {
                     profileSearchFragmentView.viewProfileSearchProgress(false);
-                    Log.e(TAG, "getProfileSearchList() ---> Error " + throwable.getMessage());
+                    Log.e(TAG, "getProfileSearchList() ---> Error " + throwable);
                 });
     }
 }

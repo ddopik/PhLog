@@ -20,6 +20,7 @@ import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.network.BaseNetworkApi;
+import com.o_bdreldin.loadingbutton.LoadingButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +62,9 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
         try {
 
+            brandSearchViewHolder.brandFollowBtn.setLoading(false);
             if(brandList.get(i).isFollow){
-                brandSearchViewHolder.brandFollowBtn.setText(context.getResources().getString(R.string.following));
+                brandSearchViewHolder.brandFollowBtn.setText(context.getResources().getString(R.string.un_follow));
             }else {
                 brandSearchViewHolder.brandFollowBtn.setText(context.getResources().getString(R.string.follow));
             }
@@ -90,6 +92,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
             });
 
             brandSearchViewHolder.brandFollowBtn.setOnClickListener(v -> {
+                brandSearchViewHolder.brandFollowBtn.setLoading(true);
                 if (brandList.get(i).isFollow) {
                     BaseNetworkApi.unFollowBrand(String.valueOf(brandList.get(i).id))
                             .subscribeOn(Schedulers.io())
@@ -134,7 +137,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
         LinearLayout searchBrandContainer;
         ImageView brandIconImg,brandImg;
         TextView brandName,brandFollowers;
-        Button brandFollowBtn;
+        LoadingButton brandFollowBtn;
 
         public BrandSearchViewHolder(View view) {
             super(view);

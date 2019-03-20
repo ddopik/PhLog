@@ -21,7 +21,7 @@ public class CampaignInnerMissionFragment extends BaseFragment
 
 
     private Campaign campaign;
-    private TextView missionDescription;
+    private TextView missionDescription, missionPrize;
     private View mainView;
 
     public static CampaignInnerMissionFragment getInstance(Campaign campaign) {
@@ -58,8 +58,12 @@ public class CampaignInnerMissionFragment extends BaseFragment
     @Override
     protected void initViews() {
         missionDescription = mainView.findViewById(R.id.mission_desc);
+        missionPrize = mainView.findViewById(R.id.mission_prize);
         if (campaign != null && campaign.descrptionEn != null)
             missionDescription.setText(campaign.descrptionEn);
+
+        if (campaign != null && campaign.prize != null)
+            missionPrize.setText(campaign.prize);
     }
 
 //    @Override

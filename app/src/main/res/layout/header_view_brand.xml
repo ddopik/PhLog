@@ -1,92 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/header_background_img"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/default_user_profile">
+    android:layout_height="wrap_content">
 
 
-    <ImageView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0.4"
-        android:background="@drawable/graduant_layer" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/dp80">
-
-        <LinearLayout
+        <ImageView
+            android:id="@+id/header_background_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:alpha="0.4"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_user_profile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.4"
+            android:background="@drawable/graduant_layer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:alpha=".2"
+            android:background="@drawable/circle"
+            app:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/brand_img_icon"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/brand_img_icon" />
+
+        <ImageView
+            android:id="@+id/brand_img_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".28"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.31"
+            tools:src="@drawable/phlog_logo" />
+
+        <com.o_bdreldin.loadingbutton.LoadingButton
+            android:id="@+id/follow_brand_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:background_color="@color/text_input_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95"
+            app:layout_constraintWidth_percent=".25"
+            app:padding="@dimen/dp4"
+            app:text="@string/follow"
+            app:text_color="@color/white"
+            app:text_size="@dimen/font_normal" />
 
 
-                <ImageView
-                    android:id="@+id/brand_img_icon"
-                    android:layout_width="@dimen/header_img_size"
-                    android:layout_height="@dimen/header_img_size"
-                    android:layout_centerInParent="true"
-                    android:scaleType="centerCrop"
-                    tools:src="@drawable/phlog_logo" />
+        <TextView
+            android:id="@+id/brand_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/segoe_b"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_medium_s"
+            app:layout_constraintBottom_toTopOf="@+id/brand_num_followers"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brand_img_icon"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="text" />
 
-            </RelativeLayout>
-
+        <android.support.v7.widget.CardView
+            android:id="@+id/brand_type_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/item_card_corner_radius"
+            app:layout_constraintBottom_toTopOf="@+id/follow_brand_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brand_num_followers">
 
             <TextView
-                android:id="@+id/brand_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp8"
-                android:layout_marginBottom="@dimen/dp8"
-                android:fontFamily="@font/segoe_b"
-                tools:text="brand name"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_medium_s" />
-
-            <com.example.softmills.phlog.base.widgets.CustomTextView
-                android:id="@+id/brand_num_followers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/dp12"
-                tools:text="512 k follows"
-                android:textColor="@color/user_profile_text_header_color" />
-
-            <Button
                 android:id="@+id/brand_type"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/brand_type_view_height"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/dp12"
-                android:background="@color/white"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/segoe_sb"
-                android:paddingStart="@dimen/dp12"
-                android:paddingEnd="@dimen/dp12"
-                tools:text="brand type"
+                android:gravity="center"
+                android:padding="@dimen/dp4"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_small" />
+                android:textSize="@dimen/font_small"
+                tools:text="Brand Type" />
 
-            <Button
-                android:id="@+id/follow_brand_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/brand_type_view_height"
-                android:layout_gravity="center|bottom"
-                android:layout_marginBottom="@dimen/dp12"
-                android:background="@drawable/rounded_orange_btn"
-                android:fontFamily="@font/segoe_sb"
-                android:text="@string/follow"
-                android:textColor="@color/white" />
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <com.example.softmills.phlog.base.widgets.CustomTextView
+            android:id="@+id/brand_num_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp8"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/brand_type_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brand_name"
+            tools:text="512 k follows" />
+    </android.support.constraint.ConstraintLayout>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:paddingTop="@dimen/dp80">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--</RelativeLayout>-->
 
 
-    </LinearLayout>
-</FrameLayout>
+    <!--<TextView-->
+    <!--android:id="@+id/brand_name"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginTop="@dimen/dp8"-->
+    <!--android:layout_marginBottom="@dimen/dp8"-->
+    <!--android:fontFamily="@font/segoe_b"-->
+    <!--tools:text="brand name"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="@dimen/text_medium_s" />-->
+
+
+    <!--</LinearLayout>-->
+</android.support.constraint.ConstraintLayout>
