@@ -245,16 +245,25 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                 break;
             }
         }
+        allAlbumImgAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void onImagePhotoGrapherLiked(int photoId, boolean state) {
         for (int i = 0; i < albumImgList.size(); i++) {
-            if (albumImgList.get(i).id == photoId && state) {
+            if (albumImgList.get(i).id == photoId  ) {
                 albumImgList.get(i).isLiked = state;
+                if (state){
+                    albumImgList.get(i).likesCount++;
+                }else {
+                    albumImgList.get(i).likesCount--;
+                }
+
                 break;
             }
         }
+        allAlbumImgAdapter.notifyDataSetChanged();
     }
 
     @Override
