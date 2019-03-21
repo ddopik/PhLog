@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -35,6 +36,8 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.Arrays;
 
 import io.reactivex.annotations.NonNull;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -89,10 +92,10 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void initView() {
 
-        draftBtn = findViewById(R.id.draft_state);
         mapUtls = new MapUtls(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(PickedPhotoInfoActivity.this)
@@ -107,7 +110,6 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         filtredImg = findViewById(R.id.photo_info);
         GlideApp.with(getBaseContext())
                 .load(Uri.parse(imagePath).getPath())
-                .centerCrop()
                 .error(R.drawable.ic_launcher_foreground)
                 .into(filtredImg);
 
@@ -121,11 +123,11 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
                 null, null);
         placesAutoCompete.setAdapter(mPlaceArrayAdapter);
-
     }
 
     @Override
     public void initPresenter() {
+
     }
 
     private void initListener() {
@@ -142,7 +144,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
             if (caption.getText() != null)
                 imageType.setImageCaption(String.valueOf(caption.getText()));
 
-            imageType.setDraft(draftBtn.isChecked());
+//            imageType.setDraft(draftBtn.isChecked());
 
             Intent intent = new Intent(this, AddTagActivity.class);
 //            intent.putExtra(AddTagActivity.IMAGE_PREVIEW, imagePath);

@@ -20,6 +20,7 @@
             app:tabTextAppearance="@style/ProfileTabTextAppearance"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            app:tabIndicatorHeight="0dp"
             app:layout_anchorGravity="bottom"
             app:layout_collapseMode="pin"
             app:tabSelectedTextColor="@color/text_input_color"

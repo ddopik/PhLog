@@ -40,6 +40,7 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
+import com.o_bdreldin.loadingbutton.LoadingButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private ImageView imagePreview;
     private String imagePreviewPath;
     private ImageButton backBtn;
-    private Button uploadBrn;
+    private LoadingButton uploadBrn;
     private ProgressBar uploadImageProgress;
     private UploadImageType imageType;
     private String imageCaption;
@@ -95,6 +96,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                 break;
             case UPLOAD_FINISHED:
 //                setResult(RESULT_OK);
+                uploadBrn.setLoading(false);
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.done)
                         .setMessage(R.string.your_photo_uploaded)
@@ -229,15 +231,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         autoCompleteTagMenuAdapter.onMenuItemClicked = this::addSelectedTag;
         selectedTagAdapter.onSelectedItemClicked = tag -> {
 
-            List<Tag> tempList = new ArrayList<Tag>();
-            for (int i = 0; i < tagList.size(); i++) {
-                if (!tagList.get(i).name.equals(tag.name)) {
-                    tempList.add(tagList.get(i));
-                }
-
-            }
-            tagList.clear();
-            tagList.addAll(tempList);
+            tagList.remove(tag);
             selectedTagAdapter.notifyDataSetChanged();
         };
 
@@ -260,6 +254,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
         uploadBrn.setOnClickListener(v -> {
 //            addTagActivityPresenter.uploadPhoto(imagePreviewPath, imageCaption, imageLocation, draftState, imageType, tagList);
+            uploadBrn.setLoading(true);
             if (tagList.isEmpty()) {
                 showToast(getString(R.string.tag_is_required));
                 return;
@@ -359,6 +354,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private void addSelectedTag(Tag tag) {
         tagList.add(tag);
         selectedTagAdapter.notifyDataSetChanged();
+        autoCompleteTextView.setText("");
         autoCompleteTextView.dismissDropDown();
     }
 

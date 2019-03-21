@@ -84,7 +84,7 @@ public class BaseNetworkApi {
     private static final String BASE_URL_COMMON = "http://178.128.162.10/api/common";
     private static final String WELCOME_SLIDES_IMAGES = BASE_URL + "/photographer/init_slider";
     private static final String ALL_COUNTRES = BASE_URL + "/common/countries/list";
-    private static final String TAG_AUTO_COMPLETE = BASE_URL + "/common/tags/search";
+    private static final String TAG_AUTO_COMPLETE = BASE_URL_COMMON + "/tags/search";
     private static final String SIGNUP_USER = BASE_URL + "/auth/signup";
     private static final String UPLOAD_CAMPAIGN_EXSISTING_PHOTO = BASE_URL + "/campaign/photo/assign";
     private static final String UPLOAD_PROFILE = BASE_URL + "/profile/upload";

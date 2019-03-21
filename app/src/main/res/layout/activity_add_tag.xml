@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -117,15 +118,17 @@
             android:padding="@dimen/activity_padding">
 
 
-            <Button
+            <com.o_bdreldin.loadingbutton.LoadingButton
                 android:id="@+id/upload_image_btn"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center|top"
                 android:background="@color/text_input_color"
-                android:fontFamily="@font/segoe_sb"
-                android:text="@string/upload_photo"
-                android:textColor="@color/white"
+                app:font_family="@font/segoe_sb"
+                app:text="@string/upload_photo"
+                app:text_color="@color/white"
+                app:background_color="@color/text_input_color"
+                app:rounded="false"
                 android:textStyle="bold" />
 
             <ProgressBar

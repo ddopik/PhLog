@@ -55,7 +55,7 @@ public class PhotoGrapherFollowingAdapter extends RecyclerView.Adapter<PhotoGrap
                     .apply(RequestOptions.circleCropTransform())
                     .into(viewHolder.profileImg);
             viewHolder.profileFullName.setText(photoGrapherFollowingInList.get(i).fullName);
-            viewHolder.profileUserName.setText(photoGrapherFollowingInList.get(i).userName);
+            viewHolder.profileUserName.setText(String.format("@%1$s", photoGrapherFollowingInList.get(i).userName));
             viewHolder.profileFollowersCount.setText(new StringBuilder().append(photoGrapherFollowingInList.get(i).followersCount).append(" ").append(context.getResources().getString(R.string.followers)).toString());
             viewHolder.profileCountFollowingCount.setText(new StringBuilder().append(photoGrapherFollowingInList.get(i).followingCount).append(" ").append(context.getResources().getString(R.string.following)).toString());
             viewHolder.photosCount.setText(new StringBuilder().append(photoGrapherFollowingInList.get(i).photosCount).append(" ").append(context.getResources().getString(R.string.photos)).toString());

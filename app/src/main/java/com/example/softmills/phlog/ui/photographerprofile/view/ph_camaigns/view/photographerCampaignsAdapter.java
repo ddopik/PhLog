@@ -74,6 +74,9 @@ public class photographerCampaignsAdapter extends RecyclerView.Adapter<photograp
         if (homeCampaign.isJoined)
             campaignViewHolder.joinCampaignBtn.setVisibility(View.INVISIBLE);
         else campaignViewHolder.joinCampaignBtn.setVisibility(View.VISIBLE);
+        if (homeCampaign.prize != null) {
+            campaignViewHolder.campaignPrize.setText(homeCampaign.prize);
+        }
         //////////////////////////////////////////
     }
 
@@ -85,7 +88,7 @@ public class photographerCampaignsAdapter extends RecyclerView.Adapter<photograp
     public class CampaignViewHolder extends RecyclerView.ViewHolder {
         ImageView campaignImage;
         ImageView campaignBusinessIcon;
-        TextView campaignBusinessName, campaignTitle, campaignDayLeft;
+        TextView campaignBusinessName, campaignTitle, campaignDayLeft, campaignPrize;
         Button joinCampaignBtn;
 
         public CampaignViewHolder(View view) {
@@ -98,7 +101,7 @@ public class photographerCampaignsAdapter extends RecyclerView.Adapter<photograp
             campaignDayLeft = view.findViewById(R.id.campaign_days_left);
 //            readMeBtn = view.findViewById(R.id.remind_me_btn);
             joinCampaignBtn = view.findViewById(R.id.join_campaign_btn);
-
+            campaignPrize = view.findViewById(R.id.campaign_prize);
         }
     }
 

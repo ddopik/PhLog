@@ -251,7 +251,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     imageType.setUploadImageType(Constants.UploadImageTypes.NORMAL_IMG);
                     GalleryImageFragment galleryImageFragment = GalleryImageFragment.getInstance(imageType);
                     addFragment(R.id.view_container, galleryImageFragment, GalleryImageFragment.class.getSimpleName(), false);
-                    picImgHomeBtn.setImageResource(R.drawable.btn_upload_selected_img);
+                    picImgHomeBtn.setImageResource(R.drawable.ic_upload_photo_selected);
                     toolbar.setVisibility(View.VISIBLE);
                     toolBarTitle.setText("");
                     backBtn.setVisibility(View.INVISIBLE);

@@ -140,6 +140,8 @@ dependencies {
 
     //Event bus
     implementation "org.greenrobot:eventbus:$event_bus_version"
+
+    implementation 'com.google.firebase:firebase-core:16.0.8'
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
 
     implementation project(':loading_button')
@@ -149,3 +151,4 @@ repositories {
 }
 apply plugin: 'realm-android'
 apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
