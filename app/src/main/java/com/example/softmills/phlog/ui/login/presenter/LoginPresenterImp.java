@@ -43,11 +43,11 @@ public class LoginPresenterImp implements LoginPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loginResponse -> {
                     loginView.viewLoginProgress(false);
-                    loginView.showMessage(loginResponse.loginData.fullName);
                     PrefUtils.setLoginState(context, true);
                     PrefUtils.setUserToken(context, loginResponse.loginData.token);
                     PrefUtils.setUserName(context, loginResponse.loginData.userName);
                     PrefUtils.setUserID(context, loginResponse.loginData.id);
+                    loginView.navigateToHome();
                     sendFirebaseToken();
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
@@ -57,15 +57,12 @@ public class LoginPresenterImp implements LoginPresenter {
 
     @SuppressLint("CheckResult")
     private void sendFirebaseToken() {
-        loginView.navigateToHome();
+
         BaseNetworkApi.updateFirebaseToken(new Device(Utilities.getDeviceName(), true, PrefUtils.getFirebaseToken(context)), PrefUtils.getUserToken(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     loginView.viewLoginProgress(false);
-                    if (response == null)
-                        return;
-                    loginView.navigateToHome();
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     loginView.viewLoginProgress(false);

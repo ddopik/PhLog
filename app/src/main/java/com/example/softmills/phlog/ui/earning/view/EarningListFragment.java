@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.earning.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.example.softmills.phlog.ui.earning.presenter.EarningListPresenterImpl
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EARNING_INNER;
 
@@ -30,7 +32,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
 
     //    EarningListAdapter
     private View mainView;
-    private TextView earningListSize;
+    private TextView earningCount;
     private EarningListAdapter earningListAdapter;
     private List<Earning> earningList = new ArrayList<>();
     private CustomRecyclerView earningListRv;
@@ -51,7 +53,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
         initPresenter();
         initViews();
         initListener();
-        if (earningList.isEmpty())
+
         earningListPresenter.getEarningList(getContext(), "1");
     }
 
@@ -63,8 +65,9 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
 
     @Override
     protected void initViews() {
-
-        earningListSize = mainView.findViewById(R.id.total_size_val);
+        Toolbar toolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.phlog_toolbar);
+        toolbar.setVisibility(View.GONE);
+        earningCount = mainView.findViewById(R.id.total_size_val);
         earningListRv = mainView.findViewById(R.id.earning_list_rv);
         earningListProgress = mainView.findViewById(R.id.earning_list_progress);
         earningListAdapter = new EarningListAdapter(earningList);
@@ -91,6 +94,8 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
 
     }
 
+
+
     @Override
     public void viewEaringListProgress(boolean state) {
         if (state) {
@@ -107,10 +112,11 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
 
     @Override
     public void setSalesNumber(int total) {
+
         if (total != 0) {
-            earningListSize.setText(getString(R.string.total_sales_number, total));
+            earningCount.setText(getString(R.string.total_sales_number, total));
         } else {
-            earningListSize.setText(getString(R.string.no_sales_yet));
+            earningCount.setText(getString(R.string.no_sales_yet));
         }
     }
 }

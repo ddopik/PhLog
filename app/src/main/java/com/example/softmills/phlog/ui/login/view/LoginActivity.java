@@ -18,13 +18,14 @@ import com.example.softmills.phlog.ui.login.presenter.LoginPresenter;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenterImp;
 import com.example.softmills.phlog.ui.signup.view.SignUpActivity;
 
-
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
@@ -59,14 +60,14 @@ public class LoginActivity extends BaseActivity implements LoginView {
         passWord = findViewById(R.id.password);
         mailInput = findViewById(R.id.mail_login_input);
         passwordInput = findViewById(R.id.login_password_input);
-        loginProgressBar=findViewById(R.id.login_progress);
+        loginProgressBar = findViewById(R.id.login_progress);
         forgotPassword = findViewById(R.id.forgot_password);
     }
 
     @Override
     public void initPresenter() {
 
-        loginPresenter=new LoginPresenterImp(getBaseContext(),this);
+        loginPresenter = new LoginPresenterImp(getBaseContext(), this);
 
     }
 
@@ -103,11 +104,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
 
-
-
-
-
-
     private boolean isLoginDataValid() {
         if (!mail.getText().toString().isEmpty() && !passWord.getText().toString().isEmpty()) {
             return true;
@@ -130,6 +126,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void navigateToSignUp() {
         Intent intent = new Intent(this, SignUpActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
@@ -142,17 +139,16 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void navigateToHome() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
+
     }
 
     @Override
     public void viewLoginProgress(Boolean state) {
-        if(state){
+        if (state) {
             loginProgressBar.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             loginProgressBar.setVisibility(View.GONE);
         }
     }

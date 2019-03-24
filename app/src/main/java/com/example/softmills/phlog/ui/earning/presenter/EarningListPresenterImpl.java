@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class EarningListPresenterImpl implements EarningListPresenter {
 
-    private String TAG=EarningListPresenterImpl.class.getSimpleName();
+    private String TAG = EarningListPresenterImpl.class.getSimpleName();
     private EarningListFragmentView earningListFragmentView;
     private Context context;
 
@@ -33,9 +33,12 @@ public class EarningListPresenterImpl implements EarningListPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(earningListResponse -> {
-                    if (earningListResponse.data != null && earningListResponse.data.transactions.data != null ) {
+                    if (earningListResponse.data != null && earningListResponse.data.transactions.data != null) {
                         earningListFragmentView.viewEarningList(earningListResponse.data.transactions.data);
-                        earningListFragmentView.setSalesNumber(earningListResponse.data.total);
+
+                        if (page.equals("1")){
+                            earningListFragmentView.setSalesNumber(earningListResponse.data.total);
+                        }
                     }
                     earningListFragmentView.viewEaringListProgress(false);
                 }, throwable -> {
