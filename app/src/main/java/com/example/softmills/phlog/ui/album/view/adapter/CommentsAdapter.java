@@ -180,7 +180,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
             if (previewImage.photographer != null) {
                 if (previewImage.photographer.id.equals(Integer.valueOf(PrefUtils.getUserId(context)))) {
-                    commentViewHolder.deleteBtn.setVisibility(View.VISIBLE);
+
+                    if (previewImage.currentPhotoGrapherPhoto !=null && previewImage.currentPhotoGrapherPhoto) {
+                        commentViewHolder.deleteBtn.setVisibility(View.VISIBLE);
+                    }
                     commentViewHolder.photoRating.setVisibility(View.VISIBLE);
                     commentViewHolder.photoRating.setIsIndicator(false);
                 }

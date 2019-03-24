@@ -57,7 +57,7 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
         mainBackBtn.setVisibility(View.INVISIBLE);
         savedPhotosRv = findViewById(R.id.saved_photos_rv);
         savedPhotosProgress = findViewById(R.id.saved_photos_progress_bar);
-        photographerPhotoAdapter = new PhotographerPhotosGridAdapter(this, imageList);
+        photographerPhotoAdapter = new PhotographerPhotosGridAdapter(this, imageList, PhotographerPhotosGridAdapter.PhotoSize.WRAP);
         savedPhotosRv = findViewById(R.id.saved_photos_rv);
         savedPhotosRv.setAdapter(photographerPhotoAdapter);
 

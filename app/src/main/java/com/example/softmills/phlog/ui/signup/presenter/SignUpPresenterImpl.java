@@ -21,15 +21,25 @@ public class SignUpPresenterImpl implements SignUpPresenter {
     private Context context;
     private String TAG = SignUpPresenterImpl.class.getSimpleName();
 
-    public SignUpPresenterImpl(Context context,SignUpView signUpView) {
+    public SignUpPresenterImpl(Context context, SignUpView signUpView) {
         this.signUpView = signUpView;
-        this.context=context;
+        this.context = context;
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void getAllCounters() {
-        requestAllCounters();
+        BaseNetworkApi.getAllCounters()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(allCountersRepose -> {
+                    AllCountersRepose countersRepose = allCountersRepose;
+                    signUpView.showCounters(allCountersRepose.countries);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
     }
+
 
     @SuppressLint("CheckResult")
     @Override
@@ -49,20 +59,9 @@ public class SignUpPresenterImpl implements SignUpPresenter {
                     signUpView.setProgress(false);
                 });
     }
-
-    @SuppressLint("CheckResult")
-    private void requestAllCounters() {
-        BaseNetworkApi.getAllCounters()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(allCountersRepose -> {
-                    AllCountersRepose countersRepose=allCountersRepose;
-                    signUpView.showCounters(allCountersRepose.countries);
-                }, throwable -> {
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
-                });
-    }
-
-
 }
+
+
+
+
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
@@ -23,11 +24,13 @@ public class PhotographerPhotosGridAdapter extends RecyclerView.Adapter<Photogra
     private List<BaseImage> photoGrapherPhotosList;
     private Context context;
     private PhotographerPhotosGridAdapter.PhotosViewHolder photosViewHolder;
+    private PhotoSize photoSize;
     public PhotoAction photoAction;
 
-    public PhotographerPhotosGridAdapter(Context context, List<BaseImage> photoGrapherPhotosList) {
+    public PhotographerPhotosGridAdapter(Context context, List<BaseImage> photoGrapherPhotosList,PhotoSize photoSize) {
         this.context = context;
         this.photoGrapherPhotosList = photoGrapherPhotosList;
+        this.photoSize=photoSize;
     }
 
     @NonNull
@@ -35,7 +38,20 @@ public class PhotographerPhotosGridAdapter extends RecyclerView.Adapter<Photogra
     public PhotographerPhotosGridAdapter.PhotosViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new PhotosViewHolder(layoutInflater.inflate(R.layout.view_holder_photo, viewGroup, false));
+
+        switch (photoSize) {
+
+            case SMALL:
+                return new PhotosViewHolder(layoutInflater.inflate(R.layout.view_holder_photo, viewGroup, false));
+
+
+                default:{
+                    return new PhotosViewHolder(layoutInflater.inflate(R.layout.view_holder_photo_wrap, viewGroup, false));
+
+                }
+        }
+
+
     }
 
     @Override
@@ -72,5 +88,10 @@ public class PhotographerPhotosGridAdapter extends RecyclerView.Adapter<Photogra
 
     public interface PhotoAction {
         void onPhotoClicked(BaseImage photoGrapherSavedPhoto);
+    }
+
+
+    public  enum  PhotoSize{
+        SMALL,WRAP
     }
 }

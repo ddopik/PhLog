@@ -3,31 +3,23 @@ package com.example.softmills.phlog.ui.campaigns.inner.ui;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
-import com.example.softmills.phlog.base.widgets.SwitchableViewPager;
 import com.example.softmills.phlog.ui.allphotos.view.AllPhotographerPhotosActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenterImpl;
@@ -37,7 +29,8 @@ import com.example.softmills.phlog.ui.uploadimage.view.UploadImageActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.softmills.phlog.Utiltes.Constants.CampaignStatus.*;
+import static com.example.softmills.phlog.Utiltes.Constants.CampaignStatus.CAMPAIGN_STATUS_APPROVED;
+import static com.example.softmills.phlog.Utiltes.Constants.CampaignStatus.CAMPAIGN_STATUS_RUNNING;
 
 /**
  * Created by abdalla_maged on 10/4/2018.
@@ -161,7 +154,6 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
         int status = campaign.status;
         List<Fragment> fragmentList = new ArrayList<>();
         CampaignInnerMissionFragment campaignInnerMissionFragment = CampaignInnerMissionFragment.getInstance(campaign);
-//        onMissionCampaignDataRecived = campaignInnerMissionFragment; // pass mission description to campaignInnerMissionFragment
         fragmentList.add(campaignInnerMissionFragment);
         fragmentList.add(CampaignInnerPhotosFragment.getInstance(campaignId, status != CAMPAIGN_STATUS_APPROVED && status != CAMPAIGN_STATUS_RUNNING));
         return fragmentList;

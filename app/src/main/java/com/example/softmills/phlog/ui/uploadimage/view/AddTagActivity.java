@@ -393,7 +393,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         Message message = new Message();
         message.what = UploaderService.REMOVE_COMMUNICATOR;
         sendMessageToService(message);
-        unbindService(connection);
+        unbindService(connection); //todo this line crashes app when backBtn pressed
         disposable.clear();
         super.onDestroy();
     }

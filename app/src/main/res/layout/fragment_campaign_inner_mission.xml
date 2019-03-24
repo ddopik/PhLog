@@ -10,7 +10,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/gray200"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/after_prize_space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,8 @@
         android:id="@+id/frameLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/white"
+        android:background="@color/gray200"
+
         app:layout_constraintBottom_toBottomOf="@+id/after_desc_space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

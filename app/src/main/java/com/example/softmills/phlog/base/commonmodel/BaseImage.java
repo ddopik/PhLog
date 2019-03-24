@@ -59,6 +59,10 @@ public class BaseImage implements Parcelable {
     @SerializedName("is_saved")
     @Expose
     public Boolean isSaved;
+
+
+    public Boolean currentPhotoGrapherPhoto; /// flag obj needed for ImageCommentActivity deleteBtn state
+
     @SerializedName("is_liked")
     @Expose
     public Boolean isLiked;
@@ -107,6 +111,7 @@ public class BaseImage implements Parcelable {
         dest.writeInt(this.id);
         dest.writeParcelable(this.photographer, flags);
         dest.writeValue(this.isSaved);
+        dest.writeValue(this.currentPhotoGrapherPhoto);
         dest.writeValue(this.isLiked);
         dest.writeTypedList(this.tags);
         dest.writeString(this.filters);
@@ -130,6 +135,7 @@ public class BaseImage implements Parcelable {
         this.id = in.readInt();
         this.photographer = in.readParcelable(Photographer.class.getClassLoader());
         this.isSaved = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.currentPhotoGrapherPhoto = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.isLiked = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.tags = in.createTypedArrayList(Tag.CREATOR);
         this.filters = in.readString();
