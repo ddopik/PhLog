@@ -66,7 +66,21 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         initViews();
         initListener();
         //default following list
+        if (becameVisible) {
+            photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0,"");
+        }
+    }
 
+    private boolean becameVisible;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !becameVisible) {
+            becameVisible = true;
+            if (getView() != null)
+                photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0,"");
+        }
     }
 
     @Override
@@ -92,8 +106,6 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
     @Override
     public void onResume() {
         super.onResume();
-        photoGrapherFollowingList.clear();
-        photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0,"");
     }
 
     private void initListener() {

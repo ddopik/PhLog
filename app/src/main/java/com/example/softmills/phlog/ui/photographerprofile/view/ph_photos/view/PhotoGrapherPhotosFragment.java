@@ -64,13 +64,27 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         super.onViewCreated(view, savedInstanceState);
         initPresenter();
         initViews();
-        initListener();
-        fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(0); //initialPage
+        initListener();//initialPage
+        if (becameVisible) {
+            fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(0);
+        }
     }
 
     @Override
     protected void initPresenter() {
         fragmentPhotoGrapherPhotosPresenter = new FragmentPhotoGrapherPhotosPresenterImpl(getContext(), this);
+    }
+
+    private boolean becameVisible;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !becameVisible) {
+            becameVisible = true;
+            if (getView() != null)
+            fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(0);
+        }
     }
 
     @Override

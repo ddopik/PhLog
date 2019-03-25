@@ -112,6 +112,7 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
         ViewPager userProfileViewpager = mainView.findViewById(R.id.photographer_profile_viewpager);
 //        userProfileViewpager.setOffscreenPageLimit(1);
         PhotoGrapherProfileViewPagerAdapter photographerProfileViewPagerAdapter = new PhotoGrapherProfileViewPagerAdapter(getChildFragmentManager(), getUserProfileFragment(), getUserProfileFragmentTitles());
+        userProfileViewpager.setOffscreenPageLimit(3);
         userProfileViewpager.setAdapter(photographerProfileViewPagerAdapter);
         userProfileTabs.setupWithViewPager(userProfileViewpager);
 
@@ -142,7 +143,6 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
 
         return photoGrapherProfileFragmentList;
     }
-
 
     private List<String> getUserProfileFragmentTitles() {
 

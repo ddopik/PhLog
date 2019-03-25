@@ -41,11 +41,6 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
         return new PhotographerCampaignsFragment();
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,7 +55,21 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
         initPresenter();
         initViews();
         initListener();
-        photoGrapherCampaignsPresenter.getPhotographerCampaigns(0);
+        if (becameVisible) {
+            photoGrapherCampaignsPresenter.getPhotographerCampaigns(0);
+        }
+    }
+
+    private boolean becameVisible;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !becameVisible) {
+            becameVisible = true;
+            if (getView() != null)
+                photoGrapherCampaignsPresenter.getPhotographerCampaigns(0);
+        }
     }
 
     @Override

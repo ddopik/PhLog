@@ -60,7 +60,7 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
         followTableLayout = mainView.findViewById(R.id.photographer_follow_tabs);
         followViewPager = mainView.findViewById(R.id.photographer_follow_pager);
         photoGrapherFollowViewPagerAdapter = new PhotoGrapherFollowViewPagerAdapter(getChildFragmentManager(), getFragmentList());
-
+followViewPager.setOffscreenPageLimit(2);
         followViewPager.setAdapter(photoGrapherFollowViewPagerAdapter);
         followTableLayout.setupWithViewPager(followViewPager);
         followTableLayout.getTabAt(0).setIcon(R.drawable.tab_follow_following);
