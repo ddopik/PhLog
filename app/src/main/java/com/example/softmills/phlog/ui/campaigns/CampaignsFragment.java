@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     private List<Campaign> homeCampaignList = new ArrayList<>();
     private CampaignPresenter campaignPresenter;
     private PagingController pagingController;
+    private ConstraintLayout noCampaignsPrompt;
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -68,7 +70,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
         allCampaignsRv = mainView.findViewById(R.id.all_campaigns_rv);
         allCampaignsAdapter = new AllCampaignsAdapter(getContext(), homeCampaignList);
         allCampaignsRv.setAdapter(allCampaignsAdapter);
-
+        noCampaignsPrompt = mainView.findViewById(R.id.no_added_campaign_prompt);
 
     }
 
@@ -118,9 +120,11 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     @Override
     public void viewAllCampaign(List<Campaign> homeCampaignList) {
         allCampaignsRv.setVisibility(View.VISIBLE);
-        this.homeCampaignList.addAll(homeCampaignList);
+//        this.homeCampaignList.addAll(homeCampaignList);
         allCampaignsAdapter.notifyDataSetChanged();
-
+        if (this.homeCampaignList.isEmpty()) {
+            noCampaignsPrompt.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

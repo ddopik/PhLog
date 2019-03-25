@@ -56,7 +56,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
-    private String TAG=AddTagActivity.class.getSimpleName();
+    private String TAG = AddTagActivity.class.getSimpleName();
     public static String IMAGE_TYPE = "image_type";
 
     private AutoCompleteTextView autoCompleteTextView;
@@ -248,7 +248,6 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                         .subscribeWith(getAutoCompleteKey()));
 
 
-
         backBtn.setOnClickListener((view) -> onBackPressed());
 
 
@@ -387,13 +386,14 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     }
 
 
-
     @Override
     protected void onDestroy() {
-        Message message = new Message();
-        message.what = UploaderService.REMOVE_COMMUNICATOR;
-        sendMessageToService(message);
-        unbindService(connection); //todo this line crashes app when backBtn pressed
+        if (bound) {
+            Message message = new Message();
+            message.what = UploaderService.REMOVE_COMMUNICATOR;
+            sendMessageToService(message);
+            unbindService(connection); //todo this line crashes app when backBtn pressed
+        }
         disposable.clear();
         super.onDestroy();
     }

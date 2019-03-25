@@ -59,7 +59,21 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
         initPresenter();
         initViews();
         initListener();
-        photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(0); //initialPage
+        if (becameVisible) {
+            photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(0); //initialPage
+        }
+    }
+
+    private boolean becameVisible;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !becameVisible) {
+            becameVisible = true;
+            if (getView() != null)
+                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(0); //initialPage
+        }
     }
 
     @Override

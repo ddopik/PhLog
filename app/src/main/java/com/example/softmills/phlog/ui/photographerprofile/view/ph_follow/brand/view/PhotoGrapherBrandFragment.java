@@ -65,6 +65,21 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
         initPresenter();
         initViews();
         initListener();
+        if (becameVisible) {
+            photoGrapherBrandPresenter.getFollowingBrand("", "0");
+        }
+    }
+
+    private boolean becameVisible;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !becameVisible) {
+            becameVisible = true;
+            if (getView() != null)
+                photoGrapherBrandPresenter.getFollowingBrand("", "0");
+        }
     }
 
     @Override
@@ -89,8 +104,6 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
     @Override
     public void onResume() {
         super.onResume();
-        photographerFollowingBrands.clear();
-        photoGrapherBrandPresenter.getFollowingBrand("0", "0");
     }
 
     private void initListener() {
@@ -99,7 +112,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
         pagingController = new PagingController(followingBrandRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                photoGrapherBrandPresenter.getFollowingBrand(String.valueOf(page ), searchPhotographerBrand.getText().toString());
+                photoGrapherBrandPresenter.getFollowingBrand(searchPhotographerBrand.getText().toString(), String.valueOf(page));
             }
 
 
@@ -131,7 +144,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
                 // user cleared search get default data
                     photographerFollowingBrands.clear();
-                    photoGrapherBrandPresenter.getFollowingBrand("0", searchPhotographerBrand.getText().toString());
+                    photoGrapherBrandPresenter.getFollowingBrand(searchPhotographerBrand.getText().toString(), "0");
             }
 
             @Override
