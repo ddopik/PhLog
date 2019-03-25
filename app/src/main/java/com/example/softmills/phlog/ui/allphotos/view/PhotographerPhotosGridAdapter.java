@@ -44,7 +44,6 @@ public class PhotographerPhotosGridAdapter extends RecyclerView.Adapter<Photogra
             case SMALL:
                 return new PhotosViewHolder(layoutInflater.inflate(R.layout.view_holder_photo, viewGroup, false));
 
-
                 default:{
                     return new PhotosViewHolder(layoutInflater.inflate(R.layout.view_holder_photo_wrap, viewGroup, false));
 
