@@ -1,20 +1,18 @@
 package com.example.softmills.phlog.ui.brand.view;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
@@ -23,19 +21,21 @@ import com.example.softmills.phlog.ui.brand.presenter.BrandInnerDataPresenterImp
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerPresenter;
 import com.o_bdreldin.loadingbutton.LoadingButton;
 
-import io.reactivex.annotations.NonNull;
-
 /**
  * Created by abdalla_maged on 11/12/2018.
  */
 public class BrandInnerActivity extends BaseActivity implements BrandInnerActivityView {
 
     public static String BRAND_ID = "brand_id";
+    private Toolbar brandProfileToolBar;
+    private AppBarLayout mAppBarLayout;
+    private CollapsingToolbarLayout brandProfileCollapsingToolbarLayout;
+    private ImageButton backBtn;
     private Business currentBrand;
     private ImageView brandHeaderImg;
     private ImageView brandIconImg;
     private LoadingButton followBrandBtn;
-    private TextView brandName, brandNumFollowers, brandType, aboutBrand, brandData, brandWebsite, brandMail, brandCampaign;
+    private TextView brandName, brandNumFollowers, brandType, aboutBrand, brandData, brandWebsite, brandMail, brandCampaign, brandProfileToolbarFollow, brandProfileToolbarTitle;
     private BrandInnerPresenter brandInnerPresenter;
     private ProgressBar progressBar;
 
@@ -56,6 +56,12 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     @Override
     public void initView() {
 
+        mAppBarLayout = findViewById(R.id.brand_profile_appBar);
+        brandProfileCollapsingToolbarLayout = findViewById(R.id.brand_profile_collapsing_layout);
+        brandProfileToolBar = findViewById(R.id.brand_profile_toolbar);
+        brandProfileToolbarTitle = findViewById(R.id.brand_profile_toolbar_title);
+        brandProfileToolbarFollow = findViewById(R.id.tool_bar_follow_brand);
+        backBtn = findViewById(R.id.back_btn);
         brandHeaderImg = findViewById(R.id.header_background_img);
         brandIconImg = findViewById(R.id.brand_img_icon);
         brandName = findViewById(R.id.brand_name);
@@ -93,6 +99,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
         if (brand.fullName != null) {
             brandName.setText(brand.fullName);
+            brandProfileToolbarTitle.setText(brand.fullName);
             aboutBrand.setText(new StringBuilder().append(getResources().getString(R.string.about_brand)).append(" : ").append(brand.fullName).toString());
         }
 
@@ -111,8 +118,10 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         }
         if (brand.isFollow) {
             followBrandBtn.setText(getResources().getString(R.string.following));
+            brandProfileToolbarFollow.setText(getResources().getString(R.string.following));
         } else {
             followBrandBtn.setText(getResources().getString(R.string.follow));
+            brandProfileToolbarFollow.setText(getResources().getString(R.string.follow));
         }
 
         if (brand.website != null)
@@ -129,15 +138,11 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
     private void intiListeners() {
         followBrandBtn.setOnClickListener(v -> {
-            if (currentBrand != null) {
-                followBrandBtn.setLoading(true);
-                if (currentBrand.isFollow) {
-                    brandInnerPresenter.unFollowBrand(String.valueOf(currentBrand.id));
-                } else {
-                    brandInnerPresenter.followBrand(String.valueOf(currentBrand.id));
-                }
+            followBrand();
+        });
 
-            }
+        brandProfileToolbarFollow.setOnClickListener(v -> {
+            followBrand();
         });
 
         brandCampaign.setOnClickListener(v -> {
@@ -146,6 +151,26 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });
+        brandProfileCollapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.black));
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    isShow = true;
+                    brandProfileToolBar.setVisibility(View.VISIBLE);
+                } else if (isShow) {
+                    isShow = false;
+                    brandProfileToolBar.setVisibility(View.GONE);
+                }
+            }
+        });
+        backBtn.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
@@ -154,10 +179,12 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         if (state) {
             currentBrand.isFollow = true;
             followBrandBtn.setText(getString(R.string.un_follow));
+            brandProfileToolbarFollow.setText(getString(R.string.un_follow));
             currentBrand.followersCount++;
         } else {
             currentBrand.isFollow = false;
             followBrandBtn.setText(getResources().getString(R.string.follow));
+            brandProfileToolbarFollow.setText(getResources().getString(R.string.follow));
             currentBrand.followersCount--;
         }
         brandNumFollowers.setText(new StringBuilder().append(currentBrand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
@@ -172,6 +199,18 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         }
     }
 
+
+    private void followBrand() {
+        if (currentBrand != null) {
+            followBrandBtn.setLoading(true);
+            if (currentBrand.isFollow) {
+                brandInnerPresenter.unFollowBrand(String.valueOf(currentBrand.id));
+            } else {
+                brandInnerPresenter.followBrand(String.valueOf(currentBrand.id));
+            }
+
+        }
+    }
 
     @Override
     public void showMessage(String msg) {
