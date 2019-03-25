@@ -5,12 +5,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,11 +45,14 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
 
     private final String TAG = CampaignInnerActivity.class.getSimpleName();
     public static String CAMPAIGN_ID = "campaign_id";
+    private Toolbar campaignProfileToolBar;
+    private AppBarLayout mAppBarLayout;
+    private CollapsingToolbarLayout campaignProfileCollapsingToolbarLayout;
+    private ImageButton backBtn;
     private String campaignId;
-
     private ImageView campaignImg;
     private Button uploadCampaignBtn;
-    private TextView campaignTitle, campaignHostedBy, campaignDayLeft;
+    private TextView campaignTitle, campaignHostedBy, campaignDayLeft, campaignProfileToolbarTitle;
     private TabLayout campaignTabs;
     private ViewPager campaignViewPager;
     private CampaignInnerPresenter campaignInnerPresenter;
@@ -64,6 +71,12 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
     @Override
     public void initView() {
 
+        mAppBarLayout = findViewById(R.id.campaign_profile_appBar);
+        campaignProfileCollapsingToolbarLayout = findViewById(R.id.campaign_profile_collapsing_layout);
+        campaignProfileToolBar = findViewById(R.id.campaign_profile_toolbar);
+        campaignProfileToolbarTitle = findViewById(R.id.campaign_profile_toolbar_title);
+       ;
+        backBtn = findViewById(R.id.back_btn);
         campaignImg = findViewById(R.id.campaign_header_img);
         campaignTitle = findViewById(R.id.campaign_title);
         campaignHostedBy = findViewById(R.id.campaign_hosted_by);
@@ -116,6 +129,26 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                         return null;
                     }).show();
         });
+        campaignProfileCollapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.black));
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    isShow = true;
+                    campaignProfileToolBar.setVisibility(View.VISIBLE);
+                } else if (isShow) {
+                    isShow = false;
+                    campaignProfileToolBar.setVisibility(View.GONE);
+                }
+            }
+        });
+        backBtn.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
@@ -131,6 +164,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                 .into(campaignImg);
 
         campaignTitle.setText(campaign.titleEn);
+        campaignProfileToolbarTitle.setText(campaign.titleEn);
 
         campaignDayLeft.setText(new StringBuilder().append(campaign.daysLeft).append(" ").append(getString(R.string.days_left_value)).toString());
 
