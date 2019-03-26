@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -181,19 +182,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             int myProfileBtnImg_off = R.drawable.ic_profile_off;
 
             homeBrn.setTextColor(getResources().getColor(R.color.gray677078));
-            homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg_off, 0, 0);
+            homeBrn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), homeBrnImg_off), null, null);
             homeBrn.setCompoundDrawablePadding(8);
 
             campaignBtn.setTextColor(getResources().getColor(R.color.gray677078));
-            campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, campaignBtnImg_off, 0, 0);
+            campaignBtn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), campaignBtnImg_off), null, null);
             campaignBtn.setCompoundDrawablePadding(8);
 
             notificationBtn.setTextColor(getResources().getColor(R.color.gray677078));
-            notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg_off, 0, 0);
+            notificationBtn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), notificationBtnImg_off), null, null);
             notificationBtn.setCompoundDrawablePadding(8);
 
             myProfileBtn.setTextColor(getResources().getColor(R.color.gray677078));
-            myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg_off, 0, 0);
+            myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), myProfileBtnImg_off), null, null);
             myProfileBtn.setCompoundDrawablePadding(8);
 
 
@@ -215,7 +216,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 case HOME: {
                     addFragment(R.id.view_container, new SocialFragment(), SocialFragment.class.getSimpleName(), false);
                     homeBrn.setTextColor(getResources().getColor(R.color.text_input_color));
-                    homeBrn.setCompoundDrawablesWithIntrinsicBounds(0, homeBrnImg, 0, 0);
+                    homeBrn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), homeBrnImg), null, null);
                     homeBrn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.GONE);
                     currentTab = HOME;
@@ -225,7 +226,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 case CAMPAIGN: {
                     addFragment(R.id.view_container, new CampaignsFragment(), CampaignsFragment.class.getSimpleName(), false);
                     campaignBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                    campaignBtn.setCompoundDrawablesWithIntrinsicBounds(0, campaignBtnImg, 0, 0);
+                    campaignBtn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), campaignBtnImg), null, null);
                     campaignBtn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.VISIBLE);
                     toolBarTitle.setText(getResources().getString(R.string.campaigns));
@@ -237,7 +238,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                     addFragment(R.id.view_container, new NotificationFragment(), NotificationFragment.class.getSimpleName(), false);
                     notificationBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                    notificationBtn.setCompoundDrawablesWithIntrinsicBounds(0, notificationBtnImg, 0, 0);
+                    notificationBtn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), notificationBtnImg), null, null);
                     notificationBtn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.VISIBLE);
                     backBtn.setVisibility(View.GONE);
@@ -263,7 +264,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     toolbar.setVisibility(View.GONE);
                     addFragment(R.id.view_container, new PhotoGraphedProfileFragment(), PhotoGraphedProfileFragment.class.getSimpleName(), false);
                     myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                    myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
+                    myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), myProfileBtnImg), null, null);
                     myProfileBtn.setCompoundDrawablePadding(8);
                     currentTab = PROFILE;
                     break;
@@ -271,7 +272,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 case EARNING_LIST: {
                     addFragment(R.id.view_container, new EarningListFragment(), EarningListFragment.class.getSimpleName(), true);
                     myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                    myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
+                    myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), myProfileBtnImg), null, null);
                     myProfileBtn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.GONE);
                     toolBarTitle.setText(getResources().getString(R.string.profile));
@@ -283,7 +284,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         EarningInnerFragment earningInnerFragment = EarningInnerFragment.getInstance(extraData);
                         addFragment(R.id.view_container, earningInnerFragment, EarningInnerFragment.class.getSimpleName(), true);
                         myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                        myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
+                        myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), myProfileBtnImg), null, null);
                         myProfileBtn.setCompoundDrawablePadding(8);
                         toolbar.setVisibility(View.VISIBLE);
                         toolBarTitle.setText(getResources().getString(R.string.earning_details));
@@ -296,7 +297,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 case EDIT_PROFILE: {
                     addFragment(R.id.view_container, EditPhotoGrapherProfileFragment.getInstance(), EditPhotoGrapherProfileFragment.class.getSimpleName(), true);
                     myProfileBtn.setTextColor(getResources().getColor(R.color.text_input_color));
-                    myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(0, myProfileBtnImg, 0, 0);
+                    myProfileBtn.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(getBaseContext(), myProfileBtnImg), null, null);
                     myProfileBtn.setCompoundDrawablePadding(8);
                     toolbar.setVisibility(View.GONE);
                     toolBarTitle.setText(getResources().getString(R.string.profile));

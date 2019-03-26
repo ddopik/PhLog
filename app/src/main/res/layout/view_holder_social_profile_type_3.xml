@@ -59,6 +59,8 @@
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                app:rounded="false"
+                app:cardCornerRadius="@dimen/dp8"
                 app:background_color="@color/text_input_color"
                 app:text_color="@color/white"
                 app:font_family="@font/segoe_sb"

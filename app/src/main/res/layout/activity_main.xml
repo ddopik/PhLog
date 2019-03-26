@@ -30,19 +30,20 @@
 
     </RelativeLayout>
 
+
+    <include layout="@layout/phlog_bottom_bar" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/pic_img_home_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="@dimen/dp26"
-        app:srcCompat="@drawable/btn_upload_img"
+        android:src="@drawable/btn_upload_img"
         app:maxImageSize="55dp"
-        app:backgroundTint="@android:color/transparent"
-        />
-
-
-    <include layout="@layout/phlog_bottom_bar" />
+        android:background="@null"
+        app:rippleColor="@null"
+        app:backgroundTint="@android:color/transparent" />
 
 
 </android.support.design.widget.CoordinatorLayout>

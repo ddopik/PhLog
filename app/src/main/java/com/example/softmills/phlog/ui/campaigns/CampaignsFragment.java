@@ -120,7 +120,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     @Override
     public void viewAllCampaign(List<Campaign> homeCampaignList) {
         allCampaignsRv.setVisibility(View.VISIBLE);
-//        this.homeCampaignList.addAll(homeCampaignList);
+        this.homeCampaignList.addAll(homeCampaignList);
         allCampaignsAdapter.notifyDataSetChanged();
         if (this.homeCampaignList.isEmpty()) {
             noCampaignsPrompt.setVisibility(View.VISIBLE);

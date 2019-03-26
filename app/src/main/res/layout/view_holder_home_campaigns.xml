@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp8"
-                    android:drawableStart="@drawable/ic_time_white"
+                    tools:drawableStart="@drawable/ic_time_white"
                     android:drawablePadding="@dimen/campaign_drawable_padding"
                     android:textColor="@color/white"
                     tools:text="5 day left" />
@@ -86,7 +86,7 @@
                     android:layout_marginTop="@dimen/dp8"
                     android:textColor="@color/white"
                     android:drawablePadding="@dimen/campaign_drawable_padding"
-                    android:drawableStart="@drawable/ic_prize_white"
+                    tools:drawableStart="@drawable/ic_prize_white"
                     android:id="@+id/campaign_prize"/>
 
                 <LinearLayout
