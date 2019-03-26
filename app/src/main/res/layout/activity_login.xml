@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/splash_screen_background">
+    android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash_screen_background" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -75,8 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/segoe_sb"
-            android:paddingStart="@dimen/widgets_padding"
             android:gravity="center_vertical"
+            android:paddingStart="@dimen/widgets_padding"
             android:text="@string/login_google"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -140,10 +143,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/circle_white"
-        android:padding="@dimen/dp10"
-        android:gravity="center"
-        android:text="@string/or"
         android:fontFamily="@font/segoe_sb"
+        android:gravity="center"
+        android:padding="@dimen/dp10"
+        android:text="@string/or"
         android:textColor="@color/gray900"
         android:textSize="@dimen/font_normal"
         android:visibility="visible"
@@ -168,11 +171,11 @@
             android:id="@+id/mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/verdana"
             android:hint="@string/mail"
             android:inputType="textEmailAddress"
             android:textAlignment="textStart"
             android:textColor="@color/white"
-            android:fontFamily="@font/verdana"
             android:textColorHint="@color/white"
             android:textSize="@dimen/sign_up_text_size_small"
             app:backgroundTint="@color/white" />
@@ -195,9 +198,9 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/verdana"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:fontFamily="@font/verdana"
             android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
@@ -212,11 +215,11 @@
         android:layout_height="@dimen/login_sign_in_btn_height"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/rounded_sign_up_btn"
+        android:fontFamily="@font/segoe_sb"
         android:text="@string/login"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/sign_up_text_size_meduim"
-        android:fontFamily="@font/segoe_sb"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
         app:layout_constraintStart_toStartOf="@+id/login_password_input"
         app:layout_constraintTop_toBottomOf="@+id/login_password_input" />

@@ -154,6 +154,9 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
                 if (textViewTextChangeEvent.getCount() == 0) {
                     promptView.setVisibility(View.VISIBLE);
+                    if (searchResultCountView != null) {
+                        searchResultCountView.setVisibility(View.INVISIBLE);
+                    }
                     promptText.setText(R.string.type_something_profile);
                     return;
                 }

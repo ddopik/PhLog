@@ -27,7 +27,7 @@
     <dimen name="map_location_marker_icon_width">500dp</dimen>
     <dimen name="map_location_marker_icon_height">500dp</dimen>
     <dimen name="logo_width">60dp</dimen>
-    <dimen name="logo_size_m">50dp</dimen>
+    <dimen name="logo_size_m">55dp</dimen>
     <dimen name="logo_height">60dp</dimen>
     <dimen name="activity_search_tab_h">35dp</dimen>
     <dimen name="activity_search_tab_h_large">45dp</dimen>

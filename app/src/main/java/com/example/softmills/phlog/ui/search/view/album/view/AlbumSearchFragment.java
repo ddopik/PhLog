@@ -302,15 +302,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
 
                 if (textViewTextChangeEvent.getCount() == 0) {
-
-
-                    if (textViewTextChangeEvent.getCount() == 0) {
-                        setTotalResultCount("0");
-                        if (searchResultCountView != null) {
-                            searchResultCountView.setVisibility(View.INVISIBLE);
-                        }
+//                    setTotalResultCount("0");
+                    if (searchResultCountView != null) {
+                        searchResultCountView.setVisibility(View.INVISIBLE);
                     }
-
                     promptView.setVisibility(View.VISIBLE);
                     promptText.setText(R.string.type_something_album);
                     return;
