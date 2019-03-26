@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.search.view.album.view;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,10 +111,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setText(headerTitle);
         ImageView arrow = convertView.findViewById(R.id.header_item_down_btn);
         if (isExpanded) {
-            arrow.setBackgroundResource(R.drawable.arrow_up_orange);
+            arrow.setBackground(AppCompatResources.getDrawable(_context, R.drawable.arrow_up_orange));
             lblListHeader.setTextColor(convertView.getContext().getResources().getColor(R.color.text_input_color));
         } else {
-            arrow.setBackgroundResource(R.drawable.down_arrow_white);
+            arrow.setBackground(AppCompatResources.getDrawable(_context, R.drawable.down_arrow_white));
             lblListHeader.setTextColor(convertView.getContext().getResources().getColor(R.color.white));
         }
 

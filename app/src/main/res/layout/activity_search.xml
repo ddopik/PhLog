@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_search_view"
-            android:drawableStart="@drawable/ic_search_gray"
+            android:drawableStart="@drawable/places_ic_search"
             android:drawablePadding="@dimen/widgets_padding"
             android:fontFamily="@font/verdana"
             android:hint="@string/search"

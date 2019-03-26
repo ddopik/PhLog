@@ -6,6 +6,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 
 import com.androidnetworking.AndroidNetworking;
@@ -30,7 +32,7 @@ import okhttp3.OkHttpClient;
  */
 
 
-public class PhLogApp extends Application {
+public class PhLogApp extends MultiDexApplication {
 
 
     public static Realm realm;
@@ -43,12 +45,13 @@ public class PhLogApp extends Application {
     public void onCreate() {
         super.onCreate();
         this.app = this;
-//        MultiDex.install(app);
 //        initRealm(); //--> [1]order is must
 //        setRealmDefaultConfiguration(); //--> [2]order is must
 //        intializeSteatho();
 //        deleteCache(app);   ///for developing        ##################
 //        initializeDepInj(); ///intializing Dagger Dependancy
+
+        MultiDex.install(app);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             networkStateChangeManager = new NetworkStateChangeManager(this);

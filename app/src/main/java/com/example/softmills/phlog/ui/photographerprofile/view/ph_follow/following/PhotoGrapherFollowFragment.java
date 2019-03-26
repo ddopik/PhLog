@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +65,9 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
 followViewPager.setOffscreenPageLimit(2);
         followViewPager.setAdapter(photoGrapherFollowViewPagerAdapter);
         followTableLayout.setupWithViewPager(followViewPager);
-        followTableLayout.getTabAt(0).setIcon(R.drawable.tab_follow_following);
-        followTableLayout.getTabAt(1).setIcon(R.drawable.tab_follow_brand);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        followTableLayout.getTabAt(0).setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.tab_follow_following));
+        followTableLayout.getTabAt(1).setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.tab_follow_brand));
 //        followViewPager.setCurrentItem(CURRENT_TAP);
 
     }

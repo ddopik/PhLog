@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -216,8 +217,8 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
         GlideApp.with(this)
                 .load(photographer.imageProfile)
                 .apply(RequestOptions.circleCropTransform())
-                .error(R.drawable.default_error_img)
-                .placeholder(R.drawable.default_place_holder)
+                .error(AppCompatResources.getDrawable(getContext(), R.drawable.default_error_img))
+                .placeholder(AppCompatResources.getDrawable(getContext(), R.drawable.default_place_holder))
                 .into(profileImage);
         Glide.with(this)
                 .load(photographer.imageCover)

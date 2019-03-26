@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -164,6 +165,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                 .into(campaignImg);
 
         campaignTitle.setText(campaign.titleEn);
+        campaignDayLeft.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(getBaseContext(), R.drawable.ic_time_white), null, null, null);
         campaignProfileToolbarTitle.setText(campaign.titleEn);
 
         campaignDayLeft.setText(new StringBuilder().append(campaign.daysLeft).append(" ").append(getString(R.string.days_left_value)).toString());

@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.campaigns;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -50,6 +52,8 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
     public void onBindViewHolder(@NonNull CampaignViewHolder campaignViewHolder, int i) {
 
         Campaign homeCampaign = homeCampaignList.get(i);
+        campaignViewHolder.campaignPrize.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(context, R.drawable.ic_prize_white), null, null, null);
+        campaignViewHolder.campaignDayLeft.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(context, R.drawable.ic_time_white), null, null, null);
         campaignViewHolder.campaignImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,21 +75,16 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
         });
 
         GlideApp.with(context).load(homeCampaign.imageCover)
-                .error(R.drawable.default_error_img)
-                .placeholder(R.drawable.default_place_holder)
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
-                        campaignViewHolder.campaignImage.setBackground(resource);
-                    }
-                });
+//                .error(R.drawable.default_error_img)
+//                .placeholder(R.drawable.default_place_holder)
+                .into(campaignViewHolder.campaignImage);
         campaignViewHolder.campaignBusinessName.setText(homeCampaign.business.fullName);
         campaignViewHolder.campaignTitle.setText(homeCampaign.titleEn);
         campaignViewHolder.campaignDayLeft.setText(String.valueOf(homeCampaign.daysLeft));
         campaignViewHolder.campaignDayLeft.append(" " + context.getResources().getString(R.string.days_left));
         GlideApp.with(context).load(homeCampaign.business.thumbnail)
-                .error(R.drawable.default_error_img)
-                .placeholder(R.drawable.default_place_holder)
+                .error(AppCompatResources.getDrawable(context, R.drawable.default_error_img))
+                .placeholder(AppCompatResources.getDrawable(context, R.drawable.default_place_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(campaignViewHolder.campaignBusinessIcon);
 

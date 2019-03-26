@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.content.res.AppCompatResources;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -74,6 +76,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         brandCampaign = findViewById(R.id.brand_campaign);
         progressBar = findViewById(R.id.brand_progress_bar);
         followBrandBtn = findViewById(R.id.follow_brand_btn);
+        brandCampaign.setCompoundDrawablesWithIntrinsicBounds(null, null, AppCompatResources.getDrawable(getBaseContext(), R.drawable.ic_navigate_brand_forward_24dp), null);
     }
 
     @Override

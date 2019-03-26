@@ -51,7 +51,7 @@
                     android:padding="@dimen/widgets_padding"
                     android:focusable="false"
                     android:paddingStart="@dimen/dp10"
-                    android:drawableStart="@drawable/ic_search"/>
+                    android:drawableStart="@drawable/places_ic_search"/>
 
             </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,8 @@ public class photographerCampaignsAdapter extends RecyclerView.Adapter<photograp
     public void onBindViewHolder(@NonNull CampaignViewHolder campaignViewHolder, int i) {
 
         Campaign homeCampaign = homeCampaignList.get(i);
+        campaignViewHolder.campaignPrize.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(context, R.drawable.ic_prize_white), null, null, null);
+        campaignViewHolder.campaignDayLeft.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(context, R.drawable.ic_time_white), null, null, null);
         if (campaignLister != null) {
             campaignViewHolder.campaignImage.setOnClickListener(view -> campaignLister.onCampaignClicked(homeCampaign.id.toString()));
             campaignViewHolder.joinCampaignBtn.setOnClickListener(view -> campaignLister.onCampaignJoinClicked(homeCampaign.id.toString()));

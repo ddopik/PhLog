@@ -15,7 +15,7 @@
         android:layout_marginStart="@dimen/dp8"
         android:layout_marginEnd="@dimen/dp8"
         android:background="@drawable/rounded_search_view_gray"
-        android:drawableStart="@drawable/ic_search_gray"
+        android:drawableStart="@drawable/places_ic_search"
         android:padding="@dimen/widgets_padding"
         android:hint="@string/search"/>
     <com.example.softmills.phlog.base.widgets.CustomRecyclerView
