@@ -6,17 +6,18 @@
     android:background="@color/white">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
+        android:id="@+id/brand_profile_appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/brand_profile_collapsing_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll"
             app:titleEnabled="false">
 
             <RelativeLayout
@@ -28,6 +29,50 @@
 
                     layout="@layout/header_view_brand" />
             </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/brand_profile_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="start"
+                android:minHeight="?attr/actionBarSize"
+                android:visibility="invisible"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/back_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:background="@color/transparent"
+                        app:srcCompat="@drawable/ic_arrow_left" />
+
+                    <com.example.softmills.phlog.base.widgets.CustomTextView
+                        android:id="@+id/brand_profile_toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+
+                    <com.example.softmills.phlog.base.widgets.CustomTextView
+                        android:id="@+id/tool_bar_follow_brand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center"
+                        android:layout_marginEnd="@dimen/dp16"
+                        android:text="@string/about_brand"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+
+                </FrameLayout>
+
+            </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
 
 
@@ -62,10 +107,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/about_brand"
+                android:fontFamily="@font/regencie_light"
                 android:paddingStart="@dimen/dp24"
                 android:paddingEnd="@dimen/dp24"
                 android:paddingBottom="@dimen/dp16"
-                android:fontFamily="@font/regencie_light"
                 tools:text="asdasjdbas;nal;xnnnnnnnnnnnasdasjdbas;nal;xnnnnnnnnnnnn
                 nnnaaaaaaaasdasjdbas;nal;xnaaaaaasdjkasd" />
 
@@ -84,8 +129,8 @@
                     android:background="@color/gray200"
                     android:gravity="center|start"
                     android:padding="@dimen/widgets_padding"
-                    tools:text="www.brand.com"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    tools:text="www.brand.com" />
 
                 <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/brand_mail"
@@ -94,8 +139,8 @@
                     android:background="@color/gray200"
                     android:gravity="center|start"
                     android:padding="@dimen/widgets_padding"
-                    tools:text="@string/mail"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    tools:text="@string/mail" />
 
                 <com.example.softmills.phlog.base.widgets.CustomTextView
                     android:id="@+id/brand_campaign"

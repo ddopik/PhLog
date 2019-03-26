@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -25,7 +27,6 @@ import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
-import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
 import com.o_bdreldin.loadingbutton.LoadingButton;
@@ -33,14 +34,10 @@ import com.o_bdreldin.loadingbutton.LoadingButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.SOCIAL_LIST;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.USER_PROFILE_PHOTOS_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_TYPE;
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
-
-import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
 
 
@@ -51,8 +48,12 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     public static String USER_TYPE = "user_type";
 
     private String userID;
+
+    private Toolbar userProfileToolBar;
+    private AppBarLayout mAppBarLayout;
+    private CollapsingToolbarLayout userProfileCollapsingToolbarLayout;
     private Photographer currentPhotographer;
-    private TextView userProfileLevel, userProfileUserName, userProfileFullName, userProfilePhotosCount, userProfileFolloweresCount, userProfileFollowingCount;
+    private TextView userProfileLevel, userProfileUserName, userProfileFullName, userProfilePhotosCount, userProfileFolloweresCount, userProfileFollowingCount, userProfileToolbarTitle, userProfileFollowTitle;
     private RatingBar userProfileRating;
     private ImageView userProfileImg, coverImage;
     private CustomRecyclerView userProfilePhotosRv;
@@ -63,6 +64,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private TextView placeHolder;
     private LoadingButton followUserBtn;
     private PagingController pagingController;
+    private ImageButton backBtn;
 
 
     @Override
@@ -86,7 +88,16 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     public void initView() {
 
         if (getIntent().getStringExtra(USER_ID) != null) {
+
             this.userID = getIntent().getStringExtra(USER_ID);
+
+
+            mAppBarLayout = findViewById(R.id.user_profile_appBar);
+            userProfileCollapsingToolbarLayout = findViewById(R.id.user_profile_collapsing_layout);
+            userProfileToolBar = findViewById(R.id.user_profile_toolbar);
+            userProfileToolbarTitle = findViewById(R.id.user_profile_toolbar_title);
+            userProfileFollowTitle = findViewById(R.id.tool_bar_follow_user);
+            backBtn = findViewById(R.id.back_btn);
             userProfileLevel = findViewById(R.id.user_profile_level);
             userProfileRating = findViewById(R.id.profile_rating);
             userProfileImg = findViewById(R.id.user_profile_img);
@@ -118,13 +129,11 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         };
 
         followUserBtn.setOnClickListener(v -> {
-            followUserBtn.setLoading(true);
-            if (currentPhotographer.isFollow) {
-                userProfilePresenter.unFollowUser(String.valueOf(currentPhotographer.id));
-            } else {
-                userProfilePresenter.followUser(String.valueOf(currentPhotographer.id));
-            }
+            followUser();
 
+        });
+        userProfileFollowTitle.setOnClickListener(v -> {
+            followUser();
         });
 
         userProfilePhotosAdapter.photoAction = image -> {
@@ -135,6 +144,28 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) userPhotoList);
             startActivity(intent);
         };
+
+
+        userProfileCollapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.black));
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    isShow = true;
+                    userProfileToolBar.setVisibility(View.VISIBLE);
+                } else if (isShow) {
+                    isShow = false;
+                    userProfileToolBar.setVisibility(View.GONE);
+                }
+            }
+        });
+        backBtn.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
@@ -142,10 +173,16 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
         currentPhotographer = photographer;
 
-        if (photographer.userName != null)
+        if (photographer.userName != null) {
             userProfileUserName.setText(String.format("@%1$s", photographer.userName));
-        if (photographer.fullName != null)
+
+        }
+
+        if (photographer.fullName != null){
             userProfileFullName.setText(photographer.fullName);
+            userProfileToolbarTitle.setText(photographer.fullName);
+        }
+
         if (photographer.level == null || photographer.level.isEmpty())
             userProfileLevel.setVisibility(View.INVISIBLE);
         else
@@ -160,9 +197,12 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
         if (photographer.isFollow) {
             followUserBtn.setText(getResources().getString(R.string.un_follow));
+            userProfileFollowTitle.setText(getResources().getString(R.string.un_follow));
         } else {
             followUserBtn.setText(getResources().getString(R.string.follow));
+            userProfileFollowTitle.setText(getResources().getString(R.string.follow));
         }
+
 
         GlideApp.with(userProfileImg)
                 .load(photographer.imageProfile)
@@ -200,11 +240,13 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         followUserBtn.setLoading(false);
         if (state) {
             followUserBtn.setText(getResources().getString(R.string.un_follow));
+            userProfileFollowTitle.setText(getResources().getString(R.string.un_follow));
             currentPhotographer.isFollow = true;
             if (currentPhotographer.followersCount != null)
                 currentPhotographer.followersCount++;
         } else {
             followUserBtn.setText(getResources().getString(R.string.follow));
+            userProfileFollowTitle.setText(getResources().getString(R.string.follow));
             currentPhotographer.isFollow = false;
             if (currentPhotographer.followersCount != null)
                 currentPhotographer.followersCount--;
@@ -221,6 +263,15 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         } else {
             userProfilePhotosProgressBar.setVisibility(View.GONE);
 
+        }
+    }
+
+    private void followUser() {
+        followUserBtn.setLoading(true);
+        if (currentPhotographer.isFollow) {
+            userProfilePresenter.unFollowUser(String.valueOf(currentPhotographer.id));
+        } else {
+            userProfilePresenter.followUser(String.valueOf(currentPhotographer.id));
         }
     }
 

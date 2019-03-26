@@ -162,7 +162,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 });
 
 
-                if (previewImage.isLiked !=null && !previewImage.isLiked) {
+                if (previewImage.isLiked != null && !previewImage.isLiked) {
                     commentViewHolder.imageLikeBtn.setImageResource(R.drawable.ic_like_off_white);
                 } else {
                     commentViewHolder.imageLikeBtn.setImageResource(R.drawable.ic_like_on);
@@ -181,11 +181,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             if (previewImage.photographer != null) {
                 if (previewImage.photographer.id.equals(Integer.valueOf(PrefUtils.getUserId(context)))) {
 
-                    if (previewImage.currentPhotoGrapherPhoto !=null && previewImage.currentPhotoGrapherPhoto) {
+                    if (previewImage.currentPhotoGrapherPhoto != null && previewImage.currentPhotoGrapherPhoto) {
                         commentViewHolder.deleteBtn.setVisibility(View.VISIBLE);
                     }
                     commentViewHolder.photoRating.setVisibility(View.VISIBLE);
-                    commentViewHolder.photoRating.setIsIndicator(false);
+                    commentViewHolder.photoRating.setIsIndicator(true);
                 }
             }
             commentViewHolder.deleteBtn.setOnClickListener(v -> {

@@ -16,6 +16,7 @@
 
 
     <dimen name="text_head_xl">42sp</dimen>
+    <dimen name="text_head_x2">58sp</dimen>
     <dimen name="signing_head_text_size">36sp</dimen>
     <dimen name="sign_up_logo_sub_head">23sp</dimen>
     <dimen name="sign_up_text_size">21sp</dimen>

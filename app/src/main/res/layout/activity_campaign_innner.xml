@@ -5,12 +5,13 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
+        android:id="@+id/campaign_profile_appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/campaign_profile_collapsing_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
@@ -26,7 +27,41 @@
 
                 <include layout="@layout/campaign_header_view" />
             </RelativeLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/campaign_profile_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="start"
+                android:minHeight="?attr/actionBarSize"
+                android:visibility="invisible"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/back_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:background="@color/transparent"
+                        app:srcCompat="@drawable/ic_arrow_left" />
+
+                    <com.example.softmills.phlog.base.widgets.CustomTextView
+                        android:id="@+id/campaign_profile_toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+
+
+
+                </FrameLayout>
+
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
