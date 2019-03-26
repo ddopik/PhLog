@@ -4,6 +4,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
 import com.example.softmills.phlog.base.commonmodel.Device;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.commonmodel.UploadImageType;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewImagesResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
@@ -90,6 +91,7 @@ public class BaseNetworkApi {
     private static final String UPLOAD_PROFILE = BASE_URL + "/profile/upload";
     private static final String NORMAL_LOGIN = BASE_URL + "/auth/login";
     private static final String FACEBOOK_LOGIN_URL = BASE_URL + "/auth/signup_facebook";
+    private static final String FACEBOOK_GOOGLE_URL = BASE_URL + "/auth/signup_google";
     private static final String USER_PROFILE_URL = BASE_URL + "/details";
     private static final String PHOTOGRAPHER_SAVED_PHOTO_URL = BASE_URL + "/photo/saved";
     private static final String PHOTOGRAPHER_ALL_PHOTO_URL = BASE_URL + "/photo/list";
@@ -196,7 +198,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(LoginResponse.class);
     }
 
-    public static Observable<SocialLoginResponse> socialLoginFacebook(HashMap<String, String> loginData) {
+    public static Observable<Photographer> socialLoginFacebook(HashMap<String, String> loginData) {
         return Rx2AndroidNetworking.post(FACEBOOK_LOGIN_URL)
 //                .addBodyParameter("fullName", loginData.get("fullName"))
 //                .addBodyParameter("facebook_id", loginData.get("facebook_id"))
@@ -207,7 +209,15 @@ public class BaseNetworkApi {
                 .addBodyParameter(loginData)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getObjectObservable(SocialLoginResponse.class);
+                .getObjectObservable(Photographer.class);
+    }
+
+    public static Observable<Photographer> socialLoginGoogle(HashMap<String, String> loginData) {
+        return Rx2AndroidNetworking.post(FACEBOOK_GOOGLE_URL)
+                .addBodyParameter(loginData)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(Photographer.class);
     }
 
 

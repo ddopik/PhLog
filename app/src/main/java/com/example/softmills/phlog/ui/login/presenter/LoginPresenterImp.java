@@ -71,35 +71,53 @@ public class LoginPresenterImp implements LoginPresenter {
 
     @Override
     public void signInWithGoogle() {
-//        GoogleSignInOptions.SCOPE_EMAIL
+        loginView.viewLoginProgress(true);
+
+        com.jaychang.sa.google.SimpleAuth.disconnectGoogle();
         List<String> scopes = new ArrayList<String>();
         scopes.add("email");
         scopes.add("profile");
         scopes.add("openid");
 
+
         com.jaychang.sa.google.SimpleAuth.connectGoogle(scopes, new AuthCallback() {
-            @Override
-            public void onSuccess(SocialUser socialUser) {
+                    @Override
+                    public void onSuccess(SocialUser socialUser) {
 
-                Log.e(TAG, "userId:" + socialUser.toString());
-//                Log.d(TAG, "email:" + socialUser.email);
-            }
+                        Log.e(TAG, "userId:" + socialUser.toString());
 
-            @Override
-            public void onError(Throwable error) {
-                ErrorUtils.Companion.setError(context, TAG, error);
-            }
+                        HashMap<String, String> parameter = new HashMap<String, String>();
+                        parameter.put("full_name", socialUser.fullName);
+                        parameter.put("google_id", socialUser.userId);
+                        parameter.put("mobile_os", "Android");
+                        parameter.put("mobile_model", Utilities.getDeviceName());
+                        parameter.put("email", socialUser.email);
+                        parameter.put("image_profile", socialUser.profilePictureUrl);
+                        processGoogleUser(parameter);
+                        loginView.viewLoginProgress(false);
 
-            @Override
-            public void onCancel() {
-                Log.e(TAG, "Canceled");
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        ErrorUtils.Companion.setError(context, TAG, error);
+                        loginView.viewLoginProgress(false);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.e(TAG, "Canceled");
+                        loginView.viewLoginProgress(false);
+                    }
+                }
+
+        );
 
     }
 
     @Override
     public void signInWithFaceBook() {
+        loginView.viewLoginProgress(true);
         List<String> scopes = new ArrayList<>();
         com.jaychang.sa.facebook.SimpleAuth.connectFacebook(scopes, new AuthCallback() {
             @SuppressLint("CheckResult")
@@ -107,11 +125,6 @@ public class LoginPresenterImp implements LoginPresenter {
             public void onSuccess(SocialUser socialUser) {
 
                 HashMap<String, String> parameter = new HashMap<String, String>();
-//                parameter.put("userId", socialUser.userId);
-
-//                parameter.put("accessToken", socialUser.accessToken);
-//                 parameter.put("username", socialUser.username);
-//                parameter.put("pageLink", socialUser.pageLink);
 
                 parameter.put("full_name", socialUser.fullName);
                 parameter.put("facebook_id", socialUser.userId);
@@ -120,37 +133,65 @@ public class LoginPresenterImp implements LoginPresenter {
                 parameter.put("email", socialUser.email);
                 parameter.put("image_profile", socialUser.profilePictureUrl);
                 processFaceBookUser(parameter);
-
+                loginView.viewLoginProgress(false);
             }
 
             @Override
             public void onError(Throwable error) {
                 ErrorUtils.Companion.setError(context, TAG, error);
+                loginView.viewLoginProgress(false);
             }
 
             @Override
             public void onCancel() {
                 Log.e(TAG, "Canceled");
+                loginView.viewLoginProgress(false);
             }
+
         });
     }
 
 
     @SuppressLint("CheckResult")
     private void processFaceBookUser(HashMap<String, String> data) {
+        loginView.viewLoginProgress(true);
         BaseNetworkApi.socialLoginFacebook(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(socialLoginResponse -> {
-                    if (socialLoginResponse.state.equals(BaseNetworkApi.STATUS_OK)) {
-                        PrefUtils.setLoginState(context, true);
-                        PrefUtils.setUserToken(context, socialLoginResponse.token);
-                        PrefUtils.setUserName(context, socialLoginResponse.userName);
-//                        PrefUtils.setUserID(context, socialLoginResponse.id);
-                        sendFirebaseToken();
-                    }
+
+                    PrefUtils.setLoginState(context, true);
+                    PrefUtils.setUserToken(context, socialLoginResponse.token);
+                    PrefUtils.setUserName(context, socialLoginResponse.userName);
+                    PrefUtils.setUserID(context, String.valueOf(socialLoginResponse.id));
+                    loginView.navigateToHome();
+                    sendFirebaseToken();
+                    loginView.viewLoginProgress(false);
+
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
+                    loginView.viewLoginProgress(false);
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    private void processGoogleUser(HashMap<String, String> data) {
+        loginView.viewLoginProgress(true);
+        BaseNetworkApi.socialLoginGoogle(data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(socialLoginResponse -> {
+                    PrefUtils.setLoginState(context, true);
+                    PrefUtils.setUserToken(context, socialLoginResponse.token);
+                    PrefUtils.setUserName(context, socialLoginResponse.userName);
+                    PrefUtils.setUserID(context, String.valueOf(socialLoginResponse.id));
+                    loginView.navigateToHome();
+                    sendFirebaseToken();
+                    loginView.viewLoginProgress(false);
+
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    loginView.viewLoginProgress(false);
                 });
     }
 

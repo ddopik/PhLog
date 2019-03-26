@@ -17,6 +17,7 @@ import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.Constants.MainActivityRedirectionValue;
 import com.example.softmills.phlog.Utiltes.Constants.PopupType;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.Utiltes.rxeventbus.RxEventBus;
 import com.example.softmills.phlog.app.PhLogApp;
 import com.example.softmills.phlog.base.BaseActivity;
@@ -74,6 +75,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initView();
         initListener();
 
+        new Utilities().printHashKey(this);
         handleIntent(getIntent());
 
     }
