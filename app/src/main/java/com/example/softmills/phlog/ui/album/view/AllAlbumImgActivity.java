@@ -16,6 +16,7 @@ import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgPresnter;
 import com.example.softmills.phlog.ui.album.presenter.AllAlbumImgPresnterImpl;
 import com.example.softmills.phlog.ui.album.view.adapter.AllAlbumImgAdapter;
@@ -41,13 +42,21 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     /// set your Proper type of list for later processes
     public static String LIST_TYPE = "list_type";
     public static String LIST_NAME = "list_name";
+    public static String CURRENT_PAGE = "current_page";
     private PhotosListType photosListType;
     private ImageButton mainBackBtn;
     private CustomTextView topBarTitle;
     private AllAlbumImgAdapter allAlbumImgAdapter;
+    private CustomRecyclerView allAlbumImgRv;
     private List<BaseImage> albumImgList = new ArrayList<>();
     private ProgressBar albumImgProgress;
     private AllAlbumImgPresnter allAlbumImgPresnter;
+    private PagingController pagingController;
+    /**
+     * in case activity loaded with data previously
+     * and we would to continue from most resent page
+     **/
+    private int currentPage = 0;
 
 
     @Override
@@ -66,9 +75,15 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             mainBackBtn = findViewById(R.id.back_btn);
             mainBackBtn.setVisibility(View.VISIBLE);
             albumImgProgress = findViewById(R.id.album_img_list_progress_bar);
-            CustomRecyclerView allAlbumImgRv = findViewById(R.id.album_img_list_rv);
+            allAlbumImgRv = findViewById(R.id.album_img_list_rv);
 
             photosListType = (PhotosListType) getIntent().getSerializableExtra(LIST_TYPE);
+
+            if (photosListType == CURRENT_PHOTOGRAPHER_PHOTOS_LIST || photosListType == CURRENT_PHOTOGRAPHER_SAVED_LIST) {
+                if (getIntent().getIntExtra(CURRENT_PAGE, -1) >= 0) {
+                    currentPage = getIntent().getIntExtra(CURRENT_PAGE, 0);
+                }
+            }
 
 
             if (getIntent().getStringExtra(LIST_NAME) != null) {
@@ -115,9 +130,8 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                 Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
                 if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
-                    albumImg.currentPhotoGrapherPhoto=true;
-                }
-                else if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
+                    albumImg.currentPhotoGrapherPhoto = true;
+                } else if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                 }
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
@@ -180,11 +194,25 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                     intent.putExtra(UserProfileActivity.USER_ID, String.valueOf(albumImg.photographer.id));
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     getBaseContext().startActivity(intent);
-                }else if ( !photosListType.equals(PhotosListType.USER_PROFILE_PHOTOS_LIST) ){ //case user already came from photographer Profile list do not navigate
+                } else if (!photosListType.equals(PhotosListType.USER_PROFILE_PHOTOS_LIST)) { //case user already came from photographer Profile list do not navigate
                     Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
                     intent.putExtra(UserProfileActivity.USER_ID, String.valueOf(albumImg.photographer.id));
                     intent.putExtra(UserProfileActivity.USER_TYPE, Constants.UserType.USER_TYPE_BUSINESS);
                     getBaseContext().startActivity(intent);
+                }
+
+
+            }
+        };
+
+
+        pagingController = new PagingController(allAlbumImgRv, currentPage) {
+            @Override
+            public void getPagingControllerCallBack(int page) {
+                if (photosListType == CURRENT_PHOTOGRAPHER_PHOTOS_LIST) {
+                    allAlbumImgPresnter.getPhotoGrapherPhotosList(page);
+                } else if (photosListType == CURRENT_PHOTOGRAPHER_SAVED_LIST) {
+                    allAlbumImgPresnter.getPhotoGrapherSavedList(page);
                 }
 
 
@@ -198,8 +226,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
     @Override
     public void viewAlbumImageList(List<BaseImage> albumImgList) {
-
-        this.albumImgList.clear();
+//        this.albumImgList.clear();
         this.albumImgList.addAll(albumImgList);
         allAlbumImgAdapter.notifyDataSetChanged();
 
@@ -253,11 +280,11 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     @Override
     public void onImagePhotoGrapherLiked(int photoId, boolean state) {
         for (int i = 0; i < albumImgList.size(); i++) {
-            if (albumImgList.get(i).id == photoId  ) {
+            if (albumImgList.get(i).id == photoId) {
                 albumImgList.get(i).isLiked = state;
-                if (state){
+                if (state) {
                     albumImgList.get(i).likesCount++;
-                }else {
+                } else {
                     albumImgList.get(i).likesCount--;
                 }
 
@@ -277,6 +304,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         }
 
     }
+
 
     @Override
     public void showToast(String msg) {

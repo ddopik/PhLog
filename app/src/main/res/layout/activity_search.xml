@@ -107,6 +107,8 @@
                     android:layout_marginStart="@dimen/dp14"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_medium_s"
+                    android:visibility="invisible"
+                    tools:visibility="visible"
                     tools:text="0 result" />
 
                 <com.example.softmills.phlog.base.widgets.CustomTextView

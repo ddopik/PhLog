@@ -86,6 +86,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         return albumSearchFragment;
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -149,6 +150,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         promptImage.setBackgroundResource(R.drawable.ic_album_search);
         promptText = mainView.findViewById(R.id.prompt_text);
         promptText.setText(R.string.type_something_album);
+        searchResultCountView.setVisibility(View.INVISIBLE);
     }
 
     private void initListener() {
@@ -249,7 +251,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
     private void setAlbumResultStats(FilterOption filterOption) {
 
-        searchResultCountView.setVisibility(View.VISIBLE);
 
         for (int i = 0; i < filterList.size(); i++) {
             for (int x = 0; x < filterList.get(i).options.size(); x++) {
@@ -339,8 +340,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             clearFilterBtn.setVisibility(View.INVISIBLE);
         }
         albumSearchRv.setVisibility(View.VISIBLE);
-        this.albumSearchList.addAll(albumSearchData.data);
-        albumSearchAdapter.notifyDataSetChanged();
+        if (albumSearchData.data != null) {
+            this.albumSearchList.addAll(albumSearchData.data);
+            albumSearchAdapter.notifyDataSetChanged();
+        }
 
         /**
          * Replacing (Apply) in case Expandable was previously visible
@@ -422,7 +425,12 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             promptView.setVisibility(View.GONE);
             albumSearchList.clear();
             albumSearchAdapter.notifyDataSetChanged();
-            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), filterList, 0);
+            if (albumSearchPresenter.getFilter(filterList).size() > 0) {
+                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), filterList, 0);
+            } else {
+                viewSearchAlbum(new AlbumSearchData());
+                searchResultCountView.setVisibility(View.INVISIBLE);
+            }
         });
     }
 

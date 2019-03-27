@@ -7,7 +7,6 @@ import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,27 +18,20 @@ import com.example.softmills.phlog.Utiltes.Constants.MainActivityRedirectionValu
 import com.example.softmills.phlog.Utiltes.Constants.PopupType;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
-import com.example.softmills.phlog.Utiltes.rxeventbus.RxEventBus;
 import com.example.softmills.phlog.app.PhLogApp;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.base.commonmodel.UploadImageType;
+import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.fgm.model.FirebaseNotificationData;
 import com.example.softmills.phlog.fgm.parse.NotificationParser;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
-import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
-import com.example.softmills.phlog.ui.dialog.popup.view.PopupDialogFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningInnerFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningListFragment;
-import com.example.softmills.phlog.ui.notification.model.NotificationData;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
 import com.example.softmills.phlog.ui.social.view.SocialFragment;
 import com.example.softmills.phlog.ui.splash.view.SplashActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.GalleryImageFragment;
-
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.CAMPAIGN;
 import static com.example.softmills.phlog.Utiltes.Constants.NavigationHelper.EARNING_INNER;
@@ -249,7 +241,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 case UPLOAD_PHOTO: {
 
-                    UploadImageType imageType = new UploadImageType();
+                    UploadImageData imageType = new UploadImageData();
                     imageType.setUploadImageType(Constants.UploadImageTypes.NORMAL_IMG);
                     GalleryImageFragment galleryImageFragment = GalleryImageFragment.getInstance(imageType);
                     addFragment(R.id.view_container, galleryImageFragment, GalleryImageFragment.class.getSimpleName(), false);

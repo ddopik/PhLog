@@ -9,6 +9,8 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivityView;
 
+import java.util.List;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -142,4 +144,40 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
         }
 
     }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void getPhotoGrapherPhotosList(int page) {
+        allAlbumImgActivityView.viewAlbumImageListProgress(true);
+        BaseNetworkApi.getPhotoGrapherPhotos(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(photosResponse -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    allAlbumImgActivityView.viewAlbumImageList(photosResponse.data.data);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                });
+
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void getPhotoGrapherSavedList(int page) {
+        allAlbumImgActivityView.viewAlbumImageListProgress(true);
+        BaseNetworkApi.getPhotoGrapherSavedPhotos(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(photosResponse -> {
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                    allAlbumImgActivityView.viewAlbumImageList(photosResponse.data.data);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    allAlbumImgActivityView.viewAlbumImageListProgress(false);
+                });
+
+    }
+
+
 }

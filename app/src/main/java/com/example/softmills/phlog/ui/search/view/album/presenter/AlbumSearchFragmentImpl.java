@@ -87,6 +87,4 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
         return filtersMap;
     }
 
-
-
 }

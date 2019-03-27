@@ -49,7 +49,6 @@ public class ReplayCommentPresenterImpl implements ReplayCommentPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(submitImageCommentResponse -> {
-                    replayCommentActivityView.viewMessage("Comment Submitted");
                     replayCommentActivityView.onCommentReplied(submitImageCommentResponse.data);
                     replayCommentActivityView.viewRepliesProgress(false);
                 }, throwable -> {

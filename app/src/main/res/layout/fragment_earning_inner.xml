@@ -210,7 +210,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@drawable/sqare_corener"
-            android:padding="@dimen/widgets_padding">
+            android:padding="@dimen/dp10">
 
             <com.example.softmills.phlog.base.widgets.CustomTextView
                 android:layout_width="match_parent"
@@ -218,6 +218,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/dp8"
                 android:text="@string/price"
+                android:textSize="@dimen/text_medium_s"
                 android:textColor="@color/white" />
 
             <com.example.softmills.phlog.base.widgets.CustomTextView
@@ -226,6 +227,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/dp8"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 tools:text="50$" />
 

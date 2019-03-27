@@ -62,7 +62,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
         Photographer imagePhotographer;
 
-        if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) || photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
+        if (photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST) ) {
             imagePhotographer = PrefUtils.getCurrentUser(context);
         } else {
             imagePhotographer = albumImgList.get(i).photographer;

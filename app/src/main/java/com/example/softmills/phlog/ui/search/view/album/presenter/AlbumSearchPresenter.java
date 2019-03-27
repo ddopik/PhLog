@@ -11,6 +11,10 @@ import java.util.Map;
 public interface AlbumSearchPresenter {
 
     void getSearchFilters();
-      Map<String,String> getFilter(List<Filter> filterList);
+
+    Map<String, String> getFilter(List<Filter> filterList);
+
     void getAlbumSearchQuery(String s, List<Filter> filterList, int page);
-}
+
+
+ }

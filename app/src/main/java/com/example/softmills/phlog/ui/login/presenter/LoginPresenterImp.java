@@ -161,9 +161,9 @@ public class LoginPresenterImp implements LoginPresenter {
                 .subscribe(socialLoginResponse -> {
 
                     PrefUtils.setLoginState(context, true);
-                    PrefUtils.setUserToken(context, socialLoginResponse.token);
-                    PrefUtils.setUserName(context, socialLoginResponse.userName);
-                    PrefUtils.setUserID(context, String.valueOf(socialLoginResponse.id));
+                    PrefUtils.setUserToken(context, socialLoginResponse.data.token);
+                    PrefUtils.setUserName(context, socialLoginResponse.data.userName);
+                    PrefUtils.setUserID(context, String.valueOf(socialLoginResponse.data.id));
                     loginView.navigateToHome();
                     sendFirebaseToken();
                     loginView.viewLoginProgress(false);
@@ -182,9 +182,9 @@ public class LoginPresenterImp implements LoginPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(socialLoginResponse -> {
                     PrefUtils.setLoginState(context, true);
-                    PrefUtils.setUserToken(context, socialLoginResponse.token);
-                    PrefUtils.setUserName(context, socialLoginResponse.userName);
-                    PrefUtils.setUserID(context, String.valueOf(socialLoginResponse.id));
+                    PrefUtils.setUserToken(context, socialLoginResponse.data.token);
+                    PrefUtils.setUserName(context, socialLoginResponse.data.userName);
+                    PrefUtils.setUserID(context, String.valueOf(socialLoginResponse.data.id));
                     loginView.navigateToHome();
                     sendFirebaseToken();
                     loginView.viewLoginProgress(false);

@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.uploadimage.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,16 +15,13 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.base.commonmodel.UploadImageType;
-import com.example.softmills.phlog.ui.signup.view.PickProfilePhotoActivity;
+import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.ui.uploadimage.view.fillters.FiltersListFragment;
 import com.example.softmills.phlog.ui.uploadimage.view.fillters.PickImageViewPagerAdapter;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
-
-import java.util.HashMap;
 
 import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGallery;
 
@@ -33,7 +31,8 @@ import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGalle
 public class ImageFilterActivity extends BaseActivity implements FiltersListFragment.FiltersListFragmentListener, EditPickedImageFragment.EditImageFragmentListener {
 
     private static final String TAG = ImageFilterActivity.class.getSimpleName();
-    public static String IMAGE_TYPE="image_type";
+    public static String IMAGE_DATA ="image_type";
+    public static String IMAGE_URI="image_uri";
 
 
 
@@ -53,7 +52,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     private float contrastFinal = 1.0f;
 
     private  String filteredImagePath;
-    private UploadImageType imageType;
+    private UploadImageData imageType;
 
     // load native image filters library
     static {
@@ -85,8 +84,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         Bundle bundle = this.getIntent().getExtras();
 
         assert bundle != null;
-        if (bundle.getSerializable(IMAGE_TYPE) != null) {
-            imageType =(UploadImageType) bundle.getSerializable(IMAGE_TYPE);
+        if (bundle.getSerializable(IMAGE_DATA) != null) {
+            imageType =(UploadImageData) bundle.getSerializable(IMAGE_DATA);
             filteredImagePath=imageType.getImageUrl() ;
             loadImage(filteredImagePath);
         }
@@ -238,6 +237,14 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
     }
 
+    public static Intent getLaunchIntent(Context context,UploadImageData uploadImageData ){
+        Intent intent=new Intent(context,ImageFilterActivity.class);
+        Bundle extras = new Bundle();
+        extras.putSerializable(ImageFilterActivity.IMAGE_DATA, uploadImageData);
+        intent.putExtras(extras);
+
+        return intent;
+    }
 
     @Override
     public void showToast(String msg) {

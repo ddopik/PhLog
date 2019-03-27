@@ -118,7 +118,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
     private void bindItemPhotoGrapher(NotificationViewHolder notificationViewHolder, Photographer photographer) {
-        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_red));
+        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_primary ));
         GlideApp.with(context).load(photographer.imageProfile)
                 .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.default_place_holder)
@@ -137,7 +137,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private void bindItemCampaign(NotificationViewHolder notificationViewHolder, Campaign campaign) {
 
-        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_blue));
+        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_green));
         GlideApp.with(context).load(campaign.business.thumbnail)
                 .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.default_place_holder)
@@ -155,7 +155,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private void bindItemBrand(NotificationViewHolder notificationViewHolder, Business business) {
 
         notificationViewHolder.notificationImg
-                .setBackground(context.getResources().getDrawable(R.drawable.circle_orange));
+                .setBackground(context.getResources().getDrawable(R.drawable.circle_brwon));
         GlideApp.with(context).load(business.thumbnail)
                 .placeholder(R.drawable.default_place_holder)
                 .error(R.drawable.default_error_img)
@@ -172,7 +172,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private void bindItemPhoto(NotificationViewHolder notificationViewHolder, BaseImage image) {
 
-        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_green));
+        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_red));
         GlideApp.with(context).load(image.url)
                 .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.default_place_holder)
