@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="dp2">2dp</dimen>
+    <dimen name="dp3">3dp</dimen>
     <dimen name="dp4">4dp</dimen>
     <dimen name="dp6">6dp</dimen>
     <dimen name="dp8">8dp</dimen>
@@ -57,9 +58,9 @@
     <dimen name="icon_view_holder_size_m">45dp</dimen>
 
     <!--//Notification_ViewHolders-->
-    <dimen name="notification_card_height">75dp</dimen>
+    <dimen name="notification_card_height">95dp</dimen>
     <dimen name="notification_card_height_m">95dp</dimen>
-    <dimen name="notification_item_icon_size_m">50dp</dimen>
+    <dimen name="notification_item_icon_size_m">60dp</dimen>
 
 
     <!--///SignUpActivity-->
