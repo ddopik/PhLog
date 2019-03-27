@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by abdalla_maged On Dec,2018
  */
-public class UploadImageType implements Serializable {
+public class UploadImageData implements Serializable {
 
 
     private String imageId;

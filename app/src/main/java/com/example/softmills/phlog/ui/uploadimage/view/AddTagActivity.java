@@ -12,11 +12,9 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,7 +25,7 @@ import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.Utiltes.uploader.UploaderService;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Tag;
-import com.example.softmills.phlog.base.commonmodel.UploadImageType;
+import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.uploadimage.model.UploadPhotoModel;
@@ -69,7 +67,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private ImageButton backBtn;
     private LoadingButton uploadBrn;
     private ProgressBar uploadImageProgress;
-    private UploadImageType imageType;
+    private UploadImageData imageType;
     private String imageCaption;
     private String draftState;
     private String imageLocation;
@@ -159,7 +157,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
         if (bundle.getSerializable(IMAGE_TYPE) != null) {
-            imageType = (UploadImageType) bundle.getSerializable(IMAGE_TYPE);
+            imageType = (UploadImageData) bundle.getSerializable(IMAGE_TYPE);
             imagePreviewPath = imageType.getImageUrl();
             draftState = String.valueOf(imageType.isDraft());
 

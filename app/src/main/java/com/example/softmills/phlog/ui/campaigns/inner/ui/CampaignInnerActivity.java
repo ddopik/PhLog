@@ -24,7 +24,7 @@ import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
-import com.example.softmills.phlog.base.commonmodel.UploadImageType;
+import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.ui.allphotos.view.AllPhotographerPhotosActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenterImpl;
@@ -116,11 +116,11 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                                 dialog1Fragment.dismiss();
                                 break;
                             case 1:
-                                UploadImageType uploadImageType = new UploadImageType();
-                                uploadImageType.setUploadImageType(Constants.UploadImageTypes.CAMPAIGN_IMG);
-                                uploadImageType.setImageId(campaignId);
+                                UploadImageData uploadImageData = new UploadImageData();
+                                uploadImageData.setUploadImageType(Constants.UploadImageTypes.CAMPAIGN_IMG);
+                                uploadImageData.setImageId(campaignId);
                                 Bundle extras = new Bundle();
-                                extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageType);
+                                extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
                                 Intent i1 = new Intent(this, UploadImageActivity.class);
                                 i1.putExtras(extras);
                                 startActivity(i1);
@@ -210,16 +210,16 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
         builder.setMessage(message);
         builder.setPositiveButton(R.string.phone, (dialog, id) -> {
 
-            UploadImageType uploadImageType = new UploadImageType();
-            uploadImageType.setUploadImageType(Constants.UploadImageTypes.CAMPAIGN_IMG);
-            uploadImageType.setImageId(campaignId);
+            UploadImageData uploadImageData = new UploadImageData();
+            uploadImageData.setUploadImageType(Constants.UploadImageTypes.CAMPAIGN_IMG);
+            uploadImageData.setImageId(campaignId);
 
 //            HashMap<String, String> imageType=new HashMap<String, String>();
-//            extras.putSerializable(UploadImageActivity.IMAGE_TYPE,imageType);
+//            extras.putSerializable(UploadImageActivity.IMAGE_DATA,imageType);
 //            imageType.put(IMAGE_TYPE_CAMPAIGN,campaignId);
 //
             Bundle extras = new Bundle();
-            extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageType);
+            extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
             Intent intent = new Intent(this, UploadImageActivity.class);
             intent.putExtras(extras);
             startActivity(intent);

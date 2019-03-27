@@ -16,13 +16,12 @@ import android.widget.ImageButton;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
-import com.example.softmills.phlog.base.commonmodel.UploadImageType;
+import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.GalleryImageAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -40,11 +39,11 @@ public class GalleryImageFragment extends BaseFragment {
     private GalleryImageAdapter galleryImageAdapter;
     private CustomRecyclerView galleryRv;
     private ImageButton openCameraBtn, backBtn;
-    private UploadImageType ImageType;
+    private UploadImageData _imageData;
 
-    public static GalleryImageFragment getInstance(UploadImageType imageType) {
+    public static GalleryImageFragment getInstance(UploadImageData imageType) {
         GalleryImageFragment galleryImageFragment = new GalleryImageFragment();
-        galleryImageFragment.ImageType = imageType;
+        galleryImageFragment._imageData = imageType;
         return galleryImageFragment;
     }
 
@@ -114,13 +113,9 @@ public class GalleryImageFragment extends BaseFragment {
     private void initListeners() {
 
         galleryImageAdapter.onGalleryImageClicked = imagePath -> {
-            Bundle extras = new Bundle();
-            ImageType.setImageUrl(imagePath);
-            extras.putSerializable(ImageFilterActivity.IMAGE_TYPE, ImageType);
-            Intent intent = new Intent(getContext(), ImageFilterActivity.class);
-//            intent.putExtra(ImageFilterActivity.ImageFilter, imagePath);
-            intent.putExtras(extras);
-            startActivity(intent);
+
+            _imageData.setImageUrl(imagePath);
+            startActivity(ImageFilterActivity.getLaunchIntent(getContext(), _imageData));
         };
         openCameraBtn.setOnClickListener((view) -> {
 
@@ -184,10 +179,9 @@ public class GalleryImageFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-            String image = ImagePicker.getFirstImageOrNull(data).getPath();
-            Intent intent = new Intent(getContext(), ImageFilterActivity.class);
-            intent.putExtra("image_uri", image);
-            startActivity(intent);
+            String imagePath = ImagePicker.getFirstImageOrNull(data).getPath();
+            _imageData.setImageUrl(imagePath);
+            startActivity(ImageFilterActivity.getLaunchIntent(getContext(), _imageData));
 
         }
         super.onActivityResult(requestCode, resultCode, data);

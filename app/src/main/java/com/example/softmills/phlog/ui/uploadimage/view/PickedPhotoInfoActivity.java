@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -25,7 +24,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.Utiltes.MapUtls;
 import com.example.softmills.phlog.base.BaseActivity;
-import com.example.softmills.phlog.base.commonmodel.UploadImageType;
+import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.PlaceArrayAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,8 +35,6 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.Arrays;
 
 import io.reactivex.annotations.NonNull;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -68,7 +65,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private EditText caption;
     private Switch draftBtn;
     private MapUtls mapUtls;
-    private UploadImageType imageType;
+    private UploadImageData imageType;
 
     public static final int UPLOAD_PHOTO_REQUEST_CODE = 325;
 
@@ -83,7 +80,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         if (bundle.getSerializable(IMAGE_TYPE) != null) {
             setContentView(R.layout.activity_photo_info_activity);
 
-            imageType = (UploadImageType) bundle.getSerializable(IMAGE_TYPE);
+            imageType = (UploadImageData) bundle.getSerializable(IMAGE_TYPE);
             imagePath = imageType.getImageUrl();
             initPresenter();
             initView();
@@ -150,7 +147,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 //            intent.putExtra(AddTagActivity.IMAGE_PREVIEW, imagePath);
 //            intent.putExtra(AddTagActivity.IMAGE_DRAFT_STATE, String.valueOf(draftBtn.isChecked()));
 //            Bundle extras = new Bundle();
-//            extras.putSerializable(AddTagActivity.IMAGE_TYPE, imageType); //passing image type
+//            extras.putSerializable(AddTagActivity.IMAGE_DATA, imageType); //passing image type
             extras.putSerializable(AddTagActivity.IMAGE_TYPE, imageType);
             intent.putExtras(extras);
             startActivity(intent);

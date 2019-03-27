@@ -44,5 +44,5 @@ public class AlbumSearchData {
     public Integer to;
     @SerializedName("total")
     @Expose
-    public Integer total;
+    public Integer total=0;
 }

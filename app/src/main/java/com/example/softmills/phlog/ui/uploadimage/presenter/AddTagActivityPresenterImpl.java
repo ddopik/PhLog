@@ -8,7 +8,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.commonmodel.Tag;
-import com.example.softmills.phlog.base.commonmodel.UploadImageType;
+import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.uploadimage.model.UploadPhotoModel;
 import com.example.softmills.phlog.ui.uploadimage.view.AddTagActivityView;
@@ -36,7 +36,7 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void uploadPhoto(String imagePath, String imageCaption, String location, String draftState, UploadImageType imageType, List<Tag> tagList) {
+    public void uploadPhoto(String imagePath, String imageCaption, String location, String draftState, UploadImageData imageType, List<Tag> tagList) {
         addTagActivityView.viewUploadProgress(true);
         HashMap<String, String> tagsSelected = new HashMap<String, String>();
         for (int i = 0; i < tagList.size(); i++) {
@@ -100,7 +100,7 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
     }
 
     @Override
-    public UploadPhotoModel getUploadModel(String imagePreviewPath, String imageCaption, String imageLocation, String draftState, UploadImageType imageType, List<Tag> tagList) {
+    public UploadPhotoModel getUploadModel(String imagePreviewPath, String imageCaption, String imageLocation, String draftState, UploadImageData imageType, List<Tag> tagList) {
         HashMap<String, String> tagsSelected = new HashMap<String, String>();
         for (int i = 0; i < tagList.size(); i++) {
             tagsSelected.put("tags[" + i + "]", tagList.get(i).name);
@@ -109,7 +109,7 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
         model.imageCaption = imageCaption;
         model.imagePath = imagePreviewPath;
         model.location = imageLocation;
-        model.uploadImageType = imageType;
+        model.uploadImageData = imageType;
         model.tags = tagsSelected;
         return model;
     }
