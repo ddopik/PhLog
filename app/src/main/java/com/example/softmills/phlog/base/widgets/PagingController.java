@@ -24,6 +24,13 @@ public abstract class PagingController {
         this.recyclerView=recyclerView;
         initListener();
     }
+
+    public PagingController(RecyclerView recyclerView,String cuurentPage) {
+        this.recyclerView=recyclerView;
+        this.currentPage=Integer.parseInt(cuurentPage);
+        initListener();
+    }
+
     public PagingController(RecyclerView recyclerView,int visibleThreshold) {
         this.recyclerView=recyclerView;
         this.visibleThreshold=visibleThreshold;
@@ -79,6 +86,9 @@ public abstract class PagingController {
         }
     }
 
+    public int getCurrentPage(){
+        return currentPage;
+    }
 
     public abstract void getPagingControllerCallBack(int page);
 

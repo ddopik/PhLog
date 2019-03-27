@@ -42,7 +42,7 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_campains);
 
-        if (getIntent().getIntExtra(BRAND_ID,0) !=0) {
+        if (getIntent().getIntExtra(BRAND_ID,-1) >=0) {
             brandId=String.valueOf(getIntent().getIntExtra(BRAND_ID,0));
             initPresenter();
             initView();

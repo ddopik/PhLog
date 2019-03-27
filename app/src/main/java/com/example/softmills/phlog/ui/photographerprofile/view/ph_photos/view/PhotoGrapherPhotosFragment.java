@@ -13,10 +13,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.base.commonmodel.BaseImage;
-import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presenter.FragmentPhotoGrapherPhotosPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presenter.FragmentPhotoGrapherPhotosPresenterImpl;
@@ -26,6 +26,7 @@ import java.util.List;
 
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_PHOTOS_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.CURRENT_PAGE;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_TYPE;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
@@ -83,13 +84,13 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         if (isVisibleToUser && !becameVisible) {
             becameVisible = true;
             if (getView() != null)
-            fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(0);
+                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(0);
         }
     }
 
     @Override
     protected void initViews() {
-        photoGrapherPhotoList= new ArrayList<BaseImage>();
+        photoGrapherPhotoList = new ArrayList<BaseImage>();
         photographerSavedPhotoAdapter = new PhotoGrapherPhotosAdapter(getContext(), photoGrapherPhotoList);
         photosRv = mainView.findViewById(R.id.photos_rv);
         photosRv.setAdapter(photographerSavedPhotoAdapter);
@@ -105,17 +106,17 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
             }
         };
 
-        photographerSavedPhotoAdapter.photoAction= photoGrapherSavedPhoto -> {
+        photographerSavedPhotoAdapter.photoAction = photoGrapherSavedPhoto -> {
             Intent intent = new Intent(getContext(), AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
             intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.photos));
             intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_PHOTOS_LIST);
+            intent.putExtra(CURRENT_PAGE, pagingController.getCurrentPage());
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherPhotoList);
             startActivity(intent);
         };
 
     }
-
 
 
     @Override

@@ -46,7 +46,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inner_brand);
-        if (getIntent().getIntExtra(BRAND_ID, 0) != 0) {
+        if (getIntent().getIntExtra(BRAND_ID, -1) >= 0) {
             initPresenter();
             initView();
             intiListeners();

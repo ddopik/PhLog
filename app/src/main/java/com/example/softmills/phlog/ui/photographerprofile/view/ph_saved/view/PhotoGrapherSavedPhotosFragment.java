@@ -23,6 +23,7 @@ import java.util.List;
 
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_SAVED_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
+import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.CURRENT_PAGE;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_NAME;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.LIST_TYPE;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELECTED_IMG_ID;
@@ -103,6 +104,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
             intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_SAVED_LIST);
             intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.saved));
+            intent.putExtra(CURRENT_PAGE, pagingController.getCurrentPage());
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherSavedPhotoList);
             startActivity(intent);
         };
