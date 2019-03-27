@@ -83,8 +83,14 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
     }
 
     @Override
+    public void onDestroy() {
+        presenter.terminate();
+        super.onDestroy();
+    }
+
+    @Override
     protected void initPresenter() {
-        presenter = new EditPhotoGrapherProfileFragmentImpl(this, getContext());
+        presenter = new EditPhotoGrapherProfileFragmentImpl(this, getContext().getApplicationContext());
     }
 
     @Override
@@ -109,6 +115,7 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
 
     private void initListeners() {
         saveButton.setOnClickListener(v -> {
+            saveButton.setVisibility(View.INVISIBLE);
             presenter.updateProfile(nameET.getText().toString()
                     , usernameET.getText().toString()
                     , emailET.getText().toString()

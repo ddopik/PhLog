@@ -607,7 +607,13 @@ public class BaseNetworkApi {
         if (files != null)
             builder.addMultipartFile(files);
         builder.addMultipartParameter(data);
-        return builder.build().getStringObservable();
+        return builder
+                .setOkHttpClient(new OkHttpClient.Builder()
+//                        .connectTimeout(5, TimeUnit.MINUTES)
+                        .readTimeout(1, TimeUnit.MINUTES)
+                        .writeTimeout(1, TimeUnit.MINUTES)
+                        .build())
+                .build().getStringObservable();
     }
 
     public static io.reactivex.Observable<EarningDetailsResponse> getEarningDetails(String earningId) {

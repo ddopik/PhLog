@@ -2,6 +2,7 @@ package com.example.softmills.phlog.ui.photographerprofile.editprofile.presenter
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -23,6 +25,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
     private final String TAG = EditPhotoGrapherProfileFragmentImpl.class.getSimpleName();
     private EditPhotoGrapherProfileFragmentView view;
     private Context context;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public EditPhotoGrapherProfileFragmentImpl(EditPhotoGrapherProfileFragmentView editPhotoGrapherProfileFragmentView, Context context) {
         this.view = editPhotoGrapherProfileFragmentView;
@@ -74,7 +77,14 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
                 }, throwable -> {
                     view.viewEditProfileProgress(false);
                     view.showMessage(R.string.profile_update_failed);
+                    if (context != null)
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
+        disposables.add(disposable);
+    }
+
+    @Override
+    public void terminate() {
+        disposables.clear();
     }
 }
