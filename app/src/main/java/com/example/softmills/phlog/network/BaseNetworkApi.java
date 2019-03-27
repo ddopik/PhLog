@@ -602,7 +602,7 @@ public class BaseNetworkApi {
                 .getStringObservable();
     }
 
-    public static io.reactivex.Observable<String> updateProfile(HashMap<String, File> files, HashMap<String, String> data) {
+    public static io.reactivex.Observable<String> updateProfile(HashMap<String, File> files, HashMap<String, String> data, String userToken) {
         Rx2ANRequest.MultiPartBuilder builder = Rx2AndroidNetworking.upload(UPDATE_PROGILE_URL).setPriority(Priority.HIGH);
         if (files != null)
             builder.addMultipartFile(files);
@@ -613,6 +613,9 @@ public class BaseNetworkApi {
                         .readTimeout(1, TimeUnit.MINUTES)
                         .writeTimeout(1, TimeUnit.MINUTES)
                         .build())
+                .addHeaders("x-auth-token", userToken)
+                .addHeaders("x-user-type", DEFAULT_USER_TYPE)
+                .addHeaders("x-lang-code", "en-us")
                 .build().getStringObservable();
     }
 

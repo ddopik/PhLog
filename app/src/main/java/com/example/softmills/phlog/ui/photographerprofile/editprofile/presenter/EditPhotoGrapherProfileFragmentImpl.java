@@ -2,10 +2,10 @@ package com.example.softmills.phlog.ui.photographerprofile.editprofile.presenter
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragmentView;
 
@@ -46,7 +46,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
     }
 
     @Override
-    public void updateProfile(String name, String username, String email
+    public void updateProfile(Context context, String name, String username, String email
             , String password, String profile, String cover) {
         view.viewEditProfileProgress(true);
         HashMap<String, File> files = null;
@@ -64,7 +64,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
         data.put("username", username);
         data.put("email", email);
         data.put("password", password);
-        Disposable disposable = BaseNetworkApi.updateProfile(files, data)
+        Disposable disposable = BaseNetworkApi.updateProfile(files, data, PrefUtils.getUserToken(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
@@ -77,8 +77,8 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
                 }, throwable -> {
                     view.viewEditProfileProgress(false);
                     view.showMessage(R.string.profile_update_failed);
-                    if (context != null)
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    if (this.context != null)
+                    ErrorUtils.Companion.setError(this.context, TAG, throwable);
                 });
         disposables.add(disposable);
     }
