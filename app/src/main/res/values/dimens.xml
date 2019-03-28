@@ -101,7 +101,7 @@
     <dimen name="campaign_mission_padding">25dp</dimen>
 
     <!--////AllCampaignActivity-->
-    <dimen name="campaign_item_height">200dp</dimen>
+    <dimen name="campaign_item_height">175dp</dimen>
     <dimen name="campaign_drawable_padding">4dp</dimen>
     <dimen name="campaign_home_button_width">175dp</dimen>
 
