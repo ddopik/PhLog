@@ -52,7 +52,7 @@
 
     <string name="loading">Loading....</string>
     <string name="edit">Edit</string>
-    <string name="total_photos">Photos</string>
+    <string name="total_photos">Total Photos</string>
     <string name="followers">Followers</string>
     <string name="home">Stories</string>
     <string name="missions">Missions</string>
