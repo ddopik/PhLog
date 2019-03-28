@@ -116,9 +116,9 @@ public class EarningInnerFragment extends BaseFragment implements EarningInnerVi
         buyerPhone.setText(earning.business.phone);
         price.setText(String.format("%1$s $", earning.price));
         if (earning.exclusive == 1){
-            exclusive.setVisibility(View.VISIBLE);
+            exclusive.setText(new StringBuilder().append(exclusive.getText()).append(getResources().getString(R.string.yes)).toString());
         } else {
-            exclusive.setVisibility(View.INVISIBLE);
+            exclusive.setText(new StringBuilder().append(exclusive.getText()).append(getResources().getString(R.string.no)).toString());
         }
     }
 
