@@ -1,7 +1,6 @@
 package com.example.softmills.phlog.ui.photographerprofile.editprofile.presenter;
 
-import com.example.softmills.phlog.base.commonmodel.Photographer;
-import com.example.softmills.phlog.ui.photographerprofile.model.ProfilePhotoGrapherInfoResponse;
+import android.content.Context;
 
 /**
  * Created by abdalla_maged On Nov,2018
@@ -10,5 +9,7 @@ public interface EditPhotoGrapherProfileFragmentPresenter {
 
     void getProfileEditData();
 
-    void updateProfile(String name, String username, String email, String password, String profile, String cover);
+    void updateProfile(Context context, String name, String username, String email, String password, String profile, String cover);
+
+    void terminate();
 }

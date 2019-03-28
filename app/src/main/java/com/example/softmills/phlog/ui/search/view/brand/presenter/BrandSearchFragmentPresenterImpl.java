@@ -2,13 +2,13 @@ package com.example.softmills.phlog.ui.search.view.brand.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.search.view.brand.view.BrandSearchFragmentView;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -44,6 +44,22 @@ public class BrandSearchFragmentPresenterImpl implements BrandSearchFragmentPres
                     brandSearchFragmentView.viewBrandSearchProgress(false);
                 });
 
+    }
+
+    @Override
+    public Observable<Boolean> unfollowBrand(Business business) {
+        return BaseNetworkApi.unFollowBrand(business.id.toString())
+                .map(followBrandResponse -> {
+                    return followBrandResponse.data.isFollow;
+                });
+    }
+
+    @Override
+    public Observable<Boolean> followBrand(Business business) {
+        return BaseNetworkApi.followBrand(business.id.toString())
+                .map(followBrandResponse -> {
+                    return followBrandResponse.data.isFollow;
+                });
     }
 
 }

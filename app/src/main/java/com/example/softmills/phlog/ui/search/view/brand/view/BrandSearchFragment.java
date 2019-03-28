@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
@@ -55,7 +57,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private List<Business> brandSearchList = new ArrayList<>();
     private BrandSearchFragmentPresenter brandSearchFragmentPresenter;
     private PagingController pagingController;
-    private CompositeDisposable disposable = new CompositeDisposable();
+    private CompositeDisposable disposables = new CompositeDisposable();
     private OnSearchTabSelected onSearchTabSelected;
 
     private ConstraintLayout promptView;
@@ -122,7 +124,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private void initListener() {
 
 
-        disposable.add(
+        disposables.add(
 
                 RxTextView.textChangeEvents(brandSearch)
                         .skipInitialValue()
@@ -141,10 +143,34 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             }
         };
 
-        brandSearchAdapter.brandAdapterListener = brandSearch -> {
-            Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
-            intent.putExtra(BrandInnerActivity.BRAND_ID, brandSearch.id);
-            startActivity(intent);
+        brandSearchAdapter.brandAdapterListener = new BrandSearchAdapter.BrandAdapterListener() {
+            @Override
+            public void onBrandSelected(Business brandSearch) {
+                Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
+                intent.putExtra(BrandInnerActivity.BRAND_ID, brandSearch.id);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFollowBrand(Business business, int position) {
+                Observable<Boolean> observable = null;
+                if (business.isFollow) {
+                    observable = brandSearchFragmentPresenter.unfollowBrand(business);
+                } else {
+                    observable = brandSearchFragmentPresenter.followBrand(business);
+                }
+                if (observable != null)
+                    disposables.add(observable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doFinally(() -> {
+                                brandSearchAdapter.notifyItemChanged(position);
+                            })
+                            .subscribe(follow -> {
+                                business.isFollow = follow;
+                            }, throwable -> {
+                                ErrorUtils.Companion.setError(getContext(), TAG, throwable);
+                            }));
+            }
         };
     }
 
@@ -218,7 +244,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     @Override
     public void onDestroy() {
         super.onDestroy();
-        disposable.clear();
+        disposables.clear();
     }
 
     public void setBrandSearchView(OnSearchTabSelected onSearchTabSelected) {

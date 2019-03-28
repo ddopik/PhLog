@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragmentView;
 
@@ -12,6 +13,7 @@ import java.io.File;
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -23,6 +25,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
     private final String TAG = EditPhotoGrapherProfileFragmentImpl.class.getSimpleName();
     private EditPhotoGrapherProfileFragmentView view;
     private Context context;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public EditPhotoGrapherProfileFragmentImpl(EditPhotoGrapherProfileFragmentView editPhotoGrapherProfileFragmentView, Context context) {
         this.view = editPhotoGrapherProfileFragmentView;
@@ -43,7 +46,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
     }
 
     @Override
-    public void updateProfile(String name, String username, String email
+    public void updateProfile(Context context, String name, String username, String email
             , String password, String profile, String cover) {
         view.viewEditProfileProgress(true);
         HashMap<String, File> files = null;
@@ -61,7 +64,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
         data.put("username", username);
         data.put("email", email);
         data.put("password", password);
-        Disposable disposable = BaseNetworkApi.updateProfile(files, data)
+        Disposable disposable = BaseNetworkApi.updateProfile(files, data, PrefUtils.getUserToken(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
@@ -74,7 +77,14 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
                 }, throwable -> {
                     view.viewEditProfileProgress(false);
                     view.showMessage(R.string.profile_update_failed);
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                    if (this.context != null)
+                    ErrorUtils.Companion.setError(this.context, TAG, throwable);
                 });
+        disposables.add(disposable);
+    }
+
+    @Override
+    public void terminate() {
+        disposables.clear();
     }
 }

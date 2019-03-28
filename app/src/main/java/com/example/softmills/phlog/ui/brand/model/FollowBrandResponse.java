@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.brand.model;
 
 import com.example.softmills.phlog.base.commonmodel.BaseErrorResponse;
+import com.example.softmills.phlog.base.commonmodel.Business;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class FollowBrandResponse  {
 
 
-    public BrandInnerData data;
+    public Business data;
 
 
 }

@@ -70,7 +70,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         new Utilities().printHashKey(this);
         handleIntent(getIntent());
-
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.softmills.phlog.ui.search.view.brand.view;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,7 +85,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
                     .into(brandSearchViewHolder.brandImg);
 
             brandSearchViewHolder.brandName.setText(brandList.get(i).fullName);
-            brandSearchViewHolder.brandFollowers.setText(new StringBuilder().append(brandList.get(i).followersCount).append(" ").append(context.getResources().getString(R.string.following)).toString());
+            brandSearchViewHolder.brandFollowers.setText(String.format("%1$d %2$s", brandList.get(i).followersCount, context.getString(R.string.follow_this)));
             brandSearchViewHolder.searchBrandContainer.setOnClickListener(v -> {
                 if (brandAdapterListener != null) {
                     brandAdapterListener.onBrandSelected(brandFiltered.get(i));
@@ -93,29 +94,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
             brandSearchViewHolder.brandFollowBtn.setOnClickListener(v -> {
                 brandSearchViewHolder.brandFollowBtn.setLoading(true);
-                if (brandList.get(i).isFollow) {
-                    BaseNetworkApi.unFollowBrand(String.valueOf(brandList.get(i).id))
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(followBrandResponse -> {
-                                brandList.get(i).isFollow = false;
-                                brandSearchViewHolder.brandFollowBtn.setText(context.getResources().getString(R.string.follow));
-                                notifyItemChanged(i);
-                            }, throwable -> {
-                                ErrorUtils.Companion.setError(context, TAG, throwable);
-                            });
-                } else {
-                    BaseNetworkApi.followBrand(String.valueOf(brandList.get(i).id))
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(followBrandResponse -> {
-                                brandList.get(i).isFollow = true;
-                                brandSearchViewHolder.brandFollowBtn.setText(context.getResources().getString(R.string.following));
-                                notifyItemChanged(i);
-                            }, throwable -> {
-                                ErrorUtils.Companion.setError(context, TAG, throwable);
-                            });
-                }
+                brandAdapterListener.onFollowBrand(brandList.get(i), i);
             });
 
         } catch (Exception e) {
@@ -134,7 +113,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
     //
     public class BrandSearchViewHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout searchBrandContainer;
+        CardView searchBrandContainer;
         ImageView brandIconImg,brandImg;
         TextView brandName,brandFollowers;
         LoadingButton brandFollowBtn;
@@ -188,5 +167,7 @@ public class BrandSearchAdapter extends RecyclerView.Adapter<BrandSearchAdapter.
 
     public interface BrandAdapterListener {
         void onBrandSelected(Business brandSearch);
+
+        void onFollowBrand(Business business, int position);
     }
 }

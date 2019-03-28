@@ -193,9 +193,9 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
             ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.EARNING_LIST);
         });
 
-        photographerProfileImg.setOnClickListener(v -> {
-            openPickerDialog();
-        });
+//        photographerProfileImg.setOnClickListener(v -> {
+//            openPickerDialog();
+//        });
     }
 
     @Override
