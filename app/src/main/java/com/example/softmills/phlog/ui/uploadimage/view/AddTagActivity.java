@@ -91,6 +91,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
             case UPLOAD_FAILED:
                 showToast(getString(R.string.upload_failed));
                 uploadImageProgress.setVisibility(View.GONE);
+                uploadBrn.setLoading(false);
                 break;
             case UPLOAD_FINISHED:
 //                setResult(RESULT_OK);

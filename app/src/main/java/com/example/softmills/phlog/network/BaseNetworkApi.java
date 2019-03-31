@@ -122,6 +122,7 @@ public class BaseNetworkApi {
     private static final String GET_ALL_NOTIFICATION = BASE_URL + "/notification/list";
     private static final String GET_EARNING = BASE_URL + "/earning/list";
     private static final String UPLOAD_PHOTOGRAPHER_PHOTO = BASE_URL + "/photo/upload";
+    private static final String UPLOAD_CAMPAIGN_PHOTO = BASE_URL + "/campaign/photo/upload";
 
     private static final String DELETE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photo/delete";
     private static final String LIKE_PHOTOGRAPHER_PHOTO = BASE_URL + "/photo/like";
@@ -551,7 +552,7 @@ public class BaseNetworkApi {
     }
 
     public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, UploadImageData uploadImageData) {
-        return Rx2AndroidNetworking.upload(UPLOAD_PHOTOGRAPHER_PHOTO)
+        return Rx2AndroidNetworking.upload(UPLOAD_CAMPAIGN_PHOTO)
                 .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
                 .addHeaders("x-lang-code", "en-us")
