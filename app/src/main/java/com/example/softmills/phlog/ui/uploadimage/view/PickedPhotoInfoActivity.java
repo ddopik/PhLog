@@ -106,7 +106,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
         filtredImg = findViewById(R.id.photo_info);
         GlideApp.with(getBaseContext())
-                .load(Uri.parse(imagePath).getPath())
+                .load(imagePath)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(filtredImg);
 

@@ -23,6 +23,9 @@ import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
+import java.util.Date;
+import java.util.concurrent.Executors;
+
 import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGallery;
 
 /**
@@ -105,11 +108,23 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
         applyFilterBtn.setOnClickListener(v -> {
             if (filteredImagePath !=null){
-                Bundle extras = new Bundle();
-                extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type
-                Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
-                intent.putExtras(extras);
-                startActivity(intent);
+                if (filterApplied) {
+                    Executors.newSingleThreadExecutor().execute(() -> {
+                        filteredImagePath = BitmapUtils.insertImage(getContentResolver(), finalImage, new Date().toString(), getString(R.string.filtered_photo_desc));
+                        imageType.setImageUrl(filteredImagePath);
+                        Bundle extras = new Bundle();
+                        extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type
+                        Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
+                        intent.putExtras(extras);
+                        startActivity(intent);
+                    });
+                } else {
+                    Bundle extras = new Bundle();
+                    extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type
+                    Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
+                    intent.putExtras(extras);
+                    startActivity(intent);
+                }
             }
 
 
@@ -225,16 +240,20 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         finalImage = myFilter.processFilter(bitmap);
     }
 
+    private boolean filterApplied;
+
     @Override
     public void onFilterSelected(Filter filter) {
         // reset image controls
         resetControls();
         // applying the selected filter
-        filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
+        filteredImage = filter.processFilter(originalImage);
         // preview filtered image
-        imagePreview.setImageBitmap(filter.processFilter(filteredImage));
+        imagePreview.setImageBitmap(filteredImage);
 
         finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
+
+        filterApplied = true;
     }
 
     public static Intent getLaunchIntent(Context context,UploadImageData uploadImageData ){
