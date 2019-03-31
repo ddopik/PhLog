@@ -562,6 +562,11 @@ public class BaseNetworkApi {
                 .addMultipartParameter(IMAGE_TYPE_CAMPAIGN, uploadImageData.getImageId())
                 .addMultipartFile("image", imgPath)
                 .setPriority(Priority.HIGH)
+                .setOkHttpClient(new OkHttpClient.Builder()
+//                        .connectTimeout(5, TimeUnit.MINUTES)
+                        .readTimeout(1, TimeUnit.MINUTES)
+                        .writeTimeout(1, TimeUnit.MINUTES)
+                        .build())
                 .build()
                 .getObjectObservable(UploadImgResponse.class);
     }

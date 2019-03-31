@@ -112,11 +112,13 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
                     Executors.newSingleThreadExecutor().execute(() -> {
                         filteredImagePath = BitmapUtils.insertImage(getContentResolver(), finalImage, new Date().toString(), getString(R.string.filtered_photo_desc));
                         imageType.setImageUrl(filteredImagePath);
-                        Bundle extras = new Bundle();
-                        extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type
-                        Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
-                        intent.putExtras(extras);
-                        startActivity(intent);
+                        runOnUiThread(() -> {
+                            Bundle extras = new Bundle();
+                            extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type
+                            Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
+                            intent.putExtras(extras);
+                            startActivity(intent);
+                        });
                     });
                 } else {
                     Bundle extras = new Bundle();
@@ -170,7 +172,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
     private void loadImage(String img) {
 
-        originalImage = BitmapUtils.getBitmapFromGallery(getBaseContext(), img, 300, 300);
+        originalImage = BitmapUtils.getBitmapFromGallery(img);
         filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
         finalImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
         imagePreview.setImageBitmap(originalImage);

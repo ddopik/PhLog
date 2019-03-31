@@ -86,7 +86,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private UploaderService.Communicator communicator = (action, objects) -> {
         switch (action) {
             case UPLOAD_STARTED:
-                uploadImageProgress.setVisibility(View.VISIBLE);
+                uploadBrn.setLoading(true);
                 break;
             case UPLOAD_FAILED:
                 showToast(getString(R.string.upload_failed));
@@ -252,7 +252,6 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
         uploadBrn.setOnClickListener(v -> {
 //            addTagActivityPresenter.uploadPhoto(imagePreviewPath, imageCaption, imageLocation, draftState, imageType, tagList);
-            uploadBrn.setLoading(true);
             if (tagList.isEmpty()) {
                 showToast(getString(R.string.tag_is_required));
                 return;

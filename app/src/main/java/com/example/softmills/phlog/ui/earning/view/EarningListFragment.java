@@ -53,10 +53,13 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
         initPresenter();
         initViews();
         initListener();
-
-        earningListPresenter.getEarningList(getContext(), "1");
+        if (!loadedFirstPage) {
+            earningListPresenter.getEarningList(getContext(), "1");
+            loadedFirstPage = true;
+        }
     }
 
+    private boolean loadedFirstPage;
 
     @Override
     protected void initPresenter() {
@@ -93,7 +96,6 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
         earningListAdapter.notifyDataSetChanged();
 
     }
-
 
 
     @Override
