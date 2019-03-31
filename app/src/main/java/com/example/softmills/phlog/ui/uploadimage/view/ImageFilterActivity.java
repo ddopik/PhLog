@@ -31,9 +31,8 @@ import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGalle
 public class ImageFilterActivity extends BaseActivity implements FiltersListFragment.FiltersListFragmentListener, EditPickedImageFragment.EditImageFragmentListener {
 
     private static final String TAG = ImageFilterActivity.class.getSimpleName();
-    public static String IMAGE_DATA ="image_type";
-    public static String IMAGE_URI="image_uri";
-
+    public static String IMAGE_DATA = "image_type";
+    public static String IMAGE_URI = "image_uri";
 
 
     private ImageView imagePreview;
@@ -51,7 +50,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     private float saturationFinal = 1.0f;
     private float contrastFinal = 1.0f;
 
-    private  String filteredImagePath;
+    private String filteredImagePath;
     private UploadImageData imageType;
 
     // load native image filters library
@@ -85,8 +84,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
         assert bundle != null;
         if (bundle.getSerializable(IMAGE_DATA) != null) {
-            imageType =(UploadImageData) bundle.getSerializable(IMAGE_DATA);
-            filteredImagePath=imageType.getImageUrl() ;
+            imageType = (UploadImageData) bundle.getSerializable(IMAGE_DATA);
+            filteredImagePath = imageType.getImageUrl();
             loadImage(filteredImagePath);
         }
     }
@@ -104,10 +103,10 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         );
 
         applyFilterBtn.setOnClickListener(v -> {
-            if (filteredImagePath !=null){
+            if (filteredImagePath != null) {
                 Bundle extras = new Bundle();
-                extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type
-                Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
+                extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE, imageType); //passing image type
+                Intent intent = new Intent(this, PickedPhotoInfoActivity.class);
                 intent.putExtras(extras);
                 startActivity(intent);
             }
@@ -155,7 +154,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
     private void loadImage(String img) {
 
-        originalImage = BitmapUtils.getBitmapFromGallery(getBaseContext(), img, 300, 300);
+        originalImage = BitmapUtils.getBitmapFromGallery(img);
         filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
         finalImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
         imagePreview.setImageBitmap(originalImage);
@@ -169,7 +168,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
                         , LinearLayout.LayoutParams.MATCH_PARENT)
                 .into(imagePreview);
 
-        Bitmap bitmap = getBitmapFromGallery(getBaseContext(), img, 800, 800);
+        Bitmap bitmap = getBitmapFromGallery(img);
         originalImage.recycle();
         finalImage.recycle();
         originalImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -237,8 +236,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
     }
 
-    public static Intent getLaunchIntent(Context context,UploadImageData uploadImageData ){
-        Intent intent=new Intent(context,ImageFilterActivity.class);
+    public static Intent getLaunchIntent(Context context, UploadImageData uploadImageData) {
+        Intent intent = new Intent(context, ImageFilterActivity.class);
         Bundle extras = new Bundle();
         extras.putSerializable(ImageFilterActivity.IMAGE_DATA, uploadImageData);
         intent.putExtras(extras);
