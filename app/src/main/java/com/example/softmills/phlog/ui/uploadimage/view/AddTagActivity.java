@@ -96,8 +96,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 //                setResult(RESULT_OK);
                 uploadBrn.setLoading(false);
                 new AlertDialog.Builder(this)
-                        .setTitle(R.string.done)
-                        .setMessage(R.string.your_photo_uploaded)
+                         .setMessage(R.string.your_photo_uploaded)
                         .setPositiveButton(R.string.view_in_profile, (dialog, which) -> {
                             Intent intents = new Intent(this, MainActivity.class);
                             intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
@@ -203,7 +202,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         flexboxLayoutManager.setFlexDirection(FlexDirection.ROW);
 
         // Set JustifyContent.
-        flexboxLayoutManager.setJustifyContent(JustifyContent.SPACE_AROUND);
+        flexboxLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
         tagsRv.setLayoutManager(flexboxLayoutManager);
 
         // Set adapter object.

@@ -127,7 +127,11 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
 
             thumbnailItemList.addAll(ThumbnailsManager.processThumbs(activityContext));
 
-            activityContext.runOnUiThread(() -> mAdapter.notifyDataSetChanged());
+
+            activityContext.runOnUiThread(() -> {
+                if (mAdapter !=null)
+                mAdapter.notifyDataSetChanged();
+            });
         };
 
         new Thread(r).start();

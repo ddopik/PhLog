@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -40,21 +40,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp12"
                     android:text="@string/powered_by"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/gray400" />
 
                 <AutoCompleteTextView
                     android:id="@+id/tag_auto_complete"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/dp45"
-                    android:fontFamily="@font/verdana"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_search_view"
+                    android:fontFamily="@font/verdana"
                     android:hint="@string/add_new_tag"
                     android:imeActionLabel="Done"
                     android:imeOptions="actionDone"
                     android:padding="@dimen/widgets_padding"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                  />
 
 
             </LinearLayout>
@@ -83,14 +84,14 @@
                 android:paddingStart="@dimen/dp16"
                 android:paddingEnd="@dimen/dp16"
                 android:text="@string/selected_tags"
-                android:textColor="@color/white" />
+                android:textColor="@color/gray400"  />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:background="@color/white" />
+                android:background="@color/gray400" />
 
 
             <com.example.softmills.phlog.base.widgets.CustomRecyclerView
@@ -102,13 +103,7 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="top"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="@color/white" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,28 +119,29 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center|top"
                 android:background="@color/text_input_color"
-                app:font_family="@font/segoe_sb"
-                app:text="@string/upload_photo"
-                app:text_color="@color/white"
+                android:textStyle="bold"
                 app:background_color="@color/text_input_color"
+                app:font_family="@font/segoe_sb"
                 app:rounded="false"
-                android:textStyle="bold" />
+                app:text="@string/upload_photo"
+                app:text_color="@color/white" />
 
             <ProgressBar
-                tools:progress="40"
                 android:id="@+id/upload_progress"
                 style="@style/PhlogHorizontalProgressBarThem"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp4" />
+                android:layout_height="@dimen/dp4"
+                tools:progress="40" />
 
         </LinearLayout>
 
 
     </LinearLayout>
+
     <ProgressBar
         android:id="@+id/upload_image_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </FrameLayout>

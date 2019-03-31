@@ -11,8 +11,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -76,7 +76,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
         campaignProfileCollapsingToolbarLayout = findViewById(R.id.campaign_profile_collapsing_layout);
         campaignProfileToolBar = findViewById(R.id.campaign_profile_toolbar);
         campaignProfileToolbarTitle = findViewById(R.id.campaign_profile_toolbar_title);
-       ;
+        ;
         backBtn = findViewById(R.id.back_btn);
         campaignImg = findViewById(R.id.campaign_header_img);
         campaignTitle = findViewById(R.id.campaign_title);
@@ -150,6 +150,12 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
             }
         });
         backBtn.setOnClickListener(v -> onBackPressed());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        campaignInnerPresenter.getCampaignDetails(getIntent().getStringExtra(CAMPAIGN_ID));
     }
 
     @Override
