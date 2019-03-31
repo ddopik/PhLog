@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -105,8 +104,9 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
 
         filtredImg = findViewById(R.id.photo_info);
+        String imagePreviewPath = "content://media" + imagePath;
         GlideApp.with(getBaseContext())
-                .load(Uri.parse(imagePath).getPath())
+                .load(imagePreviewPath)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(filtredImg);
 
@@ -130,7 +130,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private void initListener() {
         nextBtn.setOnClickListener(v -> {
             caption.getText().toString();
-            if (caption.getText().toString().isEmpty())  {
+            if (caption.getText().toString().isEmpty()) {
                 showToast(getString(R.string.caption_is_required));
                 return;
             }
@@ -144,10 +144,6 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 //            imageType.setDraft(draftBtn.isChecked());
 
             Intent intent = new Intent(this, AddTagActivity.class);
-//            intent.putExtra(AddTagActivity.IMAGE_PREVIEW, imagePath);
-//            intent.putExtra(AddTagActivity.IMAGE_DRAFT_STATE, String.valueOf(draftBtn.isChecked()));
-//            Bundle extras = new Bundle();
-//            extras.putSerializable(AddTagActivity.IMAGE_DATA, imageType); //passing image type
             extras.putSerializable(AddTagActivity.IMAGE_TYPE, imageType);
             intent.putExtras(extras);
             startActivity(intent);

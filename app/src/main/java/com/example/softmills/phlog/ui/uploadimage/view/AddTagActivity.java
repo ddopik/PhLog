@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
@@ -22,6 +23,7 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.ImageUtils;
 import com.example.softmills.phlog.Utiltes.uploader.UploaderService;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Tag;
@@ -40,6 +42,8 @@ import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 import com.o_bdreldin.loadingbutton.LoadingButton;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -97,7 +101,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 //                setResult(RESULT_OK);
                 uploadBrn.setLoading(false);
                 new AlertDialog.Builder(this)
-                         .setMessage(R.string.your_photo_uploaded)
+                        .setMessage(R.string.your_photo_uploaded)
                         .setPositiveButton(R.string.view_in_profile, (dialog, which) -> {
                             Intent intents = new Intent(this, MainActivity.class);
                             intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
@@ -158,6 +162,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         assert bundle != null;
         if (bundle.getSerializable(IMAGE_TYPE) != null) {
             imageType = (UploadImageData) bundle.getSerializable(IMAGE_TYPE);
+//            String imagePreviewPath = "content://media" + imagePath;
             imagePreviewPath = imageType.getImageUrl();
             draftState = String.valueOf(imageType.isDraft());
 
@@ -189,8 +194,9 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         autoCompleteTextView.setThreshold(0);
         autoCompleteTagMenuAdapter.notifyDataSetChanged();
         backBtn = findViewById(R.id.back_btn);
+
         GlideApp.with(getBaseContext())
-                .load(imagePreviewPath)
+                .load("content://media" + imagePreviewPath)
                 .centerCrop()
                 .error(R.drawable.ic_launcher_foreground)
                 .into(imagePreview);
@@ -264,12 +270,31 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 //                } else {
 //                    startService(intent);
 //                }
+                /// todo start trace from here
+                try {
+                    Uri uri = Uri.parse(imagePreviewPath);
+                    File file = new File(uri.getPath());//create path from uri
+                    final String[] split = file.getPath().split(":");//split the path.
+                    String filePath = split[1];//assign it to a string(your choice).
+
+
+                    model.imagePath = ImageUtils.getFilePath(getBaseContext(), Uri.parse(imagePreviewPath));
+                    model.uploadImageData.setImageUrl(ImageUtils.getFilePath(getBaseContext(), Uri.parse(imagePreviewPath)));
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                /////
                 pendingSendingMessage = true;
                 pendingMessage = new Message();
                 pendingMessage.what = UploaderService.UPLOAD_FILE;
                 pendingMessage.obj = model;
+
                 bindService(intent, connection, BIND_AUTO_CREATE);
             } else {
+                ///
+//                model.imagePath = ImageUtils.getRealPathFromURI(getBaseContext(), Uri.parse(imagePreviewPath));
+//                model.uploadImageData.setImageUrl(ImageUtils.getRealPathFromURI(getBaseContext(), Uri.parse(imagePreviewPath)));
+                /////
                 Message message = new Message();
                 message.what = UploaderService.UPLOAD_FILE;
                 message.obj = model;

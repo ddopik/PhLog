@@ -551,6 +551,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(UploadImgResponse.class);
     }
 
+
     public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, UploadImageData uploadImageData) {
         return Rx2AndroidNetworking.upload(UPLOAD_CAMPAIGN_PHOTO)
                 .addHeaders("x-auth-token", token)

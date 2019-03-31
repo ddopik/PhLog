@@ -62,6 +62,10 @@ public class UploaderService extends Service {
                             communicator.onAction(Action.UPLOAD_FINISHED);
                         checkAndStop();
                     };
+
+
+
+
                     Consumer<Throwable> throwableConsumer = throwable -> {
                         uploading--;
                         if (communicator != null)
@@ -74,6 +78,12 @@ public class UploaderService extends Service {
                         }
                         checkAndStop();
                     };
+
+
+
+
+
+
                     String token = PrefUtils.getUserToken(getApplicationContext());
                     switch (object.uploadImageData.getUploadImageType()) {
                         case NORMAL_IMG:

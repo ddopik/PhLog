@@ -1,11 +1,13 @@
 package com.example.softmills.phlog.Utiltes;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentUris;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,28 +16,25 @@ import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
-import android.os.Message;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.softmills.phlog.R;
-
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+
 /**
  * Created by ddopik..@_@
  */
@@ -46,10 +45,6 @@ public class ImageUtils {
     private static final float CORNER_RADIUS = 2.0f;
     public ArrayList<String> imagesPaths = new ArrayList<String>();
     public String imgBase64 = "", imgName;
-
-
-
-
 
 
     public static Bitmap getScaledBitmap(Bitmap btimap, int maxWidth, int maxHeight) {
@@ -87,23 +82,7 @@ public class ImageUtils {
         view.draw(canvas);
         return returnedBitmap;
     }
-    //-------------------Functions to upload multiple Images at once for OOH---------end----
 
-    public static String getSelectedImagePath(Activity activity, int requestCode, int resultCode, Intent data, int randomNumber) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == FILE_CODE) {
-                Uri selectedImageUri = data.getData();
-                //mImgPath = new FileUtils().getPathFromUri(selectedImageUri, context);
-                return new FileUtils().getPathFromUri(selectedImageUri, activity);
-            } else if (requestCode == CAMERA_CODE) {
-                //mImgPath = cameraImage.getPath();
-                return new File(FileUtils.TEMP_FILES, randomNumber + ".jpg").getPath();
-
-            }
-        }
-
-        return "";
-    }
 
     public static AlertDialog.Builder getPhotoChooserDialog(final Activity activity, final int randomNumber) {
 
@@ -120,7 +99,7 @@ public class ImageUtils {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraImage));
                 if (intent.resolveActivity(activity.getPackageManager()) != null) {
-                   activity. startActivityForResult(intent, randomNumber);
+                    activity.startActivityForResult(intent, randomNumber);
                 }
 
 
@@ -156,7 +135,7 @@ public class ImageUtils {
 
     }
 
-    public void convertImgToBase64WithoutGlide(String mImgPath,final int width, final int height) {
+    public void convertImgToBase64WithoutGlide(String mImgPath, final int width, final int height) {
         Bitmap bitmap = rotateImage(mImgPath, BitmapFactory.decodeFile(mImgPath));
         //Bitmap bitmap = BitmapFactory.decodeFile(mImgPath);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -170,19 +149,19 @@ public class ImageUtils {
     //-------------------Functions to upload multiple Images at once for OOH---------begin----
     public void convertMuliImagesToBase64WithoutGlide(final int width, final int height) {
 
-        for(int i=0;i<imagesPaths.size();i++) {
+        for (int i = 0; i < imagesPaths.size(); i++) {
             Bitmap bitmap = rotateImage(imagesPaths.get(i), BitmapFactory.decodeFile(imagesPaths.get(i)));
             //Bitmap bitmap = BitmapFactory.decodeFile(mImgPath);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             getScaledBitmap(bitmap, width, height)
                     .compress(Bitmap.CompressFormat.JPEG, COMPRESSION_RATIO, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
-            if(i != imagesPaths.size()-1)
-                this.imgBase64+="\""+ Base64.encodeToString(byteArray, Base64.NO_WRAP)+"\",";
+            if (i != imagesPaths.size() - 1)
+                this.imgBase64 += "\"" + Base64.encodeToString(byteArray, Base64.NO_WRAP) + "\",";
             else {
                 //String text;
                 //String lastCharacter;
-                this.imgBase64+="\""+ Base64.encodeToString(byteArray, Base64.NO_WRAP)+"\"";
+                this.imgBase64 += "\"" + Base64.encodeToString(byteArray, Base64.NO_WRAP) + "\"";
                 //lastCharacter= text.substring(text.length()-1);
                 //this.imgBase64 += text.substring(0, text.length()-1)+lastCharacter;
                 //this.imgBase64 += text.substring(0, text.length()-6);
@@ -196,7 +175,7 @@ public class ImageUtils {
         //---------test to save file and check its size-------
         PrintWriter writer = null;
         try {
-            writer = new PrintWriter(FileUtils.MAIN_DIRECTORY+"/test.txt", "UTF-8");
+            writer = new PrintWriter(FileUtils.MAIN_DIRECTORY + "/test.txt", "UTF-8");
             writer.println(this.imgBase64);
             writer.close();
         } catch (FileNotFoundException e) {
@@ -204,6 +183,13 @@ public class ImageUtils {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public Bitmap rotateImage(String filePath, Bitmap bitmap) {
@@ -230,7 +216,78 @@ public class ImageUtils {
         return resultBitmap;
     }
 
+    @SuppressLint("NewApi")
+    public static String getFilePath(Context context, Uri uri) throws URISyntaxException {
+        String selection = null;
+        String[] selectionArgs = null;
+        // Uri is different in versions after KITKAT (Android 4.4), we need to
+        if (Build.VERSION.SDK_INT >= 19 && DocumentsContract.isDocumentUri(context.getApplicationContext(), uri)) {
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                return Environment.getExternalStorageDirectory() + "/" + split[1];
+            } else if (isDownloadsDocument(uri)) {
+                final String id = DocumentsContract.getDocumentId(uri);
+                uri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+            } else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                if ("image".equals(type)) {
+                    uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                selection = "_id=?";
+                selectionArgs = new String[]{
+                        split[1]
+                };
+            }
+        }
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
 
+
+            if (isGooglePhotosUri(uri)) {
+                return uri.getLastPathSegment();
+            }
+
+            String[] projection = {
+                    MediaStore.Images.Media.DATA
+            };
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver()
+                        .query(uri, projection, selection, selectionArgs, null);
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    private static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
 
 }
 

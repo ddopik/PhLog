@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.ImageUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.ui.uploadimage.view.fillters.FiltersListFragment;
@@ -85,6 +86,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         assert bundle != null;
         if (bundle.getSerializable(IMAGE_DATA) != null) {
             imageType = (UploadImageData) bundle.getSerializable(IMAGE_DATA);
+
             filteredImagePath = imageType.getImageUrl();
             loadImage(filteredImagePath);
         }
@@ -104,9 +106,10 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
         applyFilterBtn.setOnClickListener(v -> {
             if (filteredImagePath != null) {
-                Bundle extras = new Bundle();
-                extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE, imageType); //passing image type
                 Intent intent = new Intent(this, PickedPhotoInfoActivity.class);
+                Bundle extras = new Bundle();
+                imageType.setImageUrl(ImageUtils.getImageUri(this, finalImage).getPath());
+                extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE, imageType); //passing image type
                 intent.putExtras(extras);
                 startActivity(intent);
             }
@@ -232,7 +235,6 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
         // preview filtered image
         imagePreview.setImageBitmap(filter.processFilter(filteredImage));
-
         finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
     }
 
