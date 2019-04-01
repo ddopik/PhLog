@@ -120,7 +120,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                                 uploadImageData.setUploadImageType(Constants.UploadImageTypes.CAMPAIGN_IMG);
                                 uploadImageData.setImageId(campaignId);
                                 Bundle extras = new Bundle();
-                                extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
+                                extras.putParcelable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
                                 Intent i1 = new Intent(this, UploadImageActivity.class);
                                 i1.putExtras(extras);
                                 startActivity(i1);
@@ -225,7 +225,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
 //            imageType.put(IMAGE_TYPE_CAMPAIGN,campaignId);
 //
             Bundle extras = new Bundle();
-            extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
+            extras.putParcelable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
             Intent intent = new Intent(this, UploadImageActivity.class);
             intent.putExtras(extras);
             startActivity(intent);

@@ -180,6 +180,10 @@ public class BitmapUtils {
         }
     }
 
+//    public static Bitmap getBitmapFromGallery(String img) {
+//        return BitmapFactory.decodeFile(img);
+//    }
+
     /**
      * Storing image to device gallery
      *

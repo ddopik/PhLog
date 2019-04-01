@@ -11,12 +11,13 @@ import android.util.Log;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.ImageUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.notification.NotificationFactory;
 import com.example.softmills.phlog.Utiltes.uploader.UploaderService.Communicator.Action;
+import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.signup.model.UploadImgResponse;
-import com.example.softmills.phlog.ui.uploadimage.model.UploadPhotoModel;
 
 import java.io.File;
 
@@ -52,10 +53,10 @@ public class UploaderService extends Service {
             case UPLOAD_FILE:
                 if (communicator != null)
                 communicator.onAction(Action.UPLOAD_STARTED);
-                if (message.obj instanceof UploadPhotoModel) {
+                if (message.obj instanceof UploadImageData) {
                     uploading++;
                     notificationFactory.changeNotificationContent(getApplicationContext(), getString(R.string.permanent_notification_channel_id), getString(R.string.permanent_notification_id), getString(R.string.phlog_uploading), R.drawable.phlog_logo);
-                    UploadPhotoModel object = (UploadPhotoModel) message.obj;
+                    UploadImageData object = (UploadImageData) message.obj;
                     Consumer<UploadImgResponse> responseConsumer = uploadImgResponse -> {
                         uploading--;
                         if (communicator != null)
@@ -85,9 +86,9 @@ public class UploaderService extends Service {
 
 
                     String token = PrefUtils.getUserToken(getApplicationContext());
-                    switch (object.uploadImageData.getUploadImageType()) {
+                    switch (object.getUploadImageType()) {
                         case NORMAL_IMG:
-                            Disposable d1 = BaseNetworkApi.uploadPhotoGrapherPhoto(token, object.imageCaption, object.location, new File(object.imagePath), object.tags, (bytesUploaded, totalBytes) -> {
+                            Disposable d1 = BaseNetworkApi.uploadPhotoGrapherPhoto(token, object.getImageCaption(), object.getImageLocation(),new File(object.getBitMapUri()), object.getTags(), (bytesUploaded, totalBytes) -> {
                                 int p = (int) ((bytesUploaded / (float) totalBytes) * 100);
                                 communicator.onAction(Action.PROGRESS, p);
                             }).subscribeOn(Schedulers.io())
@@ -96,7 +97,7 @@ public class UploaderService extends Service {
                             disposables.add(d1);
                             break;
                         case CAMPAIGN_IMG:
-                            Disposable d2 = BaseNetworkApi.uploadCampaignPhoto(token, object.imageCaption, object.location, new File(object.imagePath), object.tags, object.uploadImageData)
+                            Disposable d2 = BaseNetworkApi.uploadCampaignPhoto(token, object.getImageCaption(), object.getImageLocation(), new File(object.getBitMapUri()), object.getTags(), object.getImageId())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(responseConsumer, throwableConsumer);

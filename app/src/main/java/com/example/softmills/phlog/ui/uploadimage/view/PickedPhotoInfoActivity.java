@@ -55,7 +55,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private PlaceArrayAdapter mPlaceArrayAdapter;
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private final String TAG = PickedPhotoInfoActivity.class.getSimpleName();
-    private String imagePath;
+
     private ImageView filtredImg;
     private AutoCompleteTextView placesAutoCompete;
     private Button nextBtn;
@@ -64,7 +64,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private EditText caption;
     private Switch draftBtn;
     private MapUtls mapUtls;
-    private UploadImageData imageType;
+    private UploadImageData uploadImageData;
 
     public static final int UPLOAD_PHOTO_REQUEST_CODE = 325;
 
@@ -76,11 +76,9 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
-        if (bundle.getSerializable(IMAGE_TYPE) != null) {
+        if (bundle.getParcelable(IMAGE_TYPE) != null) {
             setContentView(R.layout.activity_photo_info_activity);
-
-            imageType = (UploadImageData) bundle.getSerializable(IMAGE_TYPE);
-            imagePath = imageType.getImageUrl();
+            uploadImageData = (UploadImageData) bundle.getParcelable(IMAGE_TYPE);
             initPresenter();
             initView();
             initListener();
@@ -104,11 +102,13 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
 
         filtredImg = findViewById(R.id.photo_info);
-        String imagePreviewPath = "content://media" + imagePath;
+//        String imagePreviewPath = "content://media" + uploadImageData.getBitMapUri();
         GlideApp.with(getBaseContext())
-                .load(imagePreviewPath)
+                .load(uploadImageData.getBitMapUri())
                 .error(R.drawable.ic_launcher_foreground)
                 .into(filtredImg);
+
+
 
         nextBtn = findViewById(R.id.activity_info_photo_next_btn);
         backBtn = findViewById(R.id.activity_info_photo_back_btn);
@@ -129,7 +129,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
     private void initListener() {
         nextBtn.setOnClickListener(v -> {
-            caption.getText().toString();
+
             if (caption.getText().toString().isEmpty()) {
                 showToast(getString(R.string.caption_is_required));
                 return;
@@ -137,14 +137,14 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
             Bundle extras = new Bundle();
             if (placesAutoCompete.getText() != null)
-                imageType.setImageLocation(String.valueOf(placesAutoCompete.getText()));
+                uploadImageData.setImageLocation(String.valueOf(placesAutoCompete.getText()));
             if (caption.getText() != null)
-                imageType.setImageCaption(String.valueOf(caption.getText()));
+                uploadImageData.setImageCaption(String.valueOf(caption.getText()));
 
 //            imageType.setDraft(draftBtn.isChecked());
 
             Intent intent = new Intent(this, AddTagActivity.class);
-            extras.putSerializable(AddTagActivity.IMAGE_TYPE, imageType);
+            extras.putParcelable(AddTagActivity.IMAGE_TYPE, uploadImageData);
             intent.putExtras(extras);
             startActivity(intent);
 //            startActivityForResult(intent, UPLOAD_PHOTO_REQUEST_CODE);

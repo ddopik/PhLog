@@ -22,10 +22,12 @@ import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.ui.uploadimage.view.AddTagActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -185,12 +187,7 @@ public class ImageUtils {
         }
     }
 
-    public static Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
+
 
     public Bitmap rotateImage(String filePath, Bitmap bitmap) {
         Bitmap resultBitmap = bitmap;
@@ -288,6 +285,64 @@ public class ImageUtils {
     private static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
+    public static Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+    public static String getBitMapRealPath(Context context, Bitmap bm) {
 
+        try {
+            String imagePath = null;
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+            Uri uri;
+            Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[]{MediaStore.Images.Media.DATA, MediaStore.Images.Media.DATE_ADDED, MediaStore.Images.ImageColumns.ORIENTATION}, MediaStore.Images.Media.DATE_ADDED, null, "date_added DESC");
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    uri = Uri.parse(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)));
+                    imagePath = uri.toString();
+                    Log.e("getBitMapUri", uri.toString());
+                    break;
+                } while (cursor.moveToNext());
+                cursor.close();
+            }
+
+            return imagePath;
+        } catch (Exception e) {
+            Log.e(AddTagActivity.class.getSimpleName(), "uploadBrn()--->" + e.getMessage());
+            return null;
+        }
+    }
+    public String getRealPathFromURI(Uri contentURI, Activity context) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        @SuppressWarnings("deprecation")
+        Cursor cursor = context.managedQuery(contentURI, projection, null, null, null);
+        if (cursor == null)
+            return null;
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        if (cursor.moveToFirst()) {
+            String s = cursor.getString(column_index);
+            // cursor.close();
+            return s;
+        }
+        // cursor.close();
+        return null;
+    }
+
+    public static void getDropboxIMGSize(Uri uri){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(new File(uri.getPath()).getAbsolutePath(), options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+
+        Log.e(ImageUtils.class.getSimpleName(), "Width ---->" + imageWidth);
+        Log.e(ImageUtils.class.getSimpleName(), "Height ---->" + imageHeight);
+
+    }
 }
 

@@ -92,6 +92,7 @@ public class PhotoGrapherFollowingBrandAdapter extends RecyclerView.Adapter<Phot
                 BaseNetworkApi.unFollowBrand(String.valueOf(brandList.get(i).id))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .doFinally(() -> brandViewHolder.brandFollowBtn.setLoading(false))
                         .subscribe(followBrandResponse -> {
                             brandList.get(i).isFollow = false;
                             brandViewHolder.brandFollowBtn.setText(context.getResources().getString(R.string.follow));
@@ -102,6 +103,7 @@ public class PhotoGrapherFollowingBrandAdapter extends RecyclerView.Adapter<Phot
                 BaseNetworkApi.followBrand(String.valueOf(brandList.get(i).id))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .doFinally(() -> brandViewHolder.brandFollowBtn.setLoading(false))
                         .subscribe(followBrandResponse -> {
                             brandList.get(i).isFollow = true;
                             brandViewHolder.brandFollowBtn.setText(context.getResources().getString(R.string.following));

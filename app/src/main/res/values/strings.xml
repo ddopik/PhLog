@@ -59,7 +59,7 @@
     <string name="Notification">Notifications</string>
     <string name="me">Me</string>
     <string name="remind_me">REMIND ME</string>
-    <string name="join">JOIN</string>
+    <string name="join">Join</string>
     <string name="tab_mission">Mission</string>
     <string name="tab_photos">Photos</string>
     <string name="days_left">Days Left</string>
@@ -212,4 +212,5 @@
     <string name="exclusive">Exclusive :</string>
     <string name="follow_this">follow this</string>
     <string name="wrong_email_format">Wrong email format</string>
+    <string name="filtered_photo_desc">Phlog filtered photo</string>
 </resources>

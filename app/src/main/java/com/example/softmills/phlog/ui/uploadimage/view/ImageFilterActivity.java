@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,7 +53,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     private float contrastFinal = 1.0f;
 
     private String filteredImagePath;
-    private UploadImageData imageType;
+    private UploadImageData uploadImageData;
 
     // load native image filters library
     static {
@@ -84,10 +85,9 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         Bundle bundle = this.getIntent().getExtras();
 
         assert bundle != null;
-        if (bundle.getSerializable(IMAGE_DATA) != null) {
-            imageType = (UploadImageData) bundle.getSerializable(IMAGE_DATA);
-
-            filteredImagePath = imageType.getImageUrl();
+        if (bundle.getParcelable(IMAGE_DATA) != null) {
+            uploadImageData = (UploadImageData) bundle.getParcelable(IMAGE_DATA);
+            filteredImagePath = uploadImageData.getSourceImagePath();
             loadImage(filteredImagePath);
         }
     }
@@ -108,10 +108,14 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
             if (filteredImagePath != null) {
                 Intent intent = new Intent(this, PickedPhotoInfoActivity.class);
                 Bundle extras = new Bundle();
-                imageType.setImageUrl(ImageUtils.getImageUri(this, finalImage).getPath());
-                extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE, imageType); //passing image type
+                uploadImageData.setBitMapUri(ImageUtils.getBitMapRealPath(this, finalImage));
+                extras.putParcelable(PickedPhotoInfoActivity.IMAGE_TYPE, uploadImageData); //passing image type
                 intent.putExtras(extras);
                 startActivity(intent);
+
+
+                Log.e(ImageFilterActivity.class.getSimpleName(), "Width ---->" + finalImage.getWidth());
+                Log.e(ImageFilterActivity.class.getSimpleName(), "Height ---->" + finalImage.getHeight());
             }
 
 
@@ -227,6 +231,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         finalImage = myFilter.processFilter(bitmap);
     }
 
+    private boolean filterApplied;
+
     @Override
     public void onFilterSelected(Filter filter) {
         // reset image controls
@@ -236,12 +242,14 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         // preview filtered image
         imagePreview.setImageBitmap(filter.processFilter(filteredImage));
         finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
+
+        filterApplied = true;
     }
 
     public static Intent getLaunchIntent(Context context, UploadImageData uploadImageData) {
         Intent intent = new Intent(context, ImageFilterActivity.class);
         Bundle extras = new Bundle();
-        extras.putSerializable(ImageFilterActivity.IMAGE_DATA, uploadImageData);
+        extras.putParcelable(ImageFilterActivity.IMAGE_DATA, uploadImageData);
         intent.putExtras(extras);
 
         return intent;
