@@ -52,7 +52,7 @@ public class UploaderService extends Service {
                 break;
             case UPLOAD_FILE:
                 if (communicator != null)
-                communicator.onAction(Action.UPLOAD_STARTED);
+                    communicator.onAction(Action.UPLOAD_STARTED);
                 if (message.obj instanceof UploadImageData) {
                     uploading++;
                     notificationFactory.changeNotificationContent(getApplicationContext(), getString(R.string.permanent_notification_channel_id), getString(R.string.permanent_notification_id), getString(R.string.phlog_uploading), R.drawable.phlog_logo);
@@ -63,8 +63,6 @@ public class UploaderService extends Service {
                             communicator.onAction(Action.UPLOAD_FINISHED);
                         checkAndStop();
                     };
-
-
 
 
                     Consumer<Throwable> throwableConsumer = throwable -> {
@@ -81,14 +79,13 @@ public class UploaderService extends Service {
                     };
 
 
-
-
-
-
                     String token = PrefUtils.getUserToken(getApplicationContext());
+                    File imageFile = new File(ImageUtils.getBitMapFilePath(getBaseContext(), object.getBitMapUri()));
                     switch (object.getUploadImageType()) {
+
+
                         case NORMAL_IMG:
-                            Disposable d1 = BaseNetworkApi.uploadPhotoGrapherPhoto(token, object.getImageCaption(), object.getImageLocation(),new File(object.getBitMapUri()), object.getTags(), (bytesUploaded, totalBytes) -> {
+                            Disposable d1 = BaseNetworkApi.uploadPhotoGrapherPhoto(token, object.getImageCaption(), object.getImageLocation(), imageFile, object.getTags(), (bytesUploaded, totalBytes) -> {
                                 int p = (int) ((bytesUploaded / (float) totalBytes) * 100);
                                 communicator.onAction(Action.PROGRESS, p);
                             }).subscribeOn(Schedulers.io())
@@ -97,7 +94,7 @@ public class UploaderService extends Service {
                             disposables.add(d1);
                             break;
                         case CAMPAIGN_IMG:
-                            Disposable d2 = BaseNetworkApi.uploadCampaignPhoto(token, object.getImageCaption(), object.getImageLocation(), new File(object.getBitMapUri()), object.getTags(), object.getImageId())
+                            Disposable d2 = BaseNetworkApi.uploadCampaignPhoto(token, object.getImageCaption(), object.getImageLocation(), imageFile, object.getTags(), object.getImageId())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(responseConsumer, throwableConsumer);

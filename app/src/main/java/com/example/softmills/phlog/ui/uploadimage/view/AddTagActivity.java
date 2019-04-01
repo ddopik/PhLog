@@ -215,6 +215,12 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     @Override
     public void initPresenter() {
         addTagActivityPresenter = new AddTagActivityPresenterImpl(getBaseContext(), this);
+
+//        try {
+//            ImageUtils.getDropboxIMGSize(getBaseContext(),uploadImageData.getBitMapUri());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -254,13 +260,10 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
             }
 
 
+
+
             uploadImageData.setTags(tagList);
             Intent intent = new Intent(this, UploaderService.class);
-            try {
-              ImageUtils.getDropboxIMGSize(Uri.parse(uploadImageData.getBitMapUri()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             if (!bound) {
 
                 pendingSendingMessage = true;
@@ -376,8 +379,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         this.tagMenuList.clear();
         this.tagMenuList.addAll(tagList);
         autoCompleteTagMenuAdapter.notifyDataSetChanged();
-//        autoCompleteTagMenuAdapter.vi
-    }
+     }
 
     @Override
     public void viewMessage(String msg) {
@@ -391,7 +393,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
             Message message = new Message();
             message.what = UploaderService.REMOVE_COMMUNICATOR;
             sendMessageToService(message);
-            unbindService(connection); //todo this line crashes app when backBtn pressed
+            unbindService(connection);
         }
         disposable.clear();
         super.onDestroy();

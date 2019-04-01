@@ -18,7 +18,7 @@ public class UploadImageData implements Parcelable {
 
     private String imageId;
     private String sourceImagePath;
-    private String BitMapUri;
+    private Uri BitMapUri;
     private Constants.UploadImageTypes uploadImageType;
     private String imageCaption;
     private String imageLocation;
@@ -85,11 +85,11 @@ public class UploadImageData implements Parcelable {
 
     }
 
-    public String getBitMapUri() {
+    public Uri getBitMapUri() {
         return BitMapUri;
     }
 
-    public void setBitMapUri(String bitMapUri) {
+    public void setBitMapUri(Uri bitMapUri) {
         BitMapUri = bitMapUri;
     }
 
@@ -110,7 +110,7 @@ public class UploadImageData implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.imageId);
         dest.writeString(this.sourceImagePath);
-        dest.writeString(this.BitMapUri);
+        dest.writeParcelable(this.BitMapUri, flags);
         dest.writeInt(this.uploadImageType == null ? -1 : this.uploadImageType.ordinal());
         dest.writeString(this.imageCaption);
         dest.writeString(this.imageLocation);
@@ -125,7 +125,7 @@ public class UploadImageData implements Parcelable {
     protected UploadImageData(Parcel in) {
         this.imageId = in.readString();
         this.sourceImagePath = in.readString();
-        this.BitMapUri = in.readString();
+        this.BitMapUri = in.readParcelable(Uri.class.getClassLoader());
         int tmpUploadImageType = in.readInt();
         this.uploadImageType = tmpUploadImageType == -1 ? null : Constants.UploadImageTypes.values()[tmpUploadImageType];
         this.imageCaption = in.readString();

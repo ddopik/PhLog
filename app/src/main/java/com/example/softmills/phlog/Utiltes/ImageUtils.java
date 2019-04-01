@@ -32,10 +32,15 @@ import com.example.softmills.phlog.ui.uploadimage.view.AddTagActivity;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by ddopik..@_@
@@ -316,33 +321,65 @@ public class ImageUtils {
             return null;
         }
     }
-    public String getRealPathFromURI(Uri contentURI, Activity context) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        @SuppressWarnings("deprecation")
-        Cursor cursor = context.managedQuery(contentURI, projection, null, null, null);
-        if (cursor == null)
-            return null;
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        if (cursor.moveToFirst()) {
-            String s = cursor.getString(column_index);
-            // cursor.close();
-            return s;
-        }
-        // cursor.close();
-        return null;
-    }
 
-    public static void getDropboxIMGSize(Uri uri){
+    public static void getDropboxIMGSize(Context context,Uri uri){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(new File(uri.getPath()).getAbsolutePath(), options);
+        BitmapFactory.decodeFile(getBitMapFilePath(context,uri), options);
+
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
 
         Log.e(ImageUtils.class.getSimpleName(), "Width ---->" + imageWidth);
         Log.e(ImageUtils.class.getSimpleName(), "Height ---->" + imageHeight);
 
+    }
+
+    public static String getBitMapFilePath(Context context,Uri uri){
+        String imagePath = "";
+
+        if (uri.toString().contains("content:")) {
+            imagePath = ImageUtils.getRealPathFromURI(uri,context);
+        } else if (uri.toString().contains("file:")) {
+            imagePath = uri.getPath();
+        } else {
+            imagePath = null;
+        }
+
+        return imagePath;
+
+    }
+    public static  String getRealPathFromURI(Uri contentUri,Context context) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null,
+                    null);
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+    public static File createImageFile(Context context) {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File mFileTemp = null;
+        String root=context.getDir("PLOG",Context.MODE_PRIVATE).getAbsolutePath();
+        File myDir = new File(root + "/Img");
+        if(!myDir.exists()){
+            myDir.mkdirs();
+        }
+        try {
+            mFileTemp=File.createTempFile(imageFileName,".jpg",myDir.getAbsoluteFile());
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return mFileTemp;
     }
 }
 

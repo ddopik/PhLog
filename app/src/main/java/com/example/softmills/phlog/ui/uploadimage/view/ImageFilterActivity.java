@@ -25,6 +25,8 @@ import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
+import java.io.File;
+
 import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGallery;
 
 /**
@@ -106,16 +108,16 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
         applyFilterBtn.setOnClickListener(v -> {
             if (filteredImagePath != null) {
+
+
                 Intent intent = new Intent(this, PickedPhotoInfoActivity.class);
                 Bundle extras = new Bundle();
-                uploadImageData.setBitMapUri(ImageUtils.getBitMapRealPath(this, finalImage));
+                uploadImageData.setBitMapUri(ImageUtils.getImageUri(this, finalImage));
                 extras.putParcelable(PickedPhotoInfoActivity.IMAGE_TYPE, uploadImageData); //passing image type
                 intent.putExtras(extras);
                 startActivity(intent);
 
 
-                Log.e(ImageFilterActivity.class.getSimpleName(), "Width ---->" + finalImage.getWidth());
-                Log.e(ImageFilterActivity.class.getSimpleName(), "Height ---->" + finalImage.getHeight());
             }
 
 
@@ -242,8 +244,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         // preview filtered image
         imagePreview.setImageBitmap(filter.processFilter(filteredImage));
         finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
-
         filterApplied = true;
+
     }
 
     public static Intent getLaunchIntent(Context context, UploadImageData uploadImageData) {
@@ -251,7 +253,6 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         Bundle extras = new Bundle();
         extras.putParcelable(ImageFilterActivity.IMAGE_DATA, uploadImageData);
         intent.putExtras(extras);
-
         return intent;
     }
 
