@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.ImageUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.ui.uploadimage.view.fillters.FiltersListFragment;
@@ -23,8 +25,7 @@ import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
-import java.util.Date;
-import java.util.concurrent.Executors;
+import java.io.File;
 
 import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGallery;
 
@@ -34,9 +35,8 @@ import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGalle
 public class ImageFilterActivity extends BaseActivity implements FiltersListFragment.FiltersListFragmentListener, EditPickedImageFragment.EditImageFragmentListener {
 
     private static final String TAG = ImageFilterActivity.class.getSimpleName();
-    public static String IMAGE_DATA ="image_type";
-    public static String IMAGE_URI="image_uri";
-
+    public static String IMAGE_DATA = "image_type";
+    public static String IMAGE_URI = "image_uri";
 
 
     private ImageView imagePreview;
@@ -54,8 +54,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     private float saturationFinal = 1.0f;
     private float contrastFinal = 1.0f;
 
-    private  String filteredImagePath;
-    private UploadImageData imageType;
+    private String filteredImagePath;
+    private UploadImageData uploadImageData;
 
     // load native image filters library
     static {
@@ -87,9 +87,9 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         Bundle bundle = this.getIntent().getExtras();
 
         assert bundle != null;
-        if (bundle.getSerializable(IMAGE_DATA) != null) {
-            imageType =(UploadImageData) bundle.getSerializable(IMAGE_DATA);
-            filteredImagePath=imageType.getImageUrl() ;
+        if (bundle.getParcelable(IMAGE_DATA) != null) {
+            uploadImageData = (UploadImageData) bundle.getParcelable(IMAGE_DATA);
+            filteredImagePath = uploadImageData.getSourceImagePath();
             loadImage(filteredImagePath);
         }
     }
@@ -107,26 +107,17 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         );
 
         applyFilterBtn.setOnClickListener(v -> {
-            if (filteredImagePath !=null){
-                if (filterApplied) {
-                    Executors.newSingleThreadExecutor().execute(() -> {
-                        filteredImagePath = BitmapUtils.insertImage(getContentResolver(), finalImage, new Date().toString(), getString(R.string.filtered_photo_desc));
-                        imageType.setImageUrl(filteredImagePath);
-                        runOnUiThread(() -> {
-                            Bundle extras = new Bundle();
-                            extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type
-                            Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
-                            intent.putExtras(extras);
-                            startActivity(intent);
-                        });
-                    });
-                } else {
-                    Bundle extras = new Bundle();
-                    extras.putSerializable(PickedPhotoInfoActivity.IMAGE_TYPE,imageType); //passing image type
-                    Intent intent=new Intent(this,PickedPhotoInfoActivity.class);
-                    intent.putExtras(extras);
-                    startActivity(intent);
-                }
+            if (filteredImagePath != null) {
+
+
+                Intent intent = new Intent(this, PickedPhotoInfoActivity.class);
+                Bundle extras = new Bundle();
+                uploadImageData.setBitMapUri(ImageUtils.getImageUri(this, finalImage));
+                extras.putParcelable(PickedPhotoInfoActivity.IMAGE_TYPE, uploadImageData); //passing image type
+                intent.putExtras(extras);
+                startActivity(intent);
+
+
             }
 
 
@@ -186,7 +177,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
                         , LinearLayout.LayoutParams.MATCH_PARENT)
                 .into(imagePreview);
 
-        Bitmap bitmap = getBitmapFromGallery(getBaseContext(), img, 800, 800);
+        Bitmap bitmap = getBitmapFromGallery(img);
         originalImage.recycle();
         finalImage.recycle();
         originalImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -249,21 +240,19 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         // reset image controls
         resetControls();
         // applying the selected filter
-        filteredImage = filter.processFilter(originalImage);
+        filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
         // preview filtered image
-        imagePreview.setImageBitmap(filteredImage);
-
+        imagePreview.setImageBitmap(filter.processFilter(filteredImage));
         finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
-
         filterApplied = true;
+
     }
 
-    public static Intent getLaunchIntent(Context context,UploadImageData uploadImageData ){
-        Intent intent=new Intent(context,ImageFilterActivity.class);
+    public static Intent getLaunchIntent(Context context, UploadImageData uploadImageData) {
+        Intent intent = new Intent(context, ImageFilterActivity.class);
         Bundle extras = new Bundle();
-        extras.putSerializable(ImageFilterActivity.IMAGE_DATA, uploadImageData);
+        extras.putParcelable(ImageFilterActivity.IMAGE_DATA, uploadImageData);
         intent.putExtras(extras);
-
         return intent;
     }
 

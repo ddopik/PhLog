@@ -93,7 +93,7 @@
     <string name="need_location_permation">Need location Permation</string>
     <string name="tag">Tags</string>
     <string name="powered_by">Powered By</string>
-    <string name="add_new_tag">Add new Tag</string>
+    <string name="add_new_tag"><font size="12">Add new Tag</font></string>
     <string name="selected_tags">Selected Tags</string>
     <string name="upload_photo">Upload photo</string>
     <string name="brand">Brand</string>
@@ -181,7 +181,7 @@
     <string name="tag_is_required">Add at least one tag to your photo</string>
     <string name="upload_failed">Upload failed</string>
     <string name="done">Done</string>
-    <string name="your_photo_uploaded">Your photo is uploaded</string>
+    <string name="your_photo_uploaded">Photo uploaded successfully</string>
     <string name="view_in_profile">View in profile</string>
     <string name="earning_details">Earning details</string>
     <string name="selcet_photos_from_phlog">Select from saved photos in Phlog</string>
@@ -211,6 +211,7 @@
     <string name="no_campaigns_prompt">No campaigns available right now !</string>
     <string name="exclusive">Exclusive :</string>
     <string name="follow_this">follow this</string>
+    <string name="wrong_email_format">Wrong email format</string>
     <string name="filtered_photo_desc">Phlog filtered photo</string>
     <string name="total_earning">Total Earnings: %1$d $</string>
 </resources>

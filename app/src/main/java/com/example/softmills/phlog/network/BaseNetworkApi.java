@@ -551,7 +551,8 @@ public class BaseNetworkApi {
                 .getObjectObservable(UploadImgResponse.class);
     }
 
-    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, UploadImageData uploadImageData) {
+
+    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, String uploadImageDataID) {
         return Rx2AndroidNetworking.upload(UPLOAD_CAMPAIGN_PHOTO)
                 .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
@@ -559,7 +560,7 @@ public class BaseNetworkApi {
                 .addMultipartParameter("caption", caption)
                 .addMultipartParameter("location", location)
                 .addMultipartParameter(tagList)
-                .addMultipartParameter(IMAGE_TYPE_CAMPAIGN, uploadImageData.getImageId())
+                .addMultipartParameter(IMAGE_TYPE_CAMPAIGN, uploadImageDataID)
                 .addMultipartFile("image", imgPath)
                 .setPriority(Priority.HIGH)
                 .setOkHttpClient(new OkHttpClient.Builder()

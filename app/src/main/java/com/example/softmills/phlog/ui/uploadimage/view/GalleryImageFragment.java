@@ -114,7 +114,7 @@ public class GalleryImageFragment extends BaseFragment {
 
         galleryImageAdapter.onGalleryImageClicked = imagePath -> {
 
-            _imageData.setImageUrl(imagePath);
+            _imageData.setSourceImagePath(imagePath);
             startActivity(ImageFilterActivity.getLaunchIntent(getContext(), _imageData));
         };
         openCameraBtn.setOnClickListener((view) -> {
@@ -180,7 +180,7 @@ public class GalleryImageFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
             String imagePath = ImagePicker.getFirstImageOrNull(data).getPath();
-            _imageData.setImageUrl(imagePath);
+            _imageData.setSourceImagePath(imagePath);
             startActivity(ImageFilterActivity.getLaunchIntent(getContext(), _imageData));
 
         }

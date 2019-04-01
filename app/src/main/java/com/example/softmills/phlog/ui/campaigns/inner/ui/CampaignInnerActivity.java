@@ -11,8 +11,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -78,7 +78,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
         campaignProfileCollapsingToolbarLayout = findViewById(R.id.campaign_profile_collapsing_layout);
         campaignProfileToolBar = findViewById(R.id.campaign_profile_toolbar);
         campaignProfileToolbarTitle = findViewById(R.id.campaign_profile_toolbar_title);
-       ;
+        ;
         backBtn = findViewById(R.id.back_btn);
         campaignImg = findViewById(R.id.campaign_header_img);
         campaignTitle = findViewById(R.id.campaign_title);
@@ -124,7 +124,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                                 uploadImageData.setUploadImageType(Constants.UploadImageTypes.CAMPAIGN_IMG);
                                 uploadImageData.setImageId(campaignId);
                                 Bundle extras = new Bundle();
-                                extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
+                                extras.putParcelable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
                                 Intent i1 = new Intent(this, UploadImageActivity.class);
                                 i1.putExtras(extras);
                                 startActivity(i1);
@@ -154,6 +154,12 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
             }
         });
         backBtn.setOnClickListener(v -> onBackPressed());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        campaignInnerPresenter.getCampaignDetails(getIntent().getStringExtra(CAMPAIGN_ID));
     }
 
     @Override
@@ -223,7 +229,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
 //            imageType.put(IMAGE_TYPE_CAMPAIGN,campaignId);
 //
             Bundle extras = new Bundle();
-            extras.putSerializable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
+            extras.putParcelable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
             Intent intent = new Intent(this, UploadImageActivity.class);
             intent.putExtras(extras);
             startActivity(intent);

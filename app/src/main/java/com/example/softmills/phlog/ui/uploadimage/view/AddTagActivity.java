@@ -1,14 +1,19 @@
 package com.example.softmills.phlog.ui.uploadimage.view;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -22,13 +27,13 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
+import com.example.softmills.phlog.Utiltes.ImageUtils;
 import com.example.softmills.phlog.Utiltes.uploader.UploaderService;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Tag;
 import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.ui.MainActivity;
-import com.example.softmills.phlog.ui.uploadimage.model.UploadPhotoModel;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenter;
 import com.example.softmills.phlog.ui.uploadimage.presenter.AddTagActivityPresenterImpl;
 import com.example.softmills.phlog.ui.uploadimage.view.adapter.AutoCompleteTagMenuAdapter;
@@ -40,6 +45,7 @@ import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 import com.o_bdreldin.loadingbutton.LoadingButton;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -63,14 +69,11 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     private SelectedTagAdapter selectedTagAdapter;
     private AutoCompleteTagMenuAdapter autoCompleteTagMenuAdapter;
     private ImageView imagePreview;
-    private String imagePreviewPath;
     private ImageButton backBtn;
     private LoadingButton uploadBrn;
     private ProgressBar uploadImageProgress;
-    private UploadImageData imageType;
-    private String imageCaption;
-    private String draftState;
-    private String imageLocation;
+    private UploadImageData uploadImageData;
+
     private ProgressBar progress;
 
     private AddTagActivityPresenter addTagActivityPresenter;
@@ -97,7 +100,6 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 //                setResult(RESULT_OK);
                 uploadBrn.setLoading(false);
                 new AlertDialog.Builder(this)
-                        .setTitle(R.string.done)
                         .setMessage(R.string.your_photo_uploaded)
                         .setPositiveButton(R.string.view_in_profile, (dialog, which) -> {
                             Intent intents = new Intent(this, MainActivity.class);
@@ -157,16 +159,9 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
-        if (bundle.getSerializable(IMAGE_TYPE) != null) {
-            imageType = (UploadImageData) bundle.getSerializable(IMAGE_TYPE);
-            imagePreviewPath = imageType.getImageUrl();
-            draftState = String.valueOf(imageType.isDraft());
+        if (bundle.getParcelable(IMAGE_TYPE) != null) {
+            uploadImageData = (UploadImageData) bundle.getParcelable(IMAGE_TYPE);
 
-            if (imageType.getImageCaption() != null)
-                imageCaption = imageType.getImageCaption();
-
-            if (imageType.getImageLocation() != null)
-                imageLocation = imageType.getImageLocation();
 
             initView();
             initPresenter();
@@ -190,11 +185,13 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         autoCompleteTextView.setThreshold(0);
         autoCompleteTagMenuAdapter.notifyDataSetChanged();
         backBtn = findViewById(R.id.back_btn);
+
         GlideApp.with(getBaseContext())
-                .load(imagePreviewPath)
+                .load(uploadImageData.getBitMapUri())
                 .centerCrop()
                 .error(R.drawable.ic_launcher_foreground)
                 .into(imagePreview);
+
 
         CustomRecyclerView tagsRv = findViewById(R.id.tags_rv);
 
@@ -204,7 +201,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         flexboxLayoutManager.setFlexDirection(FlexDirection.ROW);
 
         // Set JustifyContent.
-        flexboxLayoutManager.setJustifyContent(JustifyContent.SPACE_AROUND);
+        flexboxLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
         tagsRv.setLayoutManager(flexboxLayoutManager);
 
         // Set adapter object.
@@ -218,6 +215,12 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
     @Override
     public void initPresenter() {
         addTagActivityPresenter = new AddTagActivityPresenterImpl(getBaseContext(), this);
+
+//        try {
+//            ImageUtils.getDropboxIMGSize(getBaseContext(),uploadImageData.getBitMapUri());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -251,28 +254,29 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
 
         uploadBrn.setOnClickListener(v -> {
-//            addTagActivityPresenter.uploadPhoto(imagePreviewPath, imageCaption, imageLocation, draftState, imageType, tagList);
-            if (tagList.isEmpty()) {
+             if (tagList.isEmpty()) {
                 showToast(getString(R.string.tag_is_required));
                 return;
             }
-            UploadPhotoModel model = addTagActivityPresenter.getUploadModel(imagePreviewPath, imageCaption, imageLocation, draftState, imageType, tagList);
+
+
+
+
+            uploadImageData.setTags(tagList);
             Intent intent = new Intent(this, UploaderService.class);
             if (!bound) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                    startForegroundService(intent);
-//                } else {
-//                    startService(intent);
-//                }
+
                 pendingSendingMessage = true;
                 pendingMessage = new Message();
                 pendingMessage.what = UploaderService.UPLOAD_FILE;
-                pendingMessage.obj = model;
+                pendingMessage.obj = uploadImageData;
+
                 bindService(intent, connection, BIND_AUTO_CREATE);
             } else {
+
                 Message message = new Message();
                 message.what = UploaderService.UPLOAD_FILE;
-                message.obj = model;
+                message.obj = uploadImageData;
                 sendMessageToService(message);
             }
         });
@@ -375,8 +379,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         this.tagMenuList.clear();
         this.tagMenuList.addAll(tagList);
         autoCompleteTagMenuAdapter.notifyDataSetChanged();
-//        autoCompleteTagMenuAdapter.vi
-    }
+     }
 
     @Override
     public void viewMessage(String msg) {
@@ -390,9 +393,12 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
             Message message = new Message();
             message.what = UploaderService.REMOVE_COMMUNICATOR;
             sendMessageToService(message);
-            unbindService(connection); //todo this line crashes app when backBtn pressed
+            unbindService(connection);
         }
         disposable.clear();
         super.onDestroy();
     }
+
+
+
 }

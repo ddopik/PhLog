@@ -83,8 +83,7 @@ public class BitmapUtils {
         return BitmapFactory.decodeFile(picturePath, options);
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -106,6 +105,9 @@ public class BitmapUtils {
         return inSampleSize;
     }
 
+
+
+
     public static Bitmap getBitmapFromGallery(Context context, String picturePath, int width, int height) {
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -120,6 +122,20 @@ public class BitmapUtils {
         return BitmapFactory.decodeFile(picturePath, options);
     }
 
+
+    /**
+     * use image with it's current size
+     * */
+    public static Bitmap getBitmapFromGallery( String picturePath) {
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(picturePath, options);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(picturePath, options);
+    }
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
@@ -164,9 +180,9 @@ public class BitmapUtils {
         }
     }
 
-    public static Bitmap getBitmapFromGallery(String img) {
-        return BitmapFactory.decodeFile(img);
-    }
+//    public static Bitmap getBitmapFromGallery(String img) {
+//        return BitmapFactory.decodeFile(img);
+//    }
 
     /**
      * Storing image to device gallery
@@ -200,7 +216,7 @@ public class BitmapUtils {
             if (source != null) {
                 OutputStream imageOut = cr.openOutputStream(url);
                 try {
-                    source.compress(Bitmap.CompressFormat.JPEG, 50, imageOut);
+                    source.compress(Bitmap.CompressFormat.JPEG, 100, imageOut);
                 } finally {
                     imageOut.close();
                 }

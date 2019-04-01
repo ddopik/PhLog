@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenter;
@@ -24,8 +25,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
@@ -105,21 +104,28 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
 
     private boolean isLoginDataValid() {
-        if (!mail.getText().toString().isEmpty() && !passWord.getText().toString().isEmpty()) {
-            return true;
-        }
 
         if (mail.getText().toString().isEmpty()) {
             mailInput.setError(getResources().getString(R.string.email_missing));
-        } else {
+            return false;
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail.getText().toString()).matches()){
+            mailInput.setError(getResources().getString(R.string.wrong_email_format));
+            return false;
+        }
+        else {
             mailInput.setErrorEnabled(false);
         }
+
+
         if (passWord.getText().toString().isEmpty()) {
             passwordInput.setError(getResources().getString(R.string.invalid_password));
+            return false;
         } else {
             passwordInput.setErrorEnabled(false);
         }
-        return false;
+
+
+        return true;
     }
 
 
@@ -139,7 +145,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void navigateToHome() {
         Intent intent = new Intent(this, MainActivity.class);
-         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
     }

@@ -10,7 +10,6 @@ import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.commonmodel.Tag;
 import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.network.BaseNetworkApi;
-import com.example.softmills.phlog.ui.uploadimage.model.UploadPhotoModel;
 import com.example.softmills.phlog.ui.uploadimage.view.AddTagActivityView;
 
 import java.io.File;
@@ -36,14 +35,14 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void uploadPhoto(String imagePath, String imageCaption, String location, String draftState, UploadImageData imageType, List<Tag> tagList) {
+    public void uploadPhoto(String imagePath, String imageCaption, String location, String draftState, UploadImageData uploadImageData, List<Tag> tagList) {
         addTagActivityView.viewUploadProgress(true);
         HashMap<String, String> tagsSelected = new HashMap<String, String>();
         for (int i = 0; i < tagList.size(); i++) {
             tagsSelected.put("tags[" + i + "]", tagList.get(i).name);
         }
 
-        switch (imageType.getUploadImageType()) {
+        switch (uploadImageData.getUploadImageType()) {
             case NORMAL_IMG: {
                 //user is uploading Normal Photo
                 addTagActivityView.viewUploadProgress(true);
@@ -67,7 +66,7 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
 
                 //            --->user Uploading CampaignPhoto
                 addTagActivityView.viewUploadProgress(true);
-                BaseNetworkApi.uploadCampaignPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected, imageType)
+                BaseNetworkApi.uploadCampaignPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected, uploadImageData.getImageId())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(uploadImgResponse -> {
@@ -99,18 +98,5 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
                 });
     }
 
-    @Override
-    public UploadPhotoModel getUploadModel(String imagePreviewPath, String imageCaption, String imageLocation, String draftState, UploadImageData imageType, List<Tag> tagList) {
-        HashMap<String, String> tagsSelected = new HashMap<String, String>();
-        for (int i = 0; i < tagList.size(); i++) {
-            tagsSelected.put("tags[" + i + "]", tagList.get(i).name);
-        }
-        UploadPhotoModel model = new UploadPhotoModel();
-        model.imageCaption = imageCaption;
-        model.imagePath = imagePreviewPath;
-        model.location = imageLocation;
-        model.uploadImageData = imageType;
-        model.tags = tagsSelected;
-        return model;
-    }
+
 }
