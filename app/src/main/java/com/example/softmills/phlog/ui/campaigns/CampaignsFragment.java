@@ -97,7 +97,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
             }
 
             @Override
-            public void onFollowCampaign(Campaign campaign) {
+            public void onFollowCampaign(Campaign campaign, int i) {
                    Disposable disposable = campaignPresenter.joinCampaign(campaign.id.toString())
                            .subscribeOn(Schedulers.io())
                            .observeOn(AndroidSchedulers.mainThread())

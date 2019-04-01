@@ -3,10 +3,12 @@ package com.example.softmills.phlog.ui.brand.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
@@ -19,13 +21,16 @@ import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by abdalla_maged On Dec,2018
  */
 public class BrandCampaignsActivity extends BaseActivity implements BrandCampaignsView {
 
 
-    public static String BRAND_ID="brand_id";
+    public static String BRAND_ID = "brand_id";
     private String brandId;
     private ProgressBar progressBar;
     private CustomRecyclerView allCampaignsRv;
@@ -33,8 +38,7 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
     private List<Campaign> homeCampaignList = new ArrayList<>();
     private BrandCampaignsPresenter campaignPresenter;
     private PagingController pagingController;
-
-
+    private ConstraintLayout noCampaignsPrompt;
 
 
     @Override
@@ -42,12 +46,12 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_campains);
 
-        if (getIntent().getIntExtra(BRAND_ID,-1) >=0) {
-            brandId=String.valueOf(getIntent().getIntExtra(BRAND_ID,0));
+        if (getIntent().getIntExtra(BRAND_ID, -1) >= 0) {
+            brandId = String.valueOf(getIntent().getIntExtra(BRAND_ID, 0));
             initPresenter();
             initView();
             initListener();
-            campaignPresenter.getBrandCampaigns(brandId,"0");
+            campaignPresenter.getBrandCampaigns(brandId, "0");
         }
     }
 
@@ -58,6 +62,7 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
         allCampaignsRv = findViewById(R.id.all_campaigns_rv);
         allCampaignsAdapter = new AllCampaignsAdapter(this, homeCampaignList);
         allCampaignsRv.setAdapter(allCampaignsAdapter);
+        noCampaignsPrompt = findViewById(R.id.no_added_campaign_prompt);
     }
 
     @Override
@@ -70,7 +75,7 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
         pagingController = new PagingController(allCampaignsRv) {
             @Override
             public void getPagingControllerCallBack(int page) {
-                campaignPresenter.getBrandCampaigns(brandId,String.valueOf(page));
+                campaignPresenter.getBrandCampaigns(brandId, String.valueOf(page));
             }
         };
         allCampaignsAdapter.campaignLister = new AllCampaignsAdapter.CampaignLister() {
@@ -83,8 +88,19 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
             }
 
             @Override
-            public void onFollowCampaign(Campaign campaign) {
-                campaignPresenter.joinCampaign(campaign.id.toString());
+            public void onFollowCampaign(Campaign campaign, int i) {
+                campaignPresenter.joinCampaign(campaign.id.toString())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(success -> {
+                            if (success) {
+                                campaign.isJoined = true;
+                                if (allCampaignsAdapter != null)
+                                    allCampaignsAdapter.notifyItemChanged(i);
+                            }
+                        }, throwable -> {
+                            ErrorUtils.Companion.setError(getBaseContext(), BrandCampaignsActivity.class.getSimpleName(), throwable);
+                        });
             }
         };
 
@@ -96,6 +112,9 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
         allCampaignsRv.setVisibility(View.VISIBLE);
         this.homeCampaignList.addAll(homeCampaignList);
         allCampaignsAdapter.notifyDataSetChanged();
+        if (this.homeCampaignList.isEmpty()) {
+            noCampaignsPrompt.setVisibility(View.VISIBLE);
+        }
 
     }
 

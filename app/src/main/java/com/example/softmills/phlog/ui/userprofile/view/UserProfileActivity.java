@@ -115,7 +115,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             userProfilePresenter.getUserProfileData(userID);
             coverImage = findViewById(R.id.user_cover_img);
             placeHolder = findViewById(R.id.place_holder);
-            userProfilePresenter.getUserPhotos(userID, 0);
+            userProfilePresenter.getUserPhotos(userID, 1);
         }
     }
 

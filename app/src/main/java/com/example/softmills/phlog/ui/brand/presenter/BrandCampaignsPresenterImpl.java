@@ -3,11 +3,11 @@ package com.example.softmills.phlog.ui.brand.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.brand.view.BrandCampaignsView;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -45,14 +45,9 @@ public class BrandCampaignsPresenterImpl implements BrandCampaignsPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void joinCampaign(String campaignID) {
-        BaseNetworkApi.followCampaign(campaignID)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(followCampaignResponse -> {
-                    brandCampaignsView.showMessage(context.getResources().getString(R.string.campaign_followed));
-                }, throwable -> {
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
-                });
+    public Observable<Boolean> joinCampaign(String campaignID) {
+        return BaseNetworkApi.followCampaign(campaignID)
+                .map(followCampaignResponse -> followCampaignResponse != null);
+
     }
 }

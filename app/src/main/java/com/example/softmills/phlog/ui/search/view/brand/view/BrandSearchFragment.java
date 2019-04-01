@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.ui.search.view.brand.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,6 +48,8 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  */
 public class BrandSearchFragment extends BaseFragment implements BrandSearchFragmentView {
 
+    private final static int campain_inner_request_code = 873;
+    public final static String BRAND = "brand";
     private String TAG = BrandSearchFragment.class.getSimpleName();
     private View mainView;
     private EditText brandSearch;
@@ -148,7 +151,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
             public void onBrandSelected(Business brandSearch) {
                 Intent intent = new Intent(getActivity(), BrandInnerActivity.class);
                 intent.putExtra(BrandInnerActivity.BRAND_ID, brandSearch.id);
-                startActivity(intent);
+                startActivityForResult(intent, campain_inner_request_code);
             }
 
             @Override
@@ -257,6 +260,24 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
         if (imm.isAcceptingText()) { // verify if the soft keyboard is open
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            Business business = data.getParcelableExtra(BRAND);
+            if (business != null) {
+                for (Business b : brandSearchList) {
+                    if (b.id.equals(business.id)) {
+                        b.isFollow = business.isFollow;
+                        int pos = brandSearchList.indexOf(b);
+                        brandSearchAdapter.notifyItemChanged(pos);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

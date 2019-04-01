@@ -38,6 +38,7 @@ public class EarningListPresenterImpl implements EarningListPresenter {
 
                         if (page.equals("1")){
                             earningListFragmentView.setSalesNumber(earningListResponse.data.transactions.total);
+                            earningListFragmentView.setTotalEarnings(earningListResponse.data.total);
                         }
                     }
                     earningListFragmentView.viewEaringListProgress(false);
