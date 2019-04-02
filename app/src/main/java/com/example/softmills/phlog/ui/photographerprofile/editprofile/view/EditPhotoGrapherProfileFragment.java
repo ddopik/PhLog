@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -13,6 +14,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,8 +33,12 @@ import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.ui.MainActivity;
+import com.example.softmills.phlog.ui.dialog.changepasswroddialog.ChangePasswordDialogFragment;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.presenter.EditPhotoGrapherProfileFragmentImpl;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.presenter.EditPhotoGrapherProfileFragmentPresenter;
+import com.example.softmills.phlog.ui.signup.model.Country;
+
+import java.util.ArrayList;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -51,12 +58,20 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
 //    private Button editProfileSave;
 
     private ImageView profileImage, coverImage;
-    private EditText nameET, usernameET, phoneET, emailET, passwordET;
+    private EditText nameET, phoneET, emailET;
+    private TextInputLayout nameLayout, phoneLayout, emailLayout, countryLayout;
+    private AutoCompleteTextView countryET;
+    private Button changePassword;
+    private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<Country> countryListObj = new ArrayList<>();
+    private ArrayList<String> countryList = new ArrayList<>();
     private ProgressBar loading;
     private Button saveButton;
     private Toolbar toolbar;
     private TextView title;
     private ImageButton backButton;
+
+    private String newPassword, oldPassword;
 
     private Photographer photographer;
 
@@ -79,6 +94,15 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
         initPresenter();
         initViews();
         initListeners();
+        presenter.getAllCountries(countries -> {
+            this.countryList.clear();
+            this.countryListObj.clear();
+            this.countryListObj.addAll(countries);
+            for (int i = 0; i < countries.size(); i++) {
+                countryList.add(countries.get(i).nameEn);
+            }
+            arrayAdapter.notifyDataSetChanged();
+        });
         presenter.getProfileEditData();
     }
 
@@ -98,10 +122,14 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
         profileImage = mainView.findViewById(R.id.profile_image_image_view);
         coverImage = mainView.findViewById(R.id.cover_image_image_view);
         nameET = mainView.findViewById(R.id.name_edit_text);
-        usernameET = mainView.findViewById(R.id.username_edit_text);
+
+        countryET = mainView.findViewById(R.id.country);
+        arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, countryList);
+        countryET.setThreshold(0);
+        countryET.setAdapter(arrayAdapter);
+
         emailET = mainView.findViewById(R.id.email_edit_text);
         phoneET = mainView.findViewById(R.id.phone_edit_text);
-        passwordET = mainView.findViewById(R.id.password_edit_text);
         loading = mainView.findViewById(R.id.loading);
         loading.setVisibility(View.GONE);
         saveButton = mainView.findViewById(R.id.save_button);
@@ -109,6 +137,13 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
         backButton = mainView.findViewById(R.id.back_btn);
         title = mainView.findViewById(R.id.toolbar_title);
         title.setText(R.string.profile);
+
+        nameLayout = mainView.findViewById(R.id.name_layout);
+        phoneLayout = mainView.findViewById(R.id.phone_layout);
+        countryLayout = mainView.findViewById(R.id.country_layout);
+        emailLayout = mainView.findViewById(R.id.email_layout);
+
+        changePassword = mainView.findViewById(R.id.change_password_button);
     }
 
     private boolean detailsChanged;
@@ -116,12 +151,9 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
     private void initListeners() {
         saveButton.setOnClickListener(v -> {
             saveButton.setVisibility(View.INVISIBLE);
-            presenter.updateProfile(getContext(), nameET.getText().toString()
-                    , usernameET.getText().toString()
-                    , emailET.getText().toString()
-//                    , phoneET.getText().toString()
-                    , passwordET.getText().toString()
-                    , profile, cover);
+            if (validate())
+                presenter.updateProfile(getContext(), nameET.getText().toString()
+                        , emailET.getText().toString(), phoneET.getText().toString(), getCountryID(), profile, cover, oldPassword, newPassword);
         });
         backButton.setOnClickListener(v -> {
             ((MainActivity) getActivity()).navigationManger.navigate(Constants.NavigationHelper.PROFILE);
@@ -138,10 +170,16 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
 
             @Override
             public void afterTextChanged(Editable s) {
+                boolean isCountry = false;
+                Country country = photographer.country;
+                if (country != null) {
+                    isCountry = s.toString().equals(country.nameEn);
+                }
                 if (s.toString().equals(photographer.fullName)
-//                        || s.toString().equals(photographer.userName)
+                        || s.toString().equals(photographer.mobile)
                         || s.toString().equals(photographer.email)
-                        || s.toString().equals(photographer.password)
+//                        || photographer.country != null ? s.toString().equals(photographer.country.nameEn) : false
+                        || isCountry
                         || s.toString().isEmpty())
                     return;
                 detailsChanged = true;
@@ -152,7 +190,7 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
 //        usernameET.addTextChangedListener(textWatcher);
         phoneET.addTextChangedListener(textWatcher);
         emailET.addTextChangedListener(textWatcher);
-        passwordET.addTextChangedListener(textWatcher);
+        countryET.addTextChangedListener(textWatcher);
 
 
         profileImage.setOnClickListener(v -> {
@@ -163,6 +201,31 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
             whichImage = WhichImage.COVER;
             openPickerDialog();
         });
+
+        changePassword.setOnClickListener(v -> {
+            ChangePasswordDialogFragment.getInstance((oldPassword, newPassword) -> {
+                this.oldPassword = oldPassword;
+                this.newPassword = newPassword;
+            }).show(getChildFragmentManager(), ChangePasswordDialogFragment.class.getSimpleName());
+        });
+    }
+
+    private boolean validate() {
+        boolean valid = true;
+        if (nameET.getText().toString().isEmpty()) {
+            nameLayout.setError(getString(R.string.name_required));
+            valid = false;
+        }
+        if (phoneET.getText().toString().isEmpty() || !android.util.Patterns.PHONE.matcher(phoneET.getText()).matches()) {
+            phoneLayout.setError(getString(R.string.invalid_phone_number));
+            valid = false;
+        }
+        if (!countryET.getText().toString().isEmpty())
+            if (getCountryID() == -1) {
+                countryLayout.setError(getString(R.string.select_country_not_exist));
+                valid = false;
+            }
+        return valid;
     }
 
     private void openPickerDialog() {
@@ -218,9 +281,10 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
     public void showPhotoGrapherProfileData(Photographer photographer) {
         this.photographer = photographer;
         nameET.setText(photographer.fullName);
-        usernameET.setText(photographer.userName);
         emailET.setText(photographer.email);
-        passwordET.setText(photographer.password);
+        phoneET.setText(photographer.mobile);
+        if (photographer.country != null)
+            countryET.setText(photographer.country.nameEn);
         GlideApp.with(this)
                 .load(photographer.imageProfile)
                 .apply(RequestOptions.circleCropTransform())
@@ -243,6 +307,15 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
             loading.setVisibility(View.VISIBLE);
         else
             loading.setVisibility(View.GONE);
+    }
+
+    private int getCountryID() {
+        for (int i = 0; i < countryListObj.size(); i++) {
+            if (countryListObj.get(i).nameEn.equals(countryET.getText().toString())) {
+                return countryListObj.get(i).id;
+            }
+        }
+        return -1;
     }
 
     String profile;

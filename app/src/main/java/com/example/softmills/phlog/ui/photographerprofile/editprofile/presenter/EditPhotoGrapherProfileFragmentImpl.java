@@ -8,13 +8,17 @@ import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragmentView;
+import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
+import com.example.softmills.phlog.ui.signup.model.Country;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -46,8 +50,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
     }
 
     @Override
-    public void updateProfile(Context context, String name, String username, String email
-            , String password, String profile, String cover) {
+    public void updateProfile(Context context, String name, String email, String phone, Integer countryId, String profile, String cover, String oldPassword, String newPassword) {
         view.viewEditProfileProgress(true);
         HashMap<String, File> files = null;
         if (profile != null) {
@@ -61,9 +64,17 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
         }
         HashMap<String, String> data = new HashMap<>();
         data.put("name", name);
-        data.put("username", username);
         data.put("email", email);
-        data.put("password", password);
+        data.put("mobile", phone);
+        if (oldPassword != null) {
+            data.put("old_password", oldPassword);
+        }
+        if (newPassword != null) {
+            data.put("old_password", newPassword);
+        }
+        if (countryId != null)
+            data.put("country_id", countryId.toString());
+
         Disposable disposable = BaseNetworkApi.updateProfile(files, data, PrefUtils.getUserToken(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,5 +97,16 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
     @Override
     public void terminate() {
         disposables.clear();
+    }
+
+    @Override
+    public void getAllCountries(Consumer<List<Country>> consumer) {
+        BaseNetworkApi.getAllCounters()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(allCountersRepose -> {consumer.accept(allCountersRepose.countries);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
     }
 }

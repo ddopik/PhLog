@@ -8,6 +8,7 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivityView;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -62,18 +63,12 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void likePhoto(BaseImage baseImage) {
+    public Observable<Boolean> likePhoto(BaseImage baseImage) {
         imageCommentActivityView.viewImageProgress(true);
-
-
-        BaseNetworkApi.likeImage(String.valueOf(baseImage.id))
-                .subscribeOn(Schedulers.io())
+        return BaseNetworkApi.likeImage(String.valueOf(baseImage.id))
+                .map(likeImageResponse -> likeImageResponse != null)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(likeImageResponse -> {
-                    imageCommentActivityView.onImageLiked(likeImageResponse.data);
-                    imageCommentActivityView.viewImageProgress(false);
-                }, throwable -> {
-                    imageCommentActivityView.viewImageProgress(false);
+                .doOnError(throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 
@@ -82,15 +77,12 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void unLikePhoto(BaseImage baseImage) {
-        BaseNetworkApi.unlikeImage(String.valueOf(baseImage.id))
-                .subscribeOn(Schedulers.io())
+    public Observable<Boolean> unLikePhoto(BaseImage baseImage) {
+        imageCommentActivityView.viewImageProgress(true);
+        return BaseNetworkApi.unlikeImage(String.valueOf(baseImage.id))
+                .map(likeImageResponse -> likeImageResponse != null)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(likeImageResponse -> {
-                    imageCommentActivityView.onImageLiked(baseImage);
-                    imageCommentActivityView.onImageLiked(likeImageResponse.data);
-                }, throwable -> {
-                    imageCommentActivityView.viewImageProgress(false);
+                .doOnError(throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }

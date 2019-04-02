@@ -82,7 +82,7 @@
     <style name="TextLabel" parent="Widget.Design.TextInputLayout">
         <!-- Hint color and label color in FALSE state -->
         <item name="android:textColorHint">@color/colorWhite</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/sign_up_text_size_small</item>
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
         <item name="colorAccent">@color/text_input_color</item>
         <item name="colorControlNormal">@color/white</item>

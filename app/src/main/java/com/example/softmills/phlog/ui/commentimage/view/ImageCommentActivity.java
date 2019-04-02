@@ -41,6 +41,8 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -135,11 +137,27 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
             @Override
             public void onImageLike(BaseImage baseImage) {
+                Observable<Boolean> observable = null;
                 if (baseImage.isLiked) {
-                    imageCommentActivityPresenter.unLikePhoto(baseImage);
+                    observable = imageCommentActivityPresenter.unLikePhoto(baseImage);
                 } else {
-                    imageCommentActivityPresenter.likePhoto(baseImage);
+                    observable = imageCommentActivityPresenter.likePhoto(baseImage);
                 }
+                Disposable d = observable.subscribeOn(Schedulers.io())
+                        .doFinally(() -> {
+                            commentsAdapter.notifyItemChanged(0);
+                            viewImageProgress(false);
+                            Intent data = new Intent();
+                            data.putExtra(IMAGE_DATA, baseImage);
+                            setResult(RESULT_OK, data);
+                        })
+                        .subscribe(success -> {
+                            baseImage.isLiked = !baseImage.isLiked;
+                            if (baseImage.isLiked) baseImage.likesCount++;
+                            else baseImage.likesCount--;
+                        }, throwable -> {
+
+                        });
             }
 
             @Override
@@ -250,9 +268,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     @Override
     public void onImageLiked(BaseImage baseImage) {
         previewImage = baseImage;
-        commentsAdapter.notifyDataSetChanged();
-
-
+        commentsAdapter.notifyItemChanged(0);
     }
 
     @SuppressLint("CheckResult")
@@ -281,7 +297,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         if (state) {
             previewImage.isCart = true;
         }
-        commentsAdapter.notifyDataSetChanged();
+        commentsAdapter.notifyItemChanged(0);
     }
 
     @Override
@@ -296,6 +312,10 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
     @Override
     public void onImageDeleted(BaseImage baseImage, boolean state) {
+        baseImage.isImageDeleted = true;
+        Intent data = new Intent();
+        data.putExtra(IMAGE_DATA, baseImage);
+        setResult(RESULT_OK, data);
         finish();
     }
 
