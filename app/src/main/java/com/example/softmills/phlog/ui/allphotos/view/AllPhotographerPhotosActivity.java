@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
@@ -36,6 +35,8 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
     private PhotographerPhotosGridAdapter photographerPhotoAdapter;
     private List<BaseImage> imageList = new ArrayList<>();
     private PagingController pagingController;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
     private AllPhotographerPhotosPresenter allPhotographerPhotosPresenter;
 
 
@@ -70,13 +71,33 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
     }
 
     private void initListener() {
-        pagingController = new PagingController(savedPhotosRv) {
-            @Override
-            public void getPagingControllerCallBack(int page) {
-                allPhotographerPhotosPresenter.getPhotographerPhotos(page);
-            }
-        };
 
+        pagingController = new PagingController(savedPhotosRv) {
+
+
+            @Override
+            protected void loadMoreItems() {
+                allPhotographerPhotosPresenter.getPhotographerPhotos(Integer.parseInt(nextPageUrl));
+            }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
+        };
         photographerPhotoAdapter.photoAction = photoGrapherSavedPhoto -> {
             if (getIntent().getStringExtra(CAMPAIGN_ID) != null)
                 allPhotographerPhotosPresenter.uploadCampaignExistingPhoto(getIntent().getStringExtra(CAMPAIGN_ID), String.valueOf(photoGrapherSavedPhoto.id));
@@ -96,10 +117,18 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
 
     @Override
     public void showImageListProgress(boolean state) {
+        isLoading=state;
         if (state) {
             savedPhotosProgress.setVisibility(View.VISIBLE);
         } else {
             savedPhotosProgress.setVisibility(View.GONE);
         }
     }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
+    }
+
+
 }

@@ -1,14 +1,11 @@
 package com.example.softmills.phlog.ui.commentimage.view;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
@@ -23,10 +20,8 @@ import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.commonmodel.Comment;
 import com.example.softmills.phlog.base.commonmodel.Mentions;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
-import com.example.softmills.phlog.base.widgets.CustomAutoCompleteTextView;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
-import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.view.adapter.CommentsAdapter;
 import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsData;
 import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentData;
@@ -43,7 +38,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 import static com.example.softmills.phlog.Utiltes.Constants.CommentListType.MAIN_COMMENT;
 
 /**

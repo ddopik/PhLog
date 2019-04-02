@@ -12,7 +12,7 @@ public interface AlbumPreviewActivityView {
 
 
     void viewAlumPreview(AlbumPreviewResponseData albumPreviewResponseData);
-
+    void setNextPageUrl(String page);
     void viewAlbumPreviewProgress(boolean state);
     void viwAlbumPreviewImages(List<BaseImage> baseImageList);
 }

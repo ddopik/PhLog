@@ -10,5 +10,9 @@ import java.util.List;
 public interface PhotoGrapherPhotosFragmentView {
     void showSavedPhotos(List<BaseImage> photosList);
 
+    void setNextPageUrl(String page);
+
+    void viewPhotosLoading(boolean state);
+
     void showMessage(String msg);
 }

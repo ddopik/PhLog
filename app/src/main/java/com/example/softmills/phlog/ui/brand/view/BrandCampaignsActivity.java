@@ -10,7 +10,6 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.brand.presenter.BrandCampaignsPresenter;
 import com.example.softmills.phlog.ui.brand.presenter.BrandCampaignsPresenterImpl;
 import com.example.softmills.phlog.ui.campaigns.AllCampaignsAdapter;

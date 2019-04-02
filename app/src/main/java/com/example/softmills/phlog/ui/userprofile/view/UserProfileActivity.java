@@ -26,7 +26,6 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
-import com.example.softmills.phlog.base.widgets.PagingController2;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
@@ -34,8 +33,6 @@ import com.o_bdreldin.loadingbutton.LoadingButton;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.schedulers.Schedulers;
 
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.USER_PROFILE_PHOTOS_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
@@ -66,7 +63,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private ProgressBar userProfilePhotosProgressBar;
     private TextView placeHolder;
     private LoadingButton followUserBtn;
-    private PagingController2 pagingController;
+    private PagingController pagingController;
     private ImageButton backBtn;
     private String nextPageUrl="1";
     private boolean isLoading;
@@ -128,7 +125,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
 
     private void initListener() {
-        pagingController = new PagingController2(userProfilePhotosRv) {
+        pagingController = new PagingController(userProfilePhotosRv) {
 
 
             @Override

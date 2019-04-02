@@ -11,15 +11,12 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
-import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.notification.model.NotificationList;
 import com.example.softmills.phlog.ui.notification.presenter.NotificationPresenter;
 import com.example.softmills.phlog.ui.notification.presenter.NotificationPresenterImp;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.softmills.phlog.ui.notification.view.NotificationAdapter.itemType_NOTIFICATION_HEAD;
 
 /**
  * Created by abdalla_maged On Nov,2018

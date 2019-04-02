@@ -39,7 +39,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -63,6 +62,8 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     private Mentions mentions = new Mentions();
     private CommentsAdapter commentsAdapter;
     private PagingController pagingController;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
     private ReplayCommentPresenter replayCommentPresenter;
 
 
@@ -128,14 +129,30 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
     private void initListener() {
 
+
+
         pagingController = new PagingController(repliesRv) {
             @Override
-            public void getPagingControllerCallBack(int page) {
-                replayCommentPresenter.getReplies(headerComment.id, previewImage.id, page);
+            protected void loadMoreItems() {
+                replayCommentPresenter.getReplies(headerComment.id, previewImage.id, Integer.parseInt(nextPageUrl));
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
         };
-
-
         commentsAdapter.commentAdapterAction = new CommentsAdapter.CommentAdapterAction() {
 
             @Override
@@ -164,14 +181,10 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
             }
 
 
-
-
-
             @Override
             public void onImageCommentClicked() {
 
             }
-
 
 
             @Override
@@ -276,7 +289,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
     @Override
     public void viewRepliesProgress(boolean state) {
-
+        isLoading=state;
         if (state) {
             repliesProgressBar.setVisibility(View.VISIBLE);
         } else {
@@ -324,5 +337,10 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
             return mentions;
         });
 
+    }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
     }
 }

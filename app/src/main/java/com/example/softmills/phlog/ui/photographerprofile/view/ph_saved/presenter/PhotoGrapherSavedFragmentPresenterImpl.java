@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.view.PhotoGrapherPhotosFragmentView;
 
@@ -27,12 +28,21 @@ public class PhotoGrapherSavedFragmentPresenterImpl implements PhotoGrapherSaved
     @SuppressLint("CheckResult")
     @Override
     public void getPhotographerSavedPhotos(int Page) {
+        photoGrapherPhotosFragmentView.viewPhotosLoading(true);
         BaseNetworkApi.getPhotoGrapherSavedPhotos(Page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(photoGrapherPhotosResponse -> {
+                    photoGrapherPhotosFragmentView.viewPhotosLoading(false);
                     photoGrapherPhotosFragmentView.showSavedPhotos(photoGrapherPhotosResponse.data.data);
+                    if (photoGrapherPhotosResponse.data.nextPageUrl != null) {
+                        photoGrapherPhotosFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, photoGrapherPhotosResponse.data.nextPageUrl));
+
+                    } else {
+                        photoGrapherPhotosFragmentView.setNextPageUrl(null);
+                    }
                 }, throwable -> {
+                    photoGrapherPhotosFragmentView.viewPhotosLoading(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 

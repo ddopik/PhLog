@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
@@ -39,8 +40,10 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
     private PhotoGrapherSavedFragmentPresenter photoGrapherSavedFragmentPresenter;
 
     private CustomRecyclerView savedPhotosRv;
+    private ProgressBar photographerPhotosProgressBar;
     private PagingController pagingController;
-
+    private String nextPageUrl = "1";
+    private boolean isLoading;
 
     public static PhotoGrapherSavedPhotosFragment getInstance() {
         return new PhotoGrapherSavedPhotosFragment();
@@ -84,6 +87,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
 
     @Override
     protected void initViews() {
+        photographerPhotosProgressBar = mainView.findViewById(R.id.photographer_photos_progress_bar);
         photoGrapherSavedPhotoList = new ArrayList<BaseImage>();
         photographerSavedPhotoAdapter = new PhotographerSavedPhotoAdapter(getContext(), photoGrapherSavedPhotoList);
         savedPhotosRv = mainView.findViewById(R.id.saved_photos_rv);
@@ -92,19 +96,41 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
     }
 
     private void initListener() {
+
         pagingController = new PagingController(savedPhotosRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
-                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(page);
+            protected void loadMoreItems() {
+                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(Integer.parseInt(nextPageUrl));
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
 
-        photographerSavedPhotoAdapter.photoAction= photoGrapherSavedPhoto -> {
+
+        photographerSavedPhotoAdapter.photoAction = photoGrapherSavedPhoto -> {
             Intent intent = new Intent(getContext(), AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
             intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_SAVED_LIST);
             intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.saved));
-            intent.putExtra(CURRENT_PAGE, pagingController.getCurrentPage());
+            intent.putExtra(CURRENT_PAGE, Integer.parseInt(nextPageUrl));
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherSavedPhotoList);
             startActivity(intent);
         };
@@ -122,5 +148,19 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
         showToast(msg);
     }
 
+    @Override
+    public void viewPhotosLoading(boolean state) {
+        isLoading = state;
+        if (state) {
+            photographerPhotosProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            photographerPhotosProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl = page;
+    }
 
 }
