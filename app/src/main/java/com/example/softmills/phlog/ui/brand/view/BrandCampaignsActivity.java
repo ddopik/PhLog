@@ -10,6 +10,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.brand.presenter.BrandCampaignsPresenter;
 import com.example.softmills.phlog.ui.brand.presenter.BrandCampaignsPresenterImpl;
 import com.example.softmills.phlog.ui.campaigns.AllCampaignsAdapter;
@@ -32,6 +33,8 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
     private List<Campaign> homeCampaignList = new ArrayList<>();
     private BrandCampaignsPresenter campaignPresenter;
     private PagingController pagingController;
+    private String nextPageUrl="1";
+    private boolean isLoading;
 
 
 
@@ -66,12 +69,36 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
 
     private void initListener() {
 
+
+
         pagingController = new PagingController(allCampaignsRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
-                campaignPresenter.getBrandCampaigns(brandId,String.valueOf(page));
+            protected void loadMoreItems() {
+                 campaignPresenter.getBrandCampaigns(brandId,nextPageUrl);
+
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl ==null){
+                    return  true;
+                }else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
+
         allCampaignsAdapter.campaignLister = new AllCampaignsAdapter.CampaignLister() {
             @Override
             public void onCampaignClicked(String campaignID) {
@@ -100,12 +127,18 @@ public class BrandCampaignsActivity extends BaseActivity implements BrandCampaig
 
     @Override
     public void showAllCampaignProgress(boolean state) {
+        isLoading=state;
+
         if (state) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.GONE);
         }
 
+    }
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
     }
 
     @Override

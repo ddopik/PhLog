@@ -15,6 +15,7 @@ import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.presenter.PhotoGrapherBrandPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.presenter.PhotoGrapherBrandPresenterImpl;
@@ -44,6 +45,8 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
     private PhotoGrapherFollowingBrandAdapter photoGrapherFollowingBrandAdapter;
     private List<Business> photographerFollowingBrands = new ArrayList<>();
     private PagingController pagingController;
+    private String nextPageUrl="1";
+    private boolean isLoading;
     private CompositeDisposable disposable = new CompositeDisposable();
     private PhotoGrapherBrandPresenter photoGrapherBrandPresenter;
 
@@ -108,15 +111,35 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
     private void initListener() {
 
 
+
+
         pagingController = new PagingController(followingBrandRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
-                photoGrapherBrandPresenter.getFollowingBrand(searchPhotographerBrand.getText().toString(), String.valueOf(page));
+            protected void loadMoreItems() {
+                 photoGrapherBrandPresenter.getFollowingBrand(searchPhotographerBrand.getText().toString(), nextPageUrl);
+
+            }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl ==null){
+                    return  true;
+                }else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
             }
 
 
         };
-
 
         disposable.add(
                 RxTextView.textChangeEvents(searchPhotographerBrand)
@@ -168,6 +191,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
 
     @Override
     public void viewPhotoGrapherFollowingBrandProgress(boolean state) {
+        isLoading=state;
 
         if (state){
             photographerBrandSearchProgressBar.setVisibility(View.VISIBLE);
@@ -186,4 +210,9 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
     public void showMessage(String msg) {
         super.showToast(msg);
     }
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
+    }
+
 }

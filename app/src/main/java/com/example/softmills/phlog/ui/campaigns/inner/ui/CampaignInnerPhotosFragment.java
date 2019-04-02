@@ -14,6 +14,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPhotosFragmentPresenterImpl;
@@ -41,6 +42,8 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
     private List<BaseImage> photoGrapherPhotoList = new ArrayList<>();
     private PhotoGrapherPhotosAdapter photoGrapherPhotosAdapter;
     private PagingController pagingController;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
     private CampaignInnerPhotosFragmentPresenter campaignInnerPhotosFragmentPresenter;
 
     public static CampaignInnerPhotosFragment getInstance(String campaignID, boolean shouldLoadImages) {
@@ -85,13 +88,32 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
     }
 
     private void initLister() {
+
+
         pagingController = new PagingController(campaignInnerRv) {
             @Override
-            public void getPagingControllerCallBack(int page) {
-                campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, page);
+            protected void loadMoreItems() {
+                campaignInnerPhotosFragmentPresenter.getCampaignInnerPhotos(campaignID, Integer.parseInt(nextPageUrl));
             }
-        };
 
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
+        };
         photoGrapherPhotosAdapter.photoAction = photoGrapherSavedPhoto -> {
 
             Intent intent = new Intent(getActivity(), AllAlbumImgActivity.class);
@@ -114,6 +136,8 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
 
     @Override
     public void viewCampaignInnerPhotosProgress(boolean state) {
+        isLoading=state;
+
         if (state) {
             campaignInnerProgressBar.setVisibility(View.VISIBLE);
         } else {
@@ -122,5 +146,8 @@ public class CampaignInnerPhotosFragment extends BaseFragment implements Campaig
 
     }
 
-
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
+    }
 }

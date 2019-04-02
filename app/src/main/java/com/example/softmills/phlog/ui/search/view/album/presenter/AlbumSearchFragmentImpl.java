@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.search.view.album.model.Filter;
 import com.example.softmills.phlog.ui.search.view.album.view.AlbumSearchFragmentView;
@@ -64,10 +65,17 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumSearchResponse -> {
                     albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data);
-                    albumSearchFragmentView.showFilterSearchProgress(false);
+                    albumSearchFragmentView.showAlbumSearchProgress(false);
+                    if (albumSearchResponse.data.nextPageUrl != null) {
+                        albumSearchFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, albumSearchResponse.data.nextPageUrl));
+
+                    } else {
+                        albumSearchFragmentView.setNextPageUrl(null);
+                    }
+
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
-                    albumSearchFragmentView.showFilterSearchProgress(false);
+                    albumSearchFragmentView.showAlbumSearchProgress(false);
                 });
     }
 

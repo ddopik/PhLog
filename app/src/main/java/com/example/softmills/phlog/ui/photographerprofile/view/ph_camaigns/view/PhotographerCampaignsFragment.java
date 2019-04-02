@@ -16,6 +16,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.presenter.FragmentPhotoGrapherCampaignsPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.presenter.FragmentPhotoGrapherCampaignsPresenterImpl;
@@ -34,7 +35,8 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
     private LinearLayoutManager mLayoutManager;
     private CustomRecyclerView campaignsRv;
     private PagingController pagingController;
-
+    private String nextPageUrl="1";
+    private boolean isLoading;
     public static PhotographerCampaignsFragment getInstance() {
 
         return new PhotographerCampaignsFragment();
@@ -86,13 +88,33 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
     }
 
     private void initListener() {
-        pagingController = new PagingController(campaignsRv) {
-            @Override
-            public void getPagingControllerCallBack(int page) {
-                photoGrapherCampaignsPresenter.getPhotographerCampaigns(page);
-            }
-        };
 
+        pagingController = new PagingController(campaignsRv) {
+
+
+            @Override
+            protected void loadMoreItems() {
+                 photoGrapherCampaignsPresenter.getPhotographerCampaigns(Integer.parseInt(nextPageUrl));
+            }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl ==null){
+                    return  true;
+                }else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
+        };
         photoGrapherCampaignsAdapter.campaignLister = new photographerCampaignsAdapter.CampaignLister() {
             @Override
             public void onCampaignClicked(String campaignID) {
@@ -118,5 +140,15 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
     @Override
     public void showMessage(String msg) {
         showToast(msg);
+    }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
+    }
+
+    @Override
+    public void viewPhotoGrapherCampaignLoading(boolean state) {
+        isLoading=state;
     }
 }

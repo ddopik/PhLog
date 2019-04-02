@@ -11,5 +11,7 @@ public interface PhotoGrapherBrandFragmentView {
 
     void viewPhotoGrapherFollowingBrand(List<Business> brandSearchList);
     void viewPhotoGrapherFollowingBrandProgress(boolean state);
+    void setNextPageUrl(String page);
+
     void showMessage(String msg);
 }

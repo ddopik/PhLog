@@ -14,5 +14,6 @@ public interface CampaignFragmentView {
     void showAllCampaignProgress(boolean state);
 
     void showMessage(String msg);
+    void setNextPageUrl(String page);
 
 }

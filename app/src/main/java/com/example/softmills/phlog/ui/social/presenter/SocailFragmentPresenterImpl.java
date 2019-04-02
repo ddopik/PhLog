@@ -39,6 +39,14 @@ public class SocailFragmentPresenterImpl implements SocialFragmentPresenter {
 
                     socialFragmentView.viewSocialData(socialResponse.data);
                     socialFragmentView.viewSocialDataProgress(false);
+//                    if (userPhotosResponse.data.nextPageUrl != null) {
+//                        userProfileActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, userPhotosResponse.data.nextPageUrl));
+//
+//                    } else {
+//                        userProfileActivityView.setNextPageUrl(null);
+//                    }
+
+
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     socialFragmentView.viewSocialDataProgress(false);

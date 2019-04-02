@@ -25,6 +25,7 @@ import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.view.AlbumPreviewActivity;
 import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
@@ -70,6 +71,8 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private AlbumSearchAdapter albumSearchAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
     private PagingController pagingController;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
     private OnSearchTabSelected onSearchTabSelected;
 
 
@@ -168,14 +171,34 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
 
         pagingController = new PagingController(albumSearchRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
+            protected void loadMoreItems() {
                 if (albumSearch.getText().length() > 0) {
                     promptView.setVisibility(View.GONE);
-                    albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, page);
+                    albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, Integer.parseInt(nextPageUrl));
                 }
 
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
 
 
@@ -453,4 +476,18 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         return totalResultCount;
     }
 
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl = page;
+    }
+
+    @Override
+    public void showAlbumSearchProgress(boolean state) {
+        isLoading = state;
+        if (state) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
 }

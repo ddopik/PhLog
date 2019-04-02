@@ -15,6 +15,7 @@ import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.search.view.SearchActivity;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 import com.example.softmills.phlog.ui.social.presenter.SocailFragmentPresenterImpl;
@@ -23,8 +24,6 @@ import com.example.softmills.phlog.ui.social.view.adapter.SocialAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.softmills.phlog.Utiltes.Constants.SOCIAL_FRAGMENT_PAGING_THRESHOLD;
 
 public class SocialFragment extends BaseFragment implements SocialFragmentView, SocialAdapter.OnSocialItemListener {
 
@@ -36,6 +35,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
     private SocialAdapter socialAdapter;
     private List<SocialData> socialDataList = new ArrayList<>();
     private PagingController pagingController;
+    private String nextPageUrl = "1";
     private boolean isLoading;
 
     @Nullable
@@ -88,13 +88,27 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
             startActivity(intent);
         });
 
-        pagingController = new PagingController(socailRv, SOCIAL_FRAGMENT_PAGING_THRESHOLD) {
+
+        pagingController = new PagingController(socailRv) {
+
 
             @Override
-            public void getPagingControllerCallBack(int page) {
-                    socialFragmentPresenter.getSocialData(false);
+            protected void loadMoreItems() {
+                socialFragmentPresenter.getSocialData(false);
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return false;
 
             }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
 
 
@@ -119,7 +133,6 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
     }
 
 
-
     @Override
     public void onSocialBrandFollowed(int brandId, boolean state) {
         for (SocialData socialData : socialDataList) {
@@ -142,6 +155,10 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
     @Override
     public void showToast(String msg) {
         super.showToast(msg);
+    }
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
     }
 
 }

@@ -10,4 +10,7 @@ import java.util.List;
 public interface FragmentPhotoGrapherCampaignsView {
     void showCampaigns(List<Campaign> campaignList);
     void showMessage(String msg);
+    void setNextPageUrl(String page);
+    void viewPhotoGrapherCampaignLoading(boolean state);
+
 }

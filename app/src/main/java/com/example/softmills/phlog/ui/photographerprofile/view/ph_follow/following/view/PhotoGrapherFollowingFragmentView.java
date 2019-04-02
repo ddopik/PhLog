@@ -13,4 +13,6 @@ public interface PhotoGrapherFollowingFragmentView {
     void viewPhotographerFollowingSearch(List<Photographer> photoGrapherFollowingObjList);
     void viewPhotographerFollowingInProgress(boolean state);
     void viewMessage(String msg);
+    void setNextPageUrl(String page);
+
 }

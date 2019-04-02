@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerPhotosFragmentView;
 
@@ -39,6 +40,13 @@ public class CampaignInnerPhotosFragmentPresenterImpl implements CampaignInnerPh
                 .subscribe(campaignInnerPhotosResponse -> {
                     campaignInnerPhotosFragmentView.viewCampaignInnerPhotosProgress(false);
                     campaignInnerPhotosFragmentView.getInnerCampaignPhotos(campaignInnerPhotosResponse.data.data);
+                    if (campaignInnerPhotosResponse.data.nextPageUrl != null) {
+                        campaignInnerPhotosFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, campaignInnerPhotosResponse.data.nextPageUrl));
+
+                    } else {
+                        campaignInnerPhotosFragmentView.setNextPageUrl(null);
+                    }
+
                 }, throwable -> {
                     campaignInnerPhotosFragmentView.viewCampaignInnerPhotosProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);

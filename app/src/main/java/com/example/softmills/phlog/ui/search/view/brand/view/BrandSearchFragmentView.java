@@ -13,5 +13,7 @@ public interface BrandSearchFragmentView {
 
     void viewBrandSearchItems(BrandSearchData brandSearchData);
     void viewBrandSearchProgress(boolean state);
+    void setNextPageUrl(String page);
+
     void showMessage(String msg);
 }

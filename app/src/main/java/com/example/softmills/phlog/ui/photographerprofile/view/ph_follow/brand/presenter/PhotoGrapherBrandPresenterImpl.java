@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.view.PhotoGrapherBrandFragmentView;
 
@@ -33,6 +34,13 @@ public class PhotoGrapherBrandPresenterImpl implements PhotoGrapherBrandPresente
                 .subscribe(photographerFollowingBrandResponse -> {
                         photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrandProgress(false);
                         photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrand(photographerFollowingBrandResponse.data.data);
+                    if (photographerFollowingBrandResponse.data.nextPageUrl != null) {
+                        photoGrapherBrandFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, photographerFollowingBrandResponse.data.nextPageUrl));
+
+                    } else {
+                        photoGrapherBrandFragmentView.setNextPageUrl(null);
+                    }
+
 
                 },throwable -> {
                     photoGrapherBrandFragmentView.viewPhotoGrapherFollowingBrandProgress(false);

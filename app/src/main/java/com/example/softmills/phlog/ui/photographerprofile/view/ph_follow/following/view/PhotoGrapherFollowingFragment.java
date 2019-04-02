@@ -16,6 +16,7 @@ import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.presenter.PhotoGrapherFollowingInPresenter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.presenter.PhotoGrapherFollowingInPresenterImpl;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
@@ -43,6 +44,9 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
     private CustomRecyclerView followingRV;
     private PhotoGrapherFollowingInPresenter photoGrapherFollowingInPresenter;
     private PagingController pagingController;
+    private String nextPageUrl="1";
+    private boolean isLoading;
+
     private EditText searchEditText;
     private ProgressBar followingProgressBar;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -117,12 +121,36 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         };
 
 
+
+
         pagingController = new PagingController(followingRV) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
-                    photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(page,searchEditText.getText().toString());
+            protected void loadMoreItems() {
+                 photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(Integer.parseInt(nextPageUrl),searchEditText.getText().toString());
+
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl ==null){
+                    return  true;
+                }else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
+
 
         disposable.add(
 
@@ -172,6 +200,8 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
 
     @Override
     public void viewPhotographerFollowingInProgress(boolean state) {
+        isLoading=state;
+
         if (state) {
             followingProgressBar.setVisibility(View.VISIBLE);
         } else {
@@ -184,6 +214,12 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
     public void viewMessage(String msg) {
         showToast(msg);
     }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
+    }
+
 
     @Override
     public void onDestroy() {

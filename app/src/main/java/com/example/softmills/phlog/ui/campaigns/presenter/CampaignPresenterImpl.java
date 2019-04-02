@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.campaigns.CampaignFragmentView;
 
@@ -35,8 +36,13 @@ public class CampaignPresenterImpl implements CampaignPresenter {
                 .subscribe(campaignResponse -> {
                     campaignFragmentView.showAllCampaignProgress(false);
                         campaignFragmentView.viewAllCampaign(campaignResponse.data.data);
-                        campaignFragmentView.showAllCampaignProgress(false);
-                }, throwable -> {
+                    if (campaignResponse.data.nextPageUrl != null) {
+                        campaignFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, campaignResponse.data.nextPageUrl));
+
+                    } else {
+                        campaignFragmentView.setNextPageUrl(null);
+                    }
+                 }, throwable -> {
                     campaignFragmentView.showAllCampaignProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });

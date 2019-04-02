@@ -21,6 +21,7 @@ import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivity;
 import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.brand.model.BrandSearchData;
@@ -56,6 +57,9 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
     private List<Business> brandSearchList = new ArrayList<>();
     private BrandSearchFragmentPresenter brandSearchFragmentPresenter;
     private PagingController pagingController;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
+
     private CompositeDisposable disposables = new CompositeDisposable();
     private OnSearchTabSelected onSearchTabSelected;
 
@@ -133,14 +137,35 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(searchQuery()));
 
-        pagingController = new PagingController(searchBrandRv) {
-            @Override
-            public void getPagingControllerCallBack(int page) {
 
-                promptView.setVisibility(View.GONE);
-                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), page);
+        pagingController = new PagingController(searchBrandRv) {
+
+
+            @Override
+            protected void loadMoreItems() {
+                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), Integer.parseInt(nextPageUrl));
+
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
+
 
         brandSearchAdapter.brandAdapterListener = new BrandSearchAdapter.BrandAdapterListener() {
             @Override
@@ -227,6 +252,8 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
     @Override
     public void viewBrandSearchProgress(boolean state) {
+        isLoading = state;
+
         if (state) {
             searchBrandProgress.setVisibility(View.VISIBLE);
         } else {
@@ -257,5 +284,10 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         if (imm.isAcceptingText()) { // verify if the soft keyboard is open
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl = page;
     }
 }
