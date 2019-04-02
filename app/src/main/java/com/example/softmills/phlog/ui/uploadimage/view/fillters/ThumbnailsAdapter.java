@@ -93,4 +93,6 @@ public class ThumbnailsAdapter extends RecyclerView.Adapter<ThumbnailsAdapter.My
 
         }
     }
+
+
 }

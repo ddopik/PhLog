@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
-import com.example.softmills.phlog.base.widgets.SpacesItemDecoration;
 import com.example.softmills.phlog.base.BaseFragment;
+import com.example.softmills.phlog.base.widgets.SpacesItemDecoration;
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.utils.ThumbnailItem;
@@ -45,7 +45,6 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
     public void setListener(FiltersListFragmentListener listener) {
         this.listener = listener;
     }
-
 
 
     @Override
@@ -91,6 +90,7 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
      * @param bitmap
      */
     public void prepareThumbnail(final Bitmap bitmap, String pickedImageName) {
+
         Runnable r = () -> {
             Bitmap thumbImage;
 
@@ -129,21 +129,29 @@ public class FiltersListFragment extends BaseFragment implements ThumbnailsAdapt
 
 
             activityContext.runOnUiThread(() -> {
-                if (mAdapter !=null)
-                mAdapter.notifyDataSetChanged();
+                 if (mAdapter != null)
+                    mAdapter.notifyDataSetChanged();
+
             });
+
         };
 
         new Thread(r).start();
+
     }
 
     @Override
     public void onFilterSelected(Filter filter) {
-        if (listener != null)
+        if (listener != null) {
+            listener.onPrepareFilter(true);
             listener.onFilterSelected(filter);
+
+        }
     }
 
     public interface FiltersListFragmentListener {
         void onFilterSelected(Filter filter);
+
+        void onPrepareFilter(boolean state);
     }
 }
