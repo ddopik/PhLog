@@ -26,6 +26,7 @@ import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
+import com.example.softmills.phlog.base.widgets.PagingController2;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
@@ -33,6 +34,8 @@ import com.o_bdreldin.loadingbutton.LoadingButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.USER_PROFILE_PHOTOS_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
@@ -63,8 +66,10 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private ProgressBar userProfilePhotosProgressBar;
     private TextView placeHolder;
     private LoadingButton followUserBtn;
-    private PagingController pagingController;
+    private PagingController2 pagingController;
     private ImageButton backBtn;
+    private String nextPageUrl="1";
+    private boolean isLoading;
 
 
     @Override
@@ -109,23 +114,45 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             userProfilePhotosRv = findViewById(R.id.user_profile_photos);
             userProfilePhotosProgressBar = findViewById(R.id.user_profile_photos_progress_bar);
             followUserBtn = findViewById(R.id.follow_user_btn);
-            userProfilePhotosRv = findViewById(R.id.user_profile_photos);
-            userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
+             userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
+
+
+
             userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
             userProfilePresenter.getUserProfileData(userID);
             coverImage = findViewById(R.id.user_cover_img);
             placeHolder = findViewById(R.id.place_holder);
-            userProfilePresenter.getUserPhotos(userID, 0);
+            userProfilePresenter.getUserPhotos(userID, Integer.parseInt(nextPageUrl));
         }
     }
 
 
     private void initListener() {
-        pagingController = new PagingController(userProfilePhotosRv) {
+        pagingController = new PagingController2(userProfilePhotosRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
-                userProfilePresenter.getUserPhotos(userID, page);
+            protected void loadMoreItems() {
+                userProfilePresenter.getUserPhotos(userID, Integer.parseInt(nextPageUrl));
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl ==null){
+                    return  true;
+                }else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
 
         followUserBtn.setOnClickListener(v -> {
@@ -231,12 +258,14 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     public void viewUserPhotos(List<BaseImage> userPhotoList) {
         this.userPhotoList.addAll(userPhotoList);
         userProfilePhotosAdapter.notifyDataSetChanged();
+
+
         if (this.userPhotoList.isEmpty())
             placeHolder.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void viewUserFollowingState(Boolean state) {
+    public void viewUserFollowingState(boolean state) {
         followUserBtn.setLoading(false);
         if (state) {
             followUserBtn.setText(getResources().getString(R.string.un_follow));
@@ -256,8 +285,10 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     }
 
     @Override
-    public void viewUserPhotosProgress(Boolean state) {
+    public void viewUserPhotosProgress(boolean state) {
+        isLoading=state;
         if (state) {
+
             userProfilePhotosProgressBar.setVisibility(View.VISIBLE);
 
         } else {
@@ -278,5 +309,10 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     @Override
     public void showMessage(String msg) {
         super.showToast(msg);
+    }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
     }
 }

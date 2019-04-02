@@ -3,9 +3,8 @@ package com.example.softmills.phlog.ui.userprofile.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivityView;
 
@@ -41,12 +40,21 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
     @Override
     public void getUserPhotos(String userID, int page) {
         userProfileActivityView.viewUserPhotosProgress(true);
-        BaseNetworkApi.getUserProfilePhotos( userID, page)
+        BaseNetworkApi.getUserProfilePhotos(userID, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPhotosResponse -> {
                     userProfileActivityView.viewUserPhotosProgress(false);
                     userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
+
+                    if (userPhotosResponse.data.nextPageUrl != null) {
+                        userProfileActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, userPhotosResponse.data.nextPageUrl));
+
+                    } else {
+                        userProfileActivityView.setNextPageUrl(null);
+                    }
+
+
                 }, throwable -> {
                     userProfileActivityView.viewUserPhotosProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);

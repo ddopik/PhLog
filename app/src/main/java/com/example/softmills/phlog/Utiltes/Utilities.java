@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -307,9 +308,7 @@ public class Utilities {
         }
     }
 
-    public static List<String> getMentionsList(String comment)
-
-    {
+    public static List<String> getMentionsList(String comment) {
 
 
         String regex = "@+([a-zA-Z0-9_]+)";
@@ -366,11 +365,26 @@ public class Utilities {
         }
         return null;
     }
+
     public static void hideKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public static String getNextPageNumber(Context context, String url) {
+        try {
+            Pattern p = Pattern.compile("(?<=page=).*?(?=&|$)");
+            Matcher m = p.matcher(url);
+            while (m.find()) {
+                String pp = m.group();
+                return pp;
+            }
+        } catch (PatternSyntaxException ex) {
+            ErrorUtils.Companion.setError(context, TAG, ex);
+        }
+        return null;
     }
 }
