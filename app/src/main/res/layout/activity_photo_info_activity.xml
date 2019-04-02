@@ -70,6 +70,8 @@
         android:textColor="@color/white"
         android:textColorHint="@color/gray800"
         android:textSize="@dimen/font_normal"
+        android:imeOptions="actionDone"
+        android:inputType="text"
         app:backgroundTint="@color/gray800"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

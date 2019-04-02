@@ -1,6 +1,5 @@
 package com.example.softmills.phlog.ui.uploadimage.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -60,7 +59,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     private int brightnessFinal = 0;
     private float saturationFinal = 1.0f;
     private float contrastFinal = 1.0f;
-    private boolean filterApplied;
+
     private String filteredImagePath;
     private UploadImageData uploadImageData;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -92,11 +91,12 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
+
         Bundle bundle = this.getIntent().getExtras();
 
         assert bundle != null;
         if (bundle.getParcelable(IMAGE_DATA) != null) {
-            uploadImageData = bundle.getParcelable(IMAGE_DATA);
+            uploadImageData = (UploadImageData) bundle.getParcelable(IMAGE_DATA);
             filteredImagePath = uploadImageData.getSourceImagePath();
             loadImage(filteredImagePath);
         }
@@ -115,8 +115,8 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         );
 
         applyFilterBtn.setOnClickListener(v -> {
-
             if (filteredImagePath != null) {
+
 
                 Intent intent = new Intent(this, PickedPhotoInfoActivity.class);
                 Bundle extras = new Bundle();
@@ -124,10 +124,13 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
                 extras.putParcelable(PickedPhotoInfoActivity.IMAGE_TYPE, uploadImageData); //passing image type
                 intent.putExtras(extras);
                 startActivity(intent);
+
+
             }
 
 
         });
+
 
 //        openCameraBtn.setOnClickListener(view -> {
 //            ImagePicker.cameraOnly().start(this);
@@ -238,21 +241,20 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         finalImage = myFilter.processFilter(bitmap);
     }
 
+    private boolean filterApplied;
 
-    @SuppressLint("CheckResult")
     @Override
     public void onFilterSelected(Filter filter) {
-//
+        // reset image controls
+//        resetControls();
 //        // applying the selected filter
 //        filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-//
-//        finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
 //        // preview filtered image
 //        imagePreview.setImageBitmap(filter.processFilter(filteredImage));
-//
+//        finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
 //        filterApplied = true;
 
-
+//
         Disposable subscribe = copyBitMap(originalImage).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(bitmap -> {
@@ -260,6 +262,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
                     // preview filtered image
                     imagePreview.setImageBitmap(filter.processFilter(filteredImage));
+                    finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
                     // reset image controls
                     filterApplied = true;
                     onPrepareFilter(false);
@@ -268,21 +271,6 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
     }
 
-    private Observable<Bitmap> copyBitMap(final Bitmap bitmap) {
-
-
-        return Observable.create(emitter -> {
-
-            // applying the selected filter
-            filteredImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-            finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
-
-            emitter.onNext(filteredImage);
-            emitter.onComplete();
-
-        });
-
-    }
 
     public static Intent getLaunchIntent(Context context, UploadImageData uploadImageData) {
         Intent intent = new Intent(context, ImageFilterActivity.class);
@@ -306,5 +294,19 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
         } else {
             activityFilterProgress.setVisibility(View.GONE);
         }
+    }
+
+    private Observable<Bitmap> copyBitMap(final Bitmap bitmap) {
+
+
+        return Observable.create(emitter -> {
+
+            // applying the selected filter
+            filteredImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            emitter.onNext(filteredImage);
+            emitter.onComplete();
+
+        });
+
     }
 }
