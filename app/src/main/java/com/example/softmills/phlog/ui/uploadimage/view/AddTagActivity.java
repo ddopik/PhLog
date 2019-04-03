@@ -1,19 +1,14 @@
 package com.example.softmills.phlog.ui.uploadimage.view;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -27,7 +22,6 @@ import android.widget.ProgressBar;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
-import com.example.softmills.phlog.Utiltes.ImageUtils;
 import com.example.softmills.phlog.Utiltes.uploader.UploaderService;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Tag;
@@ -45,7 +39,6 @@ import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 import com.o_bdreldin.loadingbutton.LoadingButton;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -101,6 +94,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                 uploadBrn.setLoading(false);
                 new AlertDialog.Builder(this)
                         .setMessage(R.string.your_photo_uploaded)
+                        .setCancelable(false)
                         .setPositiveButton(R.string.view_in_profile, (dialog, which) -> {
                             Intent intents = new Intent(this, MainActivity.class);
                             intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
@@ -111,7 +105,9 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
                             finish();
                             dialog.dismiss();
                             finish();
-                        }).show();
+                        })
+
+                        .show();
                 break;
             case PROGRESS:
                 int p = (int) objects[0];
@@ -254,12 +250,10 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
 
 
         uploadBrn.setOnClickListener(v -> {
-             if (tagList.isEmpty()) {
+            if (tagList.isEmpty()) {
                 showToast(getString(R.string.tag_is_required));
                 return;
             }
-
-
 
 
             uploadImageData.setTags(tagList);
@@ -379,7 +373,7 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         this.tagMenuList.clear();
         this.tagMenuList.addAll(tagList);
         autoCompleteTagMenuAdapter.notifyDataSetChanged();
-     }
+    }
 
     @Override
     public void viewMessage(String msg) {
@@ -398,7 +392,6 @@ public class AddTagActivity extends BaseActivity implements AddTagActivityView {
         disposable.clear();
         super.onDestroy();
     }
-
 
 
 }

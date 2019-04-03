@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.allphotos.view.AllPhotographerPhotosActivity;
@@ -41,6 +42,12 @@ public class AllPhotographerPhotosPresenterImpl implements AllPhotographerPhotos
                 .subscribe(photoGrapherPhotosResponse -> {
                     allPhotographerPhotosActivityView.showImageListProgress(false);
                     allPhotographerPhotosActivityView.showPhotosList(photoGrapherPhotosResponse.data.data);
+                    if (photoGrapherPhotosResponse.data.nextPageUrl != null) {
+                        allPhotographerPhotosActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, photoGrapherPhotosResponse.data.nextPageUrl));
+
+                    } else {
+                        allPhotographerPhotosActivityView.setNextPageUrl(null);
+                    }
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     allPhotographerPhotosActivityView.showImageListProgress(false);

@@ -7,10 +7,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.BitmapUtils;
@@ -25,7 +26,11 @@ import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
-import java.io.File;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.softmills.phlog.Utiltes.BitmapUtils.getBitmapFromGallery;
 
@@ -40,6 +45,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
 
     private ImageView imagePreview;
+    private ProgressBar activityFilterProgress;
     private ImageButton applyFilterBtn, closeFilterBtn;
     private Bitmap originalImage;
     private Bitmap filteredImage; //Image get filtered from filter list
@@ -56,6 +62,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
 
     private String filteredImagePath;
     private UploadImageData uploadImageData;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     // load native image filters library
     static {
@@ -76,6 +83,7 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     @Override
     public void initView() {
         imagePreview = findViewById(R.id.filtered_image_preview);
+        activityFilterProgress = findViewById(R.id.activity_filter_progress);
         applyFilterBtn = findViewById(R.id.btn_apply_filter);
         closeFilterBtn = findViewById(R.id.btn_close_filter);
         TabLayout tabLayout = findViewById(R.id.tabs);
@@ -238,15 +246,31 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     @Override
     public void onFilterSelected(Filter filter) {
         // reset image controls
-        resetControls();
-        // applying the selected filter
-        filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
-        // preview filtered image
-        imagePreview.setImageBitmap(filter.processFilter(filteredImage));
-        finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
-        filterApplied = true;
+//        resetControls();
+//        // applying the selected filter
+//        filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
+//        // preview filtered image
+//        imagePreview.setImageBitmap(filter.processFilter(filteredImage));
+//        finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
+//        filterApplied = true;
+
+//
+        Disposable subscribe = copyBitMap(originalImage).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(bitmap -> {
+                    resetControls();
+
+                    // preview filtered image
+                    imagePreview.setImageBitmap(filter.processFilter(filteredImage));
+                    finalImage = filteredImage.copy(Bitmap.Config.ARGB_8888, true);
+                    // reset image controls
+                    filterApplied = true;
+                    onPrepareFilter(false);
+                });
+        disposable.add(subscribe);
 
     }
+
 
     public static Intent getLaunchIntent(Context context, UploadImageData uploadImageData) {
         Intent intent = new Intent(context, ImageFilterActivity.class);
@@ -262,4 +286,27 @@ public class ImageFilterActivity extends BaseActivity implements FiltersListFrag
     }
 
 
+    @Override
+    public void onPrepareFilter(boolean state) {
+
+        if (state) {
+            activityFilterProgress.setVisibility(View.VISIBLE);
+        } else {
+            activityFilterProgress.setVisibility(View.GONE);
+        }
+    }
+
+    private Observable<Bitmap> copyBitMap(final Bitmap bitmap) {
+
+
+        return Observable.create(emitter -> {
+
+            // applying the selected filter
+            filteredImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            emitter.onNext(filteredImage);
+            emitter.onComplete();
+
+        });
+
+    }
 }

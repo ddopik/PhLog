@@ -5,6 +5,7 @@ import android.content.Context;
 
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.commentimage.replay.view.ReplayCommentActivityView;
 
@@ -33,6 +34,12 @@ public class ReplayCommentPresenterImpl implements ReplayCommentPresenter {
                 .subscribe(repliesResponse -> {
                     replayCommentActivityView.viewRepliesProgress(false);
                     replayCommentActivityView.viewReplies(repliesResponse.data);
+                    if (repliesResponse.data.comments.nextPageUrl != null) {
+                        replayCommentActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, repliesResponse.data.comments.nextPageUrl));
+
+                    } else {
+                        replayCommentActivityView.setNextPageUrl(null);
+                    }
                 }, throwable -> {
                     replayCommentActivityView.viewRepliesProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);

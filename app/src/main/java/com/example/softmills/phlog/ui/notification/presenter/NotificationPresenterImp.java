@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragmentView;
 
@@ -35,6 +36,14 @@ public class NotificationPresenterImp implements NotificationPresenter {
 
                     notificationFragmentView.viewNotification(notificationResponse.notificationData.notificationList);
                     notificationFragmentView.viewNotificationProgress(false);
+
+                    if (notificationResponse.notificationData.nextPageUrl != null) {
+                        notificationFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, notificationResponse.notificationData.nextPageUrl));
+
+                    } else {
+                        notificationFragmentView.setNextPageUrl(null);
+                    }
+
 
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);

@@ -14,4 +14,5 @@ public class EarningListData {
     @SerializedName("total")
     @Expose
     public Integer total;
+
 }

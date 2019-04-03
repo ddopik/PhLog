@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivityView;
@@ -36,6 +37,13 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
                 .subscribe(albumImgCommentResponse -> {
                     imageCommentActivityView.viewPhotoComment(albumImgCommentResponse.data);
                     imageCommentActivityView.viewImageProgress(false);
+                    if (albumImgCommentResponse.data.nextPageUrl != null) {
+                        imageCommentActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, albumImgCommentResponse.data.nextPageUrl));
+
+                    } else {
+                        imageCommentActivityView.setNextPageUrl(null);
+                    }
+
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     imageCommentActivityView.viewImageProgress(false);

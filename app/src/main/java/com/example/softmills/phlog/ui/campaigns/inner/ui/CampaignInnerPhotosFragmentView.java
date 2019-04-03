@@ -11,4 +11,6 @@ public interface CampaignInnerPhotosFragmentView {
 
     void getInnerCampaignPhotos(List<BaseImage> campaignInnerPhotoList);
     void viewCampaignInnerPhotosProgress(boolean state);
+    void setNextPageUrl(String page);
+
 }

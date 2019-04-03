@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.earning.view.EarningListFragmentView;
 
@@ -40,6 +41,14 @@ public class EarningListPresenterImpl implements EarningListPresenter {
                             earningListFragmentView.setSalesNumber(earningListResponse.data.transactions.total);
                             earningListFragmentView.setTotalEarnings(earningListResponse.data.total);
                         }
+
+                        if (earningListResponse.data.transactions.nextPageUrl != null) {
+                            earningListFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, earningListResponse.data.transactions.nextPageUrl));
+
+                        } else {
+                            earningListFragmentView.setNextPageUrl(null);
+                        }
+
                     }
                     earningListFragmentView.viewEaringListProgress(false);
                 }, throwable -> {

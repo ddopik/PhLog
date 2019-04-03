@@ -10,7 +10,7 @@ public interface ReplayCommentActivityView {
     void viewRepliesProgress(boolean state);
 
     void viewMessage(String msg);
-
+    void setNextPageUrl(String page);
 
     void onCommentReplied(SubmitImageCommentData submitImageCommentData);
 

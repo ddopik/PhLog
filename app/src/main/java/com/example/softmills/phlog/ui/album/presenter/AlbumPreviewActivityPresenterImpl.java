@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.album.view.AlbumPreviewActivityView;
 
@@ -52,6 +53,12 @@ public class AlbumPreviewActivityPresenterImpl implements AlbumPreviewActivityPr
                 .subscribe(response -> {
                     albumPreviewActivityView.viewAlbumPreviewProgress(false);
                     albumPreviewActivityView.viwAlbumPreviewImages(response.data.imagesList);
+                    if (response.data.nextPageUrl != null) {
+                        albumPreviewActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, response.data.nextPageUrl));
+
+                    } else {
+                        albumPreviewActivityView.setNextPageUrl(null);
+                    }
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     albumPreviewActivityView.viewAlbumPreviewProgress(false);

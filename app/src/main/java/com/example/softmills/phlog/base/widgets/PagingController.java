@@ -3,53 +3,39 @@ package com.example.softmills.phlog.base.widgets;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-/**
- * Created by abdalla_maged on 10/4/2018.
- */
 public abstract class PagingController {
 
-    //    private val recyclerView: RecyclerView? = null
-// The total number of items in the dataset after the last load
-    private int previousTotalItemCount = 0;
-    private boolean loading = true;
-    private int visibleThreshold = 9;
-    private int firstVisibleItem = 0;
-    private int visibleItemCount = 0;
-    private int totalItemCount = 0;
-    private int startingPageIndex = 0;
-    private int currentPage = 0;
     private RecyclerView recyclerView;
+    private boolean isScroll;
+
+    /**
+     * Set scrolling threshold here (for now i'm assuming 10 item in one page)
+     */
+    private static final int PAGE_SIZE = 10;
+
 
     public PagingController(RecyclerView recyclerView) {
-        this.recyclerView=recyclerView;
-        initListener();
+        this.recyclerView = recyclerView;
+        initListeners();
     }
 
-    public PagingController(RecyclerView recyclerView,String cuurentPage) {
-        this.recyclerView=recyclerView;
-        this.currentPage=Integer.parseInt(cuurentPage);
-        initListener();
-    }
-
-    public PagingController(RecyclerView recyclerView,int visibleThreshold) {
-        this.recyclerView=recyclerView;
-        this.visibleThreshold=visibleThreshold;
-        initListener();
-    }
-
-    private void initListener() {
+    private void initListeners() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager mLayoutManager = (LinearLayoutManager) recyclerView
-                        .getLayoutManager();
-                visibleItemCount = recyclerView.getChildCount();
-                totalItemCount = mLayoutManager.getItemCount();
-                firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                onScroll(firstVisibleItem, visibleItemCount, totalItemCount);
+                LinearLayoutManager mLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (dy > 0) {
                     // Scrolling up
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int totalItemCount = mLayoutManager.getItemCount();
+                    int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+
+                    if (!isLoading() && !isLastPage()) {
+                        if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
+                            loadMoreItems();
+                        }
+                    }
 
                 } else {
 
@@ -59,39 +45,12 @@ public abstract class PagingController {
         });
     }
 
-    private void onScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        // If the total item count is zero and the previous isn't, assume the
-        // list is invalidated and should be reset back to initial state
-        if (totalItemCount < previousTotalItemCount) {
-            this.currentPage = this.startingPageIndex;
-            this.previousTotalItemCount = totalItemCount;
-            if (totalItemCount == 0) {
-                this.loading = true;
-            }
-        }
-        // If it’s still loading, we check to see if the dataset count has
-        // changed, if so we conclude it has finished loading and update the current page
-        // number and total item count.
-        if (loading && totalItemCount > previousTotalItemCount) {
-            loading = false;
-            previousTotalItemCount = totalItemCount;
-            currentPage++;
-        }
 
-        // If it isn’t currently loading, we check to see if we have breached
-        // the visibleThreshold and need to reload more data.
-         if (!loading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
-             getPagingControllerCallBack(currentPage + 1);
-            loading = true;
-        }
-    }
+    protected abstract void loadMoreItems();
 
-    public int getCurrentPage(){
-        return currentPage;
-    }
+    public abstract boolean isLastPage();
 
-    public abstract void getPagingControllerCallBack(int page);
-
+    public abstract boolean isLoading();
 
 
 }

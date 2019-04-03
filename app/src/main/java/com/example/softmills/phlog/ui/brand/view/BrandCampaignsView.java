@@ -11,4 +11,6 @@ public interface BrandCampaignsView {
     void showMessage(String msg);
     void viewAllCampaign(List<Campaign> homeCampaignList);
     void showAllCampaignProgress(boolean state);
+    void setNextPageUrl(String page);
+
 }

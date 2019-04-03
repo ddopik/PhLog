@@ -160,7 +160,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
 //            confirmRegister_passwordInput.setErrorEnabled(false);
 //            failedStates.add(2, true);
 //        }
-        if (mobile.getText().toString().equals("") || !android.util.Patterns.PHONE.matcher(mobile.getText()).matches()) {
+        if (!android.util.Patterns.PHONE.matcher(mobile.getText()).matches()) {
             mobileInput.setError(getString(R.string.invalid_phone_number));
             failedStates.add(3, false);
         } else {
@@ -169,23 +169,23 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         }
 
 
-        if (autoCompleteTextView.getText().toString().isEmpty()) {
+//        if (autoCompleteTextView.getText().toString().isEmpty()) {
 //            countryInput.setError(getString(R.string.please_select_country));
 //            countryInput.setError(getString(R.string.please_select_country));
 //            failedStates.add(6, false);
-        } else {
+//        } else {
 
 
-            if (getCountryID() == 0) {
-                countryInput.setError(getString(R.string.select_country_not_exist));
-                failedStates.add(4, false);
-            } else {
-                countryInput.setErrorEnabled(false);
-                failedStates.add(4, true);
-            }
+//            if (getCountryID() == 0) {
+//                countryInput.setError(getString(R.string.select_country_not_exist));
+//                failedStates.add(4, false);
+//            } else {
+//                countryInput.setErrorEnabled(false);
+//                failedStates.add(4, true);
+//            }
 
 
-        }
+//        }
 
 
         for (int i = 0; i < failedStates.size(); i++) {

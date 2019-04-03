@@ -12,6 +12,8 @@ public interface EarningListFragmentView {
     void viewEaringListProgress(boolean state);
     void viewMessage(String msg);
      void setSalesNumber(int total);
+    void setNextPageUrl(String page);
+
 
     void setTotalEarnings(Integer total);
 }

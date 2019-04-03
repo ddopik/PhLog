@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
     private CustomRecyclerView photosRv;
     private ProgressBar photosProgress;
     private PagingController pagingController;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
 
 
     public static PhotoGrapherPhotosFragment getInstance() {
@@ -99,19 +102,66 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
     }
 
     private void initListener() {
-        pagingController = new PagingController(photosRv) {
+
+
+        ////// initial block works by forcing then next Api for Each ScrollTop
+        // cause recycler listener won't work until mainView ported with items
+        photosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            LinearLayoutManager mLayoutManager = (LinearLayoutManager) photosRv.getLayoutManager();
             @Override
-            public void getPagingControllerCallBack(int page) {
-                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(page);
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+
+                    if (firstVisibleItemPosition == 0) {
+                        if (nextPageUrl != null) {
+                            fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(Integer.parseInt(nextPageUrl));
+                        }
+
+                    }
+                }
             }
+        });
+        ////////////////
+
+
+        pagingController = new PagingController(photosRv) {
+
+
+            @Override
+            protected void loadMoreItems() {
+
+                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(Integer.parseInt(nextPageUrl));
+
+            }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
+
 
         photographerSavedPhotoAdapter.photoAction = photoGrapherSavedPhoto -> {
             Intent intent = new Intent(getContext(), AllAlbumImgActivity.class);
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
             intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.photos));
             intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_PHOTOS_LIST);
-            intent.putExtra(CURRENT_PAGE, pagingController.getCurrentPage());
+            intent.putExtra(CURRENT_PAGE, nextPageUrl);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherPhotoList);
             startActivity(intent);
         };
@@ -134,6 +184,8 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
 
     @Override
     public void showPhotosProgress(boolean state) {
+        isLoading = state;
+
         if (state) {
             photosProgress.setVisibility(View.VISIBLE);
         } else {
@@ -141,5 +193,9 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         }
     }
 
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl = page;
+    }
 
 }

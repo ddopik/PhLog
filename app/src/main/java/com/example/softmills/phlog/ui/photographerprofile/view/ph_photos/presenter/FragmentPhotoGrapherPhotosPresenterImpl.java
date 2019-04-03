@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.view.FragmentPhotoGrapherPhotosView;
 
@@ -35,6 +36,12 @@ public class FragmentPhotoGrapherPhotosPresenterImpl implements FragmentPhotoGra
                 .subscribe(photosResponse -> {
                     fragmentPhotoGrapherPhotosView.showPhotosProgress(false);
                     fragmentPhotoGrapherPhotosView.showPhotos(photosResponse.data.data);
+                    if (photosResponse.data.nextPageUrl != null) {
+                        fragmentPhotoGrapherPhotosView.setNextPageUrl(Utilities.getNextPageNumber(context, photosResponse.data.nextPageUrl));
+
+                    } else {
+                        fragmentPhotoGrapherPhotosView.setNextPageUrl(null);
+                    }
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     fragmentPhotoGrapherPhotosView.showPhotosProgress(false);

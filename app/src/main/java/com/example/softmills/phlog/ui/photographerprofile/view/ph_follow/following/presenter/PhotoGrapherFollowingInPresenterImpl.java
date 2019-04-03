@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragmentView;
 
@@ -43,6 +44,13 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
                 .subscribe(photoGrapherFollowingInResponse -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingSearch(photoGrapherFollowingInResponse.data.data);
+                    if (photoGrapherFollowingInResponse.data.nextPageUrl != null) {
+                        photoGrapherFollowingFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, photoGrapherFollowingInResponse.data.nextPageUrl));
+
+                    } else {
+                        photoGrapherFollowingFragmentView.setNextPageUrl(null);
+                    }
+
                 }, throwable -> {
                     photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);

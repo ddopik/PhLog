@@ -53,11 +53,13 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     private ProgressBar albumImgProgress;
     private AllAlbumImgPresnter allAlbumImgPresnter;
     private PagingController pagingController;
+    private String nextPageUrl = "";
+    private boolean isLoading;
+
     /**
      * in case activity loaded with data previously
      * and we would to continue from most resent page
      **/
-    private int currentPage = 0;
 
 
     @Override
@@ -81,9 +83,8 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             photosListType = (PhotosListType) getIntent().getSerializableExtra(LIST_TYPE);
 
             if (photosListType == CURRENT_PHOTOGRAPHER_PHOTOS_LIST || photosListType == CURRENT_PHOTOGRAPHER_SAVED_LIST) {
-                if (getIntent().getIntExtra(CURRENT_PAGE, -1) >= 0) {
-                    currentPage = getIntent().getIntExtra(CURRENT_PAGE, 0);
-                }
+
+                nextPageUrl = getIntent().getStringExtra(CURRENT_PAGE);
             }
 
 
@@ -207,17 +208,36 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         };
 
 
-        pagingController = new PagingController(allAlbumImgRv, currentPage) {
+        pagingController = new PagingController(allAlbumImgRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
+            protected void loadMoreItems() {
                 if (photosListType == CURRENT_PHOTOGRAPHER_PHOTOS_LIST) {
-                    allAlbumImgPresnter.getPhotoGrapherPhotosList(page);
+                    allAlbumImgPresnter.getPhotoGrapherPhotosList(Integer.parseInt(nextPageUrl));
                 } else if (photosListType == CURRENT_PHOTOGRAPHER_SAVED_LIST) {
-                    allAlbumImgPresnter.getPhotoGrapherSavedList(page);
+                    allAlbumImgPresnter.getPhotoGrapherSavedList(Integer.parseInt(nextPageUrl));
                 }
 
+            }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
 
             }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
 
         mainBackBtn.setOnClickListener(v -> {
@@ -297,7 +317,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
     @Override
     public void viewAlbumImageListProgress(boolean state) {
-
+        isLoading = state;
         if (state) {
             albumImgProgress.setVisibility(View.VISIBLE);
         } else {
@@ -315,6 +335,11 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     @Override
     public void showMessage(String msg) {
         showToast(msg);
+    }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl = page;
     }
 
     @Override

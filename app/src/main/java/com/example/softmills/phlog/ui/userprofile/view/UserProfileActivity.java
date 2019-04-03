@@ -9,7 +9,11 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -65,6 +69,9 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     private LoadingButton followUserBtn;
     private PagingController pagingController;
     private ImageButton backBtn;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
+    private NestedScrollView nestedScrollView;
 
 
     @Override
@@ -73,7 +80,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         setContentView(R.layout.activity_user_profile);
         initPresenter();
         initView();
-        initListener();
+
 
     }
 
@@ -109,23 +116,70 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             userProfilePhotosRv = findViewById(R.id.user_profile_photos);
             userProfilePhotosProgressBar = findViewById(R.id.user_profile_photos_progress_bar);
             followUserBtn = findViewById(R.id.follow_user_btn);
-            userProfilePhotosRv = findViewById(R.id.user_profile_photos);
             userProfilePhotosAdapter = new UserProfilePhotosAdapter(this, userPhotoList);
+
             userProfilePhotosRv.setAdapter(userProfilePhotosAdapter);
             userProfilePresenter.getUserProfileData(userID);
             coverImage = findViewById(R.id.user_cover_img);
             placeHolder = findViewById(R.id.place_holder);
-            userProfilePresenter.getUserPhotos(userID, 1);
+            userProfilePresenter.getUserPhotos(userID, Integer.parseInt(nextPageUrl));
+
         }
     }
 
 
     private void initListener() {
+
+
+
+        ////// initial block works by forcing then next Api for Each ScrollTop
+        // cause recycler listener won't work until mainView ported with items
+        userProfilePhotosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            LinearLayoutManager mLayoutManager = (LinearLayoutManager) userProfilePhotosRv.getLayoutManager();
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+
+                    if (firstVisibleItemPosition == 0) {
+                        if (nextPageUrl != null) {
+                            Log.e(UserProfileActivity.class.getSimpleName(), "Page--->" + nextPageUrl);
+                            userProfilePresenter.getUserPhotos(userID, Integer.parseInt(nextPageUrl));
+                        }
+
+                    }
+                }
+            }
+        });
+
+        ////////////////
+
+
         pagingController = new PagingController(userProfilePhotosRv) {
             @Override
-            public void getPagingControllerCallBack(int page) {
-                userProfilePresenter.getUserPhotos(userID, page);
+            protected void loadMoreItems() {
+                userProfilePresenter.getUserPhotos(userID, Integer.parseInt(nextPageUrl));
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
 
         followUserBtn.setOnClickListener(v -> {
@@ -162,9 +216,13 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
                 } else if (isShow) {
                     isShow = false;
                     userProfileToolBar.setVisibility(View.GONE);
+
+
                 }
             }
         });
+
+
         backBtn.setOnClickListener(v -> onBackPressed());
     }
 
@@ -178,7 +236,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
         }
 
-        if (photographer.fullName != null){
+        if (photographer.fullName != null) {
             userProfileFullName.setText(photographer.fullName);
             userProfileToolbarTitle.setText(photographer.fullName);
         }
@@ -218,6 +276,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
 
         userProfileRating.setRating(photographer.rate);
 
+
         initListener();
     }
 
@@ -231,12 +290,14 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     public void viewUserPhotos(List<BaseImage> userPhotoList) {
         this.userPhotoList.addAll(userPhotoList);
         userProfilePhotosAdapter.notifyDataSetChanged();
+
+
         if (this.userPhotoList.isEmpty())
             placeHolder.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void viewUserFollowingState(Boolean state) {
+    public void viewUserFollowingState(boolean state) {
         followUserBtn.setLoading(false);
         if (state) {
             followUserBtn.setText(getResources().getString(R.string.un_follow));
@@ -256,8 +317,10 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     }
 
     @Override
-    public void viewUserPhotosProgress(Boolean state) {
+    public void viewUserPhotosProgress(boolean state) {
+        isLoading = state;
         if (state) {
+
             userProfilePhotosProgressBar.setVisibility(View.VISIBLE);
 
         } else {
@@ -278,5 +341,21 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
     @Override
     public void showMessage(String msg) {
         super.showToast(msg);
+    }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl = page;
+    }
+
+    private void setExpandEnabled(boolean enabled) {
+        mAppBarLayout.setExpanded(enabled, false);
+        mAppBarLayout.setActivated(enabled);
+        final AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) userProfileCollapsingToolbarLayout.getLayoutParams();
+        if (enabled)
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+        else
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+        userProfileCollapsingToolbarLayout.setLayoutParams(params);
     }
 }

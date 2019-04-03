@@ -9,5 +9,7 @@ import java.util.List;
 public interface SocialFragmentView {
     void viewSocialData(List<SocialData> socialDataList);
     void viewSocialDataProgress(boolean state);
+    void setNextPageUrl(String page);
+
     void showMessage(String msg);
 }

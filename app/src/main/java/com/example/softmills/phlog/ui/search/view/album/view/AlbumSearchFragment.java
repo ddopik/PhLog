@@ -71,6 +71,8 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private AlbumSearchAdapter albumSearchAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
     private PagingController pagingController;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
     private OnSearchTabSelected onSearchTabSelected;
 
 
@@ -110,7 +112,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         if (albumSearch.getText().toString().length() > 0) {
             promptView.setVisibility(View.GONE);
             albumSearchList.clear();
-            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, 0);
+            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, Integer.parseInt(nextPageUrl));
         } //there is A search query exist
 
     }
@@ -169,14 +171,36 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
 
         pagingController = new PagingController(albumSearchRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
+            protected void loadMoreItems() {
+                isLoading=true;
                 if (albumSearch.getText().length() > 0) {
                     promptView.setVisibility(View.GONE);
-                    albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, page);
+                     albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, Integer.parseInt(nextPageUrl));
                 }
 
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+
+                return isLoading;
+            }
+
+
         };
 
 
@@ -318,7 +342,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
                 promptView.setVisibility(View.GONE);
                 // user cleared search get default data
                 albumSearchList.clear();
-                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, 0);
+                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, Integer.parseInt(nextPageUrl));
                 Log.e(TAG, "search string: " + albumSearch.getText().toString());
 
             }
@@ -429,7 +453,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             albumSearchList.clear();
             albumSearchAdapter.notifyDataSetChanged();
             if (albumSearchPresenter.getFilter(filterList).size() > 0) {
-                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), filterList, 0);
+                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), filterList, Integer.parseInt(nextPageUrl));
             } else {
                 viewSearchAlbum(new AlbumSearchData());
                 searchResultCountView.setVisibility(View.INVISIBLE);
@@ -440,7 +464,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private void setAlbumSearchView() {
         filterExpListView.setVisibility(View.GONE);
         albumSearchRv.setVisibility(View.VISIBLE);
-
         searchResultCountView.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
     }
 
@@ -457,4 +480,18 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         return totalResultCount;
     }
 
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl = page;
+    }
+
+    @Override
+    public void showAlbumSearchProgress(boolean state) {
+        isLoading = state;
+        if (state) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
 }

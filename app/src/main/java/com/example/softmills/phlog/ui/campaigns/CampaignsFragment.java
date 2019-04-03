@@ -14,9 +14,9 @@ import com.example.softmills.phlog.R;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
-import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenter;
 import com.example.softmills.phlog.ui.campaigns.presenter.CampaignPresenterImpl;
@@ -43,6 +43,9 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
     private List<Campaign> homeCampaignList = new ArrayList<>();
     private CampaignPresenter campaignPresenter;
     private PagingController pagingController;
+    private String nextPageUrl="1";
+    private boolean isLoading;
+
     private ConstraintLayout noCampaignsPrompt;
 
     private CompositeDisposable disposables = new CompositeDisposable();
@@ -81,11 +84,33 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
 
     private void initListener() {
 
+
         pagingController = new PagingController(allCampaignsRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
-                campaignPresenter.getAllCampaign(page);
+            protected void loadMoreItems() {
+
+                campaignPresenter.getAllCampaign(Integer.parseInt(nextPageUrl));
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl ==null){
+                    return  true;
+                }else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
         allCampaignsAdapter.campaignLister =  new AllCampaignsAdapter.CampaignLister() {
             @Override
@@ -133,6 +158,7 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
 
     @Override
     public void showAllCampaignProgress(boolean state) {
+        isLoading=state;
         if (state) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
@@ -141,6 +167,10 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
 
     }
 
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
+    }
     @Override
     public void showMessage(String msg) {
         showToast(msg);

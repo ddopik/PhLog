@@ -14,7 +14,7 @@ public interface AllAlbumImgActivityView  {
 
     void viewAlbumImageList(List<BaseImage> albumImgList);
     void viewAlbumImageListProgress(boolean state);
-
+    void setNextPageUrl(String page);
     void onImageSavedToProfile(BaseImage baseImage,boolean state);
     void onImagePhotoGrapherFollowed(BaseImage baseImage ,boolean state);
     void onImagePhotoGrapherDeleted(BaseImage baseImage ,boolean state);

@@ -39,6 +39,8 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
     private ProgressBar earningListProgress;
     private EarningListPresenter earningListPresenter;
     private PagingController pagingController;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
 
     @Nullable
     @Override
@@ -83,12 +85,33 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
             ((MainActivity) getActivity()).navigationManger.setExtraData(String.valueOf(earning.id));
             ((MainActivity) getActivity()).navigationManger.navigate(EARNING_INNER);
         };
+
         pagingController = new PagingController(earningListRv) {
             @Override
-            public void getPagingControllerCallBack(int page) {
-                earningListPresenter.getEarningList(getContext(), String.valueOf(page));
+            protected void loadMoreItems() {
+
+                earningListPresenter.getEarningList(getContext(), nextPageUrl);
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
+
     }
 
     @Override
@@ -101,6 +124,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
 
     @Override
     public void viewEaringListProgress(boolean state) {
+        isLoading=state;
         if (state) {
             earningListProgress.setVisibility(View.VISIBLE);
         } else {
@@ -122,6 +146,11 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
             earningCount.setText(getString(R.string.no_sales_yet));
         }
     }
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
+    }
+
 
     @Override
     public void setTotalEarnings(Integer total) {

@@ -12,4 +12,5 @@ public interface AllPhotographerPhotosActivityView {
     void showPhotosList(List<BaseImage> photosList);
     void showMessage(String msg);
     void showImageListProgress(boolean state);
+    void setNextPageUrl(String page);
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_camaigns.view.FragmentPhotoGrapherCampaignsView;
 
@@ -31,12 +32,22 @@ public class FragmentPhotoGrapherCampaignsPresenterImpl implements FragmentPhoto
     @SuppressLint("CheckResult")
     @Override
     public void getPhotographerCampaigns(int pageNum) {
+        fragmentPhotoGrapherCampaignsView.viewPhotoGrapherCampaignLoading(true);
         BaseNetworkApi.getPhotoGrapherProfileCampaign(PrefUtils.getUserToken(context), pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(campaignResponse -> {
+                    fragmentPhotoGrapherCampaignsView.viewPhotoGrapherCampaignLoading(false);
                     fragmentPhotoGrapherCampaignsView.showCampaigns(campaignResponse.data.data);
+                    if (campaignResponse.data.nextPageUrl != null) {
+                        fragmentPhotoGrapherCampaignsView.setNextPageUrl(Utilities.getNextPageNumber(context, campaignResponse.data.nextPageUrl));
+
+                    } else {
+                        fragmentPhotoGrapherCampaignsView.setNextPageUrl(null);
+                    }
+
                 }, throwable -> {
+                    fragmentPhotoGrapherCampaignsView.viewPhotoGrapherCampaignLoading(false);
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 

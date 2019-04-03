@@ -44,7 +44,8 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     private CustomTextView albumNameTV, photosCount, albumToolBarTitle;
     private PagingController pagingController;
     private AlbumPreviewActivityPresenter albumPreviewActivityPresenter;
-
+    private String nextPageUrl = "1";
+    private boolean isLoading;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,13 +86,32 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     }
 
     private void initListener() {
-
-
         pagingController = new PagingController(albumRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
-                albumPreviewActivityPresenter.getAlbumPreviewImages(albumID, page);
+            protected void loadMoreItems() {
+                albumPreviewActivityPresenter.getAlbumPreviewImages(albumID, Integer.parseInt(nextPageUrl));
+
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl ==null){
+                    return  true;
+                }else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
         albumAdapter.onAlbumImageClicked = albumImg -> {
 
@@ -154,6 +174,7 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
     @Override
     public void viewAlbumPreviewProgress(boolean state) {
+        isLoading = state;
         if (state) {
             albumPreviewProgress.setVisibility(View.VISIBLE);
 
@@ -179,5 +200,12 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
 
         photosCount.setText(getString(R.string.photos_number, albumPreviewResponseData.photosCount));
     }
+
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl = page;
+    }
+
+
 }
 

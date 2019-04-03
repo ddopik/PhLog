@@ -29,8 +29,8 @@ public class UploadImageActivity extends BaseActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
-        if (bundle.getSerializable(IMAGE_TYPE) != null) {
-            imageType = (UploadImageData) bundle.getSerializable(IMAGE_TYPE);
+        if (bundle.getParcelable(IMAGE_TYPE) != null) {
+            imageType = (UploadImageData) bundle.getParcelable(IMAGE_TYPE);
             GalleryImageFragment galleryImageFragment = GalleryImageFragment.getInstance(imageType);
             addFragment(R.id.upload_img_container, galleryImageFragment, GalleryImageFragment.class.getSimpleName(), false);
         }

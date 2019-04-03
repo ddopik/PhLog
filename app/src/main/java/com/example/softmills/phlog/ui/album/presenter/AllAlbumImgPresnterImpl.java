@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivityView;
@@ -155,6 +156,13 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                 .subscribe(photosResponse -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     allAlbumImgActivityView.viewAlbumImageList(photosResponse.data.data);
+                    if (photosResponse.data.nextPageUrl != null) {
+                        allAlbumImgActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, photosResponse.data.nextPageUrl));
+
+                    } else {
+                        allAlbumImgActivityView.setNextPageUrl(null);
+                    }
+
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
@@ -172,6 +180,13 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
                 .subscribe(photosResponse -> {
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);
                     allAlbumImgActivityView.viewAlbumImageList(photosResponse.data.data);
+                    if (photosResponse.data.nextPageUrl != null) {
+                        allAlbumImgActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, photosResponse.data.nextPageUrl));
+
+                    } else {
+                        allAlbumImgActivityView.setNextPageUrl(null);
+                    }
+
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     allAlbumImgActivityView.viewAlbumImageListProgress(false);

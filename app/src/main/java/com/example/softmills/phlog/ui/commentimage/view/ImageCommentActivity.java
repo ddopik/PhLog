@@ -1,14 +1,11 @@
 package com.example.softmills.phlog.ui.commentimage.view;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
@@ -23,7 +20,6 @@ import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.commonmodel.Comment;
 import com.example.softmills.phlog.base.commonmodel.Mentions;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
-import com.example.softmills.phlog.base.widgets.CustomAutoCompleteTextView;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.CustomTextView;
 import com.example.softmills.phlog.base.widgets.PagingController;
@@ -45,7 +41,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 import static com.example.softmills.phlog.Utiltes.Constants.CommentListType.MAIN_COMMENT;
 
 /**
@@ -66,6 +61,9 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     private Mentions mentions = new Mentions();
     private CommentsAdapter commentsAdapter;
     private PagingController pagingController;
+    private String nextPageUrl="1";
+    private boolean isLoading;
+
     private ImageCommentActivityPresenter imageCommentActivityPresenter;
 
 
@@ -116,13 +114,34 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
     private void initListener() {
 
-        pagingController = new PagingController(commentsRv) {
-            @Override
-            public void getPagingControllerCallBack(int page) {
-                imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), String.valueOf(page));
-            }
-        };
 
+        pagingController = new PagingController(commentsRv) {
+
+
+            @Override
+            protected void loadMoreItems() {
+                 imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
+
+            }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl ==null){
+                    return  true;
+                }else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
+        };
 
         commentsAdapter.commentAdapterAction = new CommentsAdapter.CommentAdapterAction() {
 
@@ -326,6 +345,8 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
     @Override
     public void viewImageProgress(Boolean state) {
+        isLoading=state;
+
         if (state) {
             addCommentProgress.setVisibility(View.VISIBLE);
         } else {
@@ -386,6 +407,10 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         intent.putExtra(IMAGE_DATA, previewImage);
         setResult(RESULT_OK, intent);
         finish();
+    }
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
     }
 
     @Override

@@ -19,8 +19,6 @@ import com.example.softmills.phlog.ui.notification.presenter.NotificationPresent
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.softmills.phlog.ui.notification.view.NotificationAdapter.itemType_NOTIFICATION_HEAD;
-
 /**
  * Created by abdalla_maged On Nov,2018
  */
@@ -31,7 +29,8 @@ public class NotificationFragment extends BaseFragment implements NotificationFr
     private NotificationPresenter notificationPresenter;
     private NotificationAdapter notificationAdapter;
     private PagingController pagingController;
-
+    private String nextPageUrl="1";
+    private boolean isLoading;
     private List<NotificationList> notificationListList = new ArrayList<>();
     @Nullable
     @Override
@@ -79,12 +78,35 @@ public class NotificationFragment extends BaseFragment implements NotificationFr
 
     private void initListener() {
         pagingController = new PagingController(notificationRv) {
+
+
             @Override
-            public void getPagingControllerCallBack(int page) {
-                notificationPresenter.getNotification(String.valueOf(page));
+            protected void loadMoreItems() {
+                notificationPresenter.getNotification(nextPageUrl);
             }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl ==null){
+                    return  true;
+                }else {
+                    return false;
+                }
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
     }
+
+
+
 
     @Override
     public void viewNotification(List<NotificationList> notificationListList) {
@@ -97,11 +119,17 @@ public class NotificationFragment extends BaseFragment implements NotificationFr
 
     @Override
     public void viewNotificationProgress(boolean state) {
+        isLoading=state;
+
         if (state) {
             notificationProgress.setVisibility(View.VISIBLE);
         } else {
             notificationProgress.setVisibility(View.GONE);
         }
+    }
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
     }
 }
 

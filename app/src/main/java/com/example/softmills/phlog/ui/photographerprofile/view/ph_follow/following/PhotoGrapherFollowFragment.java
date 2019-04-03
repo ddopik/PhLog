@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.base.BaseFragment;
- import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.view.PhotoGrapherBrandFragment;
+import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.brand.view.PhotoGrapherBrandFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowViewPagerAdapter;
 import com.example.softmills.phlog.ui.photographerprofile.view.ph_follow.following.view.PhotoGrapherFollowingFragment;
 
@@ -30,7 +30,6 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
     private TabLayout followTableLayout;
     private ViewPager followViewPager;
     private PhotoGrapherFollowViewPagerAdapter photoGrapherFollowViewPagerAdapter;
-
 
 
     @Nullable
@@ -49,8 +48,6 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
     }
 
 
-
-
     @Override
     protected void initPresenter() {
 
@@ -62,7 +59,7 @@ public class PhotoGrapherFollowFragment extends BaseFragment {
         followTableLayout = mainView.findViewById(R.id.photographer_follow_tabs);
         followViewPager = mainView.findViewById(R.id.photographer_follow_pager);
         photoGrapherFollowViewPagerAdapter = new PhotoGrapherFollowViewPagerAdapter(getChildFragmentManager(), getFragmentList());
-followViewPager.setOffscreenPageLimit(2);
+        followViewPager.setOffscreenPageLimit(2);
         followViewPager.setAdapter(photoGrapherFollowViewPagerAdapter);
         followTableLayout.setupWithViewPager(followViewPager);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
