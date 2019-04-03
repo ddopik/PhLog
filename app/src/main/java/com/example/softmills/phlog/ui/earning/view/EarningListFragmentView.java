@@ -14,4 +14,6 @@ public interface EarningListFragmentView {
      void setSalesNumber(int total);
     void setNextPageUrl(String page);
 
+
+    void setTotalEarnings(Integer total);
 }

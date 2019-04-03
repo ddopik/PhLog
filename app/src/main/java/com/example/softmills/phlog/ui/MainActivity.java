@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     String payload = intent.getStringExtra(MainActivityRedirectionValue.PAYLOAD);
                     FirebaseNotificationData data = NotificationParser.parse(payload);
                     navigationManger.navigate(HOME);
-                    if (data != null && data.notification.popup != PopupType.NONE)
+                    if (data != null && data.notification != null && data.notification.popup != PopupType.NONE)
                         showPopup(data);
                     break;
             }

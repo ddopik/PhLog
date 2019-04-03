@@ -1,7 +1,6 @@
 package com.example.softmills.phlog.ui.campaigns;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.softmills.phlog.R;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.GlideApp;
 import com.example.softmills.phlog.base.commonmodel.Campaign;
 
@@ -63,14 +60,17 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
             }
         });
 
-        if(homeCampaign.isJoined){
+        if(homeCampaign.isJoined ){
             campaignViewHolder.joinCampaignBtn.setVisibility(View.INVISIBLE);
         }else {
+            if (homeCampaign.status == Constants.CampaignStatus.CAMPAIGN_STATUS_APPROVED || homeCampaign.status == Constants.CampaignStatus.CAMPAIGN_STATUS_RUNNING)
             campaignViewHolder.joinCampaignBtn.setVisibility(View.VISIBLE);
+            else campaignViewHolder.joinCampaignBtn.setVisibility(View.INVISIBLE);
         }
         campaignViewHolder.joinCampaignBtn.setOnClickListener(v -> {
             if (campaignLister != null) {
-                campaignLister.onFollowCampaign(homeCampaign);
+                campaignViewHolder.joinCampaignBtn.setEnabled(false);
+                campaignLister.onFollowCampaign(homeCampaign, i);
             }
         });
 
@@ -122,7 +122,7 @@ public class AllCampaignsAdapter extends RecyclerView.Adapter<AllCampaignsAdapte
 
         void onCampaignClicked(String campaignID);
 
-        void onFollowCampaign(Campaign campaign);
+        void onFollowCampaign(Campaign campaign, int i);
 
     }
 }

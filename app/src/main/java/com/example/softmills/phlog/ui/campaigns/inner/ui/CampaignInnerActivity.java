@@ -15,6 +15,7 @@ import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
     private AppBarLayout mAppBarLayout;
     private CollapsingToolbarLayout campaignProfileCollapsingToolbarLayout;
     private ImageButton backBtn;
+    private FrameLayout uploadButtonContainer;
     private String campaignId;
     private ImageView campaignImg;
     private Button uploadCampaignBtn;
@@ -89,6 +91,8 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
             campaignInnerPresenter.getCampaignDetails(getIntent().getStringExtra(CAMPAIGN_ID));
             campaignId = getIntent().getStringExtra(CAMPAIGN_ID);
         }
+
+        uploadButtonContainer = findViewById(R.id.upload_image_btn_container);
 
     }
 
@@ -185,9 +189,9 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                 , getFragmentTitles(campaign.status, campaign.photosCount));
         campaignViewPager.setAdapter(innerCampaignFragmentPagerAdapter);
         if (campaign.status == CAMPAIGN_STATUS_APPROVED || campaign.status == CAMPAIGN_STATUS_RUNNING) {
-            uploadCampaignBtn.setVisibility(View.VISIBLE);
+            uploadButtonContainer.setVisibility(View.VISIBLE);
         } else {
-            uploadCampaignBtn.setVisibility(View.GONE);
+            uploadButtonContainer.setVisibility(View.GONE);
         }
         campaignTabs.setupWithViewPager(campaignViewPager);
     }

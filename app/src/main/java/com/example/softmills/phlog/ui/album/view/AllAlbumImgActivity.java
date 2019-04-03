@@ -43,6 +43,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     public static String LIST_TYPE = "list_type";
     public static String LIST_NAME = "list_name";
     public static String CURRENT_PAGE = "current_page";
+    public final static int IMAGE_DETAILS_REQUEST_CODE = 764;
     private PhotosListType photosListType;
     private ImageButton mainBackBtn;
     private CustomTextView topBarTitle;
@@ -129,6 +130,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             @Override
             public void onAlbumImgClick(BaseImage albumImg) {
                 Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                     albumImg.currentPhotoGrapherPhoto = true;
@@ -136,8 +138,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                 }
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                startActivityForResult(intent, IMAGE_DETAILS_REQUEST_CODE);
             }
 
             @Override
@@ -168,7 +169,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                 Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                startActivityForResult(intent, IMAGE_DETAILS_REQUEST_CODE);
             }
 
             @Override
@@ -339,5 +340,27 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     @Override
     public void setNextPageUrl(String page) {
         this.nextPageUrl = page;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IMAGE_DETAILS_REQUEST_CODE && resultCode == RESULT_OK) {
+            BaseImage image = data.getParcelableExtra(ImageCommentActivity.IMAGE_DATA);
+            if (image != null) {
+                for (int i=0; i<albumImgList.size(); i++) {
+                    if (albumImgList.get(i).id == image.id) {
+                        if (image.isImageDeleted) {
+                            albumImgList.remove(i);
+                            allAlbumImgAdapter.notifyItemRemoved(i);
+                        } else {
+                            albumImgList.set(i, image);
+                            allAlbumImgAdapter.notifyItemChanged(i);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

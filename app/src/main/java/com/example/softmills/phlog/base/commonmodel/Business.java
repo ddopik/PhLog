@@ -105,7 +105,7 @@ public class Business extends MentionedUser implements Parcelable {
     public Boolean isFollow;
 
     @SerializedName("industry")
-    transient public Industry industry;
+    public Industry industry;
 
     public Business() {
     }
@@ -144,6 +144,7 @@ public class Business extends MentionedUser implements Parcelable {
         dest.writeString(this.nameEn);
         dest.writeString(this.imageCover);
         dest.writeValue(this.isFollow);
+        dest.writeParcelable(industry, flags);
     }
 
     protected Business(Parcel in) {
@@ -174,6 +175,7 @@ public class Business extends MentionedUser implements Parcelable {
         this.nameEn = in.readString();
         this.imageCover = in.readString();
         this.isFollow = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        industry = in.readParcelable(Industry.class.getClassLoader());
     }
 
     public static final Creator<Business> CREATOR = new Creator<Business>() {

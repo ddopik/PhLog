@@ -7,7 +7,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.content.res.AppCompatResources;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,6 +20,7 @@ import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerDataPresenterImpl;
 import com.example.softmills.phlog.ui.brand.presenter.BrandInnerPresenter;
+import com.example.softmills.phlog.ui.search.view.brand.view.BrandSearchFragment;
 import com.o_bdreldin.loadingbutton.LoadingButton;
 
 /**
@@ -120,8 +120,8 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
             brandWebsite.setText(brand.website);
         }
         if (brand.isFollow) {
-            followBrandBtn.setText(getResources().getString(R.string.following));
-            brandProfileToolbarFollow.setText(getResources().getString(R.string.following));
+            followBrandBtn.setText(getResources().getString(R.string.un_follow));
+            brandProfileToolbarFollow.setText(getResources().getString(R.string.un_follow));
         } else {
             followBrandBtn.setText(getResources().getString(R.string.follow));
             brandProfileToolbarFollow.setText(getResources().getString(R.string.follow));
@@ -191,6 +191,9 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
             currentBrand.followersCount--;
         }
         brandNumFollowers.setText(new StringBuilder().append(currentBrand.followersCount).append(" ").append(getResources().getString(R.string.followers)).toString());
+        Intent data = new Intent();
+        data.putExtra(BrandSearchFragment.BRAND, currentBrand);
+        setResult(RESULT_OK, data);
     }
 
     @Override

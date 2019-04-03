@@ -3,15 +3,17 @@ package com.example.softmills.phlog.ui.commentimage.presenter;
 
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 
+import io.reactivex.Observable;
+
 /**
  * Created by abdalla_maged On Nov,2018
  */
 public interface ImageCommentActivityPresenter {
     void getImageComments(String imageId, String page);
 
-    void likePhoto(BaseImage baseImage);
+    Observable<Boolean> likePhoto(BaseImage baseImage);
 
-    void unLikePhoto(BaseImage baseImage);
+    Observable<Boolean> unLikePhoto(BaseImage baseImage);
 
     void deleteImage(BaseImage baseImage);
 

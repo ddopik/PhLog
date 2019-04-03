@@ -32,7 +32,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
 
     //    EarningListAdapter
     private View mainView;
-    private TextView earningCount;
+    private TextView earningCount, totalEarnings;
     private EarningListAdapter earningListAdapter;
     private List<Earning> earningList = new ArrayList<>();
     private CustomRecyclerView earningListRv;
@@ -77,6 +77,7 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
         earningListProgress = mainView.findViewById(R.id.earning_list_progress);
         earningListAdapter = new EarningListAdapter(earningList);
         earningListRv.setAdapter(earningListAdapter);
+        totalEarnings = mainView.findViewById(R.id.total_earning_tv);
     }
 
     private void initListener() {
@@ -150,4 +151,11 @@ public class EarningListFragment extends BaseFragment implements EarningListFrag
         this.nextPageUrl=page;
     }
 
+
+    @Override
+    public void setTotalEarnings(Integer total) {
+        if (total != null) {
+            totalEarnings.setText(getString(R.string.total_earning, total));
+        }
+    }
 }

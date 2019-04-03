@@ -96,7 +96,7 @@ public class Photographer  extends MentionedUser implements Parcelable {
 
     @SerializedName("country")
     @Expose
-    public transient Country country;
+    public Country country;
     @SerializedName("rate")
     @Expose
     public float rate;

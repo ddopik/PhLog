@@ -43,7 +43,7 @@
     <string name="invalid_phone_number">invalid Phone Number</string>
     <string name="password_not_matched">password not matched</string>
     <string name="please_select_country">Please Select you country</string>
-    <string name="select_country_not_exist">your country not exist</string>
+    <string name="select_country_not_exist">your country does not exist</string>
     <string name="email_missing">Email is missing</string>
     <string name="camera_and_location_rationale">Need camera and storage permation</string>
     <string name="saved">Saved</string>
@@ -213,4 +213,11 @@
     <string name="follow_this">follow this</string>
     <string name="wrong_email_format">Wrong email format</string>
     <string name="filtered_photo_desc">Phlog filtered photo</string>
+    <string name="total_earning">Total Earnings: %1$d $</string>
+    <string name="change_password">Change Password</string>
+    <string name="new_password">New Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password_required">New password is required</string>
+    <string name="old_password_required">Old password is required</string>
+    <string name="name_required">Name is required</string>
 </resources>

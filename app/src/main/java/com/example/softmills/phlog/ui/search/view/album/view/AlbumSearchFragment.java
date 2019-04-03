@@ -317,8 +317,8 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             }
             expandableListAdapter.notifyDataSetChanged();
         }
-
-        filterIcon.setText(getResources().getString(R.string.filters));
+        if (filterIcon != null)
+            filterIcon.setText(getResources().getString(R.string.filters));
 
     }
 
@@ -329,6 +329,9 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
                 if (textViewTextChangeEvent.getCount() == 0) {
 //                    setTotalResultCount("0");
+
+                    if (albumSearchList.size() > 0)
+                        return;
                     if (searchResultCountView != null) {
                         searchResultCountView.setVisibility(View.INVISIBLE);
                     }

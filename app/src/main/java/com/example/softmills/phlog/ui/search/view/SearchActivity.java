@@ -100,7 +100,6 @@ public class SearchActivity extends BaseActivity {
             clearFilterResultBtn.setVisibility(View.INVISIBLE);
             filterTab.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             filterTab.setText(getResources().getString(R.string.filters));
-            filterTab.setVisibility(View.VISIBLE);
             albumSearchFragment = AlbumSearchFragment.getInstance();
             onFilterClicked = albumSearchFragment;
             albumSearchFragment.setAlbumSearchView(onSearchTabSelected);
@@ -136,18 +135,25 @@ public class SearchActivity extends BaseActivity {
         profileTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange));
         albumTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange));
         filterTab.setVisibility(View.GONE);
+        clearFilterResultBtn.setVisibility(View.GONE);
 
         switch (tabId) {
             case R.id.tab_brand:
                 filterTab.setVisibility(View.GONE);
+                clearFilterResultBtn.setVisibility(View.GONE);
                 brandTab.setTextColor(getResources().getColor(R.color.white));
                 brandTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange_fill));
+                if (onFilterClicked != null)
+                    onFilterClicked.onFilterCleared(clearFilterResultBtn, true);
                 break;
 
             case R.id.tab_profile:
                 filterTab.setVisibility(View.GONE);
+                clearFilterResultBtn.setVisibility(View.GONE);
                 profileTab.setTextColor(getResources().getColor(R.color.white));
                 profileTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange_fill));
+                if (onFilterClicked != null)
+                    onFilterClicked.onFilterCleared(clearFilterResultBtn, true);
                 break;
 
             case R.id.tab_album:

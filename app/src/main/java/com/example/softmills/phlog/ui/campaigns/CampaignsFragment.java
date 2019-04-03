@@ -122,14 +122,18 @@ public class CampaignsFragment extends BaseFragment implements CampaignFragmentV
             }
 
             @Override
-            public void onFollowCampaign(Campaign campaign) {
+            public void onFollowCampaign(Campaign campaign, int i) {
+                progressBar.setVisibility(View.VISIBLE);
                    Disposable disposable = campaignPresenter.joinCampaign(campaign.id.toString())
                            .subscribeOn(Schedulers.io())
                            .observeOn(AndroidSchedulers.mainThread())
+                           .doFinally(() -> progressBar.setVisibility(View.GONE))
                            .subscribe(success -> {
                                if (success) {
                                    campaign.isJoined = true;
-                                   allCampaignsAdapter.notifyItemChanged(homeCampaignList.indexOf(campaign));}
+                                   allCampaignsAdapter.notifyItemChanged(homeCampaignList.indexOf(campaign));
+                                   onCampaignClicked(String.valueOf(campaign.id));
+                               }
                            }, throwable -> {
                                ErrorUtils.Companion.setError(getContext(), TAG, throwable);
                            });
