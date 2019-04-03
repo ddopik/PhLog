@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,9 +99,32 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
 
     private void initListener() {
 
+
+        ////// initial block works by forcing then next Api for Each ScrollTop
+        // cause recycler listener won't work until mainView ported with items
+        savedPhotosRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            LinearLayoutManager mLayoutManager = (LinearLayoutManager) savedPhotosRv.getLayoutManager();
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+
+                    if (firstVisibleItemPosition == 0) {
+                        if (nextPageUrl != null) {
+                            photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(Integer.parseInt(nextPageUrl));
+                        }
+
+                    }
+                }
+            }
+        });
+
+        ////////////////
+
+
         pagingController = new PagingController(savedPhotosRv) {
-
-
             @Override
             protected void loadMoreItems() {
                 photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(Integer.parseInt(nextPageUrl));
@@ -130,7 +155,8 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
             intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_SAVED_LIST);
             intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.saved));
-            intent.putExtra(CURRENT_PAGE, Integer.parseInt(nextPageUrl));
+
+            intent.putExtra(CURRENT_PAGE, nextPageUrl);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherSavedPhotoList);
             startActivity(intent);
         };

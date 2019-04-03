@@ -39,26 +39,29 @@ public class UserProfilePresenterImpl implements UserProfilePresenter {
     @SuppressLint("CheckResult")
     @Override
     public void getUserPhotos(String userID, int page) {
-        userProfileActivityView.viewUserPhotosProgress(true);
-        BaseNetworkApi.getUserProfilePhotos(userID, page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(userPhotosResponse -> {
-                    userProfileActivityView.viewUserPhotosProgress(false);
-                    userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
-
-                    if (userPhotosResponse.data.nextPageUrl != null) {
-                        userProfileActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, userPhotosResponse.data.nextPageUrl));
-
-                    } else {
-                        userProfileActivityView.setNextPageUrl(null);
-                    }
 
 
-                }, throwable -> {
-                    userProfileActivityView.viewUserPhotosProgress(false);
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
-                });
+
+            userProfileActivityView.viewUserPhotosProgress(true);
+            BaseNetworkApi.getUserProfilePhotos(userID, page)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(userPhotosResponse -> {
+                        userProfileActivityView.viewUserPhotosProgress(false);
+                        userProfileActivityView.viewUserPhotos(userPhotosResponse.data.data);
+
+                        if (userPhotosResponse.data.nextPageUrl != null) {
+                            userProfileActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, userPhotosResponse.data.nextPageUrl));
+
+                        } else {
+                            userProfileActivityView.setNextPageUrl(null);
+                        }
+
+
+                    }, throwable -> {
+                        userProfileActivityView.viewUserPhotosProgress(false);
+                        ErrorUtils.Companion.setError(context, TAG, throwable);
+                    });
 
     }
 

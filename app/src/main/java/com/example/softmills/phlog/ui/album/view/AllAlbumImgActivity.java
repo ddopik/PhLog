@@ -82,9 +82,8 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             photosListType = (PhotosListType) getIntent().getSerializableExtra(LIST_TYPE);
 
             if (photosListType == CURRENT_PHOTOGRAPHER_PHOTOS_LIST || photosListType == CURRENT_PHOTOGRAPHER_SAVED_LIST) {
-                if (getIntent().getIntExtra(CURRENT_PAGE, -1) >= 0) {
-                    nextPageUrl = String.valueOf(getIntent().getIntExtra(CURRENT_PAGE, 1));
-                }
+
+                nextPageUrl = getIntent().getStringExtra(CURRENT_PAGE);
             }
 
 

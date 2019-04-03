@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +112,25 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
 
     private void initListener() {
 
+        ////// initial block works by forcing then next Api for Each ScrollTop
+        // cause recycler listener won't work until mainView ported with items
+        followingBrandRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            LinearLayoutManager mLayoutManager = (LinearLayoutManager) followingBrandRv.getLayoutManager();
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
 
+                    if (firstVisibleItemPosition == 0) {
+                        if (nextPageUrl != null) {
+                            photoGrapherBrandPresenter.getFollowingBrand(searchPhotographerBrand.getText().toString(), nextPageUrl);
+                        }
+
+                    }
+                }
+            }
+        });
 
 
         pagingController = new PagingController(followingBrandRv) {

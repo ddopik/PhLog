@@ -112,7 +112,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         if (albumSearch.getText().toString().length() > 0) {
             promptView.setVisibility(View.GONE);
             albumSearchList.clear();
-            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, 0);
+            albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, Integer.parseInt(nextPageUrl));
         } //there is A search query exist
 
     }
@@ -175,9 +175,10 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
             @Override
             protected void loadMoreItems() {
+                isLoading=true;
                 if (albumSearch.getText().length() > 0) {
                     promptView.setVisibility(View.GONE);
-                    albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, Integer.parseInt(nextPageUrl));
+                     albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, Integer.parseInt(nextPageUrl));
                 }
 
             }
@@ -195,6 +196,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
 
             @Override
             public boolean isLoading() {
+
                 return isLoading;
             }
 
@@ -337,7 +339,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
                 promptView.setVisibility(View.GONE);
                 // user cleared search get default data
                 albumSearchList.clear();
-                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, 0);
+                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString().trim(), filterList, Integer.parseInt(nextPageUrl));
                 Log.e(TAG, "search string: " + albumSearch.getText().toString());
 
             }
@@ -448,7 +450,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
             albumSearchList.clear();
             albumSearchAdapter.notifyDataSetChanged();
             if (albumSearchPresenter.getFilter(filterList).size() > 0) {
-                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), filterList, 0);
+                albumSearchPresenter.getAlbumSearchQuery(albumSearch.getText().toString(), filterList, Integer.parseInt(nextPageUrl));
             } else {
                 viewSearchAlbum(new AlbumSearchData());
                 searchResultCountView.setVisibility(View.INVISIBLE);
@@ -459,7 +461,6 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
     private void setAlbumSearchView() {
         filterExpListView.setVisibility(View.GONE);
         albumSearchRv.setVisibility(View.VISIBLE);
-
         searchResultCountView.setText(new StringBuilder().append(getTotalResultCount()).append(" ").append(getResources().getString(R.string.result)).toString());
     }
 

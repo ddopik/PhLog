@@ -11,4 +11,6 @@ public interface NotificationFragmentView {
 
     void viewNotification(List<NotificationList> notificationListList);
      void viewNotificationProgress(boolean state);
+    void setNextPageUrl(String page);
+
 }

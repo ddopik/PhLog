@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 public abstract class PagingController {
 
     private RecyclerView recyclerView;
-
+    private boolean isScroll;
 
     /**
      * Set scrolling threshold here (for now i'm assuming 10 item in one page)
@@ -25,16 +25,21 @@ public abstract class PagingController {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager mLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (dy > 0) {
+                    // Scrolling up
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int totalItemCount = mLayoutManager.getItemCount();
+                    int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
 
-
-                int visibleItemCount = mLayoutManager.getChildCount();
-                int totalItemCount = mLayoutManager.getItemCount();
-                int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
-
-                if (!isLoading() && !isLastPage()) {
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
-                        loadMoreItems();
+                    if (!isLoading() && !isLastPage()) {
+                        if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
+                            loadMoreItems();
+                        }
                     }
+
+                } else {
+
+                    // Scrolling down
                 }
             }
         });

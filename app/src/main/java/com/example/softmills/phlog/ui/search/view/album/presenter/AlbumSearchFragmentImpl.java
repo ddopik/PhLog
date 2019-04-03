@@ -59,19 +59,20 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
     public void getAlbumSearchQuery(String s, List<Filter> filterList, int page) {
 
         
-        albumSearchFragmentView.showFilterSearchProgress(true);
+        albumSearchFragmentView.showAlbumSearchProgress(true);
         BaseNetworkApi.getSearchAlbum(s, getFilter(filterList),String.valueOf(page))
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(albumSearchResponse -> {
+
                     albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data);
-                    albumSearchFragmentView.showAlbumSearchProgress(false);
                     if (albumSearchResponse.data.nextPageUrl != null) {
                         albumSearchFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, albumSearchResponse.data.nextPageUrl));
 
                     } else {
                         albumSearchFragmentView.setNextPageUrl(null);
                     }
+                    albumSearchFragmentView.showAlbumSearchProgress(false);
 
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);

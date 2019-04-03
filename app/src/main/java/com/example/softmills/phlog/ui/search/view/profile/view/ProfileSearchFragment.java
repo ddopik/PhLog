@@ -20,6 +20,7 @@ import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.base.BaseFragment;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
+import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.search.view.OnSearchTabSelected;
 import com.example.softmills.phlog.ui.search.view.profile.model.ProfileSearchData;
 import com.example.softmills.phlog.ui.search.view.profile.presenter.ProfileSearchPresenter;
@@ -52,6 +53,8 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     private CustomRecyclerView profileSearchRv;
     private OnSearchTabSelected onSearchTabSelected;
     private PagingController pagingController;
+    private String nextPageUrl = "1";
+    private boolean isLoading;
     private ProfileSearchAdapter profileSearchAdapter;
     private List<Photographer> profileSearchList = new ArrayList<>();
 
@@ -135,13 +138,31 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
         pagingController = new PagingController(profileSearchRv) {
             @Override
-            public void getPagingControllerCallBack(int page) {
+            protected void loadMoreItems() {
+
                 if (profileSearch.getText().length() > 0) {
                     promptView.setVisibility(View.GONE);
-                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), page);
+                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), Integer.parseInt(nextPageUrl));
+                }
+            }
+
+            @Override
+            public boolean isLastPage() {
+
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
+                    return false;
                 }
 
             }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
         };
 
 
@@ -202,6 +223,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
     @Override
     public void viewProfileSearchProgress(Boolean state) {
+        isLoading=state;
         if (state) {
             profileSearchProgress.setVisibility(View.VISIBLE);
         } else {
@@ -227,12 +249,17 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
     public void setOnSearchProfile(OnSearchTabSelected onSearchTabSelected) {
         this.onSearchTabSelected = onSearchTabSelected;
     }
+
     private void setTotalResultCount(String count) {
         totalResultCount = count;
     }
 
     private String getTotalResultCount() {
         return totalResultCount;
+    }
+    @Override
+    public void setNextPageUrl(String page) {
+        this.nextPageUrl=page;
     }
 
 }

@@ -11,4 +11,6 @@ public interface FragmentPhotoGrapherPhotosView {
     void showPhotos(List<BaseImage> photosList);
     void showMessage(String msg);
     void showPhotosProgress(boolean state);
+    void setNextPageUrl(String page);
+
 }
