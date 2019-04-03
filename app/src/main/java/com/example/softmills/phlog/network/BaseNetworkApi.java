@@ -4,7 +4,6 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.example.softmills.phlog.base.commonmodel.BaseStateResponse;
 import com.example.softmills.phlog.base.commonmodel.Device;
-import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewImagesResponse;
 import com.example.softmills.phlog.ui.album.model.AlbumPreviewResponse;
 import com.example.softmills.phlog.ui.album.model.SavePhotoResponse;
@@ -70,7 +69,9 @@ public class BaseNetworkApi {
     public static final int STATUS_404 = 404;
     public static final int STATUS_500 = 500;
     public static String STATUS_ERROR = "405";
-    public static final String ERROR_STATE_1 = "1";
+    public static final String ERROR_VALIDATION = "1";
+    public static final String ERROR_NOT_FOUND = "2";
+    public static final String ERROR_VERIFICATION = "3";
 
     public static String IMAGE_TYPE_PHOTOS = "image";
     public static String IMAGE_TYPE_CAMPAIGN = "campaign_id";
@@ -140,6 +141,7 @@ public class BaseNetworkApi {
     private static final String EARNING_DETAILS_URL = BASE_URL + "/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
     private static final String UPDATE_FIREBASE_TOKEN_URL = BASE_URL + "/auth/device/set";
+    private static final String REQUEST_VERIFICATION_URL = BASE_URL + "/auth/resend_email_verification";
 
 
     //Path Parameters
@@ -531,7 +533,7 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<UploadImgResponse> uploadPhotoGrapherPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, UploadProgressListener progressListener) {
+    public static io.reactivex.Observable<UploadImgResponse> uploadPhotoGrapherPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, Map<String, String> filters, UploadProgressListener progressListener) {
         return Rx2AndroidNetworking.upload(UPLOAD_PHOTOGRAPHER_PHOTO)
                 .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
@@ -539,6 +541,7 @@ public class BaseNetworkApi {
                 .addMultipartParameter("caption", caption)
                 .addMultipartParameter("location", location)
                 .addMultipartParameter(tagList)
+                .addMultipartParameter(filters)
                 .addMultipartFile("image", imgPath)
                 .setPriority(Priority.HIGH)
                 .setOkHttpClient(new OkHttpClient.Builder()
@@ -552,7 +555,8 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, String uploadImageDataID) {
+    public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token
+            , String caption, String location, File imgPath, Map<String, String> tagList, Map<String, String> filters, String uploadImageDataID) {
         return Rx2AndroidNetworking.upload(UPLOAD_CAMPAIGN_PHOTO)
                 .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
@@ -560,6 +564,7 @@ public class BaseNetworkApi {
                 .addMultipartParameter("caption", caption)
                 .addMultipartParameter("location", location)
                 .addMultipartParameter(tagList)
+                .addMultipartParameter(filters)
                 .addMultipartParameter(IMAGE_TYPE_CAMPAIGN, uploadImageDataID)
                 .addMultipartFile("image", imgPath)
                 .setPriority(Priority.HIGH)
@@ -715,5 +720,11 @@ public class BaseNetworkApi {
     }
 
 
-
+    public static Observable<String> requestVerification(String email) {
+        return Rx2AndroidNetworking.post(REQUEST_VERIFICATION_URL)
+                .addBodyParameter("email", email)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getStringObservable();
+    }
 }

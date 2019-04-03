@@ -111,7 +111,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
         if (brand.industry != null) {
             brandType.setText(brand.industry.nameEn);
-        }
+        } else brandType.setVisibility(View.INVISIBLE);
 
         if (brand.isBrandText != null) {
             brandData.setText(brand.description);

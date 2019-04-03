@@ -46,7 +46,7 @@ public class NotificationFragment extends BaseFragment implements NotificationFr
         initPresenter();
         initViews();
         initListener();
-        notificationPresenter.getNotification("0");
+        notificationPresenter.getNotification("1");
     }
 
     @Override

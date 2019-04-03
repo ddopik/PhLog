@@ -24,6 +24,7 @@ public class UploadImageData implements Parcelable {
     private String imageLocation;
     private boolean draft;
     private Map<String, String> tagsList = new HashMap<>();
+    private Map<String, String> filters;
 
 
     public Map<String, String> getTags() {
@@ -98,6 +99,14 @@ public class UploadImageData implements Parcelable {
         this.sourceImagePath = sourceImagePath;
     }
 
+    public Map<String, String> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(Map<String, String> filters) {
+        this.filters = filters;
+    }
+
     public UploadImageData() {
     }
 
@@ -120,6 +129,13 @@ public class UploadImageData implements Parcelable {
             dest.writeString(entry.getKey());
             dest.writeString(entry.getValue());
         }
+        if (filters != null) {
+            dest.writeInt(filters.size());
+            for (Map.Entry<String, String> entry : this.filters.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeString(entry.getValue());
+            }
+        }
     }
 
     protected UploadImageData(Parcel in) {
@@ -137,6 +153,14 @@ public class UploadImageData implements Parcelable {
             String key = in.readString();
             String value = in.readString();
             this.tagsList.put(key, value);
+        }
+        int filtersSize = in.readInt();
+        for (int i = 0; i < filtersSize; i++) {
+            if (filters == null)
+                filters = new HashMap<>();
+            String key = in.readString();
+            String value = in.readString();
+            this.filters.put(key, value);
         }
     }
 

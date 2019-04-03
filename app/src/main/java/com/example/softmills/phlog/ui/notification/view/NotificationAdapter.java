@@ -79,7 +79,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 break;
             }
             case ENTITY_IMAGE: {
-                bindItemPhoto(notificationViewHolder, notificationItemList.get(i).photo);
+                bindItemPhoto(notificationViewHolder, notificationItemList.get(i));
                 break;
             }
             case ENTITY_BRAND: {
@@ -170,10 +170,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         });
     }
 
-    private void bindItemPhoto(NotificationViewHolder notificationViewHolder, BaseImage image) {
+    private void bindItemPhoto(NotificationViewHolder notificationViewHolder, NotificationList notification) {
 
+        BaseImage image = notification.photo;
+        Photographer p = notification.photographer;
         notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_red));
-        GlideApp.with(context).load(image.url)
+        String url = p != null ? p.imageProfile : image.url;
+        GlideApp.with(context).load(url)
                 .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.default_place_holder)
                 .error(R.drawable.default_error_img)

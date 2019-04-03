@@ -53,6 +53,7 @@ import static com.example.softmills.phlog.Utiltes.Constants.CommentListType.MAIN
  */
 public class ImageCommentActivity extends BaseActivity implements ImageCommentActivityView {
 
+    public final static int REPLY_REQUEST_CODE = 876;
     public String TAG = ImageCommentActivity.class.getSimpleName();
     public static String IMAGE_DATA = "image_data";
      public static final int ImageComment_REQUEST_CODE = 1396;
@@ -221,7 +222,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
                 intent.putExtra(ReplayCommentActivity.REPLY_HEADER_COMMENT, comment);
                 intent.putExtra(ReplayCommentActivity.MENTIONS, mentions);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                startActivityForResult(intent, REPLY_REQUEST_CODE);
             }
 
             @Override
@@ -274,6 +275,10 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     @SuppressLint("CheckResult")
     @Override
     public void onImageCommented(SubmitImageCommentData commentData) {
+        previewImage.commentsCount++;
+        Intent data = new Intent();
+        data.putExtra(IMAGE_DATA, previewImage);
+        setResult(RESULT_OK, data);
         // (1) is A default value to view AddComment layout in case there is now Comments
         this.commentList.add(commentList.size() - 1, commentData.comment);
 
@@ -383,5 +388,37 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         finish();
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REPLY_REQUEST_CODE)
+            if (resultCode == RESULT_OK) {
+                Comment comment = data.getParcelableExtra(ReplayCommentActivity.REPLY_HEADER_COMMENT);
+                BaseImage image = data.getParcelableExtra(ReplayCommentActivity.COMMENT_IMAGE);
+                if (comment != null && image != null) {
+                    previewImage.commentsCount = image.commentsCount;
+                    Intent intent = new Intent();
+                    intent.putExtra(IMAGE_DATA, previewImage);
+                    setResult(RESULT_OK, intent);
+                    commentsAdapter.notifyItemChanged(0);
+                    Observable.just(comment)
+                            .observeOn(Schedulers.computation())
+                            .map(c -> {
+                                for (Comment _c : commentList) {
+                                    if (c.id.equals(_c.id)) {
+                                        return commentList.indexOf(_c);
+                                    }
+                                }
+                                return -1;
+                            })
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(position -> {
+                                if (position != -1) {
+                                    commentsAdapter.notifyItemChanged(position);
+                                }
+                            });
+                }
+            }
+    }
 }

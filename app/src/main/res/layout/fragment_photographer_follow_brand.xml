@@ -11,6 +11,7 @@
         android:layout_height="@dimen/activity_search_tab_h"
         android:fontFamily="@font/verdana"
         android:inputType="textAutoComplete"
+        android:textSize="@dimen/font_normal"
         android:layout_marginTop="@dimen/dp8"
         android:layout_marginStart="@dimen/dp8"
         android:layout_marginEnd="@dimen/dp8"

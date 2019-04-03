@@ -70,7 +70,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
             data.put("old_password", oldPassword);
         }
         if (newPassword != null) {
-            data.put("old_password", newPassword);
+            data.put("password", newPassword);
         }
         if (countryId != null)
             data.put("country_id", countryId.toString());

@@ -48,6 +48,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/dp45"
                     android:layout_weight="1"
+                    android:textSize="@dimen/font_normal"
                     android:background="@drawable/rounded_search_view"
                     android:fontFamily="@font/verdana"
                     android:hint="@string/add_new_tag"

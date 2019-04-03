@@ -126,6 +126,16 @@
         app:layout_constraintVertical_bias=".3"
         app:srcCompat="@drawable/ic_my_location" />
 
+    <!--<fragment-->
+        <!--android:id="@+id/place_autocomplete_fragment"-->
+        <!--android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
+
     <!--<ImageView-->
         <!--android:id="@+id/imageView5"-->
         <!--android:layout_width="0dp"-->
