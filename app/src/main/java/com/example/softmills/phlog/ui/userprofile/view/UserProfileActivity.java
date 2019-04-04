@@ -80,7 +80,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         setContentView(R.layout.activity_user_profile);
         initPresenter();
         initView();
-
+        initListener();
 
     }
 
@@ -277,7 +277,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         userProfileRating.setRating(photographer.rate);
 
 
-        initListener();
+
     }
 
     @Override

@@ -171,7 +171,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
                 break;
             }
             case CURRENT_PHOTOGRAPHER_SAVED_LIST: {
-                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
                 albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
                 albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
                 break;

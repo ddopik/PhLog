@@ -51,15 +51,20 @@ public class AlbumPreviewActivity extends BaseActivity implements AlbumPreviewAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_preview);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (getIntent().getIntExtra(ALBUM_PREVIEW_ID, -1) >= 0) {
             albumID = getIntent().getIntExtra(ALBUM_PREVIEW_ID, 0);
             initPresenter();
             initView();
             initListener();
         }
-
     }
-
 
     @Override
     public void initView() {

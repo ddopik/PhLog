@@ -36,7 +36,7 @@ public class SearchActivity extends BaseActivity {
         initListener();
 
         setTapSelected(R.id.tab_album);
-        filterTab.setVisibility(View.VISIBLE);
+        filterTab.setVisibility(View.GONE); //todo disabled temporary
         albumSearchFragment = AlbumSearchFragment.getInstance();
         onFilterClicked = albumSearchFragment;
         albumSearchFragment.setAlbumSearchView(onSearchTabSelected);
@@ -98,8 +98,10 @@ public class SearchActivity extends BaseActivity {
         albumTab.setOnClickListener((view) -> {
             setTapSelected(R.id.tab_album);
             clearFilterResultBtn.setVisibility(View.INVISIBLE);
-            filterTab.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-            filterTab.setText(getResources().getString(R.string.filters));
+
+//            filterTab.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+//            filterTab.setText(getResources().getString(R.string.filters));  //todo disabled temporary
+
             albumSearchFragment = AlbumSearchFragment.getInstance();
             onFilterClicked = albumSearchFragment;
             albumSearchFragment.setAlbumSearchView(onSearchTabSelected);
@@ -157,7 +159,7 @@ public class SearchActivity extends BaseActivity {
                 break;
 
             case R.id.tab_album:
-                filterTab.setVisibility(View.VISIBLE);
+                filterTab.setVisibility(View.GONE);  //todo disabled temporary
                 albumTab.setTextColor(getResources().getColor(R.color.white));
                 albumTab.setBackground(getResources().getDrawable(R.drawable.rounded_frame_orange_fill));
                 break;

@@ -289,16 +289,16 @@ public class BaseNetworkApi {
                 .getObjectObservable(PhotoGrapherFollowingInResponse.class);
     }
 
-    public static io.reactivex.Observable<BrandSearchResponse> getBrandSearch(String key, int page) {
+    public static io.reactivex.Observable<BrandSearchResponse> getBrandSearch(String key, String page) {
         return Rx2AndroidNetworking.post(BRAND_SEARCH_URL)
                 .addBodyParameter("keyword", key)
-                .addQueryParameter(PAGER_QUERY_PARAMETER, String.valueOf(page))
+                .addQueryParameter(PAGER_QUERY_PARAMETER, page)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(BrandSearchResponse.class);
     }
 
-    public static io.reactivex.Observable<ProfileSearchResponse> getProfileSearch(String key, int page) {
+    public static io.reactivex.Observable<ProfileSearchResponse> getProfileSearch(String key, String page) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_SEARCH_URL)
                 .addBodyParameter("keyword", key)
                 .addQueryParameter(PAGER_QUERY_PARAMETER, String.valueOf(page))

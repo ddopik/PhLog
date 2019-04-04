@@ -43,7 +43,7 @@
                 android:fontFamily="@font/segoe_sb"
                 android:text="@string/login"
                 android:textAllCaps="false"
-                android:textSize="@dimen/font_large"
+                android:textSize="@dimen/sign_up_text_size_meduim"
                 android:textColor="@color/colorWhite" />
 
             <Button
@@ -56,7 +56,7 @@
                 android:fontFamily="@font/segoe_sb"
                 android:text="@string/sign_up"
                 android:textAllCaps="false"
-                android:textSize="@dimen/font_large"
+                android:textSize="@dimen/sign_up_text_size_meduim"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>

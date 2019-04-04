@@ -95,7 +95,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
         if (brandSearch.getText().toString().length() > 0) {
             promptView.setVisibility(View.GONE);
-            brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
+            brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), nextPageUrl);
         }
     }
 
@@ -146,7 +146,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
             @Override
             protected void loadMoreItems() {
-                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), Integer.parseInt(nextPageUrl));
+                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), nextPageUrl);
 
             }
 
@@ -217,7 +217,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
 
                 promptView.setVisibility(View.GONE);
                 brandSearchList.clear();
-                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), 0);
+                brandSearchFragmentPresenter.getSearchBrand(brandSearch.getText().toString().trim(), nextPageUrl);
                 brandSearchAdapter.notifyDataSetChanged();
                 Log.e(TAG, "search string: " + brandSearch.getText().toString());
 

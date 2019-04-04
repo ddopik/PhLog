@@ -5,5 +5,5 @@ package com.example.softmills.phlog.ui.search.view.profile.presenter;
  */
 public interface ProfileSearchPresenter {
 
-    void getProfileSearchList(String key,int page);
+    void getProfileSearchList(String key,String page);
 }

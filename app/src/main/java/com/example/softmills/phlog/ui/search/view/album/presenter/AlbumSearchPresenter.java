@@ -14,7 +14,7 @@ public interface AlbumSearchPresenter {
 
     Map<String, String> getFilter(List<Filter> filterList);
 
-    void getAlbumSearchQuery(String s, List<Filter> filterList, int page);
+    void getAlbumSearchQuery(String s, List<Filter> filterList, String page);
 
 
  }

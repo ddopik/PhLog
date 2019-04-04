@@ -9,7 +9,7 @@ import io.reactivex.Observable;
  */
 public interface BrandSearchFragmentPresenter {
 
-     void getSearchBrand(String key,int page);
+     void getSearchBrand(String key,String page);
 
 
      Observable<Boolean> unfollowBrand(Business business);

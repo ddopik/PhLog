@@ -100,13 +100,13 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             allAlbumImgRv.setAdapter(allAlbumImgAdapter);
 
 
-            for (int i = 0; i < albumImgList.size(); i++) {
-                if (albumImgList.get(i).id == selectedPosition) {
-                    Objects.requireNonNull(allAlbumImgRv.getLayoutManager()).smoothScrollToPosition(allAlbumImgRv, null, i);
-                    break;
-                }
-
-            }
+//            for (int i = 0; i < albumImgList.size(); i++) {
+//                if (albumImgList.get(i).id == selectedPosition) {
+//                    Objects.requireNonNull(allAlbumImgRv.getLayoutManager()).smoothScrollToPosition(allAlbumImgRv, null, i);
+//                    break;
+//                }
+//
+//            }
 
             initListener();
         }
@@ -131,6 +131,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             public void onAlbumImgClick(BaseImage albumImg) {
                 Intent intent = new Intent(getBaseContext(), ImageCommentActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                // handle photoGrapher ob initialization cause it is not return into BaseImageObj when image was in PhotosList
                 if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_PHOTOS_LIST)) {
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                     albumImg.currentPhotoGrapherPhoto = true;

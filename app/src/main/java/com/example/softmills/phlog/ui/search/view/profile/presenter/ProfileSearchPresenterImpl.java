@@ -29,7 +29,7 @@ public class ProfileSearchPresenterImpl implements ProfileSearchPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getProfileSearchList(String key, int page) {
+    public void getProfileSearchList(String key, String page) {
         profileSearchFragmentView.viewProfileSearchProgress(true);
         BaseNetworkApi.getProfileSearch(key, page)
                 .subscribeOn(Schedulers.io())

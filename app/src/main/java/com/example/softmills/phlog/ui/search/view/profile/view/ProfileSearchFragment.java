@@ -93,7 +93,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
             if (profileSearch.getText().toString().length() > 0) {
                 promptView.setVisibility(View.GONE);
                 profileSearchList.clear();
-                profileSearchPresenter.getProfileSearchList(onSearchTabSelected.getSearchView().getText().toString().trim(), 0);
+                profileSearchPresenter.getProfileSearchList(onSearchTabSelected.getSearchView().getText().toString().trim(), nextPageUrl);
             }
 
         }
@@ -142,7 +142,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
 
                 if (profileSearch.getText().length() > 0) {
                     promptView.setVisibility(View.GONE);
-                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), Integer.parseInt(nextPageUrl));
+                    profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), nextPageUrl);
                 }
             }
 
@@ -187,7 +187,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
                 }
                 promptView.setVisibility(View.GONE);
                 profileSearchList.clear();
-                profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), 0);
+                profileSearchPresenter.getProfileSearchList(profileSearch.getText().toString().trim(), nextPageUrl);
                 Log.e(TAG, "search string: " + profileSearch.getText().toString());
 
             }

@@ -31,7 +31,7 @@ public class BrandSearchFragmentPresenterImpl implements BrandSearchFragmentPres
 
     @SuppressLint("CheckResult")
     @Override
-    public void getSearchBrand(String key, int page) {
+    public void getSearchBrand(String key, String page) {
         brandSearchFragmentView.viewBrandSearchProgress(true);
         BaseNetworkApi.getBrandSearch( key, page)
                 .subscribeOn(Schedulers.io())

@@ -53,42 +53,43 @@ public class AlbumSearchFragmentImpl implements AlbumSearchPresenter {
     }
 
 
-
     @SuppressLint("CheckResult")
     @Override
-    public void getAlbumSearchQuery(String s, List<Filter> filterList, int page) {
+    public void getAlbumSearchQuery(String s, List<Filter> filterList, String page) {
 
-        
+
         albumSearchFragmentView.showAlbumSearchProgress(true);
-        BaseNetworkApi.getSearchAlbum(s, getFilter(filterList),String.valueOf(page))
-                .subscribeOn(Schedulers.io())
-                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(albumSearchResponse -> {
 
-                    albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data);
-                    if (albumSearchResponse.data.nextPageUrl != null) {
-                        albumSearchFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, albumSearchResponse.data.nextPageUrl));
+            BaseNetworkApi.getSearchAlbum(s, getFilter(filterList), String.valueOf(page))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(albumSearchResponse -> {
 
-                    } else {
-                        albumSearchFragmentView.setNextPageUrl(null);
-                    }
-                    albumSearchFragmentView.showAlbumSearchProgress(false);
+                        albumSearchFragmentView.viewSearchAlbum(albumSearchResponse.data);
+                        if (albumSearchResponse.data.nextPageUrl != null) {
+                            albumSearchFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, albumSearchResponse.data.nextPageUrl));
 
-                }, throwable -> {
-                    ErrorUtils.Companion.setError(context, TAG, throwable);
-                    albumSearchFragmentView.showAlbumSearchProgress(false);
-                });
+                        } else {
+                            albumSearchFragmentView.setNextPageUrl(null);
+                        }
+                        albumSearchFragmentView.showAlbumSearchProgress(false);
+
+                    }, throwable -> {
+                        ErrorUtils.Companion.setError(context, TAG, throwable);
+                        albumSearchFragmentView.showAlbumSearchProgress(false);
+                    });
+
     }
 
     @Override
-    public Map<String,String> getFilter(List<Filter> filterList){
-        int filterCount=0;
-        Map<String,String> filtersMap=new HashMap<String, String>();
-        for (int i = 0; i< filterList.size(); i++){
-            for (int x = 0; x< filterList.get(i).options.size(); x++){
+    public Map<String, String> getFilter(List<Filter> filterList) {
+        int filterCount = 0;
+        Map<String, String> filtersMap = new HashMap<String, String>();
+        for (int i = 0; i < filterList.size(); i++) {
+            for (int x = 0; x < filterList.get(i).options.size(); x++) {
                 if (filterList.get(i).options.get(x).isSelected) {
-                    filtersMap.put("filter["+filterCount+"]", filterList.get(i).options.get(x).id.toString());
-                    filterCount ++;
+                    filtersMap.put("filter[" + filterCount + "]", filterList.get(i).options.get(x).id.toString());
+                    filterCount++;
                 }
             }
 
