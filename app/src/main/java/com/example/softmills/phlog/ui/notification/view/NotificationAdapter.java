@@ -212,11 +212,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
             if (image != null) {
                 Intent intent = new Intent(context, ImageCommentActivity.class);
-                intent.putExtra(ImageCommentActivity.IMAGE_DATA, image);
+                intent.putExtra(ImageCommentActivity.NOTIFICATION_IMAGE_ID, image.id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 context.startActivity(intent);
             } else {
-                Toast.makeText(context, context.getResources().getString(R.string.photo_not_available, context.getString(R.string.photo)), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.photo_not_available), Toast.LENGTH_LONG).show();
             }
         });
 
