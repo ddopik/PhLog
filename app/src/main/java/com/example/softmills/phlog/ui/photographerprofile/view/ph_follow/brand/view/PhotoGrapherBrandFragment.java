@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
@@ -46,6 +47,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
     private EditText searchPhotographerBrand;
     private PhotoGrapherFollowingBrandAdapter photoGrapherFollowingBrandAdapter;
     private List<Business> photographerFollowingBrands = new ArrayList<>();
+    private TextView placeHolder;
     private PagingController pagingController;
     private String nextPageUrl="1";
     private boolean isLoading;
@@ -103,6 +105,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
         photographerBrandSearchProgressBar = mainView.findViewById(R.id.photographer_brand_progress_bar);
         photoGrapherFollowingBrandAdapter = new PhotoGrapherFollowingBrandAdapter(photographerFollowingBrands);
         followingBrandRv.setAdapter(photoGrapherFollowingBrandAdapter);
+        placeHolder = mainView.findViewById(R.id.place_holder);
     }
 
     @Override
@@ -205,6 +208,8 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
     @Override
     public void viewPhotoGrapherFollowingBrand(List<Business> brandSearchList) {
         this.photographerFollowingBrands.addAll(brandSearchList);
+        if (this.photographerFollowingBrands.isEmpty())
+            placeHolder.setVisibility(View.VISIBLE);
         photoGrapherFollowingBrandAdapter.notifyDataSetChanged();
 
     }

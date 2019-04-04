@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/search_photographer_brand"
@@ -15,15 +15,37 @@
         android:layout_marginTop="@dimen/dp8"
         android:layout_marginStart="@dimen/dp8"
         android:layout_marginEnd="@dimen/dp8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/rounded_search_view_gray"
         android:drawableStart="@drawable/places_ic_search"
         android:padding="@dimen/widgets_padding"
         android:hint="@string/search"/>
 
+    <TextView
+        android:id="@+id/place_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_normal"
+        android:gravity="center"
+        android:textColor="@color/gray800"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_photographer_brand"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".1"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:text="@string/no_following_brands"/>
+
     <com.example.softmills.phlog.base.widgets.CustomRecyclerView
         android:id="@+id/photographer_search_brand_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/widgets_padding"
+        app:layout_constraintTop_toBottomOf="@id/search_photographer_brand"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_below="@+id/search_photographer_brand"
         app:orientation="vertical" />
 
@@ -36,6 +58,10 @@
         android:layout_below="@+id/photographer_search_brand_rv"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

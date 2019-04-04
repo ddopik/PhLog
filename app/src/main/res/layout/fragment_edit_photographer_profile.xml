@@ -175,7 +175,7 @@
                     android:fontFamily="@font/verdana"
                     android:inputType="textPersonName"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sign_up_text_size_small"
+                    android:textSize="@dimen/font_normal"
                     app:backgroundTint="@color/gray200" />
             </android.support.design.widget.TextInputLayout>
 
@@ -191,7 +191,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/name_layout"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@id/guideline4"
-                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_bias="1"
+                android:layout_marginEnd="@dimen/dp16"
                 app:layout_constraintTop_toTopOf="@+id/name_layout" />
 
             <android.support.design.widget.TextInputLayout
@@ -215,7 +216,7 @@
                     android:fontFamily="@font/verdana"
                     android:inputType="textEmailAddress"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sign_up_text_size_small"
+                    android:textSize="@dimen/font_normal"
                     app:backgroundTint="@color/gray200" />
             </android.support.design.widget.TextInputLayout>
 
@@ -231,7 +232,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/email_layout"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@id/guideline4"
-                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_bias="1"
+                android:layout_marginEnd="@dimen/dp16"
                 app:layout_constraintTop_toTopOf="@+id/email_layout" />
 
             <android.support.design.widget.TextInputLayout
@@ -254,7 +256,7 @@
                     android:fontFamily="@font/verdana"
                     android:inputType="phone"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sign_up_text_size_small"
+                    android:textSize="@dimen/font_normal"
                     android:visibility="visible"
                     app:backgroundTint="@color/gray200" />
             </android.support.design.widget.TextInputLayout>
@@ -272,7 +274,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/phone_layout"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@id/guideline4"
-                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_bias="1"
+                android:layout_marginEnd="@dimen/dp16"
                 app:layout_constraintTop_toTopOf="@+id/phone_layout" />
 
             <android.support.design.widget.TextInputLayout
@@ -295,7 +298,7 @@
                     android:fontFamily="@font/verdana"
                     android:inputType="textAutoComplete"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sign_up_text_size_small"
+                    android:textSize="@dimen/font_normal"
                     app:backgroundTint="@color/white" />
             </android.support.design.widget.TextInputLayout>
 
@@ -311,7 +314,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/country_layout"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@id/guideline4"
-                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_bias="1"
+                android:layout_marginEnd="@dimen/dp16"
                 app:layout_constraintTop_toTopOf="@+id/country_layout" />
 
             <Button

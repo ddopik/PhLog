@@ -11,4 +11,6 @@ public interface BrandInnerActivityView {
     void viewInnerBrandProgressBar(Boolean state);
     void viwBrandFollowedState(Boolean state);
     void showMessage(String msg);
+
+    void showNotFoundDialog();
 }

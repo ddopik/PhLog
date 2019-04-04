@@ -90,6 +90,10 @@
         <!--<item name="colorControlHighlight">@color/text_input_color</item>-->
     </style>
 
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/text_input_color</item>
+    </style>
+
     <style name="switch_btn_style" parent="AppTheme">
         <!-- active thumb & track color (30% transparency) -->
         <item name="colorControlActivated">@color/text_input_color</item>

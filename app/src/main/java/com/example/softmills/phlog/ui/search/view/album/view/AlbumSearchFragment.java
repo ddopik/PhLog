@@ -379,7 +379,7 @@ public class AlbumSearchFragment extends BaseFragment implements AlbumSearchFrag
         searchResultCountView.setTextColor(getResources().getColor(R.color.white));
         searchResultCountView.setText(new StringBuilder().append(albumSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
         searchResultCountView.setTextColor(getActivity().getResources().getColor(R.color.white));
-        Utilities.hideKeyboard(getActivity());
+//        Utilities.hideKeyboard(getActivity());
 
 
         if (this.albumSearchList.size() == 0) {

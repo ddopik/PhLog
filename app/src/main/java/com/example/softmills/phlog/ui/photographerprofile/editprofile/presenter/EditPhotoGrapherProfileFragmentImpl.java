@@ -8,7 +8,6 @@ import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragmentView;
-import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.Country;
 
 import java.io.File;
@@ -33,6 +32,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
 
     public EditPhotoGrapherProfileFragmentImpl(EditPhotoGrapherProfileFragmentView editPhotoGrapherProfileFragmentView, Context context) {
         this.view = editPhotoGrapherProfileFragmentView;
+        this.context = context;
     }
 
 
@@ -101,12 +101,41 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
 
     @Override
     public void getAllCountries(Consumer<List<Country>> consumer) {
-        BaseNetworkApi.getAllCounters()
+        Disposable d = BaseNetworkApi.getAllCounters()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(allCountersRepose -> {consumer.accept(allCountersRepose.countries);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
+        disposables.add(d);
+    }
+
+    @Override
+    public void changePassword(Context context, String oldPassword, String newPassword) {
+        view.viewEditProfileProgress(true);
+        HashMap<String, String> data = new HashMap<>();
+        if (newPassword != null) {
+            data.put("password", newPassword);
+        }
+        if (oldPassword != null) {
+            data.put("old_password", oldPassword);
+        }
+
+        Disposable disposable = BaseNetworkApi.updateProfile(null, data, PrefUtils.getUserToken(this.context))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> view.viewEditProfileProgress(false))
+                .subscribe(s -> {
+                    view.viewEditProfileProgress(false);
+                    if (s != null) {
+                        view.showMessage(R.string.password_changed);
+                    }
+                }, throwable -> {
+                    view.viewEditProfileProgress(false);
+                    if (this.context != null)
+                        ErrorUtils.Companion.setError(this.context, TAG, throwable);
+                });
+        disposables.add(disposable);
     }
 }

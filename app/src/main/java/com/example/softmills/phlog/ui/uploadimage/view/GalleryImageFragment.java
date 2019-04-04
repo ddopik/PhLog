@@ -143,9 +143,10 @@ public class GalleryImageFragment extends BaseFragment {
 
         String[] projection = {MediaStore.MediaColumns.DATA,
                 MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
+        String orderBy = MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC";
 
         cursor = getContext().getContentResolver().query(uri, projection, null,
-                null, null);
+                null, orderBy);
 
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
         column_index_folder_name = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);

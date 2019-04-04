@@ -211,7 +211,7 @@ public class ProfileSearchFragment extends BaseFragment implements ProfileSearch
         searchResultCountView.setVisibility(View.VISIBLE);
         searchResultCountView.setTextColor(getResources().getColor(R.color.white));
         searchResultCountView.setText(new StringBuilder().append(profileSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
-        hideSoftKeyBoard();
+//        hideSoftKeyBoard();
 
         if (this.profileSearchList.size() == 0) {
             promptView.setVisibility(View.VISIBLE);

@@ -242,7 +242,7 @@ public class BrandSearchFragment extends BaseFragment implements BrandSearchFrag
         searchResultCountView.setVisibility(View.VISIBLE);
         searchResultCountView.setTextColor(getResources().getColor(R.color.white));
         searchResultCountView.setText(new StringBuilder().append(brandSearchData.total).append(" ").append(getResources().getString(R.string.result)).toString());
-        hideSoftKeyBoard();
+//        hideSoftKeyBoard();
 
 
         if (this.brandSearchList.size() == 0) {

@@ -204,8 +204,7 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
 
         changePassword.setOnClickListener(v -> {
             ChangePasswordDialogFragment.getInstance((oldPassword, newPassword) -> {
-                this.oldPassword = oldPassword;
-                this.newPassword = newPassword;
+                presenter.changePassword(getContext(), oldPassword, newPassword);
             }).show(getChildFragmentManager(), ChangePasswordDialogFragment.class.getSimpleName());
         });
     }
@@ -231,13 +230,13 @@ public class EditPhotoGrapherProfileFragment extends BaseFragment implements Edi
     private void openPickerDialog() {
         CharSequence photoChooserOptions[] = new CharSequence[]{getResources().getString(R.string.general_photo_chooser_camera), getResources().getString(R.string.general_photo_chooser_gallery)};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(getResources().getString(R.string.general_photo_chooser_title));
-        builder.setItems(photoChooserOptions, (dialog, option) -> {
-            if (option == 0) {
-                RequestCameraPermutations();
-            } else if (option == 1) {
-                requestGalleryPermutations();
-            }
+        builder.setTitle(getResources().getString(R.string.general_photo_chooser_title))
+        .setPositiveButton(R.string.general_photo_chooser_camera, (dialog, which) -> {
+            RequestCameraPermutations();
+            dialog.dismiss();
+        }).setNegativeButton(R.string.general_photo_chooser_gallery, (dialog, which) -> {
+            requestGalleryPermutations();
+            dialog.dismiss();
         }).show();
     }
 

@@ -245,4 +245,15 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
 //    public interface OnMissionCampaignDataRecived {
 //        void onCampaignDescription(String desc);
 //    }
+
+
+    @Override
+    public void showNotFoundDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.campaign_not_available)
+                .setPositiveButton(R.string.go_back, (dialog, which) -> {
+                    finish();
+                    dialog.dismiss();
+                }).show();
+    }
 }

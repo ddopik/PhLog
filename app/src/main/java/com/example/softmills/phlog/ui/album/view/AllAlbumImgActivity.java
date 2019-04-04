@@ -102,7 +102,8 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
 
             for (int i = 0; i < albumImgList.size(); i++) {
                 if (albumImgList.get(i).id == selectedPosition) {
-                    Objects.requireNonNull(allAlbumImgRv.getLayoutManager()).smoothScrollToPosition(allAlbumImgRv, null, i);
+//                    Objects.requireNonNull(allAlbumImgRv.getLayoutManager()).smoothScrollToPosition(allAlbumImgRv, null, i);
+                    allAlbumImgRv.scrollToPosition(i);
                     break;
                 }
 

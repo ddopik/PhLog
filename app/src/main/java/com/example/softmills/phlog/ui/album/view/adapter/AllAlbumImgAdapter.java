@@ -107,14 +107,14 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
 
 
         if (albumImgList.get(i).isSaved) {
-            albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_saved));
+            albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_bookmark_on));
         } else {
-            albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.un_saved));
+            albumImgViewHolder.albumImgSaveBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_bookmark_off));
         }
         albumImgViewHolder.imageCommentTagVal.setText(tagS);
 
 
-        if (imagePhotographer.isFollow) {
+        if (imagePhotographer.isFollow &&  !Integer.valueOf(PrefUtils.getUserId(context)).equals(imagePhotographer.id)) {
             albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.un_follow));
         } else {
             albumImgViewHolder.followPhotoGrapherBtn.setText(context.getResources().getString(R.string.follow));
@@ -178,7 +178,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             }
             case CURRENT_PHOTOGRAPHER_PHOTOS_LIST: {
                 albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
-                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
                 albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
                 break;
             }
@@ -230,7 +230,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         ImageView albumIcon, albumImg;
         TextView authorName, authorUserName, imageCommentTagVal, albumImgLikeVal, albumImgCommentVal;
         ImageButton albumImgLike, albumImgComment, albumImgSaveBtn;
-        Button albumImgDeleteBtn;
+        ImageButton albumImgDeleteBtn;
         LoadingButton followPhotoGrapherBtn;
 
         AlbumImgViewHolder(View view) {
