@@ -42,7 +42,6 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
                 .subscribe(imageDetailsResponse -> {
                     imageCommentActivityView.viewImageDetails(imageDetailsResponse.data);
                     imageCommentActivityView.viewImageProgress(false);
-
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
 

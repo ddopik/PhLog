@@ -71,17 +71,17 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        setContentView(R.layout.activity_image_commnet);
         if (getIntent().getParcelableExtra(IMAGE_DATA) != null) {
-            setContentView(R.layout.activity_image_commnet);
             previewImage = getIntent().getExtras().getParcelable(IMAGE_DATA);
             initPresenter();
             initView();
             initListener();
             imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
         } else if (getIntent().getIntExtra(NOTIFICATION_IMAGE_ID, -1) >= 0) {
+            initPresenter();
             imageCommentActivityPresenter.getImageDetails(getIntent().getIntExtra(NOTIFICATION_IMAGE_ID, -1));
-         }
+        }
 
 
     }
@@ -95,14 +95,16 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         addCommentProgress = findViewById(R.id.add_comment_progress);
 
         commentsRv = findViewById(R.id.comment_rv);
-        toolBarTitle.setText(previewImage.albumName);
-        //force adapter to start to render Add commentView
-        Comment userComment = new Comment();
-        commentList.add(userComment); /// acts As default for image Header
-        commentList.add(userComment);/// acts As default for image Add comment
+        if (previewImage !=null) {
+//            toolBarTitle.setText(previewImage.albumName);
+            //force adapter to start to render Add commentView
+            Comment userComment = new Comment();
+            commentList.add(userComment); /// acts As default for image Header
+            commentList.add(userComment);/// acts As default for image Add comment
 
-        commentsAdapter = new CommentsAdapter(previewImage, commentList, mentions, MAIN_COMMENT);
-        commentsRv.setAdapter(commentsAdapter);
+            commentsAdapter = new CommentsAdapter(previewImage, commentList, mentions, MAIN_COMMENT);
+            commentsRv.setAdapter(commentsAdapter);
+        }
 
 
     }
@@ -417,10 +419,30 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
     @Override
     public void viewImageDetails(BaseImage baseImage) {
-        initPresenter();
+        previewImage = baseImage;
         initView();
         initListener();
         imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
+
+//        toolBarTitle = findViewById(R.id.toolbar_title);
+//        backBtn = findViewById(R.id.back_btn);
+//
+////        addCommentProgress = findViewById(R.id.add_comment_progress);
+////
+////        commentsRv = findViewById(R.id.comment_rv);
+////
+//////            toolBarTitle.setText(previewImage.albumName);
+////            //force adapter to start to render Add commentView
+////            Comment userComment = new Comment();
+////            commentList.add(userComment); /// acts As default for image Header
+////            commentList.add(userComment);/// acts As default for image Add comment
+////
+////            commentsAdapter = new CommentsAdapter(baseImage, commentList, mentions, MAIN_COMMENT);
+////            commentsRv.setAdapter(commentsAdapter);
+////
+////
+////        initListener();
+//        imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
 
     }
 
@@ -435,6 +457,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
                 }).show();
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
