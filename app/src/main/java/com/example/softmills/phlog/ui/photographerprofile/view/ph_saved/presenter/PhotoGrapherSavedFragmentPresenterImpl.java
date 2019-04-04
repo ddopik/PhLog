@@ -27,7 +27,7 @@ public class PhotoGrapherSavedFragmentPresenterImpl implements PhotoGrapherSaved
 
     @SuppressLint("CheckResult")
     @Override
-    public void getPhotographerSavedPhotos(int Page) {
+    public void getPhotographerSavedPhotos(String Page) {
         photoGrapherPhotosFragmentView.viewPhotosLoading(true);
         BaseNetworkApi.getPhotoGrapherSavedPhotos(Page)
                 .subscribeOn(Schedulers.io())
@@ -37,7 +37,6 @@ public class PhotoGrapherSavedFragmentPresenterImpl implements PhotoGrapherSaved
                     photoGrapherPhotosFragmentView.showSavedPhotos(photoGrapherPhotosResponse.data.data);
                     if (photoGrapherPhotosResponse.data.nextPageUrl != null) {
                         photoGrapherPhotosFragmentView.setNextPageUrl(Utilities.getNextPageNumber(context, photoGrapherPhotosResponse.data.nextPageUrl));
-
                     } else {
                         photoGrapherPhotosFragmentView.setNextPageUrl(null);
                     }

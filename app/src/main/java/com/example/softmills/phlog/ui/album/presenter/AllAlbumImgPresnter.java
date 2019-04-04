@@ -17,7 +17,7 @@ public interface AllAlbumImgPresnter {
     void unSaveToProfileImage(BaseImage baseImage);
     void followImagePhotoGrapher(BaseImage baseImage);
 
-    void getPhotoGrapherPhotosList(int page);
-    void getPhotoGrapherSavedList(int page);
+    void getPhotoGrapherPhotosList(String page);
+    void getPhotoGrapherSavedList(String page);
 
 }

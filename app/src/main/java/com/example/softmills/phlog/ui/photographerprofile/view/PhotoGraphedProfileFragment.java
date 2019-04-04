@@ -83,12 +83,6 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         initPresenter();
         initViews();
         initListener();
@@ -97,8 +91,9 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
             ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
             setHasOptionsMenu(true);
         }
-        photoGrapherProfileActivityPresenter.getPhotoGrapherProfileData();
+
     }
+
 
     @Override
     public void initViews() {
@@ -127,6 +122,12 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
     @Override
     public void initPresenter() {
         photoGrapherProfileActivityPresenter = new PhotoGrapherProfileActivityPresenterImpl(getContext(), this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        photoGrapherProfileActivityPresenter.getPhotoGrapherProfileData();
     }
 
     @Override

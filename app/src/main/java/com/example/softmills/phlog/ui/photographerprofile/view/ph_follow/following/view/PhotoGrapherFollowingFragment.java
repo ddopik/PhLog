@@ -70,8 +70,15 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         initViews();
         initListener();
         //default following list
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (becameVisible) {
-            photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, "");
+            photoGrapherFollowingList.clear();
+            photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(nextPageUrl, "");
         }
     }
 
@@ -82,8 +89,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !becameVisible) {
             becameVisible = true;
-            if (getView() != null)
-                photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, "");
+
         }
     }
 
@@ -107,10 +113,6 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         searchEditText = mainView.findViewById(R.id.search_following);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     private void initListener() {
 
@@ -135,7 +137,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
 
                     if (firstVisibleItemPosition == 0) {
                         if (nextPageUrl != null) {
-                            photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(Integer.parseInt(nextPageUrl), searchEditText.getText().toString());
+                            photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(nextPageUrl, searchEditText.getText().toString());
                         }
 
                     }
@@ -150,7 +152,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
 
             @Override
             protected void loadMoreItems() {
-                photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(Integer.parseInt(nextPageUrl), searchEditText.getText().toString());
+                photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(nextPageUrl, searchEditText.getText().toString());
 
             }
 
@@ -193,7 +195,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
             public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
                 photoGrapherFollowingList.clear();
                 // user is searching clear default value and get new search List
-                photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(0, searchEditText.getText().toString());
+                photoGrapherFollowingInPresenter.getPhotoGrapherFollowingSearch(nextPageUrl, searchEditText.getText().toString());
 
             }
 

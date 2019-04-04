@@ -34,7 +34,7 @@ public class AllPhotographerPhotosPresenterImpl implements AllPhotographerPhotos
 
     @SuppressLint("CheckResult")
     @Override
-    public void getPhotographerPhotos(int Page) {
+    public void getPhotographerPhotos(String Page) {
         allPhotographerPhotosActivityView.showImageListProgress(true);
         BaseNetworkApi.getPhotoGrapherPhotos(Page)
                 .subscribeOn(Schedulers.io())

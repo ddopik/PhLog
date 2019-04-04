@@ -14,6 +14,7 @@ public interface Constants {
     int SOCIAL_FRAGMENT_PAGING_THRESHOLD =3;
 
     int QUERY_SEARCH_TIME_OUT = 600;
+    int CURRENT_PROFILE_TAP_CODE = 500;
 
 
     //////NavigationMangerConst
@@ -83,6 +84,7 @@ public interface Constants {
     enum PhotosListType{
         SOCIAL_LIST,CURRENT_PHOTOGRAPHER_PHOTOS_LIST,CURRENT_PHOTOGRAPHER_SAVED_LIST,USER_PROFILE_PHOTOS_LIST,ALBUM_PREVIEW_LIST,CAMPAIGN_IMAGES_LIST
     }
+
 
 
     enum CommentListType{

@@ -148,7 +148,7 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getPhotoGrapherPhotosList(int page) {
+    public void getPhotoGrapherPhotosList(String page) {
         allAlbumImgActivityView.viewAlbumImageListProgress(true);
         BaseNetworkApi.getPhotoGrapherPhotos(page)
                 .subscribeOn(Schedulers.io())
@@ -172,7 +172,7 @@ public class AllAlbumImgPresnterImpl implements AllAlbumImgPresnter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void getPhotoGrapherSavedList(int page) {
+    public void getPhotoGrapherSavedList(String page) {
         allAlbumImgActivityView.viewAlbumImageListProgress(true);
         BaseNetworkApi.getPhotoGrapherSavedPhotos(page)
                 .subscribeOn(Schedulers.io())

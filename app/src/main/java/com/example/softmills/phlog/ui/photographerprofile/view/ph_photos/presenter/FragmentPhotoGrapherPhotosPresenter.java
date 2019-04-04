@@ -5,5 +5,5 @@ package com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.presen
  */
 public interface FragmentPhotoGrapherPhotosPresenter {
 
-    void getPhotographerPhotos(int page);
+    void getPhotographerPhotos(String page);
 }

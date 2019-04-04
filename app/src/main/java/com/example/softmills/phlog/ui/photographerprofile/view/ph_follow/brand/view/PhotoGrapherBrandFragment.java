@@ -46,6 +46,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
     private EditText searchPhotographerBrand;
     private PhotoGrapherFollowingBrandAdapter photoGrapherFollowingBrandAdapter;
     private List<Business> photographerFollowingBrands = new ArrayList<>();
+    private boolean becameVisible;
     private PagingController pagingController;
     private String nextPageUrl="1";
     private boolean isLoading;
@@ -69,20 +70,24 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
         initPresenter();
         initViews();
         initListener();
-        if (becameVisible) {
-            photoGrapherBrandPresenter.getFollowingBrand("", "0");
-        }
+
     }
 
-    private boolean becameVisible;
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (becameVisible) {
+            photographerFollowingBrands.clear();
+            photoGrapherBrandPresenter.getFollowingBrand("", nextPageUrl);
+        }
+    }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !becameVisible) {
             becameVisible = true;
-            if (getView() != null)
-                photoGrapherBrandPresenter.getFollowingBrand("", "0");
+
         }
     }
 
@@ -105,10 +110,7 @@ public class PhotoGrapherBrandFragment extends BaseFragment implements PhotoGrap
         followingBrandRv.setAdapter(photoGrapherFollowingBrandAdapter);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
+
 
     private void initListener() {
 

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.example.softmills.phlog.Utiltes.Constants.CURRENT_PROFILE_TAP_CODE;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_PHOTOS_LIST;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_SAVED_LIST;
 
@@ -42,7 +43,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     /// set your Proper type of list for later processes
     public static String LIST_TYPE = "list_type";
     public static String LIST_NAME = "list_name";
-    public static String CURRENT_PAGE = "current_page";
+     public static String CURRENT_PAGE = "current_page";
     public final static int IMAGE_DETAILS_REQUEST_CODE = 764;
     private PhotosListType photosListType;
     private ImageButton mainBackBtn;
@@ -136,7 +137,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                     albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                     albumImg.currentPhotoGrapherPhoto = true;
                 } else if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
-                    albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
+//                    albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
                 }
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
                 startActivityForResult(intent, IMAGE_DETAILS_REQUEST_CODE);
@@ -215,9 +216,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             @Override
             protected void loadMoreItems() {
                 if (photosListType == CURRENT_PHOTOGRAPHER_PHOTOS_LIST) {
-                    allAlbumImgPresnter.getPhotoGrapherPhotosList(Integer.parseInt(nextPageUrl));
+                    allAlbumImgPresnter.getPhotoGrapherPhotosList(nextPageUrl);
                 } else if (photosListType == CURRENT_PHOTOGRAPHER_SAVED_LIST) {
-                    allAlbumImgPresnter.getPhotoGrapherSavedList(Integer.parseInt(nextPageUrl));
+                    allAlbumImgPresnter.getPhotoGrapherSavedList(nextPageUrl);
                 }
 
             }
@@ -342,6 +343,20 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     public void setNextPageUrl(String page) {
         this.nextPageUrl = page;
     }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        if (getIntent().getSerializableExtra(PREVIOUS_SCREEN) !=null){
+//            Intent returnIntent=new Intent();
+//            returnIntent.putExtra(PREVIOUS_SCREEN,getIntent().getSerializableExtra(PREVIOUS_SCREEN));
+//            setResult(CURRENT_PROFILE_TAP_CODE,returnIntent);
+//            finish(); //-->test without it
+//        }
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

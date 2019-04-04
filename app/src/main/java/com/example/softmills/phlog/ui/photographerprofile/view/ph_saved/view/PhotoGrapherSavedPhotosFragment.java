@@ -24,6 +24,7 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presente
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.softmills.phlog.Utiltes.Constants.CURRENT_PROFILE_TAP_CODE;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_SAVED_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.CURRENT_PAGE;
@@ -65,9 +66,15 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
         initPresenter();
         initViews();
         initListener();
-        if (becameVisible) {
-            photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(0); //initialPage
-        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        photoGrapherSavedPhotoList.clear();
+        photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(nextPageUrl);
+
     }
 
     private boolean becameVisible;
@@ -77,8 +84,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !becameVisible) {
             becameVisible = true;
-            if (getView() != null)
-                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(0); //initialPage
+
         }
     }
 
@@ -113,7 +119,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
 
                     if (firstVisibleItemPosition == 0) {
                         if (nextPageUrl != null) {
-                            photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(Integer.parseInt(nextPageUrl));
+                            photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(nextPageUrl);
                         }
 
                     }
@@ -127,7 +133,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
         pagingController = new PagingController(savedPhotosRv) {
             @Override
             protected void loadMoreItems() {
-                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(Integer.parseInt(nextPageUrl));
+                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(nextPageUrl);
             }
 
             @Override
@@ -155,10 +161,10 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
             intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_SAVED_LIST);
             intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.saved));
-
             intent.putExtra(CURRENT_PAGE, nextPageUrl);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherSavedPhotoList);
-            startActivity(intent);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivityForResult(intent, CURRENT_PROFILE_TAP_CODE);
         };
     }
 
@@ -189,4 +195,9 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
         this.nextPageUrl = page;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }

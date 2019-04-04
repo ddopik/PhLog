@@ -68,10 +68,8 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         super.onViewCreated(view, savedInstanceState);
         initPresenter();
         initViews();
-        initListener();//initialPage
-        if (becameVisible) {
-            fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(0);
-        }
+        initListener();
+
     }
 
     @Override
@@ -86,8 +84,8 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !becameVisible) {
             becameVisible = true;
-            if (getView() != null)
-                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(0);
+//            if (getView() != null)
+//                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(0);
         }
     }
 
@@ -116,7 +114,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
 
                     if (firstVisibleItemPosition == 0) {
                         if (nextPageUrl != null) {
-                            fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(Integer.parseInt(nextPageUrl));
+                            fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(nextPageUrl);
                         }
 
                     }
@@ -131,9 +129,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
 
             @Override
             protected void loadMoreItems() {
-
-                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(Integer.parseInt(nextPageUrl));
-
+                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(nextPageUrl);
             }
 
             @Override
@@ -163,11 +159,21 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
             intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_PHOTOS_LIST);
             intent.putExtra(CURRENT_PAGE, nextPageUrl);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherPhotoList);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             startActivity(intent);
         };
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (becameVisible) {
+            photoGrapherPhotoList.clear();
+            fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(nextPageUrl);
+        }
+    }
 
     @Override
     public void showPhotos(List<BaseImage> photosList) {

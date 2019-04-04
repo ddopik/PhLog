@@ -47,7 +47,7 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
         initPresenter();
         initView();
         initListener();
-        allPhotographerPhotosPresenter.getPhotographerPhotos(0);
+        allPhotographerPhotosPresenter.getPhotographerPhotos(nextPageUrl);
     }
 
 
@@ -77,7 +77,7 @@ public class AllPhotographerPhotosActivity extends BaseActivity implements AllPh
 
             @Override
             protected void loadMoreItems() {
-                allPhotographerPhotosPresenter.getPhotographerPhotos(Integer.parseInt(nextPageUrl));
+                allPhotographerPhotosPresenter.getPhotographerPhotos(nextPageUrl);
             }
 
             @Override

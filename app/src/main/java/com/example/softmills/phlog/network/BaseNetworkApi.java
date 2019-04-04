@@ -245,7 +245,7 @@ public class BaseNetworkApi {
                 .getObjectObservable(FollowUserResponse.class);
     }
 
-    public static io.reactivex.Observable<PhotoGrapherSavedPhotosResponse> getPhotoGrapherSavedPhotos(int pageNumber) {
+    public static io.reactivex.Observable<PhotoGrapherSavedPhotosResponse> getPhotoGrapherSavedPhotos(String pageNumber) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_SAVED_PHOTO_URL)
                 .addQueryParameter(PAGER_QUERY_PARAMETER, String.valueOf(pageNumber))
                 .setPriority(Priority.HIGH)
@@ -254,7 +254,7 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<PhotoGrapherPhotosResponse> getPhotoGrapherPhotos(int pageNumber) {
+    public static io.reactivex.Observable<PhotoGrapherPhotosResponse> getPhotoGrapherPhotos(String pageNumber) {
         return Rx2AndroidNetworking.post(PHOTOGRAPHER_ALL_PHOTO_URL)
                 .addQueryParameter(PAGER_QUERY_PARAMETER, String.valueOf(pageNumber))
                 .setPriority(Priority.HIGH)
@@ -279,7 +279,7 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<PhotoGrapherFollowingInResponse> getPhotoGrapherProfileFollowingSearch(String token, String key, int page) {
+    public static io.reactivex.Observable<PhotoGrapherFollowingInResponse> getPhotoGrapherProfileFollowingSearch(String token, String key, String page) {
         return Rx2AndroidNetworking.post(PROFILE_FOLLOWING_SEARCH_URL)
                 .addBodyParameter(TOKEN_BODY_PARAMETER, token)
                 .addBodyParameter("keyword", key)

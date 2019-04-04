@@ -33,7 +33,7 @@ public class PhotoGrapherFollowingInPresenterImpl implements PhotoGrapherFollowi
     @SuppressLint("CheckResult")
     @Override
 
-    public void getPhotoGrapherFollowingSearch(int page, String key) {
+    public void getPhotoGrapherFollowingSearch(String page, String key) {
         Log.e(TAG, "getPhotoGrapherFollowingSearch() ---> key  " + key);
 
         photoGrapherFollowingFragmentView.viewPhotographerFollowingInProgress(true);
