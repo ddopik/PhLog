@@ -216,7 +216,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 context.startActivity(intent);
             } else {
-                Toast.makeText(context, context.getResources().getString(R.string.is_no_longer_availible, context.getString(R.string.photo)), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getResources().getString(R.string.photo_not_available, context.getString(R.string.photo)), Toast.LENGTH_LONG).show();
             }
         });
 
