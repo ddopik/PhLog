@@ -343,19 +343,6 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         this.nextPageUrl = page;
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-//        if (getIntent().getSerializableExtra(PREVIOUS_SCREEN) !=null){
-//            Intent returnIntent=new Intent();
-//            returnIntent.putExtra(PREVIOUS_SCREEN,getIntent().getSerializableExtra(PREVIOUS_SCREEN));
-//            setResult(CURRENT_PROFILE_TAP_CODE,returnIntent);
-//            finish(); //-->test without it
-//        }
-    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

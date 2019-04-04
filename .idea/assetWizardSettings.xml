@@ -11,29 +11,15 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
-                        <option name="children">
-                          <map>
-                            <entry key="clipartAsset">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="url" value="jar:file:/C:/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_close_black_24dp.xml" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="autoMirrored" value="true" />
-                            <entry key="height" value="18" />
-                            <entry key="outputName" value="ic_close_black_24dp" />
+                            <entry key="height" value="57" />
+                            <entry key="outputName" value="ic_bookmark_off" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\user 11" />
-                            <entry key="width" value="18" />
+                            <entry key="sourceFile" value="C:\Users\softmills-omar\Downloads\svg\bookmark.svg" />
+                            <entry key="width" value="57" />
                           </map>
                         </option>
                       </PersistentState>

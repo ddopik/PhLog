@@ -8,4 +8,6 @@ import com.example.softmills.phlog.base.commonmodel.Campaign;
 public interface CampaignInnerActivityView {
 
     void setCampaign(Campaign campaign);
+
+    void showNotFoundDialog();
 }

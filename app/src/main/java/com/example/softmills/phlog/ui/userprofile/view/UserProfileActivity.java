@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -357,5 +358,16 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
         else
             params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
         userProfileCollapsingToolbarLayout.setLayoutParams(params);
+    }
+
+    @Override
+    public void showNotFoundDialog() {
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.photographer_not_available)
+                .setPositiveButton(R.string.go_back, (dialog, which) -> {
+                    finish();
+                    dialog.dismiss();
+                }).show();
     }
 }

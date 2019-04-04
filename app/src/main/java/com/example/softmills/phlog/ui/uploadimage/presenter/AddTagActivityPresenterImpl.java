@@ -42,43 +42,43 @@ public class AddTagActivityPresenterImpl implements AddTagActivityPresenter {
             tagsSelected.put("tags[" + i + "]", tagList.get(i).name);
         }
 
-        switch (uploadImageData.getUploadImageType()) {
-            case NORMAL_IMG: {
-                //user is uploading Normal Photo
-                addTagActivityView.viewUploadProgress(true);
-                BaseNetworkApi.uploadPhotoGrapherPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected, new UploadProgressListener() {
-                    @Override
-                    public void onProgress(long bytesUploaded, long totalBytes) {
-                    }
-                })
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(uploadImgResponse -> {
-                            addTagActivityView.viewUploadProgress(false);
-                            addTagActivityView.viewMessage(context.getResources().getString(R.string.photo_uploaded));
-                        }, throwable -> {
-                            ErrorUtils.Companion.setError(context, TAG, throwable);
-                            addTagActivityView.viewUploadProgress(false);
-                        });
-                break;
-            }
-            case CAMPAIGN_IMG: {
-
-                //            --->user Uploading CampaignPhoto
-                addTagActivityView.viewUploadProgress(true);
-                BaseNetworkApi.uploadCampaignPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected, uploadImageData.getImageId())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(uploadImgResponse -> {
-                            addTagActivityView.viewUploadProgress(false);
-                            addTagActivityView.viewMessage(context.getResources().getString(R.string.photo_uploaded));
-                        }, throwable -> {
-                            ErrorUtils.Companion.setError(context, TAG, throwable);
-                            addTagActivityView.viewUploadProgress(false);
-                        });
-                break;
-            }
-        }
+//        switch (uploadImageData.getUploadImageType()) {
+//            case NORMAL_IMG: {
+//                //user is uploading Normal Photo
+//                addTagActivityView.viewUploadProgress(true);
+//                BaseNetworkApi.uploadPhotoGrapherPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected, new UploadProgressListener() {
+//                    @Override
+//                    public void onProgress(long bytesUploaded, long totalBytes) {
+//                    }
+//                })
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(uploadImgResponse -> {
+//                            addTagActivityView.viewUploadProgress(false);
+//                            addTagActivityView.viewMessage(context.getResources().getString(R.string.photo_uploaded));
+//                        }, throwable -> {
+//                            ErrorUtils.Companion.setError(context, TAG, throwable);
+//                            addTagActivityView.viewUploadProgress(false);
+//                        });
+//                break;
+//            }
+//            case CAMPAIGN_IMG: {
+//
+//                //            --->user Uploading CampaignPhoto
+//                addTagActivityView.viewUploadProgress(true);
+//                BaseNetworkApi.uploadCampaignPhoto(PrefUtils.getUserToken(context), imageCaption, location, new File(imagePath), tagsSelected, uploadImageData.getImageId())
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(uploadImgResponse -> {
+//                            addTagActivityView.viewUploadProgress(false);
+//                            addTagActivityView.viewMessage(context.getResources().getString(R.string.photo_uploaded));
+//                        }, throwable -> {
+//                            ErrorUtils.Companion.setError(context, TAG, throwable);
+//                            addTagActivityView.viewUploadProgress(false);
+//                        });
+//                break;
+//            }
+//        }
 
 
     }

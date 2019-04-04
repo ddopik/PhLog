@@ -29,6 +29,8 @@
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/font_normal"
+            android:imeOptions="actionSearch"
             android:background="@drawable/rounded_search_view"
             android:drawableStart="@drawable/places_ic_search"
             android:drawablePadding="@dimen/widgets_padding"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
@@ -44,6 +45,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
     private View mainView;
     private CustomRecyclerView followingRV;
     private PhotoGrapherFollowingInPresenter photoGrapherFollowingInPresenter;
+    private TextView placeHolder;
     private PagingController pagingController;
     private String nextPageUrl = "1";
     private boolean isLoading;
@@ -111,6 +113,7 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
         photoGrapherFollowingAdapter = new PhotoGrapherFollowingAdapter(getContext(), photoGrapherFollowingList);
         followingRV.setAdapter(photoGrapherFollowingAdapter);
         searchEditText = mainView.findViewById(R.id.search_following);
+        placeHolder = mainView.findViewById(R.id.place_holder);
     }
 
 
@@ -214,6 +217,8 @@ public class PhotoGrapherFollowingFragment extends BaseFragment implements Photo
     @Override
     public void viewPhotographerFollowingIn(List<Photographer> photoGrapherFollowingObjList) {
         this.photoGrapherFollowingList.addAll(photoGrapherFollowingObjList);
+        if (this.photoGrapherFollowingList.isEmpty())
+            placeHolder.setVisibility(View.VISIBLE);
         photoGrapherFollowingAdapter.notifyDataSetChanged();
     }
 

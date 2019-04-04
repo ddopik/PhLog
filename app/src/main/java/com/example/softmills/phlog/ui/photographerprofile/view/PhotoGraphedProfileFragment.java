@@ -219,18 +219,10 @@ public class PhotoGraphedProfileFragment extends BaseFragment implements PhotoGr
             case R.id.action_logout:
                 new AlertDialog.Builder(getContext()).setTitle(R.string.logout_confirmation)
                         .setCancelable(true)
-                        .setItems(new CharSequence[]{getString(R.string.yes), getString(R.string.no)}
-                                , (dialog, which) -> {
-                                    switch (which) {
-                                        case 0:
-                                            photoGrapherProfileActivityPresenter.logout();
-                                            dialog.dismiss();
-                                            break;
-                                        case 1:
-                                            dialog.dismiss();
-                                            break;
-                                    }
-                                }).show();
+                        .setPositiveButton(R.string.yes, (dialog, which) -> {
+                            photoGrapherProfileActivityPresenter.logout();
+                            dialog.dismiss();
+                        }).setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss()).show();
                 break;
             default:
                 break;

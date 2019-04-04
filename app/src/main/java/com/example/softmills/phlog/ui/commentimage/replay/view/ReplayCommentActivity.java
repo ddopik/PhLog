@@ -31,6 +31,7 @@ import com.example.softmills.phlog.ui.commentimage.model.ImageCommentsData;
 import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentData;
 import com.example.softmills.phlog.ui.commentimage.replay.presenter.ReplayCommentPresenter;
 import com.example.softmills.phlog.ui.commentimage.replay.presenter.ReplayCommentPresenterImpl;
+import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 
 import java.util.ArrayList;
@@ -195,8 +196,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
                 intent.putExtra(ReplayCommentActivity.REPLY_HEADER_COMMENT, comment);
                 intent.putExtra(ReplayCommentActivity.MENTIONS, mentions);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                intent.putExtra(ReplayCommentActivity.MENTIONS, mentions);
+                startActivityForResult(intent, ImageCommentActivity.REPLY_REQUEST_CODE);
             }
 
 
@@ -211,7 +211,12 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     @SuppressLint("CheckResult")
     @Override
     public void onCommentReplied(SubmitImageCommentData submitImageCommentData) {
-
+        headerComment.repliesCount ++;
+        previewImage.commentsCount ++;
+        Intent data = new Intent();
+        data.putExtra(REPLY_HEADER_COMMENT, headerComment);
+        data.putExtra(COMMENT_IMAGE, previewImage);
+        setResult(RESULT_OK, data);
         commentList.add(commentList.size() - 1, submitImageCommentData.comment);
 
         reSortMentionList(submitImageCommentData.mentions).subscribeOn(Schedulers.io())

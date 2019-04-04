@@ -3,11 +3,15 @@ package com.example.softmills.phlog.ui.brand.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.androidnetworking.error.ANError;
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
+import com.example.softmills.phlog.base.commonmodel.BaseErrorResponse;
+import com.example.softmills.phlog.base.commonmodel.ErrorMessageResponse;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivityView;
+import com.google.gson.Gson;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,6 +44,18 @@ public class BrandInnerDataPresenterImpl implements BrandInnerPresenter {
                     brandInnerActivityView.viewInnerBrandProgressBar(false);
                 }, throwable -> {
                     brandInnerActivityView.viewInnerBrandProgressBar(false);
+                    if (throwable instanceof ANError) {
+                        ANError error = (ANError) throwable;
+                        if (error.getErrorCode() == BaseNetworkApi.STATUS_BAD_REQUEST) {
+                            ErrorMessageResponse errorMessageResponse = new Gson().fromJson(error.getErrorBody(), ErrorMessageResponse.class);
+                            for (BaseErrorResponse e : errorMessageResponse.errors) {
+                                if (e.code.equals(BaseNetworkApi.ERROR_NOT_FOUND)) {
+                                    brandInnerActivityView.showNotFoundDialog();
+                                    break;
+                                }
+                            }
+                        }
+                    }
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
 

@@ -220,7 +220,16 @@
     <string name="new_password_required">New password is required</string>
     <string name="old_password_required">Old password is required</string>
     <string name="name_required">Name is required</string>
-    <string name="is_no_longer_availible">%1$ is no longer available</string>
-    <string name="campaign_not_available">ppp</string>
-    <string name="go_back">sss</string>
+    <string name="email_not_verified">Email not verified</string>
+    <string name="send_verfication_request">Do you want to request verification?</string>
+    <string name="veification_request_sent">Verication email is sent. Check your mail.</string>
+    <string name="forgot_password_check_your_mail">An email has been. Check yout mail.</string>
+    <string name="choose_filters">Choose filters that apply to yout photo.</string>
+    <string name="password_changed">Password changed</string>
+    <string name="no_following_brands">No following brands yet.</string>
+    <string name="no_following_profiles">No following profiles yet.</string>
+    <string name="campaign_not_available">Ops. This campaign is no longer available</string>
+    <string name="brand_not_available">Ops. This brand is no longer available</string>
+    <string name="photographer_not_available">Ops. This photographer is no longer available</string>
+    <string name="go_back">Go back</string>
 </resources>

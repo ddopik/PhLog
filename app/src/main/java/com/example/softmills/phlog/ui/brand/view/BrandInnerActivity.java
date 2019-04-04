@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
@@ -111,7 +112,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
         if (brand.industry != null) {
             brandType.setText(brand.industry.nameEn);
-        }
+        } else brandType.setVisibility(View.INVISIBLE);
 
         if (brand.isBrandText != null) {
             brandData.setText(brand.description);
@@ -221,5 +222,15 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     @Override
     public void showMessage(String msg) {
         showToast(msg);
+    }
+
+    @Override
+    public void showNotFoundDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.brand_not_available)
+                .setPositiveButton(R.string.go_back, (dialog, which) -> {
+                    finish();
+                    dialog.dismiss();
+                }).show();
     }
 }

@@ -85,7 +85,7 @@ public class UploaderService extends Service {
 
 
                         case NORMAL_IMG:
-                            Disposable d1 = BaseNetworkApi.uploadPhotoGrapherPhoto(token, object.getImageCaption(), object.getImageLocation(), imageFile, object.getTags(), (bytesUploaded, totalBytes) -> {
+                            Disposable d1 = BaseNetworkApi.uploadPhotoGrapherPhoto(token, object.getImageCaption(), object.getImageLocation(), imageFile, object.getTags(), object.getFilters(), (bytesUploaded, totalBytes) -> {
                                 int p = (int) ((bytesUploaded / (float) totalBytes) * 100);
                                 communicator.onAction(Action.PROGRESS, p);
                             }).subscribeOn(Schedulers.io())
@@ -94,7 +94,7 @@ public class UploaderService extends Service {
                             disposables.add(d1);
                             break;
                         case CAMPAIGN_IMG:
-                            Disposable d2 = BaseNetworkApi.uploadCampaignPhoto(token, object.getImageCaption(), object.getImageLocation(), imageFile, object.getTags(), object.getImageId())
+                            Disposable d2 = BaseNetworkApi.uploadCampaignPhoto(token, object.getImageCaption(), object.getImageLocation(), imageFile, object.getTags(), object.getFilters(), object.getImageId())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(responseConsumer, throwableConsumer);

@@ -95,8 +95,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         this.previewImage = previewImage;
         this.mentions = mentions;
         this.commentListType = commentListType;
-
-
     }
 
     @NonNull

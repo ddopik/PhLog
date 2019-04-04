@@ -20,4 +20,6 @@ public interface EditPhotoGrapherProfileFragmentPresenter {
     void terminate();
 
     void getAllCountries(Consumer<List<Country>> consumer);
+
+    void changePassword(Context context, String oldPassword, String newPassword);
 }

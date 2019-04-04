@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
-import com.example.softmills.phlog.Utiltes.Utilities;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenter;
@@ -88,15 +89,16 @@ public class LoginActivity extends BaseActivity implements LoginView {
                 mailInput.setError(getResources().getString(R.string.email_missing));
                 return;
             }
+            loginProgressBar.setVisibility(View.VISIBLE);
             Disposable disposable = loginPresenter.forgotPassword(getBaseContext(), mail.getText().toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .doFinally(() -> loginProgressBar.setVisibility(View.GONE))
                     .subscribe(success -> {
                         if (success)
-                            showToast(getString(R.string.check_your_mail));
-                        else showToast(getString(R.string.error_occured));
+                            showToast(getString(R.string.forgot_password_check_your_mail));
                     }, throwable -> {
-                        showToast(getString(R.string.error_occured));
+                        ErrorUtils.Companion.setError(this, TAG, throwable);
                     });
             disposables.add(disposable);
         });
@@ -108,11 +110,10 @@ public class LoginActivity extends BaseActivity implements LoginView {
         if (mail.getText().toString().isEmpty()) {
             mailInput.setError(getResources().getString(R.string.email_missing));
             return false;
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail.getText().toString()).matches()){
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail.getText().toString()).matches()) {
             mailInput.setError(getResources().getString(R.string.wrong_email_format));
             return false;
-        }
-        else {
+        } else {
             mailInput.setErrorEnabled(false);
         }
 
@@ -157,6 +158,18 @@ public class LoginActivity extends BaseActivity implements LoginView {
         } else {
             loginProgressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void showResendVerificationRequest() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.email_not_verified)
+                .setMessage(R.string.send_verfication_request)
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    loginPresenter.sendVerificationRequest(mail.getText().toString());
+                    dialog.dismiss();
+                }).setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss())
+                .show();
     }
 }
 

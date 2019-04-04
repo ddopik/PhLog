@@ -4,12 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.androidnetworking.error.ANError;
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
+import com.example.softmills.phlog.base.commonmodel.BaseErrorResponse;
 import com.example.softmills.phlog.base.commonmodel.Device;
+import com.example.softmills.phlog.base.commonmodel.ErrorMessageResponse;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.login.view.LoginView;
+import com.google.gson.Gson;
 import com.jaychang.sa.AuthCallback;
 import com.jaychang.sa.SocialUser;
 
@@ -50,6 +55,18 @@ public class LoginPresenterImp implements LoginPresenter {
                     loginView.navigateToHome();
                     sendFirebaseToken();
                 }, throwable -> {
+                    if (throwable instanceof ANError) {
+                        ANError error = (ANError) throwable;
+                        if (error.getErrorCode() == BaseNetworkApi.STATUS_BAD_REQUEST) {
+                            ErrorMessageResponse errorMessageResponse = new Gson().fromJson(error.getErrorBody(), ErrorMessageResponse.class);
+                            for (BaseErrorResponse e : errorMessageResponse.errors) {
+                                if (e.code.equals(BaseNetworkApi.ERROR_VERIFICATION)) {
+                                    loginView.showResendVerificationRequest();
+                                    break;
+                                }
+                            }
+                        }
+                    }
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     loginView.viewLoginProgress(false);
                 });
@@ -198,10 +215,32 @@ public class LoginPresenterImp implements LoginPresenter {
     @Override
     public Observable<Boolean> forgotPassword(Context context, String email) {
         return BaseNetworkApi.forgotPassword(email)
-                .map(response -> {
-                    if (response != null)
-                        return true;
-                    return false;
+                .map(response -> response != null);
+    }
+
+    @Override
+    public void sendVerificationRequest(String email) {
+        BaseNetworkApi.requestVerification(email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(success -> {
+                    loginView.showMessage(context.getString(R.string.veification_request_sent));
+                }, throwable -> {
+                    if (throwable instanceof ANError) {
+                        ANError error = (ANError) throwable;
+                        if (error.getErrorCode() == BaseNetworkApi.STATUS_BAD_REQUEST) {
+                            ErrorMessageResponse errorMessageResponse = new Gson().fromJson(error.getErrorBody(), ErrorMessageResponse.class);
+                            for (BaseErrorResponse e : errorMessageResponse.errors) {
+                                switch (e.code) {
+                                    case BaseNetworkApi.ERROR_VALIDATION:
+                                    case BaseNetworkApi.ERROR_VERIFICATION:
+                                        loginView.showMessage(e.message);
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
 }

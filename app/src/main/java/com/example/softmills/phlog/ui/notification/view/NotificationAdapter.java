@@ -120,17 +120,22 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private void bindItemPhotoGrapher(NotificationViewHolder notificationViewHolder, Photographer photographer) {
         notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_primary));
-        GlideApp.with(context).load(photographer.imageProfile)
+        String url = photographer != null ? photographer.imageProfile : null;
+        GlideApp.with(context).load(url)
                 .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.default_place_holder)
-                .error(R.drawable.default_error_img)
+//                .error(R.drawable.default_error_img)
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
-            Intent intent = new Intent(context, UserProfileActivity.class);
-            intent.putExtra(UserProfileActivity.USER_ID, String.valueOf(photographer.id));
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            context.startActivity(intent);
+            if (photographer != null) {
+                Intent intent = new Intent(context, UserProfileActivity.class);
+                intent.putExtra(UserProfileActivity.USER_ID, String.valueOf(photographer.id));
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, R.string.photographer_not_available, Toast.LENGTH_LONG).show();
+            }
         });
 
 
@@ -139,17 +144,25 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private void bindItemCampaign(NotificationViewHolder notificationViewHolder, Campaign campaign) {
 
         notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_green));
-        GlideApp.with(context).load(campaign.business.thumbnail)
+        String url = "";
+        if (campaign != null)
+            if (campaign.business != null)
+                url = campaign.business.thumbnail;
+        GlideApp.with(context).load(url)
                 .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.default_place_holder)
                 .error(R.drawable.default_error_img)
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
-            Intent intent = new Intent(context, CampaignInnerActivity.class);
-            intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(campaign.id));
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            context.startActivity(intent);
+            if (campaign != null) {
+                Intent intent = new Intent(context, CampaignInnerActivity.class);
+                intent.putExtra(CampaignInnerActivity.CAMPAIGN_ID, String.valueOf(campaign.id));
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, R.string.campaign_not_available, Toast.LENGTH_LONG).show();
+            }
         });
     }
 
@@ -157,17 +170,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         notificationViewHolder.notificationImg
                 .setBackground(context.getResources().getDrawable(R.drawable.circle_brwon));
-        GlideApp.with(context).load(business.thumbnail)
+
+        String url = business != null ? business.thumbnail : null;
+        GlideApp.with(context).load(url)
                 .placeholder(R.drawable.default_place_holder)
                 .error(R.drawable.default_error_img)
                 .apply(RequestOptions.circleCropTransform())
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
-            Intent intent = new Intent(context, BrandInnerActivity.class);
-            intent.putExtra(BrandCampaignsActivity.BRAND_ID, business.id);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            context.startActivity(intent);
+            if (business != null) {
+                Intent intent = new Intent(context, BrandInnerActivity.class);
+                intent.putExtra(BrandInnerActivity.BRAND_ID, business.id);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, R.string.brand_not_available, Toast.LENGTH_LONG).show();
+            }
         });
     }
 

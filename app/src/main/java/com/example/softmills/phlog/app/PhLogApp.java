@@ -11,12 +11,14 @@ import android.support.multidex.MultiDexApplication;
 
 
 import com.androidnetworking.AndroidNetworking;
+import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.networkstatus.NetworkChangeBroadcastReceiver;
 import com.example.softmills.phlog.Utiltes.networkstatus.NetworkStateChangeManager;
 import com.example.softmills.phlog.network.BasicAuthInterceptor;
 import com.example.softmills.phlog.realm.RealmConfigFile;
 import com.example.softmills.phlog.realm.RealmDbMigration;
 import com.facebook.stetho.Stetho;
+import com.google.android.libraries.places.api.Places;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import java.io.File;
@@ -61,6 +63,8 @@ public class PhLogApp extends MultiDexApplication {
             IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
             registerReceiver(networkChangeBroadcastReceiver, filter);
         }
+
+        Places.initialize(getApplicationContext(), getString(R.string.places_api_key));
     }
 
     @Override

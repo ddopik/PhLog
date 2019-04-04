@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -30,11 +31,19 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.model.Place.Field;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+
+import java.util.Arrays;
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -49,6 +58,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
 
+    private static final int AUTOCOMPLETE_REQUEST_CODE = 878;
     public static String IMAGE_TYPE = "image_type";
 
     private LocationRequest mLocationRequest;
@@ -110,7 +120,6 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
                 .into(filtredImg);
 
 
-
         nextBtn = findViewById(R.id.activity_info_photo_next_btn);
         backBtn = findViewById(R.id.activity_info_photo_back_btn);
 
@@ -121,6 +130,8 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
                 null, null);
         placesAutoCompete.setAdapter(mPlaceArrayAdapter);
+
+
     }
 
     @Override
@@ -128,7 +139,23 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initListener() {
+        placesAutoCompete.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_UP:
+                    if (!com.google.android.libraries.places.api.Places.isInitialized()) {
+                        com.google.android.libraries.places.api.Places.initialize(getApplicationContext(), getString(R.string.places_api_key));
+                    }
+                    List<Field> fields = Arrays.asList(Field.ID, Field.NAME);
+                    Intent intent = new Autocomplete.IntentBuilder(
+                            AutocompleteActivityMode.FULLSCREEN, fields)
+                            .build(this);
+                    startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+                    break;
+            }
+            return false;
+        });
         nextBtn.setOnClickListener(v -> {
 
             if (caption.getText().toString().isEmpty()) {
@@ -144,14 +171,13 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
 
 //            imageType.setDraft(draftBtn.isChecked());
 
-            Intent intent = new Intent(this, AddTagActivity.class);
-            extras.putParcelable(AddTagActivity.IMAGE_TYPE, uploadImageData);
+            Intent intent = new Intent(this, AddSearchFiltersActivity.class);
+            extras.putParcelable(AddSearchFiltersActivity.IMAGE_TYPE, uploadImageData);
             intent.putExtras(extras);
             startActivity(intent);
 //            startActivityForResult(intent, UPLOAD_PHOTO_REQUEST_CODE);
         });
         backBtn.setOnClickListener(v -> onBackPressed());
-
         locateMeBtn.setOnClickListener((view) -> requestLocation());
     }
 
@@ -249,6 +275,18 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                com.google.android.libraries.places.api.model.Place place = Autocomplete.getPlaceFromIntent(data);
+                placesAutoCompete.setText(place.getName());
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
 
     public class GeocodeHandler extends Handler {

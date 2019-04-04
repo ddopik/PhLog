@@ -113,7 +113,7 @@
                         android:layout_height="@dimen/ic_size"
                         android:background="@color/transparent"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/ic_like_off_white" />
+                        android:src="@drawable/ic_like_off_white" />
 
 
                     <ImageButton

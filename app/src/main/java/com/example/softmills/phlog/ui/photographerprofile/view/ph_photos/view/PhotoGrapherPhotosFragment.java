@@ -181,7 +181,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
     public void showPhotos(List<BaseImage> photosList) {
         this.photoGrapherPhotoList.addAll(photosList);
         photographerSavedPhotoAdapter.notifyDataSetChanged();
-        if (photosList.isEmpty())
+        if (this.photoGrapherPhotoList.isEmpty())
             placeHolder.setVisibility(View.VISIBLE);
     }
 

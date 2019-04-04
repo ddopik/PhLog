@@ -21,4 +21,6 @@ public interface UserProfileActivityView {
     void viewUserFollowingState(boolean state);
     void viewUserPhotosProgress(boolean state);
     void showMessage(String msg);
+
+    void showNotFoundDialog();
 }
