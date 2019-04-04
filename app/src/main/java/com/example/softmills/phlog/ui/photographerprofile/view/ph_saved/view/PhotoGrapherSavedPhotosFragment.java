@@ -73,6 +73,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
     public void onResume() {
         super.onResume();
         photoGrapherSavedPhotoList.clear();
+        photographerSavedPhotoAdapter.notifyDataSetChanged();
         photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(nextPageUrl);
 
     }

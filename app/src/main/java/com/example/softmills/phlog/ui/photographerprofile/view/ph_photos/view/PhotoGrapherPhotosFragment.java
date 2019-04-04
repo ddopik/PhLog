@@ -154,6 +154,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
 
         photographerSavedPhotoAdapter.photoAction = photoGrapherSavedPhoto -> {
             Intent intent = new Intent(getContext(), AllAlbumImgActivity.class);
+            photoGrapherSavedPhoto.albumName=getResources().getString(R.string.photos);
             intent.putExtra(SELECTED_IMG_ID, photoGrapherSavedPhoto.id);
             intent.putExtra(LIST_NAME, getActivity().getResources().getString(R.string.photos));
             intent.putExtra(LIST_TYPE, CURRENT_PHOTOGRAPHER_PHOTOS_LIST);
@@ -171,6 +172,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         super.onResume();
         if (becameVisible) {
             photoGrapherPhotoList.clear();
+            photographerSavedPhotoAdapter.notifyDataSetChanged();
             fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(nextPageUrl);
         }
     }

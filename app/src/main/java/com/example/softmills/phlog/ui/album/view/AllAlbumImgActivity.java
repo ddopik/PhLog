@@ -25,9 +25,7 @@ import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import static com.example.softmills.phlog.Utiltes.Constants.CURRENT_PROFILE_TAP_CODE;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_PHOTOS_LIST;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_SAVED_LIST;
 
@@ -43,7 +41,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     /// set your Proper type of list for later processes
     public static String LIST_TYPE = "list_type";
     public static String LIST_NAME = "list_name";
-     public static String CURRENT_PAGE = "current_page";
+    public static String CURRENT_PAGE = "current_page";
     public final static int IMAGE_DETAILS_REQUEST_CODE = 764;
     private PhotosListType photosListType;
     private ImageButton mainBackBtn;
@@ -138,6 +136,7 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                     albumImg.currentPhotoGrapherPhoto = true;
                 } else if (photosListType != null && photosListType.equals(CURRENT_PHOTOGRAPHER_SAVED_LIST)) {
 //                    albumImg.photographer = PrefUtils.getCurrentUser(getBaseContext());
+                    albumImg.albumName = getResources().getString(R.string.saved);
                 }
                 intent.putExtra(ImageCommentActivity.IMAGE_DATA, albumImg);
                 startActivityForResult(intent, IMAGE_DETAILS_REQUEST_CODE);
@@ -357,14 +356,13 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_DETAILS_REQUEST_CODE && resultCode == RESULT_OK) {
             BaseImage image = data.getParcelableExtra(ImageCommentActivity.IMAGE_DATA);
             if (image != null) {
-                for (int i=0; i<albumImgList.size(); i++) {
+                for (int i = 0; i < albumImgList.size(); i++) {
                     if (albumImgList.get(i).id == image.id) {
                         if (image.isImageDeleted) {
                             albumImgList.remove(i);
