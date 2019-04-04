@@ -18,4 +18,5 @@ public interface ImageCommentActivityPresenter {
     void deleteImage(BaseImage baseImage);
 
     void submitComment(String imageId, String comment);
+    void getImageDetails(int imageId);
 }

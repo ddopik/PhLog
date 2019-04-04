@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.example.softmills.phlog.R;
@@ -79,7 +80,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 break;
             }
             case ENTITY_IMAGE: {
-                bindItemPhoto(notificationViewHolder, notificationItemList.get(i).photo);
+                bindItemPhoto(notificationViewHolder, notificationItemList.get(i).photographer, notificationItemList.get(i).photo);
                 break;
             }
             case ENTITY_BRAND: {
@@ -118,7 +119,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
     private void bindItemPhotoGrapher(NotificationViewHolder notificationViewHolder, Photographer photographer) {
-        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_primary ));
+        notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_primary));
         GlideApp.with(context).load(photographer.imageProfile)
                 .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.default_place_holder)
@@ -163,27 +164,41 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 .into(notificationViewHolder.notificationImg);
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
-            Intent intent=new Intent(context, BrandInnerActivity.class);
-            intent.putExtra(BrandCampaignsActivity.BRAND_ID,business.id);
+            Intent intent = new Intent(context, BrandInnerActivity.class);
+            intent.putExtra(BrandCampaignsActivity.BRAND_ID, business.id);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             context.startActivity(intent);
         });
     }
 
-    private void bindItemPhoto(NotificationViewHolder notificationViewHolder, BaseImage image) {
+    private void bindItemPhoto(NotificationViewHolder notificationViewHolder, Photographer photographer, BaseImage image) {
 
         notificationViewHolder.notificationImg.setBackground(context.getResources().getDrawable(R.drawable.circle_red));
-        GlideApp.with(context).load(image.url)
-                .apply(RequestOptions.circleCropTransform())
-                .placeholder(R.drawable.default_place_holder)
-                .error(R.drawable.default_error_img)
-                .into(notificationViewHolder.notificationImg);
+
+        if (photographer != null) {
+            GlideApp.with(context).load(photographer.imageProfile)
+                    .apply(RequestOptions.circleCropTransform())
+                    .placeholder(R.drawable.default_place_holder)
+                    .error(R.drawable.default_error_img)
+                    .into(notificationViewHolder.notificationImg);
+        } else {
+            GlideApp.with(context).load("draft")
+                    .apply(RequestOptions.circleCropTransform())
+                    .placeholder(R.drawable.default_place_holder)
+                    .error(R.drawable.default_error_img)
+                    .into(notificationViewHolder.notificationImg);
+        }
+
 
         notificationViewHolder.notificationContainer.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ImageCommentActivity.class);
-            intent.putExtra(ImageCommentActivity.IMAGE_DATA, image);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            context.startActivity(intent);
+            if (image != null) {
+                Intent intent = new Intent(context, ImageCommentActivity.class);
+                intent.putExtra(ImageCommentActivity.IMAGE_DATA, image);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, context.getResources().getString(R.string.is_no_longer_availible, context.getString(R.string.photo)), Toast.LENGTH_LONG).show();
+            }
         });
 
     }

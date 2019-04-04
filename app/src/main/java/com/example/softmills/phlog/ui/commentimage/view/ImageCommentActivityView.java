@@ -27,4 +27,8 @@ public interface ImageCommentActivityView {
     void onImageDeleted(BaseImage baseImage,boolean state);
     void setNextPageUrl(String page);
 
+    void onImageFailed();
+
+    void viewImageDetails(BaseImage baseImage);
+
 }

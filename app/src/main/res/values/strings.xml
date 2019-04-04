@@ -220,4 +220,7 @@
     <string name="new_password_required">New password is required</string>
     <string name="old_password_required">Old password is required</string>
     <string name="name_required">Name is required</string>
+    <string name="is_no_longer_availible">%1$ is no longer available</string>
+    <string name="campaign_not_available">ppp</string>
+    <string name="go_back">sss</string>
 </resources>

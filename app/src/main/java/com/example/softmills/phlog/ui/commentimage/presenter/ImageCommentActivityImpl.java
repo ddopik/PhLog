@@ -3,11 +3,15 @@ package com.example.softmills.phlog.ui.commentimage.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.androidnetworking.error.ANError;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
+import com.example.softmills.phlog.base.commonmodel.BaseErrorResponse;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
+import com.example.softmills.phlog.base.commonmodel.ErrorMessageResponse;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivityView;
+import com.google.gson.Gson;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -25,6 +29,45 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
     public ImageCommentActivityImpl(Context context, ImageCommentActivityView imageCommentActivityView) {
         this.context = context;
         this.imageCommentActivityView = imageCommentActivityView;
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void getImageDetails(int imageId) {
+
+        imageCommentActivityView.viewImageProgress(true);
+        BaseNetworkApi.getPhotoGrapherPhotoDetails(String.valueOf(imageId))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(imageDetailsResponse -> {
+                    imageCommentActivityView.viewImageDetails(imageDetailsResponse.data);
+                    imageCommentActivityView.viewImageProgress(false);
+
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+
+
+
+                    /////////
+                    if (throwable instanceof ANError) {
+                        ANError error = (ANError) throwable;
+                        if (error.getErrorCode() == BaseNetworkApi.STATUS_BAD_REQUEST) {
+                            ErrorMessageResponse errorMessageResponse = new Gson().fromJson(error.getErrorBody(), ErrorMessageResponse.class);
+                            for (BaseErrorResponse e : errorMessageResponse.errors) {
+                                if (e.code.equals(BaseNetworkApi.ERROR_NOT_FOUND)) {
+                                    imageCommentActivityView.onImageFailed();
+                                     break;
+                                }
+                            }
+                        }
+                    }
+
+
+
+                    //////////
+
+                    imageCommentActivityView.viewImageProgress(false);
+                });
     }
 
     @SuppressLint("CheckResult")
@@ -59,7 +102,7 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(submitImageCommentResponse -> {
-                     imageCommentActivityView.onImageCommented(submitImageCommentResponse.data);
+                    imageCommentActivityView.onImageCommented(submitImageCommentResponse.data);
                     imageCommentActivityView.viewImageProgress(false);
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);

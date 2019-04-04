@@ -15,6 +15,7 @@ import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerPhotoRe
 import com.example.softmills.phlog.ui.campaigns.inner.model.CampaignInnerResponse;
 import com.example.softmills.phlog.ui.campaigns.model.CampaignResponse;
 import com.example.softmills.phlog.ui.campaigns.model.FollowCampaignResponse;
+import com.example.softmills.phlog.ui.commentimage.model.ImageDetailsResponse;
 import com.example.softmills.phlog.ui.earning.model.EarningDetailsResponse;
 import com.example.softmills.phlog.ui.earning.model.EarningListResponse;
 import com.example.softmills.phlog.ui.commentimage.model.AddImageToCartResponse;
@@ -71,6 +72,7 @@ public class BaseNetworkApi {
     public static final int STATUS_500 = 500;
     public static String STATUS_ERROR = "405";
     public static final String ERROR_STATE_1 = "1";
+    public static final String ERROR_NOT_FOUND = "2";
 
     public static String IMAGE_TYPE_PHOTOS = "image";
     public static String IMAGE_TYPE_CAMPAIGN = "campaign_id";
@@ -140,6 +142,7 @@ public class BaseNetworkApi {
     private static final String EARNING_DETAILS_URL = BASE_URL + "/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
     private static final String UPDATE_FIREBASE_TOKEN_URL = BASE_URL + "/auth/device/set";
+    private static final String PHOTO_GRAPHER_PHOTO_DETAILS = BASE_URL + "/photo/details";
 
 
     //Path Parameters
@@ -712,6 +715,15 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getObjectObservable(SubmitImageCommentResponse.class);
+    }
+
+
+    public static io.reactivex.Observable<ImageDetailsResponse> getPhotoGrapherPhotoDetails(String image_id ) {
+        return Rx2AndroidNetworking.post(PHOTO_GRAPHER_PHOTO_DETAILS)
+                .addBodyParameter("photo_id", image_id)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(ImageDetailsResponse.class);
     }
 
 

@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
- import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.BaseActivity;
@@ -38,7 +38,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.example.softmills.phlog.Utiltes.Constants.CommentListType.MAIN_COMMENT;
@@ -50,7 +49,8 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
     public String TAG = ImageCommentActivity.class.getSimpleName();
     public static String IMAGE_DATA = "image_data";
-     public static final int ImageComment_REQUEST_CODE = 1396;
+    public static String NOTIFICATION_IMAGE_ID = "image_id";
+    public static final int ImageComment_REQUEST_CODE = 1396;
     private CustomTextView toolBarTitle;
     private ImageButton backBtn;
     private BaseImage previewImage;
@@ -60,7 +60,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     private Mentions mentions = new Mentions();
     private CommentsAdapter commentsAdapter;
     private PagingController pagingController;
-    private String nextPageUrl="1";
+    private String nextPageUrl = "1";
     private boolean isLoading;
 
     private ImageCommentActivityPresenter imageCommentActivityPresenter;
@@ -70,16 +70,17 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         if (getIntent().getParcelableExtra(IMAGE_DATA) != null) {
             setContentView(R.layout.activity_image_commnet);
             previewImage = getIntent().getExtras().getParcelable(IMAGE_DATA);
-
-
-
             initPresenter();
             initView();
             initListener();
-        }
+            imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
+        } else if (getIntent().getIntExtra(NOTIFICATION_IMAGE_ID, -1) >= 0) {
+            imageCommentActivityPresenter.getImageDetails(getIntent().getIntExtra(NOTIFICATION_IMAGE_ID, -1));
+         }
 
 
     }
@@ -101,7 +102,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
         commentsAdapter = new CommentsAdapter(previewImage, commentList, mentions, MAIN_COMMENT);
         commentsRv.setAdapter(commentsAdapter);
-        imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), "0");
+
 
     }
 
@@ -119,16 +120,16 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
             @Override
             protected void loadMoreItems() {
-                 imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
+                imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
 
             }
 
             @Override
             public boolean isLastPage() {
 
-                if (nextPageUrl ==null){
-                    return  true;
-                }else {
+                if (nextPageUrl == null) {
+                    return true;
+                } else {
                     return false;
                 }
 
@@ -202,9 +203,9 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 //                    imm.showSoftInput(customAutoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
 ////
 //                } else {
-                   /**
-                    *  Pegging causing this block to crash
-                    * */
+                /**
+                 *  Pegging causing this block to crash
+                 * */
 //                    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
 //                        @Override
 //                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -340,7 +341,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
 
     @Override
     public void viewImageProgress(Boolean state) {
-        isLoading=state;
+        isLoading = state;
 
         if (state) {
             addCommentProgress.setVisibility(View.VISIBLE);
@@ -403,10 +404,30 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         setResult(RESULT_OK, intent);
         finish();
     }
+
     @Override
     public void setNextPageUrl(String page) {
-        this.nextPageUrl=page;
+        this.nextPageUrl = page;
     }
 
+    @Override
+    public void viewImageDetails(BaseImage baseImage) {
+        initPresenter();
+        initView();
+        initListener();
+        imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
 
+    }
+
+    @Override
+    public void onImageFailed() {
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.campaign_not_available)
+                .setPositiveButton(R.string.go_back, (dialog, which) -> {
+                    finish();
+                    dialog.dismiss();
+                }).show();
+
+    }
 }
