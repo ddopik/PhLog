@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.dialog.dialog1.view.Dialog1Fragment">
+    tools:context=".ui.dialog.dialog1.view.UploadCampaignPhotosDialog1Fragment">
 
     <android.support.v7.widget.CardView
         android:layout_width="0dp"

@@ -1,8 +1,6 @@
 package com.example.softmills.phlog.ui.dialog.dialog1.view;
 
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,12 +17,12 @@ import com.example.softmills.phlog.base.BaseDialogFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Dialog1Fragment extends BaseDialogFragment {
+public class UploadCampaignPhotosDialog1Fragment extends BaseDialogFragment {
 
     private TextView title, message, option0, option1;
 
     private int titleRes, messageRes, option0Res, option1Res;
-    private Function1<Dialog1Fragment, Integer, Object> optionConstumer;
+    private Function1<UploadCampaignPhotosDialog1Fragment, Integer, Object> optionConstumer;
 
     @Override
     protected void setViews(View view) {
@@ -72,7 +70,7 @@ public class Dialog1Fragment extends BaseDialogFragment {
     public static class Builder {
         private int titleRes, messageRes, option0Res, option1Res;
         private boolean cancelable;
-        private Function1<Dialog1Fragment, Integer, Object> optionConstumer;
+        private Function1<UploadCampaignPhotosDialog1Fragment, Integer, Object> optionConstumer;
         private FragmentManager fragmentManager;
 
         public Builder(Fragment fragment) {
@@ -103,7 +101,7 @@ public class Dialog1Fragment extends BaseDialogFragment {
             return this;
         }
 
-        public Builder optionConsumer(Function1<Dialog1Fragment, Integer, Object> optionConstumer) {
+        public Builder optionConsumer(Function1<UploadCampaignPhotosDialog1Fragment, Integer, Object> optionConstumer) {
             this.optionConstumer = optionConstumer;
             return this;
         }
@@ -113,8 +111,8 @@ public class Dialog1Fragment extends BaseDialogFragment {
             return this;
         }
 
-        public Dialog1Fragment create() {
-            Dialog1Fragment fragment = new Dialog1Fragment();
+        public UploadCampaignPhotosDialog1Fragment create() {
+            UploadCampaignPhotosDialog1Fragment fragment = new UploadCampaignPhotosDialog1Fragment();
             fragment.titleRes = titleRes;
             fragment.messageRes = messageRes;
             fragment.option0Res = option0Res;
@@ -125,14 +123,14 @@ public class Dialog1Fragment extends BaseDialogFragment {
         }
 
         public void show() {
-            Dialog1Fragment fragment = new Dialog1Fragment();
+            UploadCampaignPhotosDialog1Fragment fragment = new UploadCampaignPhotosDialog1Fragment();
             fragment.titleRes = titleRes;
             fragment.messageRes = messageRes;
             fragment.option0Res = option0Res;
             fragment.option1Res = option1Res;
             fragment.cancelable = cancelable;
             fragment.optionConstumer = optionConstumer;
-            fragment.show(getFramentTransaction(), Dialog1Fragment.class.getSimpleName());
+            fragment.show(getFramentTransaction(), UploadCampaignPhotosDialog1Fragment.class.getSimpleName());
         }
 
         private FragmentTransaction getFramentTransaction() {

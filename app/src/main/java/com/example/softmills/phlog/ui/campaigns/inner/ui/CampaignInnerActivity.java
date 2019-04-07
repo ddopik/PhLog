@@ -29,7 +29,7 @@ import com.example.softmills.phlog.base.commonmodel.UploadImageData;
 import com.example.softmills.phlog.ui.allphotos.view.AllPhotographerPhotosActivity;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenter;
 import com.example.softmills.phlog.ui.campaigns.inner.presenter.CampaignInnerPresenterImpl;
-import com.example.softmills.phlog.ui.dialog.dialog1.view.Dialog1Fragment;
+import com.example.softmills.phlog.ui.dialog.dialog1.view.UploadCampaignPhotosDialog1Fragment;
 import com.example.softmills.phlog.ui.uploadimage.view.UploadImageActivity;
 
 import java.util.ArrayList;
@@ -105,19 +105,19 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
         uploadCampaignBtn.setOnClickListener(v -> {
 //            showPhotoDialog(this, "title", "Message");
 
-            new Dialog1Fragment.Builder(this)
+            new UploadCampaignPhotosDialog1Fragment.Builder(this)
                     .title(R.string.upload_photo_for_campaign)
                     .message(R.string.select_option)
                     .option0(R.string.select_from_photos)
                     .option1(R.string.upload_new_photo)
                     .cancelable(true)
-                    .optionConsumer((dialog1Fragment, integer) -> {
+                    .optionConsumer((uploadCampaignPhotosDialog1Fragment, integer) -> {
                         switch (integer.intValue()) {
                             case 0:
                                 Intent i2 = new Intent(this, AllPhotographerPhotosActivity.class);
                                 i2.putExtra(AllPhotographerPhotosActivity.CAMPAIGN_ID, String.valueOf(campaignId));
                                 startActivity(i2);
-                                dialog1Fragment.dismiss();
+                                uploadCampaignPhotosDialog1Fragment.dismiss();
                                 break;
                             case 1:
                                 UploadImageData uploadImageData = new UploadImageData();
@@ -128,7 +128,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                                 Intent i1 = new Intent(this, UploadImageActivity.class);
                                 i1.putExtras(extras);
                                 startActivity(i1);
-                                dialog1Fragment.dismiss();
+                                uploadCampaignPhotosDialog1Fragment.dismiss();
                                 break;
                         }
                         return null;
