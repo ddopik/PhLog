@@ -63,7 +63,7 @@ public class SocialAdapterProfileViewController {
                 .into(socialViewHolder.socialProfileType3Icon);
 
 
-        if (photographer.photos.size() >= 3) {
+        if (photographer.photos.size() >= 4) {
             socialViewHolder.socialProfileAlbumType3PhotosContainer.setBackgroundResource(0);
             GlideApp.with(context)
                     .load(photographer.photos.get(0) )
