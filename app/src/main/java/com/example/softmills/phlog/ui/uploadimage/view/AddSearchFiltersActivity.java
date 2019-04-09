@@ -108,7 +108,7 @@ public class AddSearchFiltersActivity extends BaseActivity implements AddSearchF
         for (int i = 0; i< filterList.size(); i++){
             for (int x = 0; x< filterList.get(i).options.size(); x++){
                 if (filterList.get(i).options.get(x).isSelected) {
-                    filtersMap.put("filter["+filterCount+"]", filterList.get(i).options.get(x).id.toString());
+                    filtersMap.put("filters["+filterCount+"]", filterList.get(i).options.get(x).id.toString());
                     filterCount ++;
                 }
             }

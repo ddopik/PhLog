@@ -63,7 +63,7 @@ class ErrorUtils {
             for (i in errorMessageResponse.errors.indices) {
                 if (errorMessageResponse.errors[i].code != null)
                     when (errorMessageResponse.errors[i].code) {
-                        ERROR_VALIDATION, ERROR_NOT_FOUND -> {
+                        ERROR_VALIDATION, ERROR_EMAIL_NOT_FOUND -> {
                             Toast.makeText(context, errorMessageResponse.errors[i].message, Toast.LENGTH_SHORT).show()
                         }
                         else -> {

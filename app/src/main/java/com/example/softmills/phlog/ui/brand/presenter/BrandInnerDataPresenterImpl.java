@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.androidnetworking.error.ANError;
-import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.commonmodel.BaseErrorResponse;
@@ -13,7 +12,6 @@ import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.brand.view.BrandInnerActivityView;
 import com.google.gson.Gson;
 
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
