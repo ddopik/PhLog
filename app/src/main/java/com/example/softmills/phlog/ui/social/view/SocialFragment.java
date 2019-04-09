@@ -25,6 +25,8 @@ import com.example.softmills.phlog.ui.social.view.adapter.SocialAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.softmills.phlog.Utiltes.Constants.SOCIAL_FRAGMENT_PAGING_THRESHOLD;
+
 public class SocialFragment extends BaseFragment implements SocialFragmentView, SocialAdapter.OnSocialItemListener {
 
     private View mainView;
@@ -37,6 +39,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
     private PagingController pagingController;
     private String nextPageUrl = "1";
     private boolean isLoading;
+    private boolean loadMore =false;
 
     @Nullable
     @Override
@@ -89,7 +92,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
         });
 
 
-        pagingController = new PagingController(socailRv) {
+        pagingController = new PagingController(socailRv,SOCIAL_FRAGMENT_PAGING_THRESHOLD) {
 
 
             @Override
@@ -99,8 +102,8 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
 
             @Override
             public boolean isLastPage() {
-                return false;
 
+                return !loadMore;
             }
 
             @Override
@@ -110,6 +113,7 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
 
 
         };
+
 
 
     }
@@ -146,6 +150,10 @@ public class SocialFragment extends BaseFragment implements SocialFragmentView, 
         socialAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void loadMore(boolean loadMore) {
+        this.loadMore=loadMore;
+    }
 
     @Override
     public void showMessage(String msg) {

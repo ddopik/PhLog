@@ -11,11 +11,16 @@ public abstract class PagingController {
     /**
      * Set scrolling threshold here (for now i'm assuming 10 item in one page)
      */
-    private static final int PAGE_SIZE = 10;
+    private   int PAGE_SIZE = 10;
 
 
     public PagingController(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
+        initListeners();
+    }
+    public PagingController(RecyclerView recyclerView, int pageThreshold) {
+        this.recyclerView = recyclerView;
+        this.PAGE_SIZE = pageThreshold;
         initListeners();
     }
 
