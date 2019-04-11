@@ -22,7 +22,7 @@ public class UploadImageData implements Parcelable {
     private Constants.UploadImageTypes uploadImageType;
     private String imageCaption;
     private String imageLocation;
-    private boolean draft;
+    private boolean exclusive;
     private Map<String, String> tagsList = new HashMap<>();
     private Map<String, String> filters;
 
@@ -71,13 +71,13 @@ public class UploadImageData implements Parcelable {
         this.imageLocation = imageLocation;
     }
 
-    public boolean isDraft() {
-        return draft;
+    public boolean isExclusive() {
+        return exclusive;
     }
 
 
-    public void setDraft(boolean draft) {
-        this.draft = draft;
+    public void setExclusive(boolean exclusive) {
+        this.exclusive = exclusive;
     }
 
     public String getSourceImagePath() {
@@ -123,7 +123,7 @@ public class UploadImageData implements Parcelable {
         dest.writeInt(this.uploadImageType == null ? -1 : this.uploadImageType.ordinal());
         dest.writeString(this.imageCaption);
         dest.writeString(this.imageLocation);
-        dest.writeByte(this.draft ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.exclusive ? (byte) 1 : (byte) 0);
         dest.writeInt(this.tagsList.size());
         for (Map.Entry<String, String> entry : this.tagsList.entrySet()) {
             dest.writeString(entry.getKey());
@@ -146,7 +146,7 @@ public class UploadImageData implements Parcelable {
         this.uploadImageType = tmpUploadImageType == -1 ? null : Constants.UploadImageTypes.values()[tmpUploadImageType];
         this.imageCaption = in.readString();
         this.imageLocation = in.readString();
-        this.draft = in.readByte() != 0;
+        this.exclusive = in.readByte() != 0;
         int tagsListSize = in.readInt();
         this.tagsList = new HashMap<String, String>(tagsListSize);
         for (int i = 0; i < tagsListSize; i++) {

@@ -88,7 +88,7 @@
     <string name="next">Next</string>
     <string name="add_caption">Add caption</string>
     <string name="add_location">  Add Location</string>
-    <string name="save_to_draft">  Save to draft</string>
+    <string name="save_to_draft">  Save to exclusive</string>
     <string name="rationale_sms">Needs Locaiton to get you address</string>
     <string name="need_location_permation">Need location Permation</string>
     <string name="tag">Tags</string>
@@ -233,4 +233,5 @@
     <string name="photographer_not_available">Ops. This photographer is no longer available</string>
     <string name="go_back">Go back</string>
     <string name="photo_not_available">Ops. This photo is no longer available</string>
+    <string name="can_buy_exclusive">Can be exclusively sold</string>
 </resources>

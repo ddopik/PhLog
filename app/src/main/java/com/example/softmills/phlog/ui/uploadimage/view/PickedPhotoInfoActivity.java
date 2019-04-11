@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -73,7 +72,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
     private ImageButton backBtn;
     private ImageButton locateMeBtn;
     private EditText caption;
-    private Switch draftBtn;
+    private Switch exclusiveSwitch;
     private MapUtls mapUtls;
     private UploadImageData uploadImageData;
 
@@ -131,7 +130,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
                 null, null);
         placesAutoCompete.setAdapter(mPlaceArrayAdapter);
 
-
+        exclusiveSwitch = findViewById(R.id.exclusive_switch);
     }
 
     @Override
@@ -169,7 +168,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
             if (caption.getText() != null)
                 uploadImageData.setImageCaption(String.valueOf(caption.getText()));
 
-//            imageType.setDraft(draftBtn.isChecked());
+//            imageType.setExclusive(draftBtn.isChecked());
 
             Intent intent = new Intent(this, AddSearchFiltersActivity.class);
             extras.putParcelable(AddSearchFiltersActivity.IMAGE_TYPE, uploadImageData);
@@ -179,6 +178,10 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
         });
         backBtn.setOnClickListener(v -> onBackPressed());
         locateMeBtn.setOnClickListener((view) -> requestLocation());
+
+        exclusiveSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            uploadImageData.setExclusive(isChecked);
+        });
     }
 
     @Override

@@ -97,18 +97,17 @@
         android:id="@+id/auto_complete_places"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widgets_padding"
         android:hint="@string/add_location"
         android:paddingStart="@dimen/dp10"
         android:textColor="@color/white"
         android:textColorHint="@color/gray800"
         android:textSize="@dimen/font_normal"
         app:backgroundTint="@color/gray800"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/photo_caption"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/photo_caption"
-        app:layout_constraintVertical_bias="0.050000012"
         app:layout_constraintWidth_percent=".83" />
 
     <ImageButton
@@ -138,44 +137,44 @@
         <!--app:layout_constraintTop_toTopOf="parent"-->
         <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
 
-    <!--<ImageView-->
-        <!--android:id="@+id/imageView5"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:background="@color/transparent"-->
-        <!--app:layout_constraintDimensionRatio="1:1"-->
-        <!--app:layout_constraintHeight_percent=".03"-->
-        <!--app:layout_constraintBottom_toBottomOf="@+id/draft_state"-->
-        <!--app:layout_constraintStart_toStartOf="@+id/imageView4"-->
-        <!--app:layout_constraintTop_toTopOf="@+id/draft_state"-->
-        <!--app:srcCompat="@drawable/clock" />-->
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/transparent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHeight_percent=".03"
+        app:layout_constraintBottom_toBottomOf="@+id/exclusive_switch"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/exclusive_switch"
+        app:srcCompat="@drawable/ic_iconfinder_ic_one" />
 
-    <!--<Switch-->
-        <!--android:id="@+id/draft_state"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:checked="false"-->
-        <!--android:paddingStart="@dimen/dp12"-->
-        <!--android:text="@string/save_to_draft"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="@dimen/font_normal"-->
-        <!--android:theme="@style/switch_btn_style"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="@+id/auto_complete_places"-->
-        <!--app:layout_constraintHorizontal_bias="1"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/imageView5"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/photo_caption"-->
-        <!--app:layout_constraintVertical_bias="0.39"-->
-        <!--app:layout_constraintWidth_percent=".83" />-->
+    <Switch
+        android:id="@+id/exclusive_switch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widgets_padding"
+        android:checked="false"
+        android:paddingStart="@dimen/dp12"
+        android:text="@string/can_buy_exclusive"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal"
+        android:theme="@style/switch_btn_style"
+        app:layout_constraintEnd_toEndOf="@+id/auto_complete_places"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/auto_complete_places"
+        app:layout_constraintWidth_percent=".83" />
 
-    <!--<View-->
-        <!--android:id="@+id/view4"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="@color/gray800"-->
-        <!--app:layout_constraintEnd_toEndOf="@+id/draft_state"-->
-        <!--app:layout_constraintStart_toStartOf="@+id/draft_state"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/draft_state" />-->
+    <View
+        android:id="@+id/view4"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/widgets_padding_s"
+        android:layout_height="1dp"
+        android:background="@color/gray800"
+        app:layout_constraintEnd_toEndOf="@+id/exclusive_switch"
+        app:layout_constraintStart_toStartOf="@+id/exclusive_switch"
+        app:layout_constraintTop_toBottomOf="@+id/exclusive_switch" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp1"
             android:layout_alignParentTop="true"
-            android:background="@color/gray400"/>
+            android:background="@color/gray400" />
 
         <LinearLayout
             android:id="@+id/navigation_home_container"
@@ -37,22 +37,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                tools:drawableTop="@drawable/ic_social_on"
-                android:gravity="center"
                 android:fontFamily="@font/segoe_sb"
-                android:text="@string/home"
-                android:textAllCaps="false"
+                android:gravity="center"
                 android:padding="@dimen/widgets_padding_s"
-                android:textSize="@dimen/font_very_small"
+                android:text="@string/home"
                 android:textAlignment="center"
-                 android:textColor="@color/gray677078" />
+                android:textAllCaps="false"
+                android:textColor="@color/gray677078"
+                android:textSize="@dimen/font_very_small"
+                tools:drawableTop="@drawable/ic_social_on" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/navigation_missions_container"
-            android:layout_marginTop="@dimen/widgets_padding_s"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widgets_padding_s"
             android:layout_toEndOf="@+id/navigation_home_container"
             android:gravity="center">
 
@@ -62,12 +62,12 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:padding="@dimen/widgets_padding_s"
-                tools:drawableTop="@drawable/ic_campaigns_off"
                 android:text="@string/campaigns"
-                android:textAllCaps="false"
-                android:textSize="@dimen/font_very_small"
                 android:textAlignment="center"
-                 android:textColor="@color/gray677078" />
+                android:textAllCaps="false"
+                android:textColor="@color/gray677078"
+                android:textSize="@dimen/font_very_small"
+                tools:drawableTop="@drawable/ic_campaigns_off" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,22 +83,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                tools:drawableTop="@drawable/ic_notification_off"
                 android:gravity="center"
                 android:padding="@dimen/widgets_padding_s"
                 android:text="@string/Notification"
-                android:textAllCaps="false"
-                android:textSize="@dimen/font_very_small"
                 android:textAlignment="center"
-                 android:textColor="@color/gray677078" />
+                android:textAllCaps="false"
+                android:textColor="@color/gray677078"
+                android:textSize="@dimen/font_very_small"
+                tools:drawableTop="@drawable/ic_notification_off" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/navigation_profile_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/widgets_padding_s"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/widgets_padding_s"
             android:gravity="center">
 
             <Button
@@ -106,14 +106,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                tools:drawableTop="@drawable/ic_profile_off"
                 android:gravity="center"
                 android:padding="@dimen/widgets_padding_s"
-                android:textSize="@dimen/font_very_small"
-                android:textAllCaps="false"
                 android:text="@string/me"
                 android:textAlignment="center"
-                 android:textColor="@color/gray677078" />
+                android:textAllCaps="false"
+                android:textColor="@color/gray677078"
+                android:textSize="@dimen/font_very_small"
+                tools:drawableTop="@drawable/ic_profile_off" />
         </LinearLayout>
 
 
