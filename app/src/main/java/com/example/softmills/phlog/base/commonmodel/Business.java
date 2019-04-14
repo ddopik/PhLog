@@ -27,7 +27,6 @@ public class Business extends MentionedUser implements Parcelable {
     @Expose
     public String website;
 
-
     @SerializedName("is_phone_verified")
     public boolean isPhoneVerified;
 
@@ -59,7 +58,6 @@ public class Business extends MentionedUser implements Parcelable {
     public int rate;
 
 
-
     @SerializedName("first_name")
     public String firstName;
 
@@ -71,7 +69,6 @@ public class Business extends MentionedUser implements Parcelable {
 
     @SerializedName("brand_address")
     public String brandAddress;
-
 
 
     @SerializedName("level")
@@ -135,7 +132,7 @@ public class Business extends MentionedUser implements Parcelable {
         dest.writeString(this.email);
         dest.writeString(this.brandPhone);
         dest.writeString(this.brandAddress);
-         dest.writeInt(this.level);
+        dest.writeInt(this.level);
         dest.writeString(this.lastName);
         dest.writeInt(this.brandStatus);
         dest.writeInt(this.followingsCount);
@@ -166,7 +163,7 @@ public class Business extends MentionedUser implements Parcelable {
         this.email = in.readString();
         this.brandPhone = in.readString();
         this.brandAddress = in.readString();
-         this.level = in.readInt();
+        this.level = in.readInt();
         this.lastName = in.readString();
         this.brandStatus = in.readInt();
         this.followingsCount = in.readInt();

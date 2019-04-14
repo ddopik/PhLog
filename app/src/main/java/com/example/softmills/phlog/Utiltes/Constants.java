@@ -118,4 +118,14 @@ public interface Constants {
 
     int STATUS_LOGGED_IN = 1;
     int STATUS_LOGGED_OUT = 0;
+
+
+    interface BrandStatus {
+        int BRAND_STATUS_NONE = 0;
+        int BRAND_STATUS_DRAFT = 1;
+        int BRAND_STATUS_REQUEST = 2;
+        int BRAND_STATUS_PENDING = 3;
+        int BRAND_STATUS_APPROVED = 4;
+        int BRAND_STATUS_DECLINED = 5;
+    }
 }
