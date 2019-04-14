@@ -57,6 +57,7 @@
     <dimen name="icon_view_holder_size_s">35dp</dimen>
     <dimen name="icon_view_holder_size_m">45dp</dimen>
 
+
     <!--//Notification_ViewHolders-->
     <dimen name="notification_card_height">95dp</dimen>
     <dimen name="notification_card_height_m">95dp</dimen>
@@ -172,8 +173,8 @@
     <dimen name="social_img_slider_h">280dp</dimen>
     <dimen name="social_profile_img_w">300dp</dimen>
     <dimen name="social_album_icon_w">200dp</dimen>
-    <dimen name="social_album_icon_h">90dp</dimen>
-    <dimen name="social_album_icon_h_xl">185dp</dimen>
+    <dimen name="social_album_icon_h">135dp</dimen>
+    <dimen name="social_album_icon_h_xl">275dp</dimen>
     <dimen name="bottom_bar_item_padding">2dp</dimen>
     <dimen name="comment_header_photo_h">300dp</dimen>
     <dimen name="search_bar_radius">10dp</dimen>
