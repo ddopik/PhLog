@@ -1,5 +1,6 @@
 package com.example.softmills.phlog.base;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,10 +12,12 @@ import android.widget.Toast;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.Constants;
+import com.example.softmills.phlog.Utiltes.notification.NotificationFactory;
 import com.example.softmills.phlog.Utiltes.rxeventbus.RxEventBus;
 import com.example.softmills.phlog.fgm.model.FirebaseNotificationData;
 import com.example.softmills.phlog.ui.campaigns.inner.ui.CampaignInnerActivity;
 import com.example.softmills.phlog.ui.dialog.popup.view.PopupDialogFragment;
+import com.example.softmills.phlog.ui.notification.model.NotificationList;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -57,8 +60,8 @@ public  abstract  class BaseActivity extends AppCompatActivity {
         Disposable disposable = RxEventBus.getInstance().getSubject().subscribe(event -> {
             switch (event.getType()) {
                 case POPUP:
-                    FirebaseNotificationData data = (FirebaseNotificationData) event.getObject();
-                    if (data.notification.popup != Constants.PopupType.NONE)
+                    NotificationList data = (NotificationList) event.getObject();
+                    if (data != null && data.popup != Constants.PopupType.NONE)
                         showPopup(data);
                     break;
                 case CONNECTIVITY:
@@ -86,7 +89,7 @@ public  abstract  class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    protected void showPopup(FirebaseNotificationData data) {
+    protected void showPopup(NotificationList data) {
         PopupDialogFragment.newInstance(data, () -> {
 //            switch (data.notification.popup) {
 //                case Constants.PopupType.LEVEL_UP:
