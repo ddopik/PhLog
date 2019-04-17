@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/all_photographer_photo_top_bar"
-        app:orientation="grid" />
+        app:orientation="grid"
+        app:span_size="3"/>
 
     <ProgressBar
         android:id="@+id/saved_photos_progress_bar"

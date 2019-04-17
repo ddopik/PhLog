@@ -83,7 +83,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
 
     @Override
     public void initPresenter() {
-        signUpPresenter = new SignUpPresenterImpl(getBaseContext(),this);
+        signUpPresenter = new SignUpPresenterImpl(getBaseContext(), this);
     }
 
     public void initListener() {
@@ -100,7 +100,9 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
                     signUpData.put("email", "");
 
                 }
-                if (!mobile.getText().toString().isEmpty()) {
+
+
+                if (android.util.Patterns.PHONE.matcher(mobile.getText()).matches()) {
                     signUpData.put("mobile", mobile.getText().toString());
                 } else {
                     signUpData.put("mobile", "");
@@ -162,8 +164,10 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
 //            failedStates.add(2, true);
 //        }
         if (!android.util.Patterns.PHONE.matcher(mobile.getText()).matches()) {
-            mobileInput.setError(getString(R.string.invalid_phone_number));
-            failedStates.add(3, false);
+            if (!mobile.getText().toString().isEmpty()) {
+                mobileInput.setError(getString(R.string.invalid_phone_number));
+                failedStates.add(3, false);
+            }
         } else {
             mobileInput.setErrorEnabled(false);
             failedStates.add(3, true);
@@ -224,11 +228,6 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         return 0;
     }
 
-    @Override
-    public void pickProfilePhoto() {
-        Intent intent=new Intent(this, PickProfilePhotoActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public void showMessage(String msg) {

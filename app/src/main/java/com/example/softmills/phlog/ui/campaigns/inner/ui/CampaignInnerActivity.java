@@ -134,6 +134,8 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                         return null;
                     }).show();
         });
+
+
         campaignProfileCollapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.black));
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -159,6 +161,7 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
     @Override
     protected void onResume() {
         super.onResume();
+        // required to yo update photo count when user uploads photos through (AllPhotographerPhotosActivity,UploadImageData)
         campaignInnerPresenter.getCampaignDetails(getIntent().getStringExtra(CAMPAIGN_ID));
     }
 
@@ -188,12 +191,13 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
                 , getFragmentPagerFragment(campaign)
                 , getFragmentTitles(campaign.status, campaign.photosCount));
         campaignViewPager.setAdapter(innerCampaignFragmentPagerAdapter);
+        campaignTabs.setupWithViewPager(campaignViewPager);
+
         if (campaign.status == CAMPAIGN_STATUS_APPROVED || campaign.status == CAMPAIGN_STATUS_RUNNING) {
             uploadButtonContainer.setVisibility(View.VISIBLE);
         } else {
             uploadButtonContainer.setVisibility(View.GONE);
         }
-        campaignTabs.setupWithViewPager(campaignViewPager);
     }
 
     private List<Fragment> getFragmentPagerFragment(Campaign campaign) {
@@ -212,39 +216,6 @@ CampaignInnerActivity extends BaseActivity implements CampaignInnerActivityView 
         return fragmentList;
     }
 
-    public void showPhotoDialog(Activity activity, String title, CharSequence message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-        if (title != null) builder.setTitle(title);
-
-        builder.setMessage(message);
-        builder.setPositiveButton(R.string.phone, (dialog, id) -> {
-
-            UploadImageData uploadImageData = new UploadImageData();
-            uploadImageData.setUploadImageType(Constants.UploadImageTypes.CAMPAIGN_IMG);
-            uploadImageData.setImageId(campaignId);
-
-//            HashMap<String, String> imageType=new HashMap<String, String>();
-//            extras.putSerializable(UploadImageActivity.IMAGE_DATA,imageType);
-//            imageType.put(IMAGE_TYPE_CAMPAIGN,campaignId);
-//
-            Bundle extras = new Bundle();
-            extras.putParcelable(UploadImageActivity.IMAGE_TYPE, uploadImageData);
-            Intent intent = new Intent(this, UploadImageActivity.class);
-            intent.putExtras(extras);
-            startActivity(intent);
-        });
-        builder.setNegativeButton(R.string.photos, (dialog, id) -> {
-            Intent intent = new Intent(this, AllPhotographerPhotosActivity.class);
-            intent.putExtra(AllPhotographerPhotosActivity.CAMPAIGN_ID, String.valueOf(campaignId));
-            startActivity(intent);
-        });
-        builder.show();
-    }
-
-//    public interface OnMissionCampaignDataRecived {
-//        void onCampaignDescription(String desc);
-//    }
 
 
     @Override

@@ -14,10 +14,12 @@ import android.widget.TextView;
 
 import com.example.softmills.phlog.R;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
+import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.ui.MainActivity;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenter;
 import com.example.softmills.phlog.ui.login.presenter.LoginPresenterImp;
+import com.example.softmills.phlog.ui.signup.view.PickProfilePhotoActivity;
 import com.example.softmills.phlog.ui.signup.view.SignUpActivity;
 
 import java.util.HashMap;
@@ -145,9 +147,17 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void navigateToHome() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (PrefUtils.isFirstLaunch(getBaseContext())){
+            Intent intent = new Intent(this, PickProfilePhotoActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
+
 
     }
 
@@ -159,6 +169,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
             loginProgressBar.setVisibility(View.GONE);
         }
     }
+
+
 
     @Override
     public void showResendVerificationRequest() {

@@ -72,6 +72,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_image_commnet);
+
         if (getIntent().getParcelableExtra(IMAGE_DATA) != null) {
             previewImage = getIntent().getExtras().getParcelable(IMAGE_DATA);
             initPresenter();
@@ -424,26 +425,6 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         initView();
         initListener();
         imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
-
-//        toolBarTitle = findViewById(R.id.toolbar_title);
-//        backBtn = findViewById(R.id.back_btn);
-//
-////        addCommentProgress = findViewById(R.id.add_comment_progress);
-////
-////        commentsRv = findViewById(R.id.comment_rv);
-////
-//////            toolBarTitle.setText(previewImage.albumName);
-////            //force adapter to start to render Add commentView
-////            Comment userComment = new Comment();
-////            commentList.add(userComment); /// acts As default for image Header
-////            commentList.add(userComment);/// acts As default for image Add comment
-////
-////            commentsAdapter = new CommentsAdapter(baseImage, commentList, mentions, MAIN_COMMENT);
-////            commentsRv.setAdapter(commentsAdapter);
-////
-////
-////        initListener();
-//        imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
 
     }
 

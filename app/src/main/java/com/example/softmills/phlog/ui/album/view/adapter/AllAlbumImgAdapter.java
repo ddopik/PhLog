@@ -185,7 +185,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
             case USER_PROFILE_PHOTOS_LIST: {
                 albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
                 albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
-                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
                 break;
             }
             case ALBUM_PREVIEW_LIST: {

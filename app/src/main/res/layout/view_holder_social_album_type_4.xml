@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="@dimen/widgets_padding"
-    tools:background="@color/white">
+    >
 
     <LinearLayout
-
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-       >
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/social_profile_item_header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp4"
+            android:layout_marginBottom="@dimen/dp4"
             android:orientation="horizontal">
 
             <ImageView
@@ -49,7 +46,8 @@
                     android:id="@+id/social_album_photos_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="user name" />
+                    android:visibility="invisible"
+                    tools:text="1 photo" />
             </LinearLayout>
 
         </LinearLayout>
@@ -57,9 +55,8 @@
         <FrameLayout
             android:id="@+id/social_album_type_4_photos_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            tools:visibility="visible">
+            android:layout_height="match_parent"
+            >
             <!--Acts as A default photo as if there is was only one photo -->
 
 
@@ -68,8 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:visibility="invisible"
-                tools:visibility="visible">
+                >
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -115,13 +111,20 @@
 
 
             </LinearLayout>
+
             <ImageView
                 android:id="@+id/album_img_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:visibility="invisible" />
+                />
         </FrameLayout>
 
+
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/social_Album_overLay_listener"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>

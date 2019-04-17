@@ -12,4 +12,4 @@ public interface LoginView {
     void viewLoginProgress(Boolean state);
 
     void showResendVerificationRequest();
-}
+ }

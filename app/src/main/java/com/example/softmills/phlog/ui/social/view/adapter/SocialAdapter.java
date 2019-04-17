@@ -139,15 +139,16 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         /////
         LinearLayout socialCampaignContainer;
         ImageView socialCampaignIcon, socialCampaignImg;
-        CustomTextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft, campaignPrize;
+        CustomTextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft, campaignPrize,campaignPhotosCount;
         Button socialJoinCampaignBtn;
         /////
         ImageView socialBrandIconImg, socialBrandImg;
         CustomTextView socialBrandName, socialBrandFollowing;
         Button followBrandBtn;
         /////
-        ImageView socialAlbum1, socialAlbum2, socialAlbum3;
-        CustomTextView socialAlbumName, socialAlbumPhotosNumber;
+        FrameLayout socialAlbumOverLayListener;
+        ImageView socialAlbumIconImg, socialAlbum1, socialAlbum2, socialAlbum3;
+        CustomTextView socialAlbumName, socialAlbumPhotosNumber;;
 
 
         SocialViewHolder(View view) {
@@ -173,14 +174,17 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialCampaignDayLeft = view.findViewById(R.id.social_campaign_day_left);
             socialJoinCampaignBtn = view.findViewById(R.id.social_join_campaign_btn);
             campaignPrize = view.findViewById(R.id.campaign_prize);
-            /////BrandItemView
+            campaignPhotosCount = view.findViewById(R.id.campaign_joined);
+             /////BrandItemView
             socialBrandIconImg = view.findViewById(R.id.social_brand_icon_img);
             socialBrandImg = view.findViewById(R.id.social_brand_img);
             socialBrandName = view.findViewById(R.id.social_brand_name);
             socialBrandFollowing = view.findViewById(R.id.social_brand_following);
             followBrandBtn = view.findViewById(R.id.follow_brand);
-            /////BrandAlbumView
+/////AlbumView
+            socialAlbumOverLayListener = view.findViewById(R.id.social_Album_overLay_listener);
             socialAlbumName = view.findViewById(R.id.social_album_name);
+            socialAlbumIconImg = view.findViewById(R.id.social_album_icon_img);
             socialAlbumPhotosNumber = view.findViewById(R.id.social_album_photos_number);
             socialAlbum1 = view.findViewById(R.id.social_album_img_1);
             socialAlbum2 = view.findViewById(R.id.social_album_img_2);
