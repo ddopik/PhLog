@@ -54,6 +54,7 @@ public class LoginPresenterImp implements LoginPresenter {
                     PrefUtils.setUserID(context, loginResponse.loginData.id);
                     loginView.navigateToHome();
                     sendFirebaseToken();
+                    PrefUtils.setIsFirstLaunch(context,false);
                 }, throwable -> {
                     if (throwable instanceof ANError) {
                         ANError error = (ANError) throwable;
@@ -184,6 +185,7 @@ public class LoginPresenterImp implements LoginPresenter {
                     loginView.navigateToHome();
                     sendFirebaseToken();
                     loginView.viewLoginProgress(false);
+                    PrefUtils.setIsFirstLaunch(context,false);
 
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
@@ -205,6 +207,7 @@ public class LoginPresenterImp implements LoginPresenter {
                     loginView.navigateToHome();
                     sendFirebaseToken();
                     loginView.viewLoginProgress(false);
+                    PrefUtils.setIsFirstLaunch(context,false);
 
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);

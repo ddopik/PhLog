@@ -226,11 +226,6 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         return 0;
     }
 
-    @Override
-    public void pickProfilePhoto() {
-        Intent intent = new Intent(this, PickProfilePhotoActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public void showMessage(String msg) {

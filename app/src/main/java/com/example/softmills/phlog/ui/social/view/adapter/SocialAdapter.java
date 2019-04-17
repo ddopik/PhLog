@@ -139,7 +139,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         /////
         LinearLayout socialCampaignContainer;
         ImageView socialCampaignIcon, socialCampaignImg;
-        CustomTextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft, campaignPrize;
+        CustomTextView socialCampaignName, socialCampaignTitle, socialCampaignDayLeft, campaignPrize,campaignPhotosCount;
         Button socialJoinCampaignBtn;
         /////
         ImageView socialBrandIconImg, socialBrandImg;
@@ -174,7 +174,8 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             socialCampaignDayLeft = view.findViewById(R.id.social_campaign_day_left);
             socialJoinCampaignBtn = view.findViewById(R.id.social_join_campaign_btn);
             campaignPrize = view.findViewById(R.id.campaign_prize);
-            /////BrandItemView
+            campaignPhotosCount = view.findViewById(R.id.campaign_joined);
+             /////BrandItemView
             socialBrandIconImg = view.findViewById(R.id.social_brand_icon_img);
             socialBrandImg = view.findViewById(R.id.social_brand_img);
             socialBrandName = view.findViewById(R.id.social_brand_name);

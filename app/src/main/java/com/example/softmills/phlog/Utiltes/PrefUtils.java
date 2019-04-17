@@ -58,9 +58,7 @@ public abstract class PrefUtils {
         getSharedPref(context).edit().putString(NOTIFICATION_TOKEN, notificationToken).apply();
     }
 
-    public static void setIsFirstLaunch(Context context, boolean isFirstLaunch) {
-        getSharedPref(context).edit().putBoolean(IS_FIRST_LAUNCH, isFirstLaunch).apply();
-    }
+
 
     public static String getUserId(Context mContext) {
         return getSharedPref(mContext).getString(USER_ID,"");
@@ -82,6 +80,9 @@ public abstract class PrefUtils {
 
     public static boolean isFirstLaunch(Context context) {
         return getSharedPref(context).getBoolean(IS_FIRST_LAUNCH, true);
+    }
+    public static void setIsFirstLaunch(Context context, boolean isFirstLaunch) {
+        getSharedPref(context).edit().putBoolean(IS_FIRST_LAUNCH, isFirstLaunch).apply();
     }
 
     public static String getAppLang(Context context) {

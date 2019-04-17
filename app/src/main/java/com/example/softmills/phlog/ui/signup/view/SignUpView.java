@@ -7,9 +7,6 @@ import java.util.List;
 public interface SignUpView {
     void showCounters(List<Country> countries);
     void showMessage(String msg);
-    void pickProfilePhoto();
-
     void setProgress(boolean b);
-
     void navigateToHome();
 }
