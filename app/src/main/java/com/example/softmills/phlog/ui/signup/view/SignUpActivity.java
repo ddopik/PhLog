@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -169,23 +170,23 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
         }
 
 
-//        if (autoCompleteTextView.getText().toString().isEmpty()) {
-//            countryInput.setError(getString(R.string.please_select_country));
-//            countryInput.setError(getString(R.string.please_select_country));
-//            failedStates.add(6, false);
-//        } else {
+        if (autoCompleteTextView.getText().toString().isEmpty()) {
+            countryInput.setError(getString(R.string.please_select_country));
+            countryInput.setError(getString(R.string.please_select_country));
+            failedStates.add(6, false);
+        } else {
 
 
-//            if (getCountryID() == 0) {
-//                countryInput.setError(getString(R.string.select_country_not_exist));
-//                failedStates.add(4, false);
-//            } else {
-//                countryInput.setErrorEnabled(false);
-//                failedStates.add(4, true);
-//            }
+            if (getCountryID() == 0) {
+                countryInput.setError(getString(R.string.select_country_not_exist));
+                failedStates.add(4, false);
+            } else {
+                countryInput.setErrorEnabled(false);
+                failedStates.add(4, true);
+            }
 
 
-//        }
+        }
 
 
         for (int i = 0; i < failedStates.size(); i++) {
@@ -211,6 +212,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
     private void navigateToLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private int getCountryID() {
@@ -243,11 +245,17 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
     }
 
     @Override
-    public void navigateToHome() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-        finish();
+    public void signupSuccess() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.signup_success)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    finish();
+                    dialog.dismiss();
+                }).show();
     }
 }

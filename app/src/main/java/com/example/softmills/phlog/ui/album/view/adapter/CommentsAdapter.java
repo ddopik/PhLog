@@ -163,7 +163,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 if (previewImage.isLiked != null && !previewImage.isLiked) {
                     commentViewHolder.imageLikeBtn.setImageResource(R.drawable.ic_like_off_white);
                 } else {
-                    commentViewHolder.imageLikeBtn.setImageResource(R.drawable.ic_like_on);
+                    commentViewHolder.imageLikeBtn.setImageResource(R.drawable.ic_favorite_3);
                 }
 
                 commentViewHolder.imageLikeBtn.setOnClickListener(v -> {

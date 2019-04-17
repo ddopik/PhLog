@@ -2,6 +2,7 @@ package com.example.softmills.phlog.ui.album.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -99,13 +100,14 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
             allAlbumImgRv.setAdapter(allAlbumImgAdapter);
 
 
-//            for (int i = 0; i < albumImgList.size(); i++) {
-//                if (albumImgList.get(i).id == selectedPosition) {
+            for (int i = 0; i < albumImgList.size(); i++) {
+                if (albumImgList.get(i).id == selectedPosition) {
 //                    Objects.requireNonNull(allAlbumImgRv.getLayoutManager()).smoothScrollToPosition(allAlbumImgRv, null, i);
-//                    break;
-//                }
-//
-//            }
+                    allAlbumImgRv.scrollToPosition(i);
+                    break;
+                }
+
+            }
 
             initListener();
         }
@@ -272,6 +274,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         }
 
         allAlbumImgAdapter.notifyDataSetChanged();
+        Intent data2 = new Intent();
+        data2.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
+        setResult(RESULT_OK, data2);
 
     }
 
@@ -280,10 +285,13 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
         for (BaseImage mBaseImage : albumImgList) {
             if (mBaseImage.id == baseImage.id) {
                 mBaseImage.photographer.isFollow = state;
+                allAlbumImgAdapter.notifyItemChanged(albumImgList.indexOf(mBaseImage));
                 break;
             }
         }
-        allAlbumImgAdapter.notifyDataSetChanged();
+        Intent data2 = new Intent();
+        data2.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
+        setResult(RESULT_OK, data2);
     }
 
     @Override
@@ -295,7 +303,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                 break;
             }
         }
-        allAlbumImgAdapter.notifyDataSetChanged();
+        Intent data2 = new Intent();
+        data2.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
+        setResult(RESULT_OK, data2);
 
     }
 
@@ -310,10 +320,13 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                     albumImgList.get(i).likesCount--;
                 }
 
+                allAlbumImgAdapter.notifyItemChanged(i);
                 break;
             }
         }
-        allAlbumImgAdapter.notifyDataSetChanged();
+        Intent data2 = new Intent();
+        data2.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
+        setResult(RESULT_OK, data2);
     }
 
     @Override
@@ -358,6 +371,9 @@ public class AllAlbumImgActivity extends BaseActivity implements AllAlbumImgActi
                             albumImgList.set(i, image);
                             allAlbumImgAdapter.notifyItemChanged(i);
                         }
+                        Intent data2 = new Intent();
+                        data2.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) albumImgList);
+                        setResult(RESULT_OK, data2);
                         break;
                     }
                 }

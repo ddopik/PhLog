@@ -127,7 +127,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         if (!albumImgList.get(i).isLiked) {
             albumImgViewHolder.albumImgLike.setImageResource(R.drawable.ic_like_off_gray);
         } else {
-            albumImgViewHolder.albumImgLike.setImageResource(R.drawable.ic_like_on);
+            albumImgViewHolder.albumImgLike.setImageResource(R.drawable.ic_favorite_3);
         }
 
         setImagePhotoGrapherInfo(albumImgViewHolder, imagePhotographer);
@@ -159,7 +159,7 @@ public class AllAlbumImgAdapter extends RecyclerView.Adapter<AllAlbumImgAdapter.
         albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);
         switch (photosListType) {
             case SOCIAL_LIST: {
-                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.VISIBLE);
+                albumImgViewHolder.albumImgSaveBtn.setVisibility(View.INVISIBLE);
                 albumImgViewHolder.albumImgDeleteBtn.setVisibility(View.INVISIBLE);
                 if (imagePhotographer.id == Integer.parseInt(PrefUtils.getUserId(context))) {
                     albumImgViewHolder.followPhotoGrapherBtn.setVisibility(View.INVISIBLE);

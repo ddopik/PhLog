@@ -24,6 +24,7 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_saved.presente
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.softmills.phlog.Utiltes.Constants.CURRENT_PROFILE_TAP_CODE;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_SAVED_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
@@ -47,6 +48,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
     private PagingController pagingController;
     private String nextPageUrl = "1";
     private boolean isLoading;
+    private static final int ALBUM_LIST_REQUEST_CODE = 234;
 
     public static PhotoGrapherSavedPhotosFragment getInstance() {
         return new PhotoGrapherSavedPhotosFragment();
@@ -72,9 +74,11 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
     @Override
     public void onResume() {
         super.onResume();
-        photoGrapherSavedPhotoList.clear();
-        photographerSavedPhotoAdapter.notifyDataSetChanged();
-        photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(nextPageUrl);
+        if (becameVisible && "1".equals(nextPageUrl)) {
+            photoGrapherSavedPhotoList.clear();
+            photographerSavedPhotoAdapter.notifyDataSetChanged();
+            photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(nextPageUrl);
+        }
 
     }
 
@@ -85,7 +89,8 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !becameVisible) {
             becameVisible = true;
-
+            if (getView() != null && "1".equals(nextPageUrl))
+                photoGrapherSavedFragmentPresenter.getPhotographerSavedPhotos(nextPageUrl);
         }
     }
 
@@ -165,7 +170,7 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
             intent.putExtra(CURRENT_PAGE, nextPageUrl);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherSavedPhotoList);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivityForResult(intent, CURRENT_PROFILE_TAP_CODE);
+            startActivityForResult(intent, ALBUM_LIST_REQUEST_CODE);
         };
     }
 
@@ -199,6 +204,15 @@ public class PhotoGrapherSavedPhotosFragment extends BaseFragment implements Pho
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if (requestCode == ALBUM_LIST_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<BaseImage> imageList = data.getParcelableArrayListExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES);
+            if (imageList != null) {
+                if (!imageList.isEmpty()) {
+                    photoGrapherSavedPhotoList.clear();
+                    photoGrapherSavedPhotoList.addAll(imageList);
+                    photographerSavedPhotoAdapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 }

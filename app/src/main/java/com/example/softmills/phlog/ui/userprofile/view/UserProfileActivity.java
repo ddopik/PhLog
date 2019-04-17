@@ -32,6 +32,7 @@ import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomRecyclerView;
 import com.example.softmills.phlog.base.widgets.PagingController;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
+import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenter;
 import com.example.softmills.phlog.ui.userprofile.presenter.UserProfilePresenterImpl;
 import com.o_bdreldin.loadingbutton.LoadingButton;
@@ -49,6 +50,7 @@ import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELE
 public class UserProfileActivity extends BaseActivity implements UserProfileActivityView {
 
 
+    private static final int ALBUM_LIST_REQUEST_CODE = 324;
     public static String USER_ID = "user_id";
     public static String USER_TYPE = "user_type";
 
@@ -197,7 +199,7 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
             intent.putExtra(LIST_NAME, image.photographer.userName);
             intent.putExtra(LIST_TYPE, USER_PROFILE_PHOTOS_LIST);
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) userPhotoList);
-            startActivity(intent);
+            startActivityForResult(intent, ALBUM_LIST_REQUEST_CODE);
         };
 
 
@@ -369,5 +371,20 @@ public class UserProfileActivity extends BaseActivity implements UserProfileActi
                     finish();
                     dialog.dismiss();
                 }).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ALBUM_LIST_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<BaseImage> imageList = data.getParcelableArrayListExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES);
+            if (imageList != null) {
+                if (!imageList.isEmpty()) {
+                    userPhotoList.clear();
+                    userPhotoList.addAll(imageList);
+                    userProfilePhotosAdapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 }
