@@ -67,11 +67,16 @@ public class SocialAdapterCampaignViewController {
         socialViewHolder.socialCampaignDayLeft.setText("days_left here");
         socialViewHolder.socialCampaignName.setText(socialData.campaigns.get(0).titleEn);
 
-        if (socialData.campaigns.get(0).isJoined) {
-            socialViewHolder.socialJoinCampaignBtn.setVisibility(View.GONE);
-        } else {
-            socialViewHolder.socialJoinCampaignBtn.setVisibility(View.VISIBLE);
-        }
+        /**
+         * join disabled for both state in social screen
+         **/
+        socialViewHolder.socialJoinCampaignBtn.setVisibility(View.GONE);
+
+//        if (socialData.campaigns.get(0).isJoined) {
+//            socialViewHolder.socialJoinCampaignBtn.setVisibility(View.GONE);
+//        } else {
+//            socialViewHolder.socialJoinCampaignBtn.setVisibility(View.VISIBLE);
+//        }
 
         if (onSocialItemListener != null) {
             socialViewHolder.socialJoinCampaignBtn.setOnClickListener(v -> {
@@ -117,25 +122,28 @@ public class SocialAdapterCampaignViewController {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(followCampaignResponse -> {
-                    socialData.campaigns.get(0).isJoined =true;
-
                     getCampaignIndex(campaignId)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(index -> {
-                                if (index >0){
-                                    socialDataList.set(index, socialData);
-                                    socialAdapter.notifyDataSetChanged();
-                                }
-                                socialAdapter.notifyDataSetChanged();
+
+
+                                /**
+                                 * join disabled for both state in social screen
+                                **/
+//                                if (index >0){
+//                                    socialData.campaigns.get(0).isJoined =true;
+//                                    socialDataList.set(index, socialData);
+//                                    socialAdapter.notifyDataSetChanged();
+//                                }
+//                                socialAdapter.notifyDataSetChanged();
 
                             }, throwable -> {
                                 ErrorUtils.Companion.setError(context, TAG, throwable);
                             });
 
 
-//                    onSocialItemListener.onSocialCampaignJoined(campaignId, true);
-                }, throwable -> {
+                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }

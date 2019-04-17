@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    tools:layout_height="275dp">
 
     <LinearLayout
         android:id="@+id/social_campaign_container"
@@ -38,13 +38,12 @@
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/campaign_item_height">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/social_campaign_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 tools:background="@drawable/splash_screen_background" />
 
             <ImageView
@@ -72,20 +71,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp8"
-                    tools:drawableStart="@drawable/ic_time_white"
                     android:drawablePadding="@dimen/campaign_drawable_padding"
                     android:textColor="@color/white"
+                    tools:drawableStart="@drawable/ic_time_white"
                     tools:text="5 day left" />
 
                 <com.example.softmills.phlog.base.widgets.CustomTextView
+                    android:id="@+id/campaign_prize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
                     android:layout_marginTop="@dimen/dp8"
-                    android:textColor="@color/white"
                     android:drawablePadding="@dimen/campaign_drawable_padding"
-                    tools:drawableStart="@drawable/ic_prize_white"
-                    android:id="@+id/campaign_prize"/>
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    tools:drawableStart="@drawable/ic_prize_white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

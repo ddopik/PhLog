@@ -218,6 +218,7 @@ public class LoginPresenterImp implements LoginPresenter {
                 .map(response -> response != null);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void sendVerificationRequest(String email) {
         BaseNetworkApi.requestVerification(email)
