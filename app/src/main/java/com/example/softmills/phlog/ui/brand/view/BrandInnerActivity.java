@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
@@ -41,6 +42,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
     private TextView brandName, brandNumFollowers, brandType, aboutBrand, brandData, brandWebsite, brandMail, brandCampaign, brandProfileToolbarFollow, brandProfileToolbarTitle;
     private BrandInnerPresenter brandInnerPresenter;
     private ProgressBar progressBar;
+    private CardView industryContainer;
 
 
     @Override
@@ -77,6 +79,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
         brandCampaign = findViewById(R.id.brand_campaign);
         progressBar = findViewById(R.id.brand_progress_bar);
         followBrandBtn = findViewById(R.id.follow_brand_btn);
+        industryContainer = findViewById(R.id.brand_type_container);
         brandCampaign.setCompoundDrawablesWithIntrinsicBounds(null, null, AppCompatResources.getDrawable(getBaseContext(), R.drawable.ic_navigate_brand_forward_24dp), null);
     }
 
@@ -112,7 +115,7 @@ public class BrandInnerActivity extends BaseActivity implements BrandInnerActivi
 
         if (brand.industry != null) {
             brandType.setText(brand.industry.nameEn);
-        } else brandType.setVisibility(View.INVISIBLE);
+        } else industryContainer.setVisibility(View.INVISIBLE);
 
         if (brand.isBrandText != null) {
             brandData.setText(brand.description);

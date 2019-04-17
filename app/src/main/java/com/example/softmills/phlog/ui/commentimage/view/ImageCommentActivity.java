@@ -81,6 +81,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
             imageCommentActivityPresenter.getImageComments(String.valueOf(previewImage.id), nextPageUrl);
         } else if (getIntent().getIntExtra(NOTIFICATION_IMAGE_ID, -1) >= 0) {
             initPresenter();
+            initView();
             imageCommentActivityPresenter.getImageDetails(getIntent().getIntExtra(NOTIFICATION_IMAGE_ID, -1));
         }
 

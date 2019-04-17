@@ -25,6 +25,7 @@ import com.example.softmills.phlog.ui.photographerprofile.view.ph_photos.present
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.softmills.phlog.Utiltes.Constants.PhotosListType.CURRENT_PHOTOGRAPHER_PHOTOS_LIST;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.ALL_ALBUM_IMAGES;
 import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.CURRENT_PAGE;
@@ -37,6 +38,7 @@ import static com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity.SELE
  */
 public class PhotoGrapherPhotosFragment extends BaseFragment implements FragmentPhotoGrapherPhotosView {
 
+    private static final int ALBUM_LIST_REQUEST_CODE = 234;
     private static String TAG = PhotoGrapherPhotosFragment.class.getSimpleName();
     private View mainView;
     private List<BaseImage> photoGrapherPhotoList;
@@ -84,8 +86,8 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !becameVisible) {
             becameVisible = true;
-//            if (getView() != null)
-//                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(0);
+            if (getView() != null && "1".equals(nextPageUrl))
+                fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(nextPageUrl);
         }
     }
 
@@ -162,7 +164,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
             intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) photoGrapherPhotoList);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-            startActivity(intent);
+            startActivityForResult(intent, ALBUM_LIST_REQUEST_CODE);
         };
 
     }
@@ -170,7 +172,7 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
     @Override
     public void onResume() {
         super.onResume();
-        if (becameVisible) {
+        if (becameVisible && "1".equals(nextPageUrl)) {
             photoGrapherPhotoList.clear();
             photographerSavedPhotoAdapter.notifyDataSetChanged();
             fragmentPhotoGrapherPhotosPresenter.getPhotographerPhotos(nextPageUrl);
@@ -206,4 +208,18 @@ public class PhotoGrapherPhotosFragment extends BaseFragment implements Fragment
         this.nextPageUrl = page;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ALBUM_LIST_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<BaseImage> imageList = data.getParcelableArrayListExtra(AllAlbumImgActivity.ALL_ALBUM_IMAGES);
+            if (imageList != null) {
+                if (!imageList.isEmpty()) {
+                    photoGrapherPhotoList.clear();
+                    photoGrapherPhotoList.addAll(imageList);
+                    photographerSavedPhotoAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
 }

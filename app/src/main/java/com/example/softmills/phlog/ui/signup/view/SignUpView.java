@@ -8,5 +8,7 @@ public interface SignUpView {
     void showCounters(List<Country> countries);
     void showMessage(String msg);
     void setProgress(boolean b);
+
+    void signupSuccess();
     void navigateToHome();
 }

@@ -70,7 +70,7 @@ public class PhotographerCampaignsFragment extends BaseFragment implements Fragm
         if (isVisibleToUser && !becameVisible) {
             becameVisible = true;
             if (getView() != null)
-                photoGrapherCampaignsPresenter.getPhotographerCampaigns(0);
+                photoGrapherCampaignsPresenter.getPhotographerCampaigns(1);
         }
     }
 

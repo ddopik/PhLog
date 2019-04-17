@@ -63,8 +63,7 @@ public class EditPhotoGrapherProfileFragmentImpl implements EditPhotoGrapherProf
             files.put("image_cover", new File(cover));
         }
         HashMap<String, String> data = new HashMap<>();
-        data.put("name", name);
-        data.put("email", email);
+        data.put("full_name", name);
         data.put("mobile", phone);
         if (oldPassword != null) {
             data.put("old_password", oldPassword);

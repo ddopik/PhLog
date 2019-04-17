@@ -2,10 +2,8 @@ package com.example.softmills.phlog.ui.signup.presenter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
-import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.view.SignUpView;
@@ -50,10 +48,10 @@ public class SignUpPresenterImpl implements SignUpPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(signUpResponse -> {
                     signUpView.setProgress(false);
-                    PrefUtils.setLoginState(context, true);
-                    PrefUtils.setUserToken(context, signUpResponse.token);
+//                    PrefUtils.setLoginState(context, true);
+//                    PrefUtils.setUserToken(context, signUpResponse.token);
 //                    PrefUtils.setUserID(context, signUpResponse.id);
-                    signUpView.navigateToHome();
+                    signUpView.signupSuccess();
                 }, throwable -> {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                     signUpView.setProgress(false);

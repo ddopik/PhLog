@@ -65,6 +65,7 @@ public class PhotoGrapherProfileActivityPresenterImpl implements PhotoGrapherPro
     public void logout(Context context) {
         PrefUtils.setLoginState(context, false);
         PrefUtils.setUserToken(context, null);
+        PrefUtils.setFirebaseTokenSentToServer(context, false);
     }
 
     @Override

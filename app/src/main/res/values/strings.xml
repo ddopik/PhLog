@@ -236,4 +236,7 @@
     <string name="can_buy_exclusive">Can be exclusively sold</string>
     <string name="phlog">Phlog</string>
     <string name="photos_uploaded">Photos uploaded</string>
+    <string name="location_is_required">Location is required</string>
+    <string name="signup_success">A verification email has been sent to your email. Please verify your email then log in to the app.</string>
+    <string name="ok">OK</string>
 </resources>
