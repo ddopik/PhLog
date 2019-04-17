@@ -71,8 +71,9 @@ public class BaseNetworkApi {
     public static final int STATUS_500 = 500;
     public static String STATUS_ERROR = "405";
     public static final String ERROR_VALIDATION = "1";
-    public static final String ERROR_NOT_FOUND = "2";
+    public static final String ERROR_EMAIL_NOT_FOUND = "2";
     public static final String ERROR_VERIFICATION = "3";
+    public static final String ERROR_NOT_FOUND = "1404";
 
     public static String IMAGE_TYPE_PHOTOS = "image";
     public static String IMAGE_TYPE_CAMPAIGN = "campaign_id";
@@ -535,12 +536,15 @@ public class BaseNetworkApi {
     }
 
 
-    public static io.reactivex.Observable<UploadImgResponse> uploadPhotoGrapherPhoto(String token, String caption, String location, File imgPath, Map<String, String> tagList, Map<String, String> filters, UploadProgressListener progressListener) {
+    public static io.reactivex.Observable<UploadImgResponse> uploadPhotoGrapherPhoto(String token
+            , String caption, String location, File imgPath, Map<String, String> tagList, Map<String, String> filters
+            , boolean exclusive, UploadProgressListener progressListener) {
         return Rx2AndroidNetworking.upload(UPLOAD_PHOTOGRAPHER_PHOTO)
                 .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
                 .addHeaders("x-lang-code", "en-us")
                 .addMultipartParameter("caption", caption)
+                .addMultipartParameter("is_exclusive", String.valueOf(exclusive))
                 .addMultipartParameter("location", location)
                 .addMultipartParameter(tagList)
                 .addMultipartParameter(filters)
@@ -558,13 +562,15 @@ public class BaseNetworkApi {
 
 
     public static io.reactivex.Observable<UploadImgResponse> uploadCampaignPhoto(String token
-            , String caption, String location, File imgPath, Map<String, String> tagList, Map<String, String> filters, String uploadImageDataID) {
+            , String caption, String location, File imgPath, Map<String, String> tagList, Map<String
+            , String> filters, String uploadImageDataID, boolean exclusive) {
         return Rx2AndroidNetworking.upload(UPLOAD_CAMPAIGN_PHOTO)
                 .addHeaders("x-auth-token", token)
                 .addHeaders("x-user-type", DEFAULT_USER_TYPE)
                 .addHeaders("x-lang-code", "en-us")
                 .addMultipartParameter("caption", caption)
                 .addMultipartParameter("location", location)
+                .addMultipartParameter("is_exclusive", String.valueOf(exclusive))
                 .addMultipartParameter(tagList)
                 .addMultipartParameter(filters)
                 .addMultipartParameter(IMAGE_TYPE_CAMPAIGN, uploadImageDataID)

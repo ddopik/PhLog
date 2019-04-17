@@ -26,6 +26,7 @@ import com.example.softmills.phlog.fgm.parse.NotificationParser;
 import com.example.softmills.phlog.ui.campaigns.CampaignsFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningInnerFragment;
 import com.example.softmills.phlog.ui.earning.view.EarningListFragment;
+import com.example.softmills.phlog.ui.notification.model.NotificationList;
 import com.example.softmills.phlog.ui.notification.view.NotificationFragment;
 import com.example.softmills.phlog.ui.photographerprofile.editprofile.view.EditPhotoGrapherProfileFragment;
 import com.example.softmills.phlog.ui.photographerprofile.view.PhotoGraphedProfileFragment;
@@ -87,9 +88,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     break;
                 case MainActivityRedirectionValue.TO_POPUP:
                     String payload = intent.getStringExtra(MainActivityRedirectionValue.PAYLOAD);
-                    FirebaseNotificationData data = NotificationParser.parse(payload);
+                    NotificationList data = NotificationParser.parse(payload);
                     navigationManger.navigate(HOME);
-                    if (data != null && data.notification != null && data.notification.popup != PopupType.NONE)
+                    if (data != null && data.popup != PopupType.NONE)
                         showPopup(data);
                     break;
             }
