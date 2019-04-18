@@ -88,7 +88,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
         });
         forgotPassword.setOnClickListener(v -> {
             if (mail.getText().toString().isEmpty()) {
-                mailInput.setError(getResources().getString(R.string.email_missing));
+                mailInput.setError(getString(R.string.email_missing));
+                return;
+            }
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail.getText().toString()).matches()) {
+                mailInput.setError(getString(R.string.invalid_mail));
                 return;
             }
             loginProgressBar.setVisibility(View.VISIBLE);
@@ -137,6 +141,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         Intent intent = new Intent(this, SignUpActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+        finish();
     }
 
 

@@ -162,10 +162,10 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
                 return;
             }
 
-            if (placesAutoCompete.getText().toString().isEmpty()) {
-                showToast(getString(R.string.location_is_required));
-                return;
-            }
+//            if (placesAutoCompete.getText().toString().isEmpty()) {
+//                showToast(getString(R.string.location_is_required));
+//                return;
+//            }
 
             Bundle extras = new Bundle();
             if (placesAutoCompete.getText() != null)

@@ -35,28 +35,6 @@ public  abstract  class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    public abstract void initView();
-    public abstract void initPresenter();
-    public void showToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
-    }
-
-
-    public void addFragment(int containerID, Fragment fragment, String tag,boolean addBackStack) {
-        if (addBackStack){
-            getSupportFragmentManager().beginTransaction().replace(containerID, fragment, tag).addToBackStack(tag).commit();
-        }else {
-            getSupportFragmentManager().beginTransaction().replace(containerID, fragment, tag).commit();
-
-        }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         Disposable disposable = RxEventBus.getInstance().getSubject().subscribe(event -> {
             switch (event.getType()) {
                 case POPUP:
@@ -79,6 +57,28 @@ public  abstract  class BaseActivity extends AppCompatActivity {
             Log.e("MainActivity-Noti", throwable.getMessage());
         });
         disposables.add(disposable);
+    }
+
+    public abstract void initView();
+    public abstract void initPresenter();
+    public void showToast(String msg){
+        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
+    }
+
+
+    public void addFragment(int containerID, Fragment fragment, String tag,boolean addBackStack) {
+        if (addBackStack){
+            getSupportFragmentManager().beginTransaction().replace(containerID, fragment, tag).addToBackStack(tag).commit();
+        }else {
+            getSupportFragmentManager().beginTransaction().replace(containerID, fragment, tag).commit();
+
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private CompositeDisposable disposables = new CompositeDisposable();
