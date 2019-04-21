@@ -73,42 +73,28 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_replay);
-        initPresenter();
-        initView();
-        initListener();
+
 
         if (getIntent().getParcelableExtra(REPLY_HEADER_COMMENT) != null && getIntent().getParcelableExtra(COMMENT_IMAGE) != null) {
             previewImage = getIntent().getParcelableExtra(COMMENT_IMAGE);
             headerComment = (Comment) getIntent().getParcelableExtra(REPLY_HEADER_COMMENT);
+            mentions =   getIntent().getParcelableExtra(MENTIONS);
             commentListType = (Constants.CommentListType) getIntent().getSerializableExtra(COMMENT_LIST_TYPE);
             Comment comment = new Comment();
 
             commentList.add(headerComment);
             commentList.add(comment);
-            commentsAdapter.notifyDataSetChanged();
+            initPresenter();
+            initView();
+            initListener();
+
             replayCommentPresenter.getReplies(headerComment.id, previewImage.id, 0);
         }
 
 
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
 
-
-        if (intent.getParcelableExtra(REPLY_HEADER_COMMENT) != null && getIntent().getParcelableExtra(COMMENT_IMAGE) != null) {
-            previewImage = intent.getParcelableExtra(COMMENT_IMAGE);
-            headerComment = intent.getParcelableExtra(REPLY_HEADER_COMMENT);
-            commentListType = (Constants.CommentListType) intent.getSerializableExtra(COMMENT_LIST_TYPE);
-            commentList.clear();
-            Comment comment = new Comment();
-            commentList.add(headerComment);
-            commentList.add(comment);
-            commentsAdapter.notifyDataSetChanged();
-            replayCommentPresenter.getReplies(headerComment.id, previewImage.id, 0);
-
-        }
-    }
 
     @Override
     public void initView() {
