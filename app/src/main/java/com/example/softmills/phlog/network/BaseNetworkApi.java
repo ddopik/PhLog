@@ -38,6 +38,7 @@ import com.example.softmills.phlog.ui.signup.model.AllCountersRepose;
 import com.example.softmills.phlog.ui.signup.model.SignUpResponse;
 import com.example.softmills.phlog.ui.signup.model.UploadImgResponse;
 import com.example.softmills.phlog.ui.social.model.SocialResponse;
+import com.example.softmills.phlog.ui.splash.model.CheckVersionReponse;
 import com.example.softmills.phlog.ui.uploadimage.model.AutoCompleteTagResponse;
 import com.example.softmills.phlog.ui.userprofile.model.FollowUserResponse;
 import com.example.softmills.phlog.ui.userprofile.model.UserPhotosResponse;
@@ -74,6 +75,7 @@ public class BaseNetworkApi {
     public static final String ERROR_EMAIL_NOT_FOUND = "2";
     public static final String ERROR_VERIFICATION = "3";
     public static final String ERROR_NOT_FOUND = "1404";
+    private static final int ANDROID_PLATFORM = 0;
 
     public static String IMAGE_TYPE_PHOTOS = "image";
     public static String IMAGE_TYPE_CAMPAIGN = "campaign_id";
@@ -139,12 +141,13 @@ public class BaseNetworkApi {
     private static final String UNSAVE_PHOTO_URL = BASE_URL + "/photo/unsave";
     private static final String FORGOT_PASSWORD_URL = BASE_URL + "/auth/forgot_password";
     private static final String UPDATE_PROGILE_URL = BASE_URL + "/profile/update";
-     private static final String COMMENT_REPLAY_URL = BASE_URL + "/photo/comment/list";
+    private static final String COMMENT_REPLAY_URL = BASE_URL + "/photo/comment/list";
     private static final String EARNING_DETAILS_URL = BASE_URL + "/earning/details";
     private static final String SOCIAL_AUTO_COMPLETE = BASE_URL_COMMON + "/social/search";
     private static final String UPDATE_FIREBASE_TOKEN_URL = BASE_URL + "/auth/device/set";
     private static final String REQUEST_VERIFICATION_URL = BASE_URL + "/auth/resend_email_verification";
     private static final String PHOTO_GRAPHER_PHOTO_DETAILS = BASE_URL + "/photo/details";
+    private static final String CHECK_APP_VERSION_URL = BASE_URL_COMMON + "/version/check";
 
 
     //Path Parameters
@@ -744,5 +747,17 @@ public class BaseNetworkApi {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getStringObservable();
+    }
+
+    public static Observable<CheckVersionReponse> checkAppVersion(String versionName) {
+        return Rx2AndroidNetworking.post(CHECK_APP_VERSION_URL)
+                .addBodyParameter("version", versionName)
+                .addBodyParameter("user_platform", String.valueOf(ANDROID_PLATFORM))
+                .addHeaders("x-user-type", DEFAULT_USER_TYPE)
+                .addHeaders("x-lang-code", "en-us")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getObjectObservable(CheckVersionReponse.class);
+
     }
 }

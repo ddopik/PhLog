@@ -2,10 +2,13 @@ package com.example.softmills.phlog.ui.splash.presenter;
 
 import android.content.Context;
 
+import com.example.softmills.phlog.BuildConfig;
 import com.example.softmills.phlog.Utiltes.PrefUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.commonmodel.Device;
 import com.example.softmills.phlog.network.BaseNetworkApi;
+import com.example.softmills.phlog.ui.splash.model.CheckVersionData;
+import com.example.softmills.phlog.ui.splash.model.CheckVersionReponse;
 import com.example.softmills.phlog.ui.splash.view.SplashView;
 
 import io.reactivex.Observable;
@@ -30,5 +33,11 @@ public class SplashPresenterImpl implements SplashPresenter {
                         return false;
                     }
                 });
+    }
+
+    @Override
+    public Observable<CheckVersionData> checkAppVersion() {
+        return BaseNetworkApi.checkAppVersion(BuildConfig.VERSION_NAME)
+                .map(CheckVersionReponse::getData);
     }
 }

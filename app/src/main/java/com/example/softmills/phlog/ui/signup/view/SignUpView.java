@@ -11,3 +11,4 @@ public interface SignUpView {
 
     void signupSuccess();
  }
+}
