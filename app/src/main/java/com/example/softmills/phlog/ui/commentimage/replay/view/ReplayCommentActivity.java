@@ -73,42 +73,35 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_replay);
-        initPresenter();
-        initView();
-        initListener();
+
 
         if (getIntent().getParcelableExtra(REPLY_HEADER_COMMENT) != null && getIntent().getParcelableExtra(COMMENT_IMAGE) != null) {
             previewImage = getIntent().getParcelableExtra(COMMENT_IMAGE);
+            mentions = getIntent().getParcelableExtra(MENTIONS);
             headerComment = (Comment) getIntent().getParcelableExtra(REPLY_HEADER_COMMENT);
             commentListType = (Constants.CommentListType) getIntent().getSerializableExtra(COMMENT_LIST_TYPE);
-            Comment comment = new Comment();
 
+
+            initPresenter();
+            initView();
+            initListener();
+
+            //default Comment for head comment
+            Comment comment = new Comment();
             commentList.add(headerComment);
             commentList.add(comment);
+
+
             commentsAdapter.notifyDataSetChanged();
             replayCommentPresenter.getReplies(headerComment.id, previewImage.id, 0);
+
+
         }
 
 
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
 
-
-        if (intent.getParcelableExtra(REPLY_HEADER_COMMENT) != null && getIntent().getParcelableExtra(COMMENT_IMAGE) != null) {
-            previewImage = intent.getParcelableExtra(COMMENT_IMAGE);
-            headerComment = intent.getParcelableExtra(REPLY_HEADER_COMMENT);
-            commentListType = (Constants.CommentListType) intent.getSerializableExtra(COMMENT_LIST_TYPE);
-            commentList.clear();
-            Comment comment = new Comment();
-            commentList.add(headerComment);
-            commentList.add(comment);
-            commentsAdapter.notifyDataSetChanged();
-            replayCommentPresenter.getReplies(headerComment.id, previewImage.id, 0);
-
-        }
-    }
 
     @Override
     public void initView() {
@@ -131,7 +124,6 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     private void initListener() {
 
 
-
         pagingController = new PagingController(repliesRv) {
             @Override
             protected void loadMoreItems() {
@@ -148,6 +140,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
                 }
 
             }
+
             @Override
             public boolean isLoading() {
                 return isLoading;
@@ -211,8 +204,8 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     @SuppressLint("CheckResult")
     @Override
     public void onCommentReplied(SubmitImageCommentData submitImageCommentData) {
-        headerComment.repliesCount ++;
-        previewImage.commentsCount ++;
+        headerComment.repliesCount++;
+        previewImage.commentsCount++;
         Intent data = new Intent();
         data.putExtra(REPLY_HEADER_COMMENT, headerComment);
         data.putExtra(COMMENT_IMAGE, previewImage);
@@ -294,7 +287,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
     @Override
     public void viewRepliesProgress(boolean state) {
-        isLoading=state;
+        isLoading = state;
         if (state) {
             repliesProgressBar.setVisibility(View.VISIBLE);
         } else {
@@ -346,6 +339,6 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
     @Override
     public void setNextPageUrl(String page) {
-        this.nextPageUrl=page;
+        this.nextPageUrl = page;
     }
 }
