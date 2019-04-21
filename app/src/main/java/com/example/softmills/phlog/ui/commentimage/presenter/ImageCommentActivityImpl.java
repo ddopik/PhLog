@@ -4,14 +4,21 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.androidnetworking.error.ANError;
+import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.Utiltes.ErrorUtils;
 import com.example.softmills.phlog.Utiltes.Utilities;
 import com.example.softmills.phlog.base.commonmodel.BaseErrorResponse;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
+import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.commonmodel.ErrorMessageResponse;
+import com.example.softmills.phlog.base.commonmodel.MentionedUser;
+import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.network.BaseNetworkApi;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivityView;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -79,8 +86,8 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
                 .subscribe(albumImgCommentResponse -> {
                     imageCommentActivityView.viewPhotoComment(albumImgCommentResponse.data);
                     imageCommentActivityView.viewImageProgress(false);
-                    if (albumImgCommentResponse.data.nextPageUrl != null) {
-                        imageCommentActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, albumImgCommentResponse.data.nextPageUrl));
+                    if (albumImgCommentResponse.data.comments.nextPageUrl != null) {
+                        imageCommentActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, albumImgCommentResponse.data.comments.nextPageUrl));
 
                     } else {
                         imageCommentActivityView.setNextPageUrl(null);
@@ -152,5 +159,41 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
                     ErrorUtils.Companion.setError(context, TAG, throwable);
                 });
     }
+    @SuppressLint("CheckResult")
+    @Override
+    public void getMentionedUser(String key) {
+        BaseNetworkApi.getSocialAutoComplete(key)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(socialAutoCompleteResponse -> {
 
+                    List<MentionedUser> mentionedUserList = new ArrayList<>();
+                    if (socialAutoCompleteResponse.data.photographers != null) {
+
+
+                        for (Photographer photographer : socialAutoCompleteResponse.data.photographers) {
+                            MentionedUser mentionedUser = new MentionedUser();
+
+                            mentionedUser.mentionedUserId = photographer.id;
+                            mentionedUser.mentionedUserName = photographer.fullName;
+                            mentionedUser.mentionedImage = photographer.imageProfile;
+                            mentionedUser.mentionedType = Constants.UserType.USER_TYPE_PHOTOGRAPHER;
+                            mentionedUserList.add(mentionedUser);
+                        }
+                    }
+                    if (socialAutoCompleteResponse.data.businesses != null) {
+                        for (Business business : socialAutoCompleteResponse.data.businesses) {
+                            MentionedUser mentionedUser = new MentionedUser();
+                            mentionedUser.mentionedUserId = business.id;
+                            mentionedUser.mentionedUserName = business.firstName + " " + business.lastName;
+                            mentionedUser.mentionedImage = business.thumbnail;
+                            mentionedUser.mentionedType = Constants.UserType.USER_TYPE_BUSINESS;
+                            mentionedUserList.add(mentionedUser);
+                        }
+                    }
+                    imageCommentActivityView.viewMentionedUsers(mentionedUserList);
+                }, throwable -> {
+                    ErrorUtils.Companion.setError(context, TAG, throwable);
+                });
+    }
 }

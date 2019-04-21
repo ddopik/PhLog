@@ -164,15 +164,15 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
             }
 
-            @Override
-            public void onSubmitComment(String comment) {
-
-                if (comment.length() > 0) {
-                    replayCommentPresenter.submitReplayComment(String.valueOf(previewImage.id), String.valueOf(headerComment.id), comment);
-                } else {
-                    showToast(getResources().getString(R.string.comment_cant_not_be_null));
-                }
-            }
+//            @Override
+//            public void onSubmitComment(String comment) {
+//
+//                if (comment.length() > 0) {
+//                    replayCommentPresenter.submitReplayComment(String.valueOf(previewImage.id), String.valueOf(headerComment.id), comment);
+//                } else {
+//                    showToast(getResources().getString(R.string.comment_cant_not_be_null));
+//                }
+//            }
 
 
             @Override

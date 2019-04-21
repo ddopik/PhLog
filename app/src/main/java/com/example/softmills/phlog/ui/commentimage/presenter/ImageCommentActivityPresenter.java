@@ -19,4 +19,6 @@ public interface ImageCommentActivityPresenter {
 
     void submitComment(String imageId, String comment);
     void getImageDetails(int imageId);
+
+    void getMentionedUser(String key);
 }

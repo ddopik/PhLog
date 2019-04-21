@@ -10,5 +10,5 @@ public interface SignUpView {
     void setProgress(boolean b);
 
     void signupSuccess();
- }
+
 }
