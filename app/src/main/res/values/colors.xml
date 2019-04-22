@@ -57,5 +57,5 @@
     <color name="filter_label_normal">#EEEEEE</color>
     <color name="filter_label_selected">#FFFFFF</color>
     <color name="black_transparent">#80000000</color>
-    <color name="test_color">#0A0A00</color>
+    <color name="add_commnet_cell_color">#0A0A00</color>
 </resources>
