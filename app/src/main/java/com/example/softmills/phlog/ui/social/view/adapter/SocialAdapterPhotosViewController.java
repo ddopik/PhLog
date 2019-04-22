@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.example.softmills.phlog.Utiltes.Constants;
 import com.example.softmills.phlog.ui.album.view.AllAlbumImgActivity;
+import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
 import com.example.softmills.phlog.ui.social.model.SocialData;
 
 import java.util.ArrayList;
@@ -40,13 +41,17 @@ public class SocialAdapterPhotosViewController {
 
 
         socialImagesAdapter.onSocialSliderImgClick = img -> {
-            Intent intent = new Intent(context, AllAlbumImgActivity.class);
+//            Intent intent = new Intent(context, AllAlbumImgActivity.class);
+//            intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) socialData.photos);
+//            intent.putExtra(SELECTED_IMG_ID, socialData.photos.get(0).id);
+//            intent.putExtra(LIST_TYPE, Constants.PhotosListType.SOCIAL_LIST);
+//            intent.putExtra(LIST_NAME, socialData.title);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-            intent.putParcelableArrayListExtra(ALL_ALBUM_IMAGES, (ArrayList<? extends Parcelable>) socialData.photos);
-            intent.putExtra(SELECTED_IMG_ID, socialData.photos.get(0).id);
-            intent.putExtra(LIST_TYPE, Constants.PhotosListType.SOCIAL_LIST);
-            intent.putExtra(LIST_NAME, socialData.title);
-
+            if (img == null)
+                return;
+            Intent intent = new Intent(context, ImageCommentActivity.class);
+            intent.putExtra(ImageCommentActivity.IMAGE_DATA, img);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             context.startActivity(intent);
 
