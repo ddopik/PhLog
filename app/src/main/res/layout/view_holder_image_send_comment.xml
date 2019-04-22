@@ -2,35 +2,38 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:layout_height="wrap_content"
+    android:background="@color/test_color"
+   >
 
     <TextView
         android:id="@+id/send_comment_top_line"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_above="@+id/img_send_comment_val"
-        android:layout_marginBottom="@dimen/widgets_padding"
-        android:background="@color/gray2B2E00" />
+        android:layout_height="1dp"
+         android:background="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        />
+
 
     <com.example.softmills.phlog.base.widgets.CustomAutoCompleteTextView
         android:id="@+id/img_send_comment_val"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:scrollbars = "vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="@dimen/dp4"
-        android:layout_toStartOf="@+id/send_comment_btn"
-        android:background="@drawable/rounded_frame_back_gray"
+         android:layout_toStartOf="@+id/send_comment_btn"
+        android:layout_below="@+id/send_comment_top_line"
         android:fontFamily="@font/verdana"
         android:hint="@string/write_your_comment"
         android:imeOptions="actionDone"
-        android:padding="@dimen/dp18"
-        android:minLines="10"
+        android:background="@drawable/rounded_frame_no_border"
+        android:maxHeight="140dp"
+        android:padding="@dimen/dp16"
+        android:layout_margin="@dimen/dp6"
         android:scrollbarStyle="insideInset"
-        android:overScrollMode="always"
+
+
+        android:maxLines="3"
+        android:scrollbars="vertical"
         android:textColor="@color/white"
         android:textColorHint="@color/gray400"
         android:textSize="@dimen/font_normal" />
@@ -38,18 +41,24 @@
 
     <ImageButton
         android:id="@+id/send_comment_btn"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/widgets_padding"
-        android:background="@drawable/circle_orange"
+        android:layout_above="@+id/send_comment_base_line"
+         android:layout_marginBottom="6dp"
+        android:layout_marginEnd="@dimen/dp6"
+         android:background="@drawable/circle_orange"
         android:paddingStart="@dimen/dp4"
         android:scaleType="centerInside"
         android:text="@string/send"
         android:textColor="@color/white"
         app:srcCompat="@drawable/ic_add_comment" />
-
+    <TextView
+        android:id="@+id/send_comment_base_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@null"
+        android:layout_below="@+id/img_send_comment_val"/>
 
 </RelativeLayout>
 

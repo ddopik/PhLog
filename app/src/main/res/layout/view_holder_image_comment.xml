@@ -30,7 +30,7 @@
         <LinearLayout
             android:id="@+id/comment_val_sub_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/notification_card_height"
+            android:layout_height="wrap_content"
             android:gravity="center|start"
             android:orientation="vertical"
 
@@ -52,6 +52,8 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_normal"
                 android:layout_marginStart="@dimen/dp8"
+                android:padding="@dimen/widgets_padding"
+                android:background="@drawable/rounded_frame_primary_color"
                 tools:text="comment data here"/>
 
             <!--<TextView-->

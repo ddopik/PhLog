@@ -20,7 +20,7 @@
             android:id="@+id/comment_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/dp32"
+            android:layout_marginBottom="@dimen/dp65"
             app:orientation="vertical" />
 
     </LinearLayout>
@@ -38,7 +38,8 @@
         android:id="@+id/send_comment_container"
         layout="@layout/view_holder_image_send_comment"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+
         android:layout_gravity="bottom" />
 
 

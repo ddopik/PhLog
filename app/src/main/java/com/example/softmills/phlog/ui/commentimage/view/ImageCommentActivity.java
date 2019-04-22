@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -125,6 +124,9 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
             commentsRv.setAdapter(commentsAdapter);
         }
 
+
+
+        setReplyCommentView();
 
     }
 
@@ -284,7 +286,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
     public void viewPhotoComment(ImageCommentsData imageCommentsData) {
 
         Collections.reverse(imageCommentsData.comments.commentList);
-        this.commentList.addAll(this.commentList.size() , imageCommentsData.comments.commentList);
+        this.commentList.addAll(this.commentList.size(), imageCommentsData.comments.commentList);
 
         if (imageCommentsData.mentions.business != null)
             this.mentions.business.addAll(imageCommentsData.mentions.business);
@@ -311,7 +313,7 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
         data.putExtra(IMAGE_DATA, previewImage);
         setResult(RESULT_OK, data);
         // (1) is A default value to view AddComment layout in case there is now Comments
-        this.commentList.add(commentList.size() - 1, commentData.comment);
+        this.commentList.add(commentList.size() , commentData.comment);
 
         // prevent mentioned user from duplication
         reSortMentionList(commentData.mentions).subscribeOn(Schedulers.io())
@@ -482,12 +484,11 @@ public class ImageCommentActivity extends BaseActivity implements ImageCommentAc
             }
     }
 
-    private void set() {
+    private void setReplyCommentView() {
         mentionsAutoCompleteAdapter = new MentionsAutoCompleteAdapter(getBaseContext(), R.layout.view_holder_mentioned_user, mentionedUserList);
         mentionsAutoCompleteAdapter.setNotifyOnChange(true);
         sendCommentImgVal.setAdapter(mentionsAutoCompleteAdapter);
-        sendCommentImgVal.setMovementMethod(new ScrollingMovementMethod());
-        sendCommentImgVal.setThreshold(0);
+
 
 
         sendCommentImgVal.setOnItemClickListener((parent, view, position, id) -> {

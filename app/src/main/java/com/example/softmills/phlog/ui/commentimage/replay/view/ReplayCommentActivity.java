@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
@@ -20,6 +24,7 @@ import com.example.softmills.phlog.base.BaseActivity;
 import com.example.softmills.phlog.base.commonmodel.BaseImage;
 import com.example.softmills.phlog.base.commonmodel.Business;
 import com.example.softmills.phlog.base.commonmodel.Comment;
+import com.example.softmills.phlog.base.commonmodel.MentionedUser;
 import com.example.softmills.phlog.base.commonmodel.Mentions;
 import com.example.softmills.phlog.base.commonmodel.Photographer;
 import com.example.softmills.phlog.base.widgets.CustomAutoCompleteTextView;
@@ -32,14 +37,20 @@ import com.example.softmills.phlog.ui.commentimage.model.SubmitImageCommentData;
 import com.example.softmills.phlog.ui.commentimage.replay.presenter.ReplayCommentPresenter;
 import com.example.softmills.phlog.ui.commentimage.replay.presenter.ReplayCommentPresenterImpl;
 import com.example.softmills.phlog.ui.commentimage.view.ImageCommentActivity;
+import com.example.softmills.phlog.ui.commentimage.view.MentionsAutoCompleteAdapter;
 import com.example.softmills.phlog.ui.userprofile.view.UserProfileActivity;
+import com.jakewharton.rxbinding3.widget.RxTextView;
+import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -58,7 +69,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     private CustomTextView toolBarTitle;
     private ImageButton backBtn;
     private BaseImage previewImage;
-    private Comment headerComment;
+    private  Comment headerComment;
     private List<Comment> commentList = new ArrayList<>();
     private Mentions mentions = new Mentions();
     private CommentsAdapter commentsAdapter;
@@ -66,7 +77,13 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     private String nextPageUrl = "1";
     private boolean isLoading;
     private ReplayCommentPresenter replayCommentPresenter;
-
+    //SendCommentCell
+    private CustomAutoCompleteTextView sendCommentImgVal;
+    private ImageButton sendCommentBtn;
+    private MentionsAutoCompleteAdapter mentionsAutoCompleteAdapter;
+    private List<MentionedUser> mentionedUserList = new ArrayList<>();
+    private DisposableObserver<TextViewTextChangeEvent> searchQuery;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
 
@@ -86,10 +103,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
             initView();
             initListener();
 
-            //default Comment for head comment
-            Comment comment = new Comment();
-            commentList.add(headerComment);
-            commentList.add(comment);
+              commentList.add(headerComment);
 
 
             commentsAdapter.notifyDataSetChanged();
@@ -106,6 +120,8 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     @Override
     public void initView() {
         toolBarTitle = findViewById(R.id.toolbar_title);
+        sendCommentImgVal = findViewById(R.id.img_send_comment_val);
+        sendCommentBtn = findViewById(R.id.send_comment_btn);
         toolBarTitle.setText(getResources().getString(R.string.replies));
         backBtn = findViewById(R.id.back_btn);
         repliesProgressBar = findViewById(R.id.comment_replay_progress);
@@ -113,7 +129,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
         commentsAdapter = new CommentsAdapter(previewImage, commentList, mentions, VIEW_REPLIES);
         repliesRv.setAdapter(commentsAdapter);
 
-
+        setReplyCommentView();
     }
 
     @Override
@@ -164,15 +180,6 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
             }
 
-//            @Override
-//            public void onSubmitComment(String comment) {
-//
-//                if (comment.length() > 0) {
-//                    replayCommentPresenter.submitReplayComment(String.valueOf(previewImage.id), String.valueOf(headerComment.id), comment);
-//                } else {
-//                    showToast(getResources().getString(R.string.comment_cant_not_be_null));
-//                }
-//            }
 
 
             @Override
@@ -210,7 +217,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
         data.putExtra(REPLY_HEADER_COMMENT, headerComment);
         data.putExtra(COMMENT_IMAGE, previewImage);
         setResult(RESULT_OK, data);
-        commentList.add(commentList.size() - 1, submitImageCommentData.comment);
+        commentList.add(commentList.size() , submitImageCommentData.comment);
 
         reSortMentionList(submitImageCommentData.mentions).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -231,7 +238,7 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
 
         Collections.reverse(imageCommentsData.comments.commentList);
-        this.commentList.addAll(commentList.size() - 1, imageCommentsData.comments.commentList);
+        this.commentList.addAll(commentList.size() , imageCommentsData.comments.commentList);
 
         if (imageCommentsData.mentions.business != null)
             this.mentions.business.addAll(imageCommentsData.mentions.business);
@@ -244,14 +251,14 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
 
         if (commentListType == Constants.CommentListType.REPLAY_ON_COMMENT) {
             if (commentList.size() == 1) {
-                repliesRv.scrollToPosition(commentList.size() - 1);
+                repliesRv.scrollToPosition(commentList.size() );
                 CustomAutoCompleteTextView customAutoCompleteTextView = (CustomAutoCompleteTextView) repliesRv.getChildAt(commentList.size() - 1).findViewById(R.id.img_send_comment_val);
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(customAutoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
                 customAutoCompleteTextView.requestFocus();
             } else {
-                repliesRv.getLayoutManager().smoothScrollToPosition(repliesRv, null, commentList.size() - 1);
+                repliesRv.getLayoutManager().smoothScrollToPosition(repliesRv, null, commentList.size() );
                 RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -341,4 +348,111 @@ public class ReplayCommentActivity extends BaseActivity implements ReplayComment
     public void setNextPageUrl(String page) {
         this.nextPageUrl = page;
     }
+
+    private void setReplyCommentView() {
+        mentionsAutoCompleteAdapter = new MentionsAutoCompleteAdapter(getBaseContext(), R.layout.view_holder_mentioned_user, mentionedUserList);
+        mentionsAutoCompleteAdapter.setNotifyOnChange(true);
+        sendCommentImgVal.setAdapter(mentionsAutoCompleteAdapter);
+
+
+
+        sendCommentImgVal.setOnItemClickListener((parent, view, position, id) -> {
+            sendCommentImgVal.handleMentionedCommentBody(position, mentionedUserList);
+
+        });
+
+
+        if (searchQuery == null) {
+            searchQuery = getSearchTagQuery(sendCommentImgVal);
+            sendCommentImgVal.addTextChangedListener(new TextWatcher() {
+                int cursorPosition = sendCommentImgVal.getSelectionStart();
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    int mentionIdentifierCharPosition = sendCommentImgVal.getText().toString().indexOf("@", cursorPosition - 2);
+                    if ((mentionIdentifierCharPosition + 1) >= sendCommentImgVal.getText().toString().length() || mentionIdentifierCharPosition == -1) {
+                        mentionedUserList.clear();
+                        mentionsAutoCompleteAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            disposable.add(
+
+                    RxTextView.textChangeEvents(sendCommentImgVal)
+                            .skipInitialValue()
+                            .debounce(900, TimeUnit.MILLISECONDS)
+                            .distinctUntilChanged()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeWith(searchQuery)
+            );
+        }
+
+
+        sendCommentBtn.setOnClickListener(v -> {
+            String comment = sendCommentImgVal.prepareCommentToSend();
+            if (comment.length() > 0) {
+                replayCommentPresenter.submitReplayComment(String.valueOf(previewImage.id),String.valueOf(headerComment.id), comment);
+
+            } else {
+                showToast(getResources().getString(R.string.comment_cant_not_be_null));
+            }
+
+            sendCommentImgVal.getText().clear();
+
+        });
+
+
+        mentionsAutoCompleteAdapter.onUserClicked = socialUser -> {
+        };
+    }
+
+    private DisposableObserver<TextViewTextChangeEvent> getSearchTagQuery(AutoCompleteTextView autoCompleteTextView) {
+        return new DisposableObserver<TextViewTextChangeEvent>() {
+            @Override
+            public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
+                // user cleared search get default
+                Log.e(TAG, "search string: " + autoCompleteTextView.getText().toString().trim());
+                int cursorPosition = autoCompleteTextView.getSelectionStart();
+
+                ///getting String value before cursor
+                if (cursorPosition > 0) {
+                    int searKeyPosition = autoCompleteTextView.getText().toString().lastIndexOf("@", cursorPosition);
+                    if (searKeyPosition >= 0) {
+                        replayCommentPresenter.getMentionedUser(autoCompleteTextView.getText().toString().substring(searKeyPosition + 1, autoCompleteTextView.getSelectionStart()));
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+    }
+
+    @Override
+    public void viewMentionedUsers(List<MentionedUser> mentionedUserList) {
+        this.mentionedUserList.clear();
+        this.mentionedUserList.addAll(mentionedUserList);
+        mentionsAutoCompleteAdapter.notifyDataSetChanged();
+    }
+
 }
