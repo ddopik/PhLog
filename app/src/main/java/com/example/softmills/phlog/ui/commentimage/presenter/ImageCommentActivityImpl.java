@@ -79,8 +79,8 @@ public class ImageCommentActivityImpl implements ImageCommentActivityPresenter {
                 .subscribe(albumImgCommentResponse -> {
                     imageCommentActivityView.viewPhotoComment(albumImgCommentResponse.data);
                     imageCommentActivityView.viewImageProgress(false);
-                    if (albumImgCommentResponse.data.nextPageUrl != null) {
-                        imageCommentActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, albumImgCommentResponse.data.nextPageUrl));
+                    if (albumImgCommentResponse.data.comments.nextPageUrl != null) {
+                        imageCommentActivityView.setNextPageUrl(Utilities.getNextPageNumber(context, albumImgCommentResponse.data.comments.nextPageUrl));
 
                     } else {
                         imageCommentActivityView.setNextPageUrl(null);

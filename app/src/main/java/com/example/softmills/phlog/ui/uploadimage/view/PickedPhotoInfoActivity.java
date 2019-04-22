@@ -147,9 +147,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
                         com.google.android.libraries.places.api.Places.initialize(getApplicationContext(), getString(R.string.places_api_key));
                     }
                     List<Field> fields = Arrays.asList(Field.ID, Field.NAME);
-                    Intent intent = new Autocomplete.IntentBuilder(
-                            AutocompleteActivityMode.FULLSCREEN, fields)
-                            .build(this);
+                    Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this);
                     startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
                     break;
             }
@@ -202,8 +200,7 @@ public class PickedPhotoInfoActivity extends BaseActivity implements MapUtls.OnL
             mapUtls.startLocationUpdates(this, MapUtls.MapConst.UPDATE_INTERVAL_INSTANT);
         } else {
             // Request one permission
-            EasyPermissions.requestPermissions(this, getString(R.string.need_location_permation),
-                    REQUEST_CODE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
+            EasyPermissions.requestPermissions(this, getString(R.string.need_location_permation), REQUEST_CODE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
         }
     }
 
