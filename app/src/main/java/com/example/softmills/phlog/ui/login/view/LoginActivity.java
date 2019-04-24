@@ -161,9 +161,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
-
-
-
+        finish();
     }
 
     @Override

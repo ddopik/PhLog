@@ -71,6 +71,7 @@ public class PickProfilePhotoActivity extends BaseActivity implements PickProfil
         skipUploadProfileBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            finish();
         });
     }
 
@@ -167,6 +168,7 @@ public class PickProfilePhotoActivity extends BaseActivity implements PickProfil
     public void UploadProfileImgFinished(Boolean state) {
         Intent intent = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+        finish();
     }
 
     @Override
